@@ -17,6 +17,7 @@ import ItemDetailsPage from "./pages/ItemDetailsPage";
 import MyPlansPage from "./pages/MyPlansPage";
 import ProfilePage from "./pages/ProfilePage";
 import ResetPassword from "./pages/ResetPassword";
+import CustomerDetailPage from "./pages/CustomerDetailPage";
 import SupportPage from "./pages/SupportPage";
 import AdminPage from "./pages/AdminPage";
 
@@ -58,6 +59,7 @@ function AppContent() {
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
+        <Route path="/admin/customers/:id" element={<ProtectedRoute><CustomerDetailPage /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {/* Floating chat button visible on all pages except concierge and auth */}

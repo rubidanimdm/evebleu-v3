@@ -11,10 +11,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit2, Trash2, Users, DollarSign, Calendar, Package } from 'lucide-react';
+import { Plus, Edit2, Trash2, Users, DollarSign, Calendar, Package, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { CatalogManager } from '@/components/admin/CatalogManager';
+import { AdminCustomers } from '@/components/admin/AdminCustomers';
+import { AdminInbox } from '@/components/admin/AdminInbox';
 
 interface Supplier {
   id: string;
@@ -223,21 +225,39 @@ export default function AdminPage() {
         </div>
 
         <Tabs defaultValue="catalog" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3 bg-card/50 border border-primary/10 rounded-xl p-1">
-            <TabsTrigger value="catalog" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary gap-1.5">
+          <TabsList className="grid w-full grid-cols-5 bg-card/50 border border-primary/10 rounded-xl p-1">
+            <TabsTrigger value="catalog" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary gap-1.5 text-xs">
               <Package className="w-4 h-4" />
-              Catalog
+              <span className="hidden sm:inline">Catalog</span>
             </TabsTrigger>
-            <TabsTrigger value="suppliers" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
-              Suppliers
+            <TabsTrigger value="suppliers" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary text-xs">
+              <span className="hidden sm:inline">Suppliers</span>
+              <span className="sm:hidden">Supp</span>
             </TabsTrigger>
-            <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
-              Bookings
+            <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary text-xs">
+              <span className="hidden sm:inline">Bookings</span>
+              <span className="sm:hidden">Book</span>
+            </TabsTrigger>
+            <TabsTrigger value="customers" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary gap-1.5 text-xs">
+              <Users className="w-4 h-4" />
+              <span className="hidden sm:inline">Customers</span>
+            </TabsTrigger>
+            <TabsTrigger value="inbox" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary gap-1.5 text-xs">
+              <MessageSquare className="w-4 h-4" />
+              <span className="hidden sm:inline">Inbox</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="catalog" className="space-y-4">
             <CatalogManager />
+          </TabsContent>
+
+          <TabsContent value="customers" className="space-y-4">
+            <AdminCustomers />
+          </TabsContent>
+
+          <TabsContent value="inbox" className="space-y-4">
+            <AdminInbox />
           </TabsContent>
 
           <TabsContent value="suppliers" className="space-y-4">
