@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import LandingPage from "./pages/LandingPage";
+import HomePage from "./pages/HomePage";
 import ConciergePage from "./pages/ConciergePage";
 import ExplorePage from "./pages/ExplorePage";
 import MyPlansPage from "./pages/MyPlansPage";
@@ -47,6 +48,7 @@ const App = () => (
               <Route path="/" element={<LandingPage />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
               <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
               <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
               <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
