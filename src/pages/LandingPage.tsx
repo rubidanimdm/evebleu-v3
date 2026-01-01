@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Brain, Compass, CreditCard, Headphones } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { useLanguage } from '@/lib/i18n';
 
 // Flowing gold wave SVG
 const GoldWaves = ({ position = 'top' }: { position?: 'top' | 'middle' | 'bottom' }) => {
@@ -230,6 +232,11 @@ export default function LandingPage() {
 
       {/* ========== HERO SECTION ========== */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+        {/* Language Switcher - Top Right */}
+        <div className="absolute top-6 right-6 z-20">
+          <LanguageSwitcher variant="full" />
+        </div>
+        
         {/* Background layers */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card/50" />
         <GoldParticles />
