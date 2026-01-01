@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import logo from '@/assets/logo.png';
+import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -61,21 +61,59 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md border-border/50 bg-card">
-        <CardHeader className="text-center pb-6">
-          <div className="mx-auto mb-6">
-            <img src={logo} alt="AI My Dubai" className="w-24 h-24 object-contain mx-auto" />
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background effects */}
+      <GoldParticles count={25} />
+      <div className="absolute inset-0 bg-gradient-to-b from-card/30 via-background to-background" />
+      
+      {/* Decorative wave */}
+      <svg 
+        className="absolute bottom-0 left-0 right-0 h-64 opacity-20 pointer-events-none"
+        viewBox="0 0 1920 256" 
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient id="authWaveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#B88A2A" stopOpacity="0" />
+            <stop offset="50%" stopColor="#D6B46A" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#B88A2A" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path 
+          d="M0,128 Q480,64 960,128 T1920,128" 
+          fill="none" 
+          stroke="url(#authWaveGradient)" 
+          strokeWidth="1.5"
+        />
+        <path 
+          d="M0,160 Q480,96 960,160 T1920,160" 
+          fill="none" 
+          stroke="url(#authWaveGradient)" 
+          strokeWidth="0.75"
+          opacity="0.5"
+        />
+      </svg>
+
+      <div className="relative z-10 w-full max-w-md">
+        {/* Card with luxury styling */}
+        <div className="bg-card/50 border border-primary/10 rounded-2xl backdrop-blur-sm p-8 md:p-10">
+          {/* Logo and brand */}
+          <div className="text-center mb-8">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 blur-2xl bg-primary/10 rounded-full scale-150" />
+              <img src={logo} alt="AI My Dubai" className="relative w-20 h-20 object-contain mx-auto" />
+            </div>
+            <h1 className="text-2xl font-medium text-primary tracking-tight mt-6">
+              AI MY DUBAI
+            </h1>
+            <p className="text-muted-foreground text-sm mt-1">
+              Concierge. It. Done.
+            </p>
           </div>
-          <CardTitle className="text-xl font-medium text-foreground tracking-tight">
-            AI My Dubai
-          </CardTitle>
-          <CardDescription className="text-muted-foreground text-sm">
-            Concierge. It. Done.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleLogin} className="space-y-5">
+
+          <GoldDivider />
+
+          <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm text-muted-foreground">Email</Label>
               <Input
@@ -84,7 +122,7 @@ export default function Auth() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-background border-border/50 focus:border-primary/50"
+                className="h-12 bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
                 required
               />
             </div>
@@ -97,16 +135,20 @@ export default function Auth() {
                 placeholder="Your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-12 bg-background border-border/50 focus:border-primary/50"
+                className="h-12 bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
                 required
               />
             </div>
 
-            <Button type="submit" className="w-full h-12 text-base font-medium" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign In'}
+            <Button 
+              type="submit" 
+              className="w-full h-12 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg" 
+              disabled={loading}
+            >
+              {loading ? 'Signing in...' : 'Enter Concierge'}
             </Button>
 
-            <div className="text-center pt-2">
+            <div className="text-center pt-4">
               <Button 
                 variant="link" 
                 onClick={() => navigate('/onboarding')} 
@@ -114,10 +156,18 @@ export default function Auth() {
               >
                 Request Access
               </Button>
+              <span className="text-muted-foreground/50 mx-2">·</span>
+              <Button 
+                variant="link" 
+                onClick={() => navigate('/')} 
+                className="text-muted-foreground hover:text-primary text-sm"
+              >
+                Back to Home
+              </Button>
             </div>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

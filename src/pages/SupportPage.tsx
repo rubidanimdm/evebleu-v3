@@ -1,8 +1,8 @@
 import { BottomNav } from '@/components/BottomNav';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, Mail, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 
 export default function SupportPage() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function SupportPage() {
       icon: MessageCircle,
       title: 'AI Concierge',
       description: 'Instant assistance, 24/7',
-      action: () => navigate('/'),
+      action: () => navigate('/concierge'),
       buttonText: 'Open Chat',
       primary: true,
     },
@@ -40,42 +40,43 @@ export default function SupportPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <header className="bg-card/80 backdrop-blur border-b border-border/50 px-4 py-4 sticky top-0 z-40">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-lg font-medium text-foreground">Support</h1>
-          <p className="text-sm text-muted-foreground">Contact your concierge</p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background pb-24 relative">
+      <GoldParticles count={10} />
+      
+      <LargePageHeader 
+        title="Private Support"
+        subtitle="Discreet assistance. Always available."
+      />
 
       <main className="max-w-2xl mx-auto p-4 space-y-4">
         {/* Service Hours */}
-        <Card className="p-4 border-primary/20 bg-primary/5">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-primary" />
+        <LuxuryCard className="p-5 border-primary/20">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+              <Clock className="w-5 h-5 text-primary" strokeWidth={1.5} />
             </div>
             <div>
-              <p className="font-medium text-foreground">24/7 Concierge</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="font-medium text-primary">24/7 Concierge</p>
+              <p className="text-sm text-muted-foreground mt-0.5">
                 AI concierge always available. Human support: 9 AM – 11 PM
               </p>
             </div>
           </div>
-        </Card>
+        </LuxuryCard>
 
         {/* Contact Options */}
-        <div className="space-y-3">
+        <div className="space-y-3 pt-2">
           {contactOptions.map((option, i) => (
-            <Card key={i} className="p-4 border-border/50 bg-card">
+            <LuxuryCard key={i} className="p-5">
               <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  option.primary ? 'bg-primary/10' : 'bg-secondary'
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  option.primary 
+                    ? 'bg-primary/10 border border-primary/20' 
+                    : 'bg-secondary/50 border border-border/50'
                 }`}>
                   <option.icon className={`w-5 h-5 ${
                     option.primary ? 'text-primary' : 'text-muted-foreground'
-                  }`} />
+                  }`} strokeWidth={1.5} />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-medium text-foreground">{option.title}</h3>
@@ -85,12 +86,16 @@ export default function SupportPage() {
                   variant={option.primary ? 'default' : 'outline'}
                   size="sm"
                   onClick={option.action}
-                  className={!option.primary ? 'border-border/50' : ''}
+                  className={`rounded-xl px-5 ${
+                    option.primary 
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                      : 'border-primary/20 hover:border-primary/40 hover:bg-primary/5'
+                  }`}
                 >
                   {option.buttonText}
                 </Button>
               </div>
-            </Card>
+            </LuxuryCard>
           ))}
         </div>
       </main>
