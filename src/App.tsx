@@ -16,6 +16,7 @@ import ExplorePage from "./pages/ExplorePage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
 import MyPlansPage from "./pages/MyPlansPage";
 import ProfilePage from "./pages/ProfilePage";
+import ResetPassword from "./pages/ResetPassword";
 import SupportPage from "./pages/SupportPage";
 import AdminPage from "./pages/AdminPage";
 
@@ -47,6 +48,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
