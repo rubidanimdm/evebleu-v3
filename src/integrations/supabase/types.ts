@@ -118,6 +118,54 @@ export type Database = {
           },
         ]
       }
+      catalog_items: {
+        Row: {
+          category: string
+          created_at: string
+          currency: string
+          details: Json | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          price: number
+          pricing_unit: string
+          short_description: string | null
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          currency?: string
+          details?: Json | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          price?: number
+          pricing_unit?: string
+          short_description?: string | null
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          currency?: string
+          details?: Json | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          price?: number
+          pricing_unit?: string
+          short_description?: string | null
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string

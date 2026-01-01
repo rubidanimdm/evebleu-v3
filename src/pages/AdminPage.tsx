@@ -11,9 +11,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit2, Trash2, Users, DollarSign, Calendar } from 'lucide-react';
+import { Plus, Edit2, Trash2, Users, DollarSign, Calendar, Package } from 'lucide-react';
 import { format } from 'date-fns';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
+import { CatalogManager } from '@/components/admin/CatalogManager';
 
 interface Supplier {
   id: string;
@@ -221,8 +222,12 @@ export default function AdminPage() {
           </LuxuryCard>
         </div>
 
-        <Tabs defaultValue="suppliers" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2 bg-card/50 border border-primary/10 rounded-xl p-1">
+        <Tabs defaultValue="catalog" className="space-y-4">
+          <TabsList className="grid w-full grid-cols-3 bg-card/50 border border-primary/10 rounded-xl p-1">
+            <TabsTrigger value="catalog" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary gap-1.5">
+              <Package className="w-4 h-4" />
+              Catalog
+            </TabsTrigger>
             <TabsTrigger value="suppliers" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
               Suppliers
             </TabsTrigger>
@@ -230,6 +235,10 @@ export default function AdminPage() {
               Bookings
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="catalog" className="space-y-4">
+            <CatalogManager />
+          </TabsContent>
 
           <TabsContent value="suppliers" className="space-y-4">
             <div className="flex justify-between items-center">
