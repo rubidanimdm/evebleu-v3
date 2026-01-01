@@ -11,8 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { BottomNav } from '@/components/BottomNav';
-import { LargePageHeader, GoldDivider, LuxuryCard } from '@/components/LuxuryElements';
-import { User, MessageSquare, Calendar, Settings, ChevronRight, Trash2 } from 'lucide-react';
+import { LargePageHeader, GoldDivider, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
+import { User, MessageSquare, Calendar, Settings, ChevronRight, Trash2, Lock, Compass, Utensils, Car, Hotel, Plane, Sparkles, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 
@@ -33,6 +33,25 @@ interface Booking {
   conversation_id: string | null;
 }
 
+interface CatalogItem {
+  id: string;
+  title: string;
+  category: string;
+  short_description: string;
+  price: number;
+  currency: string;
+  image_url: string;
+}
+
+const categoryIcons: Record<string, React.ElementType> = {
+  DINING: Utensils,
+  TRANSPORT: Car,
+  HOTEL: Hotel,
+  FLIGHT: Plane,
+  EXPERIENCE: Sparkles,
+  CLUB: Sparkles,
+};
+
 export default function ProfilePage() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
@@ -40,6 +59,7 @@ export default function ProfilePage() {
   
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [catalogItems, setCatalogItems] = useState<CatalogItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   // Profile form state
@@ -53,6 +73,12 @@ export default function ProfilePage() {
   const [preferredAreas, setPreferredAreas] = useState('');
   const [specialNotes, setSpecialNotes] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+
+  // Password change state
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -96,6 +122,16 @@ export default function ProfilePage() {
         .order('created_at', { ascending: false });
       
       if (bookingData) setBookings(bookingData);
+
+      // Load catalog items for explore section
+      const { data: catalogData } = await supabase
+        .from('catalog_items')
+        .select('id, title, category, short_description, price, currency, image_url')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true })
+        .limit(12);
+      
+      if (catalogData) setCatalogItems(catalogData);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -133,15 +169,41 @@ export default function ProfilePage() {
     }
   };
 
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      toast({ title: 'Passwords do not match', variant: 'destructive' });
+      return;
+    }
+    if (newPassword.length < 6) {
+      toast({ title: 'Password must be at least 6 characters', variant: 'destructive' });
+      return;
+    }
+
+    setIsChangingPassword(true);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) throw error;
+      
+      toast({ title: 'Password updated successfully' });
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (error: any) {
+      toast({ title: 'Failed to update password', description: error.message, variant: 'destructive' });
+    } finally {
+      setIsChangingPassword(false);
+    }
+  };
+
   const handleClearData = async () => {
     if (!user) return;
     if (!confirm('Are you sure you want to clear all your chat history and memories? This cannot be undone.')) return;
 
     try {
-      // Delete all conversations (cascades to messages)
       await supabase.from('conversations').delete().eq('user_id', user.id);
-      
-      // Clear AI memories
       await supabase
         .from('profiles')
         .update({ ai_memories: [] })
@@ -154,41 +216,237 @@ export default function ProfilePage() {
     }
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({ title: 'Signed out' });
+    navigate('/');
+  };
+
   const openConversation = (convId: string) => {
     navigate(`/concierge?conversation=${convId}`);
   };
 
+  const firstName = profile?.full_name?.split(' ')[0] || 'Guest';
+
   return (
     <div className="min-h-screen bg-background pb-24">
-      <LargePageHeader title="My Profile" subtitle="Manage your account and preferences" />
+      {/* Welcome Header */}
+      <div className="relative bg-card/80 border-b border-primary/10 px-4 py-8 overflow-hidden">
+        <GoldParticles count={15} />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="relative max-w-2xl mx-auto">
+          <h1 className="text-2xl font-medium text-primary">
+            Welcome, {firstName}!
+          </h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            {profile?.email}
+          </p>
+        </div>
+      </div>
       
       <div className="max-w-2xl mx-auto px-4 py-6">
-        <Tabs defaultValue="profile" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-card/50 border border-primary/10">
-            <TabsTrigger value="profile" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <User className="w-4 h-4 mr-2" />
-              Profile
+        <Tabs defaultValue="bookings" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5 bg-card/50 border border-primary/10">
+            <TabsTrigger value="bookings" className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Calendar className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Bookings</span>
             </TabsTrigger>
-            <TabsTrigger value="preferences" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Settings className="w-4 h-4 mr-2" />
-              Preferences
+            <TabsTrigger value="explore" className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Compass className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Explore</span>
             </TabsTrigger>
-            <TabsTrigger value="chats" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Chats
+            <TabsTrigger value="chats" className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <MessageSquare className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Chats</span>
             </TabsTrigger>
-            <TabsTrigger value="bookings" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Calendar className="w-4 h-4 mr-2" />
-              Bookings
+            <TabsTrigger value="profile" className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <User className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Profile</span>
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Settings className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Settings</span>
             </TabsTrigger>
           </TabsList>
+
+          {/* Bookings Tab */}
+          <TabsContent value="bookings" className="space-y-4">
+            <LuxuryCard>
+              <CardHeader>
+                <CardTitle className="text-primary">My Bookings</CardTitle>
+                <CardDescription>Your past and upcoming reservations</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isLoading ? (
+                  <p className="text-center text-muted-foreground py-8">Loading...</p>
+                ) : bookings.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Calendar className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
+                    <p className="text-muted-foreground mb-4">No bookings yet</p>
+                    <Button 
+                      onClick={() => navigate('/explore')}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      <Compass className="w-4 h-4 mr-2" />
+                      Explore Services
+                    </Button>
+                  </div>
+                ) : (
+                  <ScrollArea className="h-[400px]">
+                    <div className="space-y-3">
+                      {bookings.map((booking) => (
+                        <div
+                          key={booking.id}
+                          className="p-4 rounded-xl border border-primary/10 bg-card/50 space-y-2"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-primary">{booking.booking_number}</span>
+                            <span className={`text-xs px-2 py-1 rounded-full ${
+                              booking.status === 'confirmed' ? 'bg-green-500/20 text-green-500' :
+                              booking.status === 'pending' ? 'bg-yellow-500/20 text-yellow-500' :
+                              booking.status === 'cancelled' ? 'bg-red-500/20 text-red-500' :
+                              'bg-muted text-muted-foreground'
+                            }`}>
+                              {booking.status}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <span>{format(new Date(booking.booking_date), 'MMM d, yyyy')}</span>
+                            {booking.total_amount && (
+                              <span className="font-medium text-foreground">AED {booking.total_amount}</span>
+                            )}
+                          </div>
+                          {booking.conversation_id && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => openConversation(booking.conversation_id!)}
+                              className="text-xs text-primary hover:text-primary/80"
+                            >
+                              <MessageSquare className="w-3 h-3 mr-1" />
+                              View Related Chat
+                            </Button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                )}
+              </CardContent>
+            </LuxuryCard>
+          </TabsContent>
+
+          {/* Explore Tab */}
+          <TabsContent value="explore" className="space-y-4">
+            <LuxuryCard>
+              <CardHeader>
+                <CardTitle className="text-primary">Explore & Book</CardTitle>
+                <CardDescription>Discover experiences and services</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isLoading ? (
+                  <p className="text-center text-muted-foreground py-8">Loading...</p>
+                ) : catalogItems.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Compass className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
+                    <p className="text-muted-foreground">No items available</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    {catalogItems.map((item) => {
+                      const IconComponent = categoryIcons[item.category] || Sparkles;
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => navigate(`/item/${item.id}`)}
+                          className="p-3 rounded-xl border border-primary/10 bg-card/50 hover:bg-card hover:border-primary/20 transition-all text-left group"
+                        >
+                          {item.image_url ? (
+                            <img 
+                              src={item.image_url} 
+                              alt={item.title}
+                              className="w-full h-20 object-cover rounded-lg mb-2"
+                            />
+                          ) : (
+                            <div className="w-full h-20 bg-primary/10 rounded-lg mb-2 flex items-center justify-center">
+                              <IconComponent className="w-8 h-8 text-primary/50" />
+                            </div>
+                          )}
+                          <p className="font-medium text-sm line-clamp-1 group-hover:text-primary transition-colors">
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {item.currency} {item.price}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+                <Button 
+                  onClick={() => navigate('/explore')}
+                  variant="outline"
+                  className="w-full mt-4 border-primary/20 hover:bg-primary/5"
+                >
+                  View All Services
+                  <ChevronRight className="w-4 h-4 ml-2" />
+                </Button>
+              </CardContent>
+            </LuxuryCard>
+          </TabsContent>
+
+          {/* Chats Tab */}
+          <TabsContent value="chats" className="space-y-4">
+            <LuxuryCard>
+              <CardHeader>
+                <CardTitle className="text-primary">Chat History</CardTitle>
+                <CardDescription>Your conversations with AI concierge</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isLoading ? (
+                  <p className="text-center text-muted-foreground py-8">Loading...</p>
+                ) : conversations.length === 0 ? (
+                  <div className="text-center py-8">
+                    <MessageSquare className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
+                    <p className="text-muted-foreground mb-4">No conversations yet</p>
+                    <Button 
+                      onClick={() => navigate('/concierge')}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      Start a Chat
+                    </Button>
+                  </div>
+                ) : (
+                  <ScrollArea className="h-[400px]">
+                    <div className="space-y-2">
+                      {conversations.map((conv) => (
+                        <button
+                          key={conv.id}
+                          onClick={() => openConversation(conv.id)}
+                          className="w-full p-4 rounded-xl border border-primary/10 bg-card/50 hover:bg-card hover:border-primary/20 transition-all flex items-center justify-between group"
+                        >
+                          <div className="text-left">
+                            <p className="font-medium text-sm line-clamp-1">{conv.title || 'Untitled Chat'}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {format(new Date(conv.updated_at), 'MMM d, yyyy · h:mm a')}
+                            </p>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </button>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                )}
+              </CardContent>
+            </LuxuryCard>
+          </TabsContent>
 
           {/* Profile Tab */}
           <TabsContent value="profile" className="space-y-4">
             <LuxuryCard>
               <CardHeader>
                 <CardTitle className="text-primary">Personal Information</CardTitle>
-                <CardDescription>Update your basic profile details</CardDescription>
+                <CardDescription>Update your profile details</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -201,7 +459,7 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
+                  <Label htmlFor="phone">Phone (optional)</Label>
                   <Input 
                     id="phone" 
                     value={phone} 
@@ -242,14 +500,13 @@ export default function ProfilePage() {
                 </Button>
               </CardContent>
             </LuxuryCard>
-          </TabsContent>
 
-          {/* Preferences Tab */}
-          <TabsContent value="preferences" className="space-y-4">
+            <GoldDivider />
+
             <LuxuryCard>
               <CardHeader>
-                <CardTitle className="text-primary">AI Memory & Preferences</CardTitle>
-                <CardDescription>These help our AI personalize your experience</CardDescription>
+                <CardTitle className="text-primary">AI Preferences</CardTitle>
+                <CardDescription>Help our AI personalize your experience</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -272,7 +529,7 @@ export default function ProfilePage() {
                     id="dietaryPreferences" 
                     value={dietaryPreferences} 
                     onChange={(e) => setDietaryPreferences(e.target.value)}
-                    placeholder="e.g., Halal, Vegetarian, Gluten-free"
+                    placeholder="e.g., Halal, Vegetarian"
                     className="bg-background/50 border-primary/20"
                   />
                 </div>
@@ -282,7 +539,7 @@ export default function ProfilePage() {
                     id="favoriteCuisines" 
                     value={favoriteCuisines} 
                     onChange={(e) => setFavoriteCuisines(e.target.value)}
-                    placeholder="e.g., Japanese, Italian, Middle Eastern"
+                    placeholder="e.g., Japanese, Italian"
                     className="bg-background/50 border-primary/20"
                   />
                 </div>
@@ -292,18 +549,18 @@ export default function ProfilePage() {
                     id="preferredAreas" 
                     value={preferredAreas} 
                     onChange={(e) => setPreferredAreas(e.target.value)}
-                    placeholder="e.g., DIFC, Downtown, Marina"
+                    placeholder="e.g., DIFC, Downtown"
                     className="bg-background/50 border-primary/20"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="specialNotes">Special Notes for AI</Label>
+                  <Label htmlFor="specialNotes">Special Notes</Label>
                   <Textarea 
                     id="specialNotes" 
                     value={specialNotes} 
                     onChange={(e) => setSpecialNotes(e.target.value)}
-                    placeholder="Anything else you'd like our AI to remember..."
-                    className="bg-background/50 border-primary/20 min-h-[100px]"
+                    placeholder="Anything else for our AI to remember..."
+                    className="bg-background/50 border-primary/20 min-h-[80px]"
                   />
                 </div>
                 <Button 
@@ -315,13 +572,75 @@ export default function ProfilePage() {
                 </Button>
               </CardContent>
             </LuxuryCard>
+          </TabsContent>
+
+          {/* Settings Tab */}
+          <TabsContent value="settings" className="space-y-4">
+            <LuxuryCard>
+              <CardHeader>
+                <CardTitle className="text-primary flex items-center gap-2">
+                  <Lock className="w-5 h-5" />
+                  Change Password
+                </CardTitle>
+                <CardDescription>Update your account password</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="newPassword">New Password</Label>
+                  <Input 
+                    id="newPassword" 
+                    type="password"
+                    value={newPassword} 
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="At least 6 characters"
+                    className="bg-background/50 border-primary/20"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input 
+                    id="confirmPassword" 
+                    type="password"
+                    value={confirmPassword} 
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm new password"
+                    className="bg-background/50 border-primary/20"
+                  />
+                </div>
+                <Button 
+                  onClick={handleChangePassword} 
+                  disabled={isChangingPassword || !newPassword || !confirmPassword}
+                  className="w-full bg-primary hover:bg-primary/90"
+                >
+                  {isChangingPassword ? 'Updating...' : 'Update Password'}
+                </Button>
+              </CardContent>
+            </LuxuryCard>
+
+            <GoldDivider />
+
+            <LuxuryCard>
+              <CardHeader>
+                <CardTitle className="text-primary">Account Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button 
+                  variant="outline" 
+                  onClick={handleLogout}
+                  className="w-full border-primary/20 hover:bg-primary/5"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </CardContent>
+            </LuxuryCard>
 
             <GoldDivider />
 
             <LuxuryCard className="border-destructive/20">
               <CardHeader>
-                <CardTitle className="text-destructive">Data & Privacy</CardTitle>
-                <CardDescription>Manage your data and privacy settings</CardDescription>
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                <CardDescription>Irreversible actions</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button 
@@ -330,121 +649,8 @@ export default function ProfilePage() {
                   className="w-full border-destructive/30 text-destructive hover:bg-destructive/10"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Clear All Chat History & Memories
+                  Clear All Chat History & Data
                 </Button>
-              </CardContent>
-            </LuxuryCard>
-          </TabsContent>
-
-          {/* Chats Tab */}
-          <TabsContent value="chats" className="space-y-4">
-            <LuxuryCard>
-              <CardHeader>
-                <CardTitle className="text-primary">Chat History</CardTitle>
-                <CardDescription>View and continue past conversations</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {isLoading ? (
-                  <p className="text-center text-muted-foreground py-8">Loading...</p>
-                ) : conversations.length === 0 ? (
-                  <div className="text-center py-8">
-                    <MessageSquare className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
-                    <p className="text-muted-foreground">No conversations yet</p>
-                    <Button 
-                      variant="outline" 
-                      className="mt-4"
-                      onClick={() => navigate('/concierge')}
-                    >
-                      Start a Chat
-                    </Button>
-                  </div>
-                ) : (
-                  <ScrollArea className="h-[400px]">
-                    <div className="space-y-2">
-                      {conversations.map((conv) => (
-                        <button
-                          key={conv.id}
-                          onClick={() => openConversation(conv.id)}
-                          className="w-full p-4 rounded-xl border border-primary/10 bg-card/50 hover:bg-card hover:border-primary/20 transition-all flex items-center justify-between group"
-                        >
-                          <div className="text-left">
-                            <p className="font-medium text-sm line-clamp-1">{conv.title || 'Untitled Chat'}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {format(new Date(conv.updated_at), 'MMM d, yyyy · h:mm a')}
-                            </p>
-                          </div>
-                          <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </button>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                )}
-              </CardContent>
-            </LuxuryCard>
-          </TabsContent>
-
-          {/* Bookings Tab */}
-          <TabsContent value="bookings" className="space-y-4">
-            <LuxuryCard>
-              <CardHeader>
-                <CardTitle className="text-primary">My Bookings</CardTitle>
-                <CardDescription>View your booking history</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {isLoading ? (
-                  <p className="text-center text-muted-foreground py-8">Loading...</p>
-                ) : bookings.length === 0 ? (
-                  <div className="text-center py-8">
-                    <Calendar className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
-                    <p className="text-muted-foreground">No bookings yet</p>
-                    <Button 
-                      variant="outline" 
-                      className="mt-4"
-                      onClick={() => navigate('/explore')}
-                    >
-                      Explore Services
-                    </Button>
-                  </div>
-                ) : (
-                  <ScrollArea className="h-[400px]">
-                    <div className="space-y-3">
-                      {bookings.map((booking) => (
-                        <div
-                          key={booking.id}
-                          className="p-4 rounded-xl border border-primary/10 bg-card/50 space-y-2"
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium text-primary">{booking.booking_number}</span>
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              booking.status === 'confirmed' ? 'bg-green-500/20 text-green-500' :
-                              booking.status === 'pending' ? 'bg-yellow-500/20 text-yellow-500' :
-                              'bg-muted text-muted-foreground'
-                            }`}>
-                              {booking.status}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <span>{format(new Date(booking.booking_date), 'MMM d, yyyy')}</span>
-                            {booking.total_amount && (
-                              <span className="font-medium text-foreground">AED {booking.total_amount}</span>
-                            )}
-                          </div>
-                          {booking.conversation_id && (
-                            <Button 
-                              variant="ghost" 
-                              size="sm"
-                              onClick={() => openConversation(booking.conversation_id!)}
-                              className="text-xs text-primary hover:text-primary/80"
-                            >
-                              <MessageSquare className="w-3 h-3 mr-1" />
-                              View Related Chat
-                            </Button>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                )}
               </CardContent>
             </LuxuryCard>
           </TabsContent>
