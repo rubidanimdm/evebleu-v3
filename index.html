@@ -2,24 +2,57 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
     <title>AI My Dubai – Concierge. It. Done.</title>
     <meta name="description" content="AI My Dubai is your private, intelligent, AI-powered concierge that executes life in Dubai for elite clients — quietly, efficiently, flawlessly." />
     <meta name="author" content="AI My Dubai" />
     <meta name="keywords" content="luxury concierge, AI concierge, Dubai VIP, yacht booking, fine dining, nightlife, private events, UHNW services" />
 
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI My Dubai" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="msapplication-TileColor" content="#0A0A0A" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- App Icons -->
+    <link rel="icon" type="image/png" href="/icons/icon-1024x1024.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-1024x1024.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-1024x1024.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-1024x1024.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-1024x1024.png" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Open Graph -->
     <meta property="og:title" content="AI My Dubai – Concierge. It. Done." />
     <meta property="og:description" content="A private, intelligent, AI-powered concierge that executes life in Dubai for elite clients." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:image" content="/icons/icon-1024x1024.png" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@AImyDubai" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:image" content="/icons/icon-1024x1024.png" />
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Capacitor -->
+    <style>
+      /* Safe area insets for iOS notch */
+      :root {
+        --safe-area-inset-top: env(safe-area-inset-top);
+        --safe-area-inset-bottom: env(safe-area-inset-bottom);
+        --safe-area-inset-left: env(safe-area-inset-left);
+        --safe-area-inset-right: env(safe-area-inset-right);
+      }
+    </style>
   </head>
 
   <body>
