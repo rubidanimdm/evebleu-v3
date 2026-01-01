@@ -16,8 +16,8 @@ interface ServiceButton {
 const services: ServiceButton[] = [
   { icon: UtensilsCrossed, label: 'Book Me a Table', route: '/explore', category: SERVICE_CATEGORIES.DINING },
   { icon: Car, label: 'Book Me a Car', route: '/explore', category: SERVICE_CATEGORIES.TRANSPORT },
-  { icon: Building, label: 'Book Me a Hotel', route: '/concierge', intent: CONCIERGE_INTENTS.HOTEL_BOOKING },
-  { icon: Plane, label: 'Book Me a Flight', route: '/concierge', intent: CONCIERGE_INTENTS.FLIGHT_BOOKING },
+  { icon: Building, label: 'Book Me a Hotel', route: '/concierge', intent: SERVICE_CATEGORIES.HOTEL },
+  { icon: Plane, label: 'Book Me a Flight', route: '/concierge', intent: SERVICE_CATEGORIES.FLIGHT },
   { icon: Wine, label: 'Book Me a Club', route: '/explore', category: SERVICE_CATEGORIES.CLUB },
   { icon: Ship, label: 'Book an Experience', route: '/explore', category: SERVICE_CATEGORIES.EXPERIENCE },
   { icon: Headphones, label: 'Handle It For Me', route: '/concierge', intent: CONCIERGE_INTENTS.CUSTOM_REQUEST },
