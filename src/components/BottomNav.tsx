@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { icon: MessageSquare, label: 'Concierge', path: '/' },
+  { icon: MessageSquare, label: 'Concierge', path: '/concierge' },
   { icon: Compass, label: 'Explore', path: '/explore' },
   { icon: Calendar, label: 'My Plans', path: '/my-plans' },
   { icon: Headphones, label: 'Support', path: '/support' },
@@ -26,7 +26,7 @@ export function BottomNav() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     toast({ title: 'Signed out' });
-    navigate('/auth');
+    navigate('/');
   };
 
   const isAdmin = profile?.role === 'manager' || profile?.role === 'staff';

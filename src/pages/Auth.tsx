@@ -46,7 +46,7 @@ export default function Auth() {
         title: 'Welcome back',
       });
 
-      navigate('/');
+      navigate('/concierge');
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
