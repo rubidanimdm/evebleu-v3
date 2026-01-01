@@ -538,6 +538,27 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       user_bookings: {
@@ -617,6 +638,7 @@ export type Database = {
       is_admin_user: { Args: { user_id: string }; Returns: boolean }
     }
     Enums: {
+      app_role: "manager" | "staff" | "resident"
       payment_status: "paid" | "unpaid"
       ticket_category:
         | "electricity"
@@ -754,6 +776,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["manager", "staff", "resident"],
       payment_status: ["paid", "unpaid"],
       ticket_category: [
         "electricity",
