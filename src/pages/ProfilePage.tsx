@@ -114,9 +114,9 @@ export default function ProfilePage() {
       
       if (convData) setConversations(convData);
 
-      // Load bookings
+      // Load bookings using secure view (excludes admin_notes, commission_amount)
       const { data: bookingData } = await supabase
-        .from('bookings')
+        .from('user_bookings')
         .select('id, booking_number, booking_date, status, total_amount, supplier_id, conversation_id')
         .eq('user_id', user!.id)
         .order('created_at', { ascending: false });

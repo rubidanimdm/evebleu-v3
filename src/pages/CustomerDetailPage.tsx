@@ -117,7 +117,6 @@ export default function CustomerDetailPage() {
 
       setNotes(notesData || []);
     } catch (error) {
-      console.error('Error loading customer:', error);
       toast({ title: 'Error loading customer data', variant: 'destructive' });
     } finally {
       setIsLoading(false);

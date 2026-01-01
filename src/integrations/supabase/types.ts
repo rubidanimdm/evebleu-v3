@@ -540,7 +540,76 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_bookings: {
+        Row: {
+          booking_date: string | null
+          booking_number: string | null
+          booking_time: string | null
+          conversation_id: string | null
+          created_at: string | null
+          id: string | null
+          party_size: number | null
+          special_requests: string | null
+          status: string | null
+          supplier_id: string | null
+          total_amount: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          booking_date?: string | null
+          booking_number?: string | null
+          booking_time?: string | null
+          conversation_id?: string | null
+          created_at?: string | null
+          id?: string | null
+          party_size?: number | null
+          special_requests?: string | null
+          status?: string | null
+          supplier_id?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          booking_date?: string | null
+          booking_number?: string | null
+          booking_time?: string | null
+          conversation_id?: string | null
+          created_at?: string | null
+          id?: string | null
+          party_size?: number | null
+          special_requests?: string | null
+          status?: string | null
+          supplier_id?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       generate_booking_number: { Args: never; Returns: string }
