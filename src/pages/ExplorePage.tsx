@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { BottomNav } from '@/components/BottomNav';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { UtensilsCrossed, Wine, Car, Ship, Calendar, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 
 const categoryIcons: Record<string, React.ElementType> = {
   restaurant: UtensilsCrossed,
@@ -61,38 +61,47 @@ export default function ExplorePage() {
     : suppliers;
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <header className="bg-card/80 backdrop-blur border-b border-border/50 px-4 py-4 sticky top-0 z-40">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-lg font-medium text-foreground">Explore</h1>
-          <p className="text-sm text-muted-foreground">Curated experiences in Dubai</p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background pb-24 relative">
+      <GoldParticles count={10} />
+      
+      <LargePageHeader 
+        title="Explore"
+        subtitle="Curated access to Dubai's most exclusive experiences"
+      />
 
       {/* Category Filter */}
-      <div className="sticky top-[57px] z-30 bg-background/95 backdrop-blur border-b border-border/30">
-        <div className="max-w-2xl mx-auto px-4 py-3">
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-xl border-b border-primary/10">
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+        <div className="max-w-2xl mx-auto px-4 py-4">
           <div className="flex gap-2 overflow-x-auto no-scrollbar">
             <Button
               variant={selectedCategory === null ? 'default' : 'outline'}
               size="sm"
               onClick={() => setSelectedCategory(null)}
-              className="flex-shrink-0 h-9 px-4 border-border/50"
+              className={`flex-shrink-0 h-10 px-5 rounded-xl ${
+                selectedCategory === null 
+                  ? 'bg-primary text-primary-foreground' 
+                  : 'border-primary/20 hover:border-primary/40 hover:bg-primary/5'
+              }`}
             >
               All
             </Button>
             {categories.map(cat => {
               const Icon = categoryIcons[cat];
+              const isActive = selectedCategory === cat;
               return (
                 <Button
                   key={cat}
-                  variant={selectedCategory === cat ? 'default' : 'outline'}
+                  variant={isActive ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(cat)}
-                  className="flex-shrink-0 h-9 px-4 gap-2 border-border/50"
+                  className={`flex-shrink-0 h-10 px-5 gap-2 rounded-xl ${
+                    isActive 
+                      ? 'bg-primary text-primary-foreground' 
+                      : 'border-primary/20 hover:border-primary/40 hover:bg-primary/5'
+                  }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-4 h-4" strokeWidth={1.5} />
                   {categoryLabels[cat]}
                 </Button>
               );
@@ -103,17 +112,24 @@ export default function ExplorePage() {
 
       <main className="max-w-2xl mx-auto p-4">
         {loading ? (
-          <div className="text-center py-12 text-muted-foreground">
-            Loading...
+          <div className="text-center py-16">
+            <div className="flex gap-1.5 justify-center">
+              <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
+              <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+              <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+            </div>
           </div>
         ) : filteredSuppliers.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">
+          <div className="text-center py-16">
+            <p className="text-muted-foreground mb-6">
               {selectedCategory 
                 ? `No ${categoryLabels[selectedCategory]} available.`
-                : 'No options available.'}
+                : 'No experiences available.'}
             </p>
-            <Button onClick={() => navigate('/')}>
+            <Button 
+              onClick={() => navigate('/concierge')}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-6"
+            >
               Ask Concierge
             </Button>
           </div>
@@ -122,9 +138,9 @@ export default function ExplorePage() {
             {filteredSuppliers.map(supplier => {
               const Icon = categoryIcons[supplier.category] || Calendar;
               return (
-                <Card key={supplier.id} className="overflow-hidden border-border/50 bg-card">
+                <LuxuryCard key={supplier.id} className="overflow-hidden">
                   {supplier.image_url && (
-                    <div className="h-40 overflow-hidden">
+                    <div className="h-44 overflow-hidden">
                       <img 
                         src={supplier.image_url} 
                         alt={supplier.name}
@@ -133,44 +149,44 @@ export default function ExplorePage() {
                       />
                     </div>
                   )}
-                  <div className="p-4 space-y-3">
+                  <div className="p-5 space-y-4">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h3 className="font-medium text-foreground">{supplier.name}</h3>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                          <Icon className="w-3.5 h-3.5" />
+                        <h3 className="font-medium text-foreground text-lg">{supplier.name}</h3>
+                        <div className="flex items-center gap-2 text-sm text-primary/80 mt-1">
+                          <Icon className="w-4 h-4" strokeWidth={1.5} />
                           <span>{categoryLabels[supplier.category]}</span>
                         </div>
                       </div>
                       {supplier.price_range && (
-                        <Badge variant="outline" className="border-primary/30 text-primary text-xs">
+                        <Badge className="bg-primary/10 text-primary border border-primary/20 text-xs">
                           {supplier.price_range}
                         </Badge>
                       )}
                     </div>
 
                     {supplier.description && (
-                      <p className="text-sm text-muted-foreground line-clamp-2">
+                      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
                         {supplier.description}
                       </p>
                     )}
 
                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
                       {supplier.location && (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
+                        <span className="flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5" />
                           {supplier.location}
                         </span>
                       )}
                       {supplier.min_spend && supplier.min_spend > 0 && (
-                        <span>From ${supplier.min_spend.toLocaleString()}</span>
+                        <span className="text-primary/80">From ${supplier.min_spend.toLocaleString()}</span>
                       )}
                     </div>
 
                     {supplier.tags && supplier.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap gap-2">
                         {supplier.tags.slice(0, 3).map(tag => (
-                          <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5">
+                          <Badge key={tag} variant="secondary" className="text-[10px] px-2.5 py-1 bg-secondary/50">
                             {tag}
                           </Badge>
                         ))}
@@ -179,14 +195,13 @@ export default function ExplorePage() {
 
                     <Button 
                       variant="outline"
-                      size="sm"
-                      className="w-full border-primary/30 text-primary hover:bg-primary/5 hover:border-primary/50"
-                      onClick={() => navigate(`/?supplier=${encodeURIComponent(supplier.name)}`)}
+                      className="w-full border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 rounded-xl h-11"
+                      onClick={() => navigate(`/concierge?supplier=${encodeURIComponent(supplier.name)}`)}
                     >
                       Book with Concierge
                     </Button>
                   </div>
-                </Card>
+                </LuxuryCard>
               );
             })}
           </div>

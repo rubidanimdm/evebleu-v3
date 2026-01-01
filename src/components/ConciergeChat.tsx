@@ -6,6 +6,7 @@ import { useConciergeChat } from '@/hooks/useConciergeChat';
 import { Send, User, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import logo from '@/assets/logo.png';
+import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 
 export function ConciergeChat() {
   const { messages, isLoading, error, sendMessage, clearMessages } = useConciergeChat();
@@ -34,30 +35,39 @@ export function ConciergeChat() {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="flex flex-col h-full bg-background relative">
       {/* Messages Area */}
       <ScrollArea ref={scrollRef} className="flex-1 p-4">
         <div className="max-w-2xl mx-auto space-y-4">
           {messages.length === 0 && (
-            <div className="text-center py-12 space-y-8">
-              <div className="inline-flex items-center justify-center w-20 h-20">
-                <img src={logo} alt="AI My Dubai" className="w-20 h-20 object-contain" />
-              </div>
-              <div className="space-y-3">
-                <p className="text-lg text-foreground font-medium">
-                  How can I handle Dubai for you today?
-                </p>
-                <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-                  Dining, nightlife, yachts, transport, events — tell me what you need.
-                </p>
+            <div className="relative text-center py-16 space-y-8">
+              <GoldParticles count={15} />
+              
+              {/* Logo with glow */}
+              <div className="relative inline-block">
+                <div className="absolute inset-0 blur-2xl bg-primary/15 rounded-full scale-150" />
+                <img src={logo} alt="AI My Dubai" className="relative w-24 h-24 object-contain" />
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-md mx-auto pt-4">
+              <div className="space-y-4">
+                <p className="text-xl text-primary font-medium">
+                  How can I handle Dubai for you?
+                </p>
+                <p className="text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
+                  Dining. Nightlife. Yachts. Transport. Experiences.
+                  <br />
+                  Tell me what you need.
+                </p>
+              </div>
+
+              <GoldDivider />
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto pt-2">
                 {quickPrompts.map((prompt, i) => (
                   <Button
                     key={i}
                     variant="outline"
-                    className="text-sm h-auto py-3 px-4 text-left justify-start border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-luxury"
+                    className="text-sm h-auto py-4 px-5 text-left justify-start border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-xl"
                     onClick={() => {
                       setInput(prompt);
                       inputRef.current?.focus();
@@ -79,8 +89,8 @@ export function ConciergeChat() {
               )}
             >
               {msg.role === 'assistant' && (
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg overflow-hidden">
-                  <img src={logo} alt="AI" className="w-8 h-8 object-contain" />
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl overflow-hidden border border-primary/20 bg-card/50">
+                  <img src={logo} alt="AI" className="w-9 h-9 object-contain p-1" />
                 </div>
               )}
               <div
@@ -88,7 +98,7 @@ export function ConciergeChat() {
                   "max-w-[80%] rounded-xl px-4 py-3",
                   msg.role === 'user'
                     ? 'bg-primary text-primary-foreground'
-                    : 'bg-card border border-border/50'
+                    : 'bg-card/80 border border-primary/10'
                 )}
               >
                 <p className="whitespace-pre-wrap text-sm leading-relaxed">
@@ -96,7 +106,7 @@ export function ConciergeChat() {
                 </p>
               </div>
               {msg.role === 'user' && (
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-secondary flex items-center justify-center">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-secondary/50 border border-border/50 flex items-center justify-center">
                   <User className="w-4 h-4 text-muted-foreground" />
                 </div>
               )}
@@ -105,38 +115,39 @@ export function ConciergeChat() {
 
           {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 rounded-lg overflow-hidden">
-                <img src={logo} alt="AI" className="w-8 h-8 object-contain opacity-70" />
+              <div className="flex-shrink-0 w-9 h-9 rounded-xl overflow-hidden border border-primary/20 bg-card/50">
+                <img src={logo} alt="AI" className="w-9 h-9 object-contain p-1 opacity-70" />
               </div>
-              <div className="bg-card border border-border/50 rounded-xl px-4 py-3">
+              <div className="bg-card/80 border border-primary/10 rounded-xl px-4 py-3">
                 <div className="flex gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-pulse" />
-                  <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             </div>
           )}
 
           {error && (
-            <div className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm text-center border border-destructive/20">
+            <div className="bg-destructive/10 text-destructive rounded-xl p-4 text-sm text-center border border-destructive/20">
               {error}
             </div>
           )}
         </div>
       </ScrollArea>
 
-      {/* Input Area */}
-      <div className="border-t border-border/50 p-4 bg-card/50 backdrop-blur">
+      {/* Input Area with luxury styling */}
+      <div className="relative border-t border-primary/10 p-4 bg-card/50 backdrop-blur">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         <div className="max-w-2xl mx-auto">
-          <form onSubmit={handleSubmit} className="flex gap-2">
+          <form onSubmit={handleSubmit} className="flex gap-3">
             {messages.length > 0 && (
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
                 onClick={clearMessages}
-                className="flex-shrink-0 text-muted-foreground hover:text-foreground"
+                className="flex-shrink-0 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-xl"
                 title="Start new conversation"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -147,13 +158,13 @@ export function ConciergeChat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Tell me what you need..."
-              className="flex-1 bg-background border-border/50 focus:border-primary/50"
+              className="flex-1 h-12 bg-background/50 border-primary/20 focus:border-primary/50 rounded-xl"
               disabled={isLoading}
             />
             <Button 
               type="submit" 
               disabled={!input.trim() || isLoading}
-              className="flex-shrink-0"
+              className="flex-shrink-0 h-12 px-5 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
             >
               <Send className="w-4 h-4" />
             </Button>

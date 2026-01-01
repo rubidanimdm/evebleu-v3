@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BottomNav } from '@/components/BottomNav';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,6 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Edit2, Trash2, Users, DollarSign, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
+import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 
 interface Supplier {
   id: string;
@@ -192,64 +192,74 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      <header className="bg-card/80 backdrop-blur border-b border-border/50 px-4 py-4 sticky top-0 z-40">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-lg font-medium text-foreground">Admin Panel</h1>
-          <p className="text-sm text-muted-foreground">Manage suppliers and bookings</p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background pb-24 relative">
+      <GoldParticles count={10} />
+      
+      <LargePageHeader 
+        title="Admin Panel"
+        subtitle="Manage suppliers and bookings"
+      />
 
       <main className="max-w-4xl mx-auto p-4 space-y-6">
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <Card className="p-4 text-center">
-            <p className="text-2xl font-bold text-primary">{stats.activeSuppliers}</p>
-            <p className="text-xs text-muted-foreground">Active Suppliers</p>
-          </Card>
-          <Card className="p-4 text-center">
-            <p className="text-2xl font-bold text-warning">{stats.pendingBookings}</p>
-            <p className="text-xs text-muted-foreground">Pending Bookings</p>
-          </Card>
-          <Card className="p-4 text-center">
-            <p className="text-2xl font-bold text-success">${stats.totalRevenue.toLocaleString()}</p>
-            <p className="text-xs text-muted-foreground">Total Revenue</p>
-          </Card>
-          <Card className="p-4 text-center">
-            <p className="text-2xl font-bold text-foreground">{bookings.length}</p>
-            <p className="text-xs text-muted-foreground">Total Bookings</p>
-          </Card>
+          <LuxuryCard className="p-5 text-center">
+            <p className="text-3xl font-medium text-primary">{stats.activeSuppliers}</p>
+            <p className="text-xs text-muted-foreground mt-1">Active Suppliers</p>
+          </LuxuryCard>
+          <LuxuryCard className="p-5 text-center">
+            <p className="text-3xl font-medium text-warning">{stats.pendingBookings}</p>
+            <p className="text-xs text-muted-foreground mt-1">Pending Bookings</p>
+          </LuxuryCard>
+          <LuxuryCard className="p-5 text-center">
+            <p className="text-3xl font-medium text-success">${stats.totalRevenue.toLocaleString()}</p>
+            <p className="text-xs text-muted-foreground mt-1">Total Revenue</p>
+          </LuxuryCard>
+          <LuxuryCard className="p-5 text-center">
+            <p className="text-3xl font-medium text-foreground">{bookings.length}</p>
+            <p className="text-xs text-muted-foreground mt-1">Total Bookings</p>
+          </LuxuryCard>
         </div>
 
-        <Tabs defaultValue="suppliers">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="suppliers">Suppliers</TabsTrigger>
-            <TabsTrigger value="bookings">Bookings</TabsTrigger>
+        <Tabs defaultValue="suppliers" className="space-y-4">
+          <TabsList className="grid w-full grid-cols-2 bg-card/50 border border-primary/10 rounded-xl p-1">
+            <TabsTrigger value="suppliers" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
+              Suppliers
+            </TabsTrigger>
+            <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
+              Bookings
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="suppliers" className="space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Suppliers ({suppliers.length})</h2>
+              <h2 className="text-lg font-medium text-primary">Suppliers ({suppliers.length})</h2>
               <Dialog open={isDialogOpen} onOpenChange={(open) => { setIsDialogOpen(open); if (!open) resetForm(); }}>
                 <DialogTrigger asChild>
-                  <Button size="sm" className="gap-2">
+                  <Button size="sm" className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl">
                     <Plus className="w-4 h-4" /> Add Supplier
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-h-[90vh] overflow-y-auto">
+                <DialogContent className="max-h-[90vh] overflow-y-auto bg-card border-primary/10">
                   <DialogHeader>
-                    <DialogTitle>{editingSupplier ? 'Edit Supplier' : 'Add Supplier'}</DialogTitle>
+                    <DialogTitle className="text-primary">{editingSupplier ? 'Edit Supplier' : 'Add Supplier'}</DialogTitle>
                   </DialogHeader>
-                  <div className="space-y-4">
+                  <div className="space-y-4 pt-4">
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-2">
-                        <Label>Name *</Label>
-                        <Input value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                        <Label className="text-muted-foreground">Name *</Label>
+                        <Input 
+                          value={formData.name} 
+                          onChange={e => setFormData({ ...formData, name: e.target.value })} 
+                          className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                        />
                       </div>
                       <div className="space-y-2">
-                        <Label>Category *</Label>
+                        <Label className="text-muted-foreground">Category *</Label>
                         <Select value={formData.category} onValueChange={v => setFormData({ ...formData, category: v })}>
-                          <SelectTrigger><SelectValue /></SelectTrigger>
+                          <SelectTrigger className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg">
+                            <SelectValue />
+                          </SelectTrigger>
                           <SelectContent>
                             {categories.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                           </SelectContent>
@@ -257,56 +267,100 @@ export default function AdminPage() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label>Description</Label>
-                      <Textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                      <Label className="text-muted-foreground">Description</Label>
+                      <Textarea 
+                        value={formData.description} 
+                        onChange={e => setFormData({ ...formData, description: e.target.value })} 
+                        className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-2">
-                        <Label>Location</Label>
-                        <Input value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} />
+                        <Label className="text-muted-foreground">Location</Label>
+                        <Input 
+                          value={formData.location} 
+                          onChange={e => setFormData({ ...formData, location: e.target.value })} 
+                          className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                        />
                       </div>
                       <div className="space-y-2">
-                        <Label>Price Range</Label>
-                        <Input placeholder="$$$$" value={formData.price_range} onChange={e => setFormData({ ...formData, price_range: e.target.value })} />
+                        <Label className="text-muted-foreground">Price Range</Label>
+                        <Input 
+                          placeholder="$$$$" 
+                          value={formData.price_range} 
+                          onChange={e => setFormData({ ...formData, price_range: e.target.value })} 
+                          className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                        />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-2">
-                        <Label>Min Spend ($)</Label>
-                        <Input type="number" value={formData.min_spend} onChange={e => setFormData({ ...formData, min_spend: e.target.value })} />
+                        <Label className="text-muted-foreground">Min Spend ($)</Label>
+                        <Input 
+                          type="number" 
+                          value={formData.min_spend} 
+                          onChange={e => setFormData({ ...formData, min_spend: e.target.value })} 
+                          className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                        />
                       </div>
                       <div className="space-y-2">
-                        <Label>Commission %</Label>
-                        <Input type="number" value={formData.commission_percent} onChange={e => setFormData({ ...formData, commission_percent: e.target.value })} />
+                        <Label className="text-muted-foreground">Commission %</Label>
+                        <Input 
+                          type="number" 
+                          value={formData.commission_percent} 
+                          onChange={e => setFormData({ ...formData, commission_percent: e.target.value })} 
+                          className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label>Image URL</Label>
-                      <Input value={formData.image_url} onChange={e => setFormData({ ...formData, image_url: e.target.value })} />
+                      <Label className="text-muted-foreground">Image URL</Label>
+                      <Input 
+                        value={formData.image_url} 
+                        onChange={e => setFormData({ ...formData, image_url: e.target.value })} 
+                        className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-2">
-                        <Label>Phone</Label>
-                        <Input value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                        <Label className="text-muted-foreground">Phone</Label>
+                        <Input 
+                          value={formData.phone} 
+                          onChange={e => setFormData({ ...formData, phone: e.target.value })} 
+                          className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                        />
                       </div>
                       <div className="space-y-2">
-                        <Label>WhatsApp Link</Label>
-                        <Input value={formData.whatsapp_link} onChange={e => setFormData({ ...formData, whatsapp_link: e.target.value })} />
+                        <Label className="text-muted-foreground">WhatsApp Link</Label>
+                        <Input 
+                          value={formData.whatsapp_link} 
+                          onChange={e => setFormData({ ...formData, whatsapp_link: e.target.value })} 
+                          className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label>Tags (comma separated)</Label>
-                      <Input placeholder="romantic, vip, group" value={formData.tags} onChange={e => setFormData({ ...formData, tags: e.target.value })} />
+                      <Label className="text-muted-foreground">Tags (comma separated)</Label>
+                      <Input 
+                        placeholder="romantic, vip, group" 
+                        value={formData.tags} 
+                        onChange={e => setFormData({ ...formData, tags: e.target.value })} 
+                        className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                      />
                     </div>
                     <div className="space-y-2">
-                      <Label>Availability Notes</Label>
-                      <Textarea value={formData.availability_notes} onChange={e => setFormData({ ...formData, availability_notes: e.target.value })} />
+                      <Label className="text-muted-foreground">Availability Notes</Label>
+                      <Textarea 
+                        value={formData.availability_notes} 
+                        onChange={e => setFormData({ ...formData, availability_notes: e.target.value })} 
+                        className="bg-background/50 border-primary/20 focus:border-primary/50 rounded-lg"
+                      />
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3 pt-2">
                       <Switch checked={formData.is_active} onCheckedChange={c => setFormData({ ...formData, is_active: c })} />
-                      <Label>Active</Label>
+                      <Label className="text-foreground">Active</Label>
                     </div>
-                    <Button onClick={handleSaveSupplier} className="w-full">
+                    <Button onClick={handleSaveSupplier} className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl">
                       {editingSupplier ? 'Update Supplier' : 'Create Supplier'}
                     </Button>
                   </div>
@@ -315,19 +369,25 @@ export default function AdminPage() {
             </div>
 
             {loading ? (
-              <p className="text-muted-foreground">Loading...</p>
+              <div className="text-center py-12">
+                <div className="flex gap-1.5 justify-center">
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
             ) : (
               <div className="space-y-3">
                 {suppliers.map(supplier => (
-                  <Card key={supplier.id} className="p-4">
+                  <LuxuryCard key={supplier.id} className="p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold">{supplier.name}</h3>
-                          <Badge variant={supplier.is_active ? 'default' : 'secondary'}>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-medium text-foreground">{supplier.name}</h3>
+                          <Badge className={`${supplier.is_active ? 'bg-primary/10 text-primary border-primary/20' : 'bg-muted text-muted-foreground border-border'} border`}>
                             {supplier.is_active ? 'Active' : 'Inactive'}
                           </Badge>
-                          <Badge variant="outline">{supplier.category}</Badge>
+                          <Badge variant="outline" className="border-primary/20 text-primary/80">{supplier.category}</Badge>
                         </div>
                         <p className="text-sm text-muted-foreground mt-1">{supplier.location}</p>
                         <div className="flex gap-4 mt-2 text-sm text-muted-foreground">
@@ -336,57 +396,74 @@ export default function AdminPage() {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => openEdit(supplier)}>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => openEdit(supplier)}
+                          className="rounded-xl hover:bg-primary/10 hover:text-primary"
+                        >
                           <Edit2 className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDeleteSupplier(supplier.id)}>
-                          <Trash2 className="w-4 h-4 text-destructive" />
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => handleDeleteSupplier(supplier.id)}
+                          className="rounded-xl hover:bg-destructive/10 hover:text-destructive"
+                        >
+                          <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                     </div>
-                  </Card>
+                  </LuxuryCard>
                 ))}
               </div>
             )}
           </TabsContent>
 
           <TabsContent value="bookings" className="space-y-4">
-            <h2 className="text-lg font-semibold">Recent Bookings</h2>
+            <h2 className="text-lg font-medium text-primary">Recent Bookings</h2>
             {loading ? (
-              <p className="text-muted-foreground">Loading...</p>
+              <div className="text-center py-12">
+                <div className="flex gap-1.5 justify-center">
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
             ) : bookings.length === 0 ? (
-              <p className="text-muted-foreground">No bookings yet.</p>
+              <p className="text-muted-foreground text-center py-12">No bookings yet.</p>
             ) : (
               <div className="space-y-3">
                 {bookings.map(booking => (
-                  <Card key={booking.id} className="p-4">
+                  <LuxuryCard key={booking.id} className="p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold">{booking.booking_number}</h3>
-                          <Badge variant={
-                            booking.status === 'confirmed' ? 'default' :
-                            booking.status === 'pending' ? 'secondary' :
-                            'outline'
-                          }>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-medium text-foreground">{booking.booking_number}</h3>
+                          <Badge className={`border ${
+                            booking.status === 'confirmed' ? 'bg-primary/10 text-primary border-primary/20' :
+                            booking.status === 'pending' ? 'bg-warning/10 text-warning border-warning/20' :
+                            booking.status === 'completed' ? 'bg-success/10 text-success border-success/20' :
+                            'bg-muted text-muted-foreground border-border'
+                          }`}>
                             {booking.status}
                           </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground mt-1">
                           {booking.supplier?.name} • {booking.user?.full_name}
                         </p>
                         <div className="flex gap-4 mt-2 text-sm text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-primary/60" />
                             {format(new Date(booking.booking_date), 'MMM d, yyyy')}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <Users className="w-3 h-3" />
+                          <span className="flex items-center gap-1.5">
+                            <Users className="w-3.5 h-3.5 text-primary/60" />
                             {booking.party_size}
                           </span>
                           {booking.total_amount && (
-                            <span className="flex items-center gap-1">
-                              <DollarSign className="w-3 h-3" />
+                            <span className="flex items-center gap-1.5">
+                              <DollarSign className="w-3.5 h-3.5 text-primary/60" />
                               ${booking.total_amount}
                             </span>
                           )}
@@ -395,22 +472,36 @@ export default function AdminPage() {
                       <div className="flex gap-2">
                         {booking.status === 'pending' && (
                           <>
-                            <Button size="sm" onClick={() => updateBookingStatus(booking.id, 'confirmed')}>
+                            <Button 
+                              size="sm" 
+                              onClick={() => updateBookingStatus(booking.id, 'confirmed')}
+                              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
+                            >
                               Confirm
                             </Button>
-                            <Button size="sm" variant="outline" onClick={() => updateBookingStatus(booking.id, 'cancelled')}>
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              onClick={() => updateBookingStatus(booking.id, 'cancelled')}
+                              className="border-destructive/30 text-destructive hover:bg-destructive/10 rounded-xl"
+                            >
                               Cancel
                             </Button>
                           </>
                         )}
                         {booking.status === 'confirmed' && (
-                          <Button size="sm" variant="outline" onClick={() => updateBookingStatus(booking.id, 'completed')}>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            onClick={() => updateBookingStatus(booking.id, 'completed')}
+                            className="border-success/30 text-success hover:bg-success/10 rounded-xl"
+                          >
                             Complete
                           </Button>
                         )}
                       </div>
                     </div>
-                  </Card>
+                  </LuxuryCard>
                 ))}
               </div>
             )}

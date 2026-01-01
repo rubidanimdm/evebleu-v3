@@ -33,7 +33,10 @@ export function BottomNav() {
   const allItems = isAdmin ? [...navItems, ...adminItems] : navItems;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur border-t border-border/50 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-primary/10 z-50">
+      {/* Gold accent line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      
       <div className="max-w-2xl mx-auto flex items-center justify-around py-2">
         {allItems.map((item) => {
           const isActive = location.pathname === item.path;
@@ -44,11 +47,13 @@ export function BottomNav() {
               size="sm"
               onClick={() => navigate(item.path)}
               className={cn(
-                "flex flex-col gap-1 h-auto py-2 px-3 min-w-[56px] transition-luxury",
-                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                "flex flex-col gap-1 h-auto py-2.5 px-3 min-w-[56px] rounded-xl transition-all duration-300",
+                isActive 
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-primary hover:bg-primary/5"
               )}
             >
-              <item.icon className="w-5 h-5" />
+              <item.icon className="w-5 h-5" strokeWidth={1.5} />
               <span className="text-[10px] font-medium">{item.label}</span>
             </Button>
           );
@@ -57,9 +62,9 @@ export function BottomNav() {
           variant="ghost"
           size="sm"
           onClick={handleLogout}
-          className="flex flex-col gap-1 h-auto py-2 px-3 min-w-[56px] text-muted-foreground hover:text-foreground transition-luxury"
+          className="flex flex-col gap-1 h-auto py-2.5 px-3 min-w-[56px] text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-300"
         >
-          <LogOut className="w-5 h-5" />
+          <LogOut className="w-5 h-5" strokeWidth={1.5} />
           <span className="text-[10px] font-medium">Exit</span>
         </Button>
       </div>
