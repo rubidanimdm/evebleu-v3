@@ -1,136 +1,114 @@
 import { useNavigate } from 'react-router-dom';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import { Utensils, Car, Building, Plane, Wine, Ship, Headphones } from 'lucide-react';
-import heroImage from '@/assets/ai-mydubai-hero.jpeg';
+import heroBackground from '@/assets/hero-background.jpeg';
 
-// Service category button component
-const ServiceButton = ({ 
-  icon: Icon, 
-  label, 
-  onClick 
-}: { 
-  icon: React.ElementType; 
+interface ServiceButton {
   label: string;
-  onClick: () => void;
-}) => (
-  <button 
-    onClick={onClick}
-    className="group flex flex-col items-center gap-2 p-2 transition-all duration-300"
-  >
-    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full border border-primary/40 flex items-center justify-center bg-card/30 backdrop-blur-sm group-hover:border-primary group-hover:bg-primary/10 transition-all duration-300">
-      <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" strokeWidth={1.5} />
-    </div>
-    <span className="text-primary text-[10px] sm:text-xs md:text-sm font-medium tracking-wide text-center leading-tight max-w-[70px] sm:max-w-[80px]">
-      {label}
-    </span>
-  </button>
-);
+  route: string;
+  category?: string;
+  intent?: string;
+}
 
-// Crown logo
-const CrownLogo = () => (
-  <svg viewBox="0 0 60 40" className="w-10 h-6 text-primary">
-    <path 
-      d="M5,35 L10,15 L20,25 L30,10 L40,25 L50,15 L55,35 Z" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="1.5"
-    />
-    <circle cx="10" cy="12" r="3" fill="currentColor" opacity="0.8" />
-    <circle cx="30" cy="7" r="3" fill="currentColor" opacity="0.8" />
-    <circle cx="50" cy="12" r="3" fill="currentColor" opacity="0.8" />
-  </svg>
-);
+const services: ServiceButton[] = [
+  { label: 'Book Me a Table', route: '/auth', category: 'DINING' },
+  { label: 'Book Me a Car', route: '/auth', category: 'TRANSPORT' },
+  { label: 'Book Me a Hotel', route: '/auth', category: 'HOTEL' },
+  { label: 'Book Me a Flight', route: '/auth', category: 'FLIGHT' },
+  { label: 'Book Me a Club', route: '/auth', category: 'CLUB' },
+  { label: 'Book an Experience', route: '/auth', category: 'EXPERIENCE' },
+  { label: 'Handle It For Me', route: '/auth', intent: 'CONCIERGE' },
+];
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
-  const handleServiceClick = (category: string) => {
-    if (category === 'CONCIERGE') {
-      navigate('/auth');
+  const handleServiceClick = (service: ServiceButton) => {
+    if (service.category) {
+      navigate(`/auth?redirect=/explore?category=${service.category}`);
+    } else if (service.intent) {
+      navigate(`/auth?redirect=/concierge`);
     } else {
-      navigate(`/auth?redirect=/explore?category=${category}`);
+      navigate('/auth');
     }
   };
 
-  const services = [
-    { icon: Utensils, label: 'Book Me a Table', category: 'DINING' },
-    { icon: Car, label: 'Book Me a Car', category: 'TRANSPORT' },
-    { icon: Building, label: 'Book Me a Hotel', category: 'HOTEL' },
-    { icon: Plane, label: 'Book Me a Flight', category: 'FLIGHT' },
-    { icon: Wine, label: 'Book Me a Club', category: 'CLUB' },
-    { icon: Ship, label: 'Book an Experience', category: 'EXPERIENCE' },
-    { icon: Headphones, label: 'Handle It For Me', category: 'CONCIERGE' },
-  ];
-
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-hidden">
+    <div 
+      className="fixed inset-0 w-full h-full overflow-hidden"
+      style={{
+        backgroundImage: `url(${heroBackground})`,
+        backgroundSize: 'contain',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#0a0a0a',
+      }}
+    >
       {/* Language Switcher */}
       <div className="absolute top-4 right-4 z-20">
         <LanguageSwitcher variant="full" />
       </div>
 
-      {/* Full-screen Hero with Image */}
-      <div className="relative min-h-screen flex flex-col">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img 
-            src={heroImage} 
-            alt="AI My Dubai - Luxury Concierge"
-            className="w-full h-full object-cover object-center"
-          />
-          {/* Gradient overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/80" />
-        </div>
-
-        {/* Content positioned over the image */}
-        <div className="relative z-10 flex-1 flex flex-col justify-end pb-8 px-4">
-          {/* Service Buttons Grid - positioned at bottom */}
-          <div className="max-w-sm sm:max-w-md mx-auto w-full px-2">
-            {/* First row - 4 buttons */}
-            <div className="grid grid-cols-4 gap-0 mb-1">
+      {/* Button overlays - positioned to match buttons in background image */}
+      <div className="absolute inset-0 flex flex-col items-center justify-end">
+        {/* 
+          Positioning calibrated for the reference image:
+          - Desktop (1440px+): buttons at ~60% from top
+          - Tablet: adjusted for portrait orientation
+          - Mobile: stacked layout with maintained hierarchy
+        */}
+        <div 
+          className="w-full flex justify-center"
+          style={{ 
+            paddingBottom: 'clamp(8%, 12vh, 15%)',
+          }}
+        >
+          <div className="w-[85%] max-w-[550px] md:max-w-[600px] lg:max-w-[650px]">
+            {/* First Row - 4 buttons */}
+            <div className="grid grid-cols-4 gap-[3%] mb-[3%]">
               {services.slice(0, 4).map((service) => (
-                <ServiceButton
-                  key={service.category}
-                  icon={service.icon}
+                <ServiceButtonOverlay
+                  key={service.label}
                   label={service.label}
-                  onClick={() => handleServiceClick(service.category)}
+                  onClick={() => handleServiceClick(service)}
                 />
               ))}
             </div>
             
-            {/* Second row - 3 buttons centered */}
-            <div className="flex justify-center gap-0">
-              {services.slice(4, 7).map((service) => (
-                <ServiceButton
-                  key={service.category}
-                  icon={service.icon}
+            {/* Second Row - 3 buttons centered */}
+            <div className="grid grid-cols-3 gap-[3%] w-[75%] mx-auto">
+              {services.slice(4).map((service) => (
+                <ServiceButtonOverlay
+                  key={service.label}
                   label={service.label}
-                  onClick={() => handleServiceClick(service.category)}
+                  onClick={() => handleServiceClick(service)}
                 />
               ))}
-            </div>
-          </div>
-
-          {/* Crown + Footer Links */}
-          <div className="mt-8 flex flex-col items-center gap-4">
-            <CrownLogo />
-            <div className="flex items-center gap-8 text-xs text-muted-foreground/60">
-              <button 
-                onClick={() => navigate('/auth')}
-                className="hover:text-primary transition-colors"
-              >
-                Contact
-              </button>
-              <button 
-                onClick={() => navigate('/auth')}
-                className="hover:text-primary transition-colors"
-              >
-                Privacy
-              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function ServiceButtonOverlay({ 
+  label, 
+  onClick 
+}: { 
+  label: string; 
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="
+        aspect-[1/1.15] rounded-xl cursor-pointer
+        transition-all duration-300 ease-out
+        hover:bg-[hsl(45,80%,50%)]/8 hover:shadow-[0_0_20px_rgba(212,175,55,0.15)]
+        active:bg-[hsl(45,80%,50%)]/12 active:shadow-[0_0_25px_rgba(212,175,55,0.25)]
+        focus:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(45,80%,50%)]/30
+      "
+      aria-label={label}
+    />
   );
 }
