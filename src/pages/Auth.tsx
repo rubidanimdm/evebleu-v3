@@ -25,7 +25,6 @@ export default function Auth() {
 
     try {
       loginSchema.parse({ email, password });
-
       setLoading(true);
 
       const { error } = await supabase.auth.signInWithPassword({
@@ -43,8 +42,8 @@ export default function Auth() {
       }
 
       toast({
-        title: 'Welcome back!',
-        description: 'You have successfully signed in.',
+        title: 'Welcome back',
+        description: 'Signed in successfully.',
       });
 
       navigate('/');
@@ -63,21 +62,25 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-primary">MYAI</CardTitle>
-          <CardDescription>Smart Assistant for Building Managers</CardDescription>
+      <Card className="w-full max-w-md border-border/50 shadow-xl">
+        <CardHeader className="text-center pb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary to-gold-dark mx-auto mb-4">
+            <span className="text-primary-foreground font-bold text-2xl font-serif">L</span>
+          </div>
+          <CardTitle className="text-3xl font-bold text-foreground font-serif tracking-wide">LUXE</CardTitle>
+          <CardDescription className="text-base">AI Concierge for Luxury Experiences</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="your@email.com"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="h-12"
                 required
               />
             </div>
@@ -90,17 +93,18 @@ export default function Auth() {
                 placeholder="Your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="h-12"
                 required
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full h-12 text-base" disabled={loading}>
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
 
-            <div className="text-center">
-              <Button variant="link" onClick={() => navigate('/onboarding')}>
-                Don't have an account? Sign up
+            <div className="text-center pt-2">
+              <Button variant="link" onClick={() => navigate('/onboarding')} className="text-muted-foreground">
+                Don't have an account? Join LUXE
               </Button>
             </div>
           </form>
