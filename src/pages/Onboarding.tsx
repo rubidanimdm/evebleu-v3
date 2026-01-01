@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Building2, UserCircle2 } from 'lucide-react';
+import { Sparkles, Crown } from 'lucide-react';
 import { z } from 'zod';
 
 const signupSchema = z.object({
@@ -14,8 +14,6 @@ const signupSchema = z.object({
   password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
   fullName: z.string().min(2, { message: 'Please enter your full name' }),
   phone: z.string().min(10, { message: 'Please enter a valid phone number' }),
-  buildingName: z.string().min(1, { message: 'Please enter your building name' }),
-  apartmentUnit: z.string().optional(),
 });
 
 export default function Onboarding() {
@@ -26,8 +24,6 @@ export default function Onboarding() {
     password: '',
     fullName: '',
     phone: '',
-    buildingName: '',
-    apartmentUnit: '',
   });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -42,9 +38,7 @@ export default function Onboarding() {
     e.preventDefault();
     
     try {
-      // Validate form data
       signupSchema.parse(formData);
-
       setLoading(true);
 
       const { error } = await supabase.auth.signUp({
@@ -54,8 +48,7 @@ export default function Onboarding() {
           data: {
             full_name: formData.fullName,
             phone: formData.phone,
-            building_name: formData.buildingName,
-            apartment_unit: formData.apartmentUnit,
+            building_name: 'LUXE Member',
             role: role,
           },
           emailRedirectTo: `${window.location.origin}/`,
@@ -71,7 +64,7 @@ export default function Onboarding() {
           });
         } else {
           toast({
-            title: 'Signup failed',
+            title: 'Registration failed',
             description: error.message,
             variant: 'destructive',
           });
@@ -80,8 +73,8 @@ export default function Onboarding() {
       }
 
       toast({
-        title: 'Welcome to MYAI!',
-        description: 'Your account has been created successfully.',
+        title: 'Welcome to LUXE',
+        description: 'Your concierge account has been created.',
       });
 
       navigate('/');
@@ -102,46 +95,53 @@ export default function Onboarding() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8">
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold text-primary">MYAI</h1>
-            <p className="text-lg text-muted-foreground">
-              Smart Assistant for Building Managers
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Welcome! Let's get started by selecting your role.
+          {/* Logo */}
+          <div className="text-center space-y-4">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-gold-dark">
+              <span className="text-primary-foreground font-bold text-3xl font-serif">L</span>
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-foreground font-serif tracking-wide">LUXE</h1>
+              <p className="text-lg text-muted-foreground mt-2">
+                Your Personal AI Concierge
+              </p>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-xs mx-auto">
+              Discover and book the most exclusive experiences, curated just for you.
             </p>
           </div>
 
+          {/* Role Selection */}
           <div className="space-y-4">
             <Card
-              className="cursor-pointer hover:border-primary transition-colors"
+              className="cursor-pointer hover:border-primary transition-all hover:shadow-lg group"
               onClick={() => handleRoleSelect('resident')}
             >
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <UserCircle2 className="h-8 w-8 text-primary" />
+                  <div className="p-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl group-hover:from-primary/30 transition-colors">
+                    <Sparkles className="h-8 w-8 text-primary" />
                   </div>
                   <div>
-                    <CardTitle>I am a Resident</CardTitle>
-                    <CardDescription>Report issues and track requests</CardDescription>
+                    <CardTitle className="text-lg">Join as a Member</CardTitle>
+                    <CardDescription>Access exclusive experiences and bookings</CardDescription>
                   </div>
                 </div>
               </CardHeader>
             </Card>
 
             <Card
-              className="cursor-pointer hover:border-primary transition-colors"
+              className="cursor-pointer hover:border-primary transition-all hover:shadow-lg group"
               onClick={() => handleRoleSelect('manager')}
             >
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <Building2 className="h-8 w-8 text-primary" />
+                  <div className="p-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl group-hover:from-primary/30 transition-colors">
+                    <Crown className="h-8 w-8 text-primary" />
                   </div>
                   <div>
-                    <CardTitle>I am a Building Manager</CardTitle>
-                    <CardDescription>Manage tasks and residents</CardDescription>
+                    <CardTitle className="text-lg">Partner / Admin</CardTitle>
+                    <CardDescription>Manage suppliers and bookings</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -149,7 +149,7 @@ export default function Onboarding() {
           </div>
 
           <div className="text-center">
-            <Button variant="link" onClick={() => navigate('/auth')}>
+            <Button variant="link" onClick={() => navigate('/auth')} className="text-muted-foreground">
               Already have an account? Sign in
             </Button>
           </div>
@@ -160,11 +160,14 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Create Your Account</CardTitle>
+      <Card className="w-full max-w-md border-border/50 shadow-xl">
+        <CardHeader className="text-center pb-2">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary to-gold-dark mx-auto mb-4">
+            <span className="text-primary-foreground font-bold text-xl font-serif">L</span>
+          </div>
+          <CardTitle className="text-2xl font-serif">Create Your Account</CardTitle>
           <CardDescription>
-            {role === 'resident' ? 'Resident' : 'Building Manager'} Registration
+            {role === 'resident' ? 'Member Registration' : 'Partner Registration'}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -173,9 +176,10 @@ export default function Onboarding() {
               <Label htmlFor="fullName">Full Name</Label>
               <Input
                 id="fullName"
-                placeholder="John Doe"
+                placeholder="Your full name"
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                className="h-12"
                 required
               />
             </div>
@@ -185,9 +189,10 @@ export default function Onboarding() {
               <Input
                 id="phone"
                 type="tel"
-                placeholder="+1234567890"
+                placeholder="+1 (555) 000-0000"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="h-12"
                 required
               />
             </div>
@@ -197,9 +202,10 @@ export default function Onboarding() {
               <Input
                 id="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder="you@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="h-12"
                 required
               />
             </div>
@@ -212,45 +218,22 @@ export default function Onboarding() {
                 placeholder="Min. 6 characters"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                className="h-12"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="buildingName">Building Name</Label>
-              <Input
-                id="buildingName"
-                placeholder="Sunshine Apartments"
-                value={formData.buildingName}
-                onChange={(e) => setFormData({ ...formData, buildingName: e.target.value })}
-                required
-              />
-            </div>
-
-            {role === 'resident' && (
-              <div className="space-y-2">
-                <Label htmlFor="apartmentUnit">Apartment/Unit Number</Label>
-                <Input
-                  id="apartmentUnit"
-                  placeholder="A-101"
-                  value={formData.apartmentUnit}
-                  onChange={(e) => setFormData({ ...formData, apartmentUnit: e.target.value })}
-                  required
-                />
-              </div>
-            )}
-
-            <div className="flex gap-2">
+            <div className="flex gap-3 pt-2">
               <Button
                 type="button"
                 variant="outline"
-                className="w-full"
+                className="flex-1 h-12"
                 onClick={() => setStep(1)}
               >
                 Back
               </Button>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? 'Creating Account...' : 'Create Account'}
+              <Button type="submit" className="flex-1 h-12" disabled={loading}>
+                {loading ? 'Creating...' : 'Get Started'}
               </Button>
             </div>
           </form>
