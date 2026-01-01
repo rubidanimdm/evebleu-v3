@@ -12,6 +12,7 @@ import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
 import ConciergePage from "./pages/ConciergePage";
 import ExplorePage from "./pages/ExplorePage";
+import ItemDetailsPage from "./pages/ItemDetailsPage";
 import MyPlansPage from "./pages/MyPlansPage";
 import SupportPage from "./pages/SupportPage";
 import AdminPage from "./pages/AdminPage";
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
               <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
               <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
+              <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
               <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
               <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
               <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />

@@ -4,48 +4,40 @@ import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { UtensilsCrossed, Wine, Car, Ship, Calendar, MapPin } from 'lucide-react';
+import { UtensilsCrossed, Plane, Car, Hotel, Music, Sparkles } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
-import { SERVICE_CATEGORIES, CATEGORY_TO_SUPPLIER_MAP } from '@/lib/constants';
 
 const categoryIcons: Record<string, React.ElementType> = {
-  restaurant: UtensilsCrossed,
-  nightlife: Wine,
-  transport: Car,
-  yacht: Ship,
-  event: Calendar,
+  DINING: UtensilsCrossed,
+  TRANSPORT: Car,
+  HOTEL: Hotel,
+  FLIGHT: Plane,
+  CLUB: Music,
+  EXPERIENCE: Sparkles,
 };
 
 const categoryLabels: Record<string, string> = {
-  restaurant: 'Dining',
-  nightlife: 'Nightlife',
-  transport: 'Transport',
-  yacht: 'Yachts',
-  event: 'Events',
+  DINING: 'Dining',
+  TRANSPORT: 'Transport',
+  HOTEL: 'Hotels',
+  FLIGHT: 'Flights',
+  CLUB: 'Nightlife',
+  EXPERIENCE: 'Experiences',
 };
 
-// Map service categories to display labels
-const serviceCategoryLabels: Record<string, string> = {
-  [SERVICE_CATEGORIES.DINING]: 'Dining',
-  [SERVICE_CATEGORIES.TRANSPORT]: 'Transport',
-  [SERVICE_CATEGORIES.CLUB]: 'Nightlife',
-  [SERVICE_CATEGORIES.EXPERIENCE]: 'Experiences',
-};
-
-interface Supplier {
+interface CatalogItem {
   id: string;
-  name: string;
   category: string;
-  description: string | null;
-  location: string | null;
-  min_spend: number | null;
-  price_range: string | null;
+  title: string;
   image_url: string | null;
-  tags: string[] | null;
+  price: number;
+  currency: string;
+  pricing_unit: string;
+  short_description: string | null;
 }
 
 export default function ExplorePage() {
-  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [items, setItems] = useState<CatalogItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -54,29 +46,30 @@ export default function ExplorePage() {
   // Read category from URL params on mount
   useEffect(() => {
     const categoryParam = searchParams.get('category');
-    if (categoryParam && CATEGORY_TO_SUPPLIER_MAP[categoryParam]) {
-      setSelectedCategory(CATEGORY_TO_SUPPLIER_MAP[categoryParam]);
+    if (categoryParam && categoryLabels[categoryParam]) {
+      setSelectedCategory(categoryParam);
     }
   }, [searchParams]);
 
   useEffect(() => {
-    async function fetchSuppliers() {
+    async function fetchItems() {
       const { data } = await supabase
-        .from('suppliers')
-        .select('id, name, category, description, location, min_spend, price_range, image_url, tags')
+        .from('catalog_items')
+        .select('id, category, title, image_url, price, currency, pricing_unit, short_description')
         .eq('is_active', true)
-        .order('name');
+        .order('category')
+        .order('sort_order');
       
-      setSuppliers(data || []);
+      setItems(data || []);
       setLoading(false);
     }
-    fetchSuppliers();
+    fetchItems();
   }, []);
 
   const categories = Object.keys(categoryLabels);
-  const filteredSuppliers = selectedCategory 
-    ? suppliers.filter(s => s.category === selectedCategory)
-    : suppliers;
+  const filteredItems = selectedCategory 
+    ? items.filter(i => i.category === selectedCategory)
+    : items;
 
   return (
     <div className="min-h-screen bg-background pb-24 relative">
@@ -137,12 +130,12 @@ export default function ExplorePage() {
               <span className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
             </div>
           </div>
-        ) : filteredSuppliers.length === 0 ? (
+        ) : filteredItems.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-muted-foreground mb-6">
               {selectedCategory 
-                ? `No ${categoryLabels[selectedCategory]} available.`
-                : 'No experiences available.'}
+                ? `No ${categoryLabels[selectedCategory]} available yet.`
+                : 'No items available yet.'}
             </p>
             <Button 
               onClick={() => navigate('/concierge')}
@@ -153,71 +146,58 @@ export default function ExplorePage() {
           </div>
         ) : (
           <div className="grid gap-4">
-            {filteredSuppliers.map(supplier => {
-              const Icon = categoryIcons[supplier.category] || Calendar;
+            {filteredItems.map(item => {
+              const Icon = categoryIcons[item.category] || Sparkles;
               return (
-                <LuxuryCard key={supplier.id} className="overflow-hidden">
-                  {supplier.image_url && (
+                <LuxuryCard 
+                  key={item.id} 
+                  className="overflow-hidden cursor-pointer hover:border-primary/30 transition-colors"
+                  onClick={() => navigate(`/item/${item.id}`)}
+                >
+                  {item.image_url && (
                     <div className="h-44 overflow-hidden">
                       <img 
-                        src={supplier.image_url} 
-                        alt={supplier.name}
-                        className="w-full h-full object-cover"
+                        src={item.image_url} 
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         loading="lazy"
                       />
                     </div>
                   )}
-                  <div className="p-5 space-y-4">
+                  <div className="p-5 space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h3 className="font-medium text-foreground text-lg">{supplier.name}</h3>
+                        <h3 className="font-medium text-foreground text-lg">{item.title}</h3>
                         <div className="flex items-center gap-2 text-sm text-primary/80 mt-1">
                           <Icon className="w-4 h-4" strokeWidth={1.5} />
-                          <span>{categoryLabels[supplier.category]}</span>
+                          <span>{categoryLabels[item.category]}</span>
                         </div>
                       </div>
-                      {supplier.price_range && (
-                        <Badge className="bg-primary/10 text-primary border border-primary/20 text-xs">
-                          {supplier.price_range}
-                        </Badge>
-                      )}
+                      <Badge className="bg-primary/10 text-primary border border-primary/20 text-xs whitespace-nowrap">
+                        {item.price.toLocaleString()} {item.currency}
+                      </Badge>
                     </div>
 
-                    {supplier.description && (
+                    {item.short_description && (
                       <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                        {supplier.description}
+                        {item.short_description}
                       </p>
                     )}
 
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      {supplier.location && (
-                        <span className="flex items-center gap-1.5">
-                          <MapPin className="w-3.5 h-3.5" />
-                          {supplier.location}
-                        </span>
-                      )}
-                      {supplier.min_spend && supplier.min_spend > 0 && (
-                        <span className="text-primary/80">From ${supplier.min_spend.toLocaleString()}</span>
-                      )}
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-xs text-muted-foreground">{item.pricing_unit}</span>
+                      <Button 
+                        variant="outline"
+                        size="sm"
+                        className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 rounded-lg h-8 px-4"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/item/${item.id}`);
+                        }}
+                      >
+                        View Details
+                      </Button>
                     </div>
-
-                    {supplier.tags && supplier.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {supplier.tags.slice(0, 3).map(tag => (
-                          <Badge key={tag} variant="secondary" className="text-[10px] px-2.5 py-1 bg-secondary/50">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-
-                    <Button 
-                      variant="outline"
-                      className="w-full border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 rounded-xl h-11"
-                      onClick={() => navigate(`/concierge?supplier=${encodeURIComponent(supplier.name)}`)}
-                    >
-                      Book with Concierge
-                    </Button>
                   </div>
                 </LuxuryCard>
               );
