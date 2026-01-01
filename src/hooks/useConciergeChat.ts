@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 type Message = { role: 'user' | 'assistant'; content: string };
@@ -9,6 +9,65 @@ export function useConciergeChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+
+  // Load or create conversation on mount
+  useEffect(() => {
+    const loadOrCreateConversation = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
+
+      // Check for existing active conversation from today
+      const today = new Date().toISOString().split('T')[0];
+      const { data: existingConvs } = await supabase
+        .from('conversations')
+        .select('id, created_at')
+        .eq('user_id', session.user.id)
+        .eq('is_archived', false)
+        .gte('created_at', `${today}T00:00:00`)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (existingConvs && existingConvs.length > 0) {
+        setConversationId(existingConvs[0].id);
+        // Load existing messages
+        const { data: existingMsgs } = await supabase
+          .from('chat_messages')
+          .select('role, content')
+          .eq('conversation_id', existingConvs[0].id)
+          .order('created_at', { ascending: true });
+        
+        if (existingMsgs) {
+          setMessages(existingMsgs.map(m => ({ 
+            role: m.role as 'user' | 'assistant', 
+            content: m.content 
+          })));
+        }
+      }
+    };
+
+    loadOrCreateConversation();
+  }, []);
+
+  const createConversation = async (userId: string): Promise<string> => {
+    const { data, error } = await supabase
+      .from('conversations')
+      .insert({ user_id: userId, title: 'New Chat' })
+      .select('id')
+      .single();
+    
+    if (error) throw error;
+    return data.id;
+  };
+
+  const saveMessage = async (convId: string, userId: string, role: string, content: string) => {
+    await supabase.from('chat_messages').insert({
+      conversation_id: convId,
+      user_id: userId,
+      role,
+      content
+    });
+  };
 
   const sendMessage = useCallback(async (input: string) => {
     const userMsg: Message = { role: 'user', content: input };
@@ -31,16 +90,28 @@ export function useConciergeChat() {
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) throw new Error('Please sign in to use the concierge');
+      
+      // Create conversation if needed
+      let convId = conversationId;
+      if (!convId) {
+        convId = await createConversation(session.user.id);
+        setConversationId(convId);
+      }
+
+      // Save user message
+      await saveMessage(convId, session.user.id, 'user', input);
       
       const resp = await fetch(CHAT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ 
           messages: [...messages, userMsg],
-          userId: session?.user?.id 
+          userId: session.user.id,
+          conversationId: convId
         }),
       });
 
@@ -103,18 +174,56 @@ export function useConciergeChat() {
           } catch { /* ignore */ }
         }
       }
+
+      // Save assistant response
+      if (assistantSoFar && convId) {
+        await saveMessage(convId, session.user.id, 'assistant', assistantSoFar);
+        
+        // Update conversation title if first message
+        if (messages.length === 0) {
+          const title = input.length > 50 ? input.slice(0, 50) + '...' : input;
+          await supabase
+            .from('conversations')
+            .update({ title })
+            .eq('id', convId);
+        }
+      }
     } catch (e) {
       console.error('Chat error:', e);
       setError(e instanceof Error ? e.message : 'Something went wrong');
     } finally {
       setIsLoading(false);
     }
-  }, [messages]);
+  }, [messages, conversationId]);
 
-  const clearMessages = useCallback(() => {
+  const clearMessages = useCallback(async () => {
+    // Archive current conversation
+    if (conversationId) {
+      await supabase
+        .from('conversations')
+        .update({ is_archived: true })
+        .eq('id', conversationId);
+    }
     setMessages([]);
+    setConversationId(null);
     setError(null);
+  }, [conversationId]);
+
+  const loadConversation = useCallback(async (convId: string) => {
+    const { data: msgs } = await supabase
+      .from('chat_messages')
+      .select('role, content')
+      .eq('conversation_id', convId)
+      .order('created_at', { ascending: true });
+    
+    if (msgs) {
+      setMessages(msgs.map(m => ({ 
+        role: m.role as 'user' | 'assistant', 
+        content: m.content 
+      })));
+      setConversationId(convId);
+    }
   }, []);
 
-  return { messages, isLoading, error, sendMessage, clearMessages };
+  return { messages, isLoading, error, sendMessage, clearMessages, conversationId, loadConversation };
 }

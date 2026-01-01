@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
-import { Home, MessageSquare, Compass, Calendar, Headphones, LogOut, Settings } from 'lucide-react';
+import { Home, MessageSquare, Compass, Calendar, User, LogOut, Settings } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -11,7 +11,7 @@ const navItems = [
   { icon: MessageSquare, label: 'Concierge', path: '/concierge' },
   { icon: Compass, label: 'Explore', path: '/explore' },
   { icon: Calendar, label: 'My Plans', path: '/my-plans' },
-  { icon: Headphones, label: 'Support', path: '/support' },
+  { icon: User, label: 'Profile', path: '/profile' },
 ];
 
 const adminItems = [
