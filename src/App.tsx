@@ -4,18 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/lib/supabase";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
-import ResidentHome from "./pages/ResidentHome";
-import ManagerHome from "./pages/ManagerHome";
-import ReportIssue from "./pages/ReportIssue";
-import MyTickets from "./pages/MyTickets";
-import Announcements from "./pages/Announcements";
-import Payments from "./pages/Payments";
-import Contacts from "./pages/Contacts";
-import ManagerTickets from "./pages/ManagerTickets";
+import ConciergePage from "./pages/ConciergePage";
+import ExplorePage from "./pages/ExplorePage";
+import MyPlansPage from "./pages/MyPlansPage";
+import SupportPage from "./pages/SupportPage";
+import AdminPage from "./pages/AdminPage";
 
 const queryClient = new QueryClient();
 
@@ -47,63 +43,11 @@ const App = () => (
           <Routes>
             <Route path="/auth" element={<Auth />} />
             <Route path="/onboarding" element={<Onboarding />} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Index />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/report-issue"
-              element={
-                <ProtectedRoute>
-                  <ReportIssue />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/my-tickets"
-              element={
-                <ProtectedRoute>
-                  <MyTickets />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/announcements"
-              element={
-                <ProtectedRoute>
-                  <Announcements />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/payments"
-              element={
-                <ProtectedRoute>
-                  <Payments />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/contacts"
-              element={
-                <ProtectedRoute>
-                  <Contacts />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/manager/tickets"
-              element={
-                <ProtectedRoute>
-                  <ManagerTickets />
-                </ProtectedRoute>
-              }
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
+            <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
+            <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
+            <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

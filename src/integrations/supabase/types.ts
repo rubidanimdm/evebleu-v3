@@ -52,6 +52,104 @@ export type Database = {
           },
         ]
       }
+      bookings: {
+        Row: {
+          admin_notes: string | null
+          booking_date: string
+          booking_number: string
+          booking_time: string | null
+          commission_amount: number | null
+          created_at: string
+          id: string
+          party_size: number | null
+          special_requests: string | null
+          status: string
+          supplier_id: string
+          total_amount: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          booking_date: string
+          booking_number: string
+          booking_time?: string | null
+          commission_amount?: number | null
+          created_at?: string
+          id?: string
+          party_size?: number | null
+          special_requests?: string | null
+          status?: string
+          supplier_id: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          booking_date?: string
+          booking_number?: string
+          booking_time?: string | null
+          commission_amount?: number | null
+          created_at?: string
+          id?: string
+          party_size?: number | null
+          special_requests?: string | null
+          status?: string
+          supplier_id?: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contacts: {
         Row: {
           display_order: number
@@ -162,6 +260,63 @@ export type Database = {
         }
         Relationships: []
       }
+      suppliers: {
+        Row: {
+          availability_notes: string | null
+          category: string
+          commission_percent: number | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          location: string | null
+          min_spend: number | null
+          name: string
+          phone: string | null
+          price_range: string | null
+          tags: string[] | null
+          updated_at: string
+          whatsapp_link: string | null
+        }
+        Insert: {
+          availability_notes?: string | null
+          category: string
+          commission_percent?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          location?: string | null
+          min_spend?: number | null
+          name: string
+          phone?: string | null
+          price_range?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          whatsapp_link?: string | null
+        }
+        Update: {
+          availability_notes?: string | null
+          category?: string
+          commission_percent?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          location?: string | null
+          min_spend?: number | null
+          name?: string
+          phone?: string | null
+          price_range?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          whatsapp_link?: string | null
+        }
+        Relationships: []
+      }
       tickets: {
         Row: {
           apartment_unit: string
@@ -227,6 +382,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_booking_number: { Args: never; Returns: string }
       generate_ticket_number: { Args: never; Returns: string }
     }
     Enums: {
