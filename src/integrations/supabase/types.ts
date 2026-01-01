@@ -384,6 +384,7 @@ export type Database = {
     Functions: {
       generate_booking_number: { Args: never; Returns: string }
       generate_ticket_number: { Args: never; Returns: string }
+      is_admin_user: { Args: { user_id: string }; Returns: boolean }
     }
     Enums: {
       payment_status: "paid" | "unpaid"
