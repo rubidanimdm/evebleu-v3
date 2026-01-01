@@ -3,23 +3,24 @@ import { UtensilsCrossed, Car, Building, Plane, Wine, Ship, Headphones } from 'l
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { BottomNav } from '@/components/BottomNav';
 import { GoldParticles, FlowingWave, GoldWaveAccent } from '@/components/LuxuryElements';
+import { SERVICE_CATEGORIES, CONCIERGE_INTENTS } from '@/lib/constants';
 
 interface ServiceButton {
   icon: React.ElementType;
   label: string;
   route: string;
   category?: string;
-  conciergeIntent?: string;
+  intent?: string;
 }
 
 const services: ServiceButton[] = [
-  { icon: UtensilsCrossed, label: 'Book Me a Table', route: '/explore', category: 'restaurant' },
-  { icon: Car, label: 'Book Me a Car', route: '/explore', category: 'transport' },
-  { icon: Building, label: 'Book Me a Hotel', route: '/concierge', conciergeIntent: 'I need to book a hotel' },
-  { icon: Plane, label: 'Book Me a Flight', route: '/concierge', conciergeIntent: 'I need to book a flight' },
-  { icon: Wine, label: 'Book Me a Club', route: '/explore', category: 'nightlife' },
-  { icon: Ship, label: 'Book an Experience', route: '/explore', category: 'yacht' },
-  { icon: Headphones, label: 'Handle It For Me', route: '/concierge', conciergeIntent: 'I have a custom request' },
+  { icon: UtensilsCrossed, label: 'Book Me a Table', route: '/explore', category: SERVICE_CATEGORIES.DINING },
+  { icon: Car, label: 'Book Me a Car', route: '/explore', category: SERVICE_CATEGORIES.TRANSPORT },
+  { icon: Building, label: 'Book Me a Hotel', route: '/concierge', intent: CONCIERGE_INTENTS.HOTEL_BOOKING },
+  { icon: Plane, label: 'Book Me a Flight', route: '/concierge', intent: CONCIERGE_INTENTS.FLIGHT_BOOKING },
+  { icon: Wine, label: 'Book Me a Club', route: '/explore', category: SERVICE_CATEGORIES.CLUB },
+  { icon: Ship, label: 'Book an Experience', route: '/explore', category: SERVICE_CATEGORIES.EXPERIENCE },
+  { icon: Headphones, label: 'Handle It For Me', route: '/concierge', intent: CONCIERGE_INTENTS.CUSTOM_REQUEST },
 ];
 
 export default function HomePage() {
@@ -28,8 +29,8 @@ export default function HomePage() {
   const handleServiceClick = (service: ServiceButton) => {
     if (service.category) {
       navigate(`${service.route}?category=${service.category}`);
-    } else if (service.conciergeIntent) {
-      navigate(`${service.route}?intent=${encodeURIComponent(service.conciergeIntent)}`);
+    } else if (service.intent) {
+      navigate(`${service.route}?intent=${service.intent}`);
     } else {
       navigate(service.route);
     }

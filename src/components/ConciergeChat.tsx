@@ -8,17 +8,30 @@ import { cn } from '@/lib/utils';
 import logo from '@/assets/logo.png';
 import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 
-export function ConciergeChat() {
+interface ConciergeChatProps {
+  initialMessage?: string;
+}
+
+export function ConciergeChat({ initialMessage }: ConciergeChatProps) {
   const { messages, isLoading, error, sendMessage, clearMessages } = useConciergeChat();
   const [input, setInput] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [hasAutoSent, setHasAutoSent] = useState(false);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Auto-send initial message when coming from Home buttons
+  useEffect(() => {
+    if (initialMessage && !hasAutoSent && messages.length === 0) {
+      setHasAutoSent(true);
+      sendMessage(initialMessage);
+    }
+  }, [initialMessage, hasAutoSent, messages.length, sendMessage]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
