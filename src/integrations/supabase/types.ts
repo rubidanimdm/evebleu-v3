@@ -183,6 +183,8 @@ export type Database = {
           created_at: string
           id: string
           role: string
+          sender_id: string | null
+          sender_type: string
           user_id: string
         }
         Insert: {
@@ -191,6 +193,8 @@ export type Database = {
           created_at?: string
           id?: string
           role: string
+          sender_id?: string | null
+          sender_type?: string
           user_id: string
         }
         Update: {
@@ -199,6 +203,8 @@ export type Database = {
           created_at?: string
           id?: string
           role?: string
+          sender_id?: string | null
+          sender_type?: string
           user_id?: string
         }
         Relationships: [
@@ -256,7 +262,9 @@ export type Database = {
           created_at: string
           id: string
           is_archived: boolean
+          status: string
           title: string | null
+          type: string
           updated_at: string
           user_id: string
         }
@@ -264,7 +272,9 @@ export type Database = {
           created_at?: string
           id?: string
           is_archived?: boolean
+          status?: string
           title?: string | null
+          type?: string
           updated_at?: string
           user_id: string
         }
@@ -272,9 +282,38 @@ export type Database = {
           created_at?: string
           id?: string
           is_archived?: boolean
+          status?: string
           title?: string | null
+          type?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      customer_notes: {
+        Row: {
+          admin_id: string
+          content: string
+          created_at: string
+          customer_id: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          admin_id: string
+          content: string
+          created_at?: string
+          customer_id: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_id?: string
+          content?: string
+          created_at?: string
+          customer_id?: string
+          id?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -333,6 +372,7 @@ export type Database = {
           full_name: string
           id: string
           language: string | null
+          last_seen: string | null
           phone: string
           preferred_areas: string[] | null
           role: Database["public"]["Enums"]["user_role"]
@@ -352,6 +392,7 @@ export type Database = {
           full_name: string
           id: string
           language?: string | null
+          last_seen?: string | null
           phone: string
           preferred_areas?: string[] | null
           role?: Database["public"]["Enums"]["user_role"]
@@ -371,6 +412,7 @@ export type Database = {
           full_name?: string
           id?: string
           language?: string | null
+          last_seen?: string | null
           phone?: string
           preferred_areas?: string[] | null
           role?: Database["public"]["Enums"]["user_role"]
