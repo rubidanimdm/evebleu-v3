@@ -1,9 +1,26 @@
+import { useSearchParams } from 'react-router-dom';
 import { ConciergeChat } from '@/components/ConciergeChat';
 import { BottomNav } from '@/components/BottomNav';
 import logo from '@/assets/logo.png';
 import { GoldWaveAccent } from '@/components/LuxuryElements';
+import { INTENT_MESSAGES } from '@/lib/constants';
 
 export default function ConciergePage() {
+  const [searchParams] = useSearchParams();
+  const intentParam = searchParams.get('intent');
+  const supplierParam = searchParams.get('supplier');
+  
+  // Determine initial message based on params
+  const getInitialMessage = (): string | undefined => {
+    if (intentParam && INTENT_MESSAGES[intentParam]) {
+      return INTENT_MESSAGES[intentParam];
+    }
+    if (supplierParam) {
+      return `I'd like to book at ${supplierParam}.`;
+    }
+    return undefined;
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header with luxury styling */}
@@ -27,7 +44,7 @@ export default function ConciergePage() {
 
       {/* Chat Area */}
       <main className="flex-1 pb-20">
-        <ConciergeChat />
+        <ConciergeChat initialMessage={getInitialMessage()} />
       </main>
 
       <BottomNav />

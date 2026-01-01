@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { UtensilsCrossed, Wine, Car, Ship, Calendar, MapPin } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
+import { SERVICE_CATEGORIES, CATEGORY_TO_SUPPLIER_MAP } from '@/lib/constants';
 
 const categoryIcons: Record<string, React.ElementType> = {
   restaurant: UtensilsCrossed,
@@ -21,6 +22,14 @@ const categoryLabels: Record<string, string> = {
   transport: 'Transport',
   yacht: 'Yachts',
   event: 'Events',
+};
+
+// Map service categories to display labels
+const serviceCategoryLabels: Record<string, string> = {
+  [SERVICE_CATEGORIES.DINING]: 'Dining',
+  [SERVICE_CATEGORIES.TRANSPORT]: 'Transport',
+  [SERVICE_CATEGORIES.CLUB]: 'Nightlife',
+  [SERVICE_CATEGORIES.EXPERIENCE]: 'Experiences',
 };
 
 interface Supplier {
@@ -40,6 +49,15 @@ export default function ExplorePage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // Read category from URL params on mount
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam && CATEGORY_TO_SUPPLIER_MAP[categoryParam]) {
+      setSelectedCategory(CATEGORY_TO_SUPPLIER_MAP[categoryParam]);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     async function fetchSuppliers() {
