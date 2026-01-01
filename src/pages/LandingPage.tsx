@@ -15,12 +15,12 @@ const ServiceButton = ({
 }) => (
   <button 
     onClick={onClick}
-    className="group flex flex-col items-center gap-3 p-4 transition-all duration-300"
+    className="group flex flex-col items-center gap-2 p-2 transition-all duration-300"
   >
-    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-primary/40 flex items-center justify-center bg-card/30 backdrop-blur-sm group-hover:border-primary group-hover:bg-primary/10 transition-all duration-300">
-      <Icon className="w-7 h-7 md:w-8 md:h-8 text-primary" strokeWidth={1.5} />
+    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full border border-primary/40 flex items-center justify-center bg-card/30 backdrop-blur-sm group-hover:border-primary group-hover:bg-primary/10 transition-all duration-300">
+      <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" strokeWidth={1.5} />
     </div>
-    <span className="text-primary text-xs md:text-sm font-medium tracking-wide text-center">
+    <span className="text-primary text-[10px] sm:text-xs md:text-sm font-medium tracking-wide text-center leading-tight max-w-[70px] sm:max-w-[80px]">
       {label}
     </span>
   </button>
@@ -85,9 +85,9 @@ export default function LandingPage() {
         {/* Content positioned over the image */}
         <div className="relative z-10 flex-1 flex flex-col justify-end pb-8 px-4">
           {/* Service Buttons Grid - positioned at bottom */}
-          <div className="max-w-md mx-auto w-full">
+          <div className="max-w-sm sm:max-w-md mx-auto w-full px-2">
             {/* First row - 4 buttons */}
-            <div className="grid grid-cols-4 gap-1 mb-2">
+            <div className="grid grid-cols-4 gap-0 mb-1">
               {services.slice(0, 4).map((service) => (
                 <ServiceButton
                   key={service.category}
@@ -99,7 +99,7 @@ export default function LandingPage() {
             </div>
             
             {/* Second row - 3 buttons centered */}
-            <div className="flex justify-center gap-1">
+            <div className="flex justify-center gap-0">
               {services.slice(4, 7).map((service) => (
                 <ServiceButton
                   key={service.category}
