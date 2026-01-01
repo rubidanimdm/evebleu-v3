@@ -193,9 +193,9 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="bg-card/80 backdrop-blur border-b border-border px-4 py-4 sticky top-0 z-40">
+      <header className="bg-card/80 backdrop-blur border-b border-border/50 px-4 py-4 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-xl font-semibold text-foreground">Admin Panel</h1>
+          <h1 className="text-lg font-medium text-foreground">Admin Panel</h1>
           <p className="text-sm text-muted-foreground">Manage suppliers and bookings</p>
         </div>
       </header>

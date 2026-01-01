@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
+import logo from '@/assets/logo.png';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -34,7 +35,7 @@ export default function Auth() {
 
       if (error) {
         toast({
-          title: 'Login failed',
+          title: 'Access denied',
           description: error.message,
           variant: 'destructive',
         });
@@ -43,7 +44,6 @@ export default function Auth() {
 
       toast({
         title: 'Welcome back',
-        description: 'Signed in successfully.',
       });
 
       navigate('/');
@@ -62,49 +62,57 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md border-border/50 shadow-xl">
-        <CardHeader className="text-center pb-4">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary to-gold-dark mx-auto mb-4">
-            <span className="text-primary-foreground font-bold text-2xl font-serif">L</span>
+      <Card className="w-full max-w-md border-border/50 bg-card">
+        <CardHeader className="text-center pb-6">
+          <div className="mx-auto mb-6">
+            <img src={logo} alt="AI My Dubai" className="w-24 h-24 object-contain mx-auto" />
           </div>
-          <CardTitle className="text-3xl font-bold text-foreground font-serif tracking-wide">LUXE</CardTitle>
-          <CardDescription className="text-base">AI Concierge for Luxury Experiences</CardDescription>
+          <CardTitle className="text-xl font-medium text-foreground tracking-tight">
+            AI My Dubai
+          </CardTitle>
+          <CardDescription className="text-muted-foreground text-sm">
+            Concierge. It. Done.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm text-muted-foreground">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12"
+                className="h-12 bg-background border-border/50 focus:border-primary/50"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm text-muted-foreground">Password</Label>
               <Input
                 id="password"
                 type="password"
                 placeholder="Your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-12"
+                className="h-12 bg-background border-border/50 focus:border-primary/50"
                 required
               />
             </div>
 
-            <Button type="submit" className="w-full h-12 text-base" disabled={loading}>
+            <Button type="submit" className="w-full h-12 text-base font-medium" disabled={loading}>
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
 
             <div className="text-center pt-2">
-              <Button variant="link" onClick={() => navigate('/onboarding')} className="text-muted-foreground">
-                Don't have an account? Join LUXE
+              <Button 
+                variant="link" 
+                onClick={() => navigate('/onboarding')} 
+                className="text-muted-foreground hover:text-primary text-sm"
+              >
+                Request Access
               </Button>
             </div>
           </form>

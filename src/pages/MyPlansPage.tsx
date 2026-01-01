@@ -26,11 +26,11 @@ interface Booking {
   } | null;
 }
 
-const statusColors: Record<string, string> = {
-  pending: 'bg-warning/10 text-warning border-warning/30',
-  confirmed: 'bg-success/10 text-success border-success/30',
-  completed: 'bg-muted text-muted-foreground border-border',
-  cancelled: 'bg-destructive/10 text-destructive border-destructive/30',
+const statusStyles: Record<string, string> = {
+  pending: 'border-warning/30 text-warning bg-warning/10',
+  confirmed: 'border-primary/30 text-primary bg-primary/10',
+  completed: 'border-border text-muted-foreground bg-muted',
+  cancelled: 'border-destructive/30 text-destructive bg-destructive/10',
 };
 
 export default function MyPlansPage() {
@@ -70,32 +70,32 @@ export default function MyPlansPage() {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <header className="bg-card/80 backdrop-blur border-b border-border px-4 py-4 sticky top-0 z-40">
+      <header className="bg-card/80 backdrop-blur border-b border-border/50 px-4 py-4 sticky top-0 z-40">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-xl font-semibold text-foreground">My Plans</h1>
-          <p className="text-sm text-muted-foreground">Your upcoming experiences</p>
+          <h1 className="text-lg font-medium text-foreground">My Plans</h1>
+          <p className="text-sm text-muted-foreground">Your bookings and reservations</p>
         </div>
       </header>
 
       <main className="max-w-2xl mx-auto p-4 space-y-6">
         {loading ? (
           <div className="text-center py-12 text-muted-foreground">
-            Loading your plans...
+            Loading...
           </div>
         ) : bookings.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground mb-4">
-              You haven't made any bookings yet.
+              No bookings yet.
             </p>
             <Button onClick={() => navigate('/')}>
-              Start Planning with Concierge
+              Start with Concierge
             </Button>
           </div>
         ) : (
           <>
             {upcomingBookings.length > 0 && (
               <section>
-                <h2 className="text-lg font-semibold mb-3">Upcoming</h2>
+                <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Upcoming</h2>
                 <div className="space-y-3">
                   {upcomingBookings.map(booking => (
                     <BookingCard key={booking.id} booking={booking} />
@@ -106,7 +106,7 @@ export default function MyPlansPage() {
 
             {pastBookings.length > 0 && (
               <section>
-                <h2 className="text-lg font-semibold mb-3 text-muted-foreground">Past</h2>
+                <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Past</h2>
                 <div className="space-y-3">
                   {pastBookings.map(booking => (
                     <BookingCard key={booking.id} booking={booking} />
@@ -125,54 +125,48 @@ export default function MyPlansPage() {
 
 function BookingCard({ booking }: { booking: Booking }) {
   return (
-    <Card className="p-4 space-y-3">
+    <Card className="p-4 space-y-3 border-border/50 bg-card">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 className="font-semibold text-foreground">
-            {booking.supplier?.name || 'Unknown Venue'}
+          <h3 className="font-medium text-foreground">
+            {booking.supplier?.name || 'Booking'}
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs text-muted-foreground mt-0.5">
             {booking.booking_number}
           </p>
         </div>
-        <Badge className={statusColors[booking.status]}>
+        <Badge className={statusStyles[booking.status]}>
           {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
         </Badge>
       </div>
 
       <div className="grid grid-cols-2 gap-2 text-sm">
         <div className="flex items-center gap-2 text-muted-foreground">
-          <Calendar className="w-4 h-4" />
+          <Calendar className="w-3.5 h-3.5" />
           {format(new Date(booking.booking_date), 'MMM d, yyyy')}
         </div>
         {booking.booking_time && (
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Clock className="w-4 h-4" />
+            <Clock className="w-3.5 h-3.5" />
             {booking.booking_time}
           </div>
         )}
         <div className="flex items-center gap-2 text-muted-foreground">
-          <Users className="w-4 h-4" />
+          <Users className="w-3.5 h-3.5" />
           {booking.party_size} {booking.party_size === 1 ? 'guest' : 'guests'}
         </div>
         {booking.supplier?.location && (
           <div className="flex items-center gap-2 text-muted-foreground">
-            <MapPin className="w-4 h-4" />
+            <MapPin className="w-3.5 h-3.5" />
             {booking.supplier.location}
           </div>
         )}
       </div>
 
       {booking.total_amount && (
-        <div className="text-sm font-medium text-foreground">
-          Total: ${booking.total_amount.toLocaleString()}
+        <div className="text-sm text-foreground pt-1 border-t border-border/30">
+          Total: <span className="text-primary font-medium">${booking.total_amount.toLocaleString()}</span>
         </div>
-      )}
-
-      {booking.special_requests && (
-        <p className="text-sm text-muted-foreground border-t border-border pt-2">
-          {booking.special_requests}
-        </p>
       )}
     </Card>
   );
