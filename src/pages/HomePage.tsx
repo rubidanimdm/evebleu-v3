@@ -34,7 +34,7 @@ export default function HomePage() {
 
   return (
     <div 
-      className="fixed inset-0 w-full h-full"
+      className="fixed inset-0 w-full h-full overflow-hidden"
       style={{
         backgroundImage: `url(${heroBackground})`,
         backgroundSize: 'cover',
@@ -42,34 +42,67 @@ export default function HomePage() {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Invisible button overlays - positioned to match the buttons in the background image */}
-      <div className="absolute inset-0 flex flex-col items-center justify-end pb-[12%]">
-        <div className="w-full max-w-[85%] md:max-w-[600px]">
-          {/* First Row - 4 buttons */}
-          <div className="grid grid-cols-4 gap-[2%] mb-[2%]">
-            {services.slice(0, 4).map((service) => (
-              <button
-                key={service.label}
-                onClick={() => handleServiceClick(service)}
-                className="aspect-[1/1.1] rounded-xl cursor-pointer hover:bg-white/5 active:bg-white/10 transition-colors duration-200"
-                aria-label={service.label}
-              />
-            ))}
-          </div>
-          
-          {/* Second Row - 3 buttons centered */}
-          <div className="grid grid-cols-3 gap-[2%] w-[75%] mx-auto">
-            {services.slice(4).map((service) => (
-              <button
-                key={service.label}
-                onClick={() => handleServiceClick(service)}
-                className="aspect-[1/1.1] rounded-xl cursor-pointer hover:bg-white/5 active:bg-white/10 transition-colors duration-200"
-                aria-label={service.label}
-              />
-            ))}
+      {/* Button overlays - positioned to match buttons in background image */}
+      <div className="absolute inset-0 flex flex-col items-center justify-end">
+        {/* 
+          Positioning calibrated for the reference image:
+          - Desktop (1440px+): buttons at ~60% from top
+          - Tablet: adjusted for portrait orientation
+          - Mobile: stacked layout with maintained hierarchy
+        */}
+        <div 
+          className="w-full flex justify-center"
+          style={{ 
+            paddingBottom: 'clamp(8%, 12vh, 15%)',
+          }}
+        >
+          <div className="w-[85%] max-w-[550px] md:max-w-[600px] lg:max-w-[650px]">
+            {/* First Row - 4 buttons */}
+            <div className="grid grid-cols-4 gap-[3%] mb-[3%]">
+              {services.slice(0, 4).map((service) => (
+                <ServiceButtonOverlay
+                  key={service.label}
+                  label={service.label}
+                  onClick={() => handleServiceClick(service)}
+                />
+              ))}
+            </div>
+            
+            {/* Second Row - 3 buttons centered */}
+            <div className="grid grid-cols-3 gap-[3%] w-[75%] mx-auto">
+              {services.slice(4).map((service) => (
+                <ServiceButtonOverlay
+                  key={service.label}
+                  label={service.label}
+                  onClick={() => handleServiceClick(service)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function ServiceButtonOverlay({ 
+  label, 
+  onClick 
+}: { 
+  label: string; 
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="
+        aspect-[1/1.15] rounded-xl cursor-pointer
+        transition-all duration-300 ease-out
+        hover:bg-[hsl(45,80%,50%)]/8 hover:shadow-[0_0_20px_rgba(212,175,55,0.15)]
+        active:bg-[hsl(45,80%,50%)]/12 active:shadow-[0_0_25px_rgba(212,175,55,0.25)]
+        focus:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(45,80%,50%)]/30
+      "
+      aria-label={label}
+    />
   );
 }
