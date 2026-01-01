@@ -10,10 +10,11 @@ import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 
 interface ConciergeChatProps {
   initialMessage?: string;
+  conversationId?: string;
 }
 
-export function ConciergeChat({ initialMessage }: ConciergeChatProps) {
-  const { messages, isLoading, error, sendMessage, clearMessages } = useConciergeChat();
+export function ConciergeChat({ initialMessage, conversationId }: ConciergeChatProps) {
+  const { messages, isLoading, error, sendMessage, clearMessages, loadConversation } = useConciergeChat();
   const [input, setInput] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -25,13 +26,20 @@ export function ConciergeChat({ initialMessage }: ConciergeChatProps) {
     }
   }, [messages]);
 
+  // Load conversation if ID provided
+  useEffect(() => {
+    if (conversationId && loadConversation) {
+      loadConversation(conversationId);
+    }
+  }, [conversationId]);
+
   // Auto-send initial message when coming from Home buttons
   useEffect(() => {
-    if (initialMessage && !hasAutoSent && messages.length === 0) {
+    if (initialMessage && !hasAutoSent && messages.length === 0 && !conversationId) {
       setHasAutoSent(true);
       sendMessage(initialMessage);
     }
-  }, [initialMessage, hasAutoSent, messages.length, sendMessage]);
+  }, [initialMessage, hasAutoSent, messages.length, sendMessage, conversationId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

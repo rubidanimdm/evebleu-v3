@@ -59,6 +59,7 @@ export type Database = {
           booking_number: string
           booking_time: string | null
           commission_amount: number | null
+          conversation_id: string | null
           created_at: string
           id: string
           party_size: number | null
@@ -75,6 +76,7 @@ export type Database = {
           booking_number: string
           booking_time?: string | null
           commission_amount?: number | null
+          conversation_id?: string | null
           created_at?: string
           id?: string
           party_size?: number | null
@@ -91,6 +93,7 @@ export type Database = {
           booking_number?: string
           booking_time?: string | null
           commission_amount?: number | null
+          conversation_id?: string | null
           created_at?: string
           id?: string
           party_size?: number | null
@@ -102,6 +105,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "bookings_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "bookings_supplier_id_fkey"
             columns: ["supplier_id"]
@@ -169,6 +179,7 @@ export type Database = {
       chat_messages: {
         Row: {
           content: string
+          conversation_id: string | null
           created_at: string
           id: string
           role: string
@@ -176,6 +187,7 @@ export type Database = {
         }
         Insert: {
           content: string
+          conversation_id?: string | null
           created_at?: string
           id?: string
           role: string
@@ -183,12 +195,20 @@ export type Database = {
         }
         Update: {
           content?: string
+          conversation_id?: string | null
           created_at?: string
           id?: string
           role?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "chat_messages_user_id_fkey"
             columns: ["user_id"]
@@ -228,6 +248,33 @@ export type Database = {
           phone?: string
           role?: string
           whatsapp_link?: string | null
+        }
+        Relationships: []
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          is_archived: boolean
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          title?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -274,36 +321,60 @@ export type Database = {
       }
       profiles: {
         Row: {
+          ai_memories: Json | null
           apartment_unit: string | null
+          budget_style: string | null
           building_name: string
+          city: string | null
           created_at: string
+          dietary_preferences: string[] | null
           email: string
+          favorite_cuisines: string[] | null
           full_name: string
           id: string
+          language: string | null
           phone: string
+          preferred_areas: string[] | null
           role: Database["public"]["Enums"]["user_role"]
+          special_notes: string | null
           updated_at: string
         }
         Insert: {
+          ai_memories?: Json | null
           apartment_unit?: string | null
+          budget_style?: string | null
           building_name: string
+          city?: string | null
           created_at?: string
+          dietary_preferences?: string[] | null
           email: string
+          favorite_cuisines?: string[] | null
           full_name: string
           id: string
+          language?: string | null
           phone: string
+          preferred_areas?: string[] | null
           role?: Database["public"]["Enums"]["user_role"]
+          special_notes?: string | null
           updated_at?: string
         }
         Update: {
+          ai_memories?: Json | null
           apartment_unit?: string | null
+          budget_style?: string | null
           building_name?: string
+          city?: string | null
           created_at?: string
+          dietary_preferences?: string[] | null
           email?: string
+          favorite_cuisines?: string[] | null
           full_name?: string
           id?: string
+          language?: string | null
           phone?: string
+          preferred_areas?: string[] | null
           role?: Database["public"]["Enums"]["user_role"]
+          special_notes?: string | null
           updated_at?: string
         }
         Relationships: []
