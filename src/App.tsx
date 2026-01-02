@@ -7,7 +7,8 @@ import { AuthProvider, useAuth } from "@/lib/supabase";
 import { LanguageProvider } from "@/lib/i18n";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
 import NotFound from "./pages/NotFound";
-import Auth from "./pages/Auth";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Onboarding from "./pages/Onboarding";
 import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
@@ -35,7 +36,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!user) {
-    return <Navigate to="/auth" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;
@@ -48,10 +49,11 @@ function AppContent() {
     <>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
         <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
         <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
