@@ -10,7 +10,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Onboarding from "./pages/Onboarding";
-import HomePage from "./pages/HomePage";
+import MainScreen from "./pages/MainScreen";
 import ConciergePage from "./pages/ConciergePage";
 import ExplorePage from "./pages/ExplorePage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
@@ -73,63 +73,23 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function PublicRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
-          <p className="text-muted-foreground text-sm">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Redirect authenticated users to main home
-  if (user) {
-    return <Navigate to="/" replace />;
-  }
-
-  return <>{children}</>;
-}
-
-function RootRedirect() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
-          <p className="text-muted-foreground text-sm">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Authenticated users go to main home ("/"), unauthenticated to login
-  return <Navigate to={user ? "/" : "/login"} replace />;
-}
-
 function AppContent() {
   const { user } = useAuth();
   
   return (
     <>
       <Routes>
-        {/* Main App Home - authenticated users land here */}
-        <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        {/* Main Screen - same design for logged-in and logged-out users */}
+        <Route path="/" element={<MainScreen />} />
         
         {/* Auth Routes */}
-        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/onboarding" element={<Onboarding />} />
         
-        {/* App Screens */}
+        {/* App Screens - protected */}
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
         <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
         <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
