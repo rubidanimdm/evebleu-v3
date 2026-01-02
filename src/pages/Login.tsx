@@ -47,7 +47,7 @@ export default function Login() {
       }
 
       toast({ title: 'Welcome back' });
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({

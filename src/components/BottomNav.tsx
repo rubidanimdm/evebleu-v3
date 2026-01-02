@@ -34,11 +34,11 @@ export function BottomNav() {
   const allItems = isAdmin ? [...navItems, ...adminItems] : navItems;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-primary/10 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-primary/10 z-50 safe-area-pb">
       {/* Gold accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       
-      <div className="max-w-2xl mx-auto flex items-center justify-around py-2">
+      <div className="max-w-2xl mx-auto flex items-center justify-around py-2 px-2">
         {allItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (

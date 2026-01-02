@@ -1,7 +1,9 @@
 /**
  * Invoice Email Service
- * Production-ready placeholder for invoice automation
+ * Sends branded invoices via edge function
  */
+
+import { supabase } from '@/integrations/supabase/client';
 
 interface InvoiceData {
   bookingId: string;
@@ -16,17 +18,27 @@ interface InvoiceData {
 
 /**
  * Sends an invoice/receipt email to the customer after payment
- * Integration pending - will use edge function + email provider
  */
 export async function sendInvoiceEmail(data: InvoiceData): Promise<{ success: boolean; error?: string }> {
   try {
-    // Invoice sending will be handled by edge function when configured
-    // For now, return success to maintain flow integrity
-    return { success: true };
-  } catch (error: any) {
+    const { data: response, error } = await supabase.functions.invoke('send-invoice', {
+      body: data,
+    });
+
+    if (error) {
+      console.error('Invoice sending error:', error);
+      return { 
+        success: false, 
+        error: error.message || 'Failed to send invoice email' 
+      };
+    }
+
+    return { success: response?.success ?? true };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to send invoice email';
     return { 
       success: false, 
-      error: error.message || 'Failed to send invoice email' 
+      error: message 
     };
   }
 }
