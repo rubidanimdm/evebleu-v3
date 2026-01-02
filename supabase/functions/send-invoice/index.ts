@@ -8,13 +8,6 @@ const corsHeaders = {
 
 interface InvoiceRequest {
   bookingId: string;
-  customerEmail: string;
-  customerName: string;
-  itemTitle: string;
-  amount: number;
-  currency: string;
-  bookingDate: string;
-  bookingNumber: string;
 }
 
 serve(async (req) => {
@@ -24,20 +17,129 @@ serve(async (req) => {
   }
 
   try {
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-    );
-
-    const invoiceData: InvoiceRequest = await req.json();
-    
-    // Validate required fields
-    if (!invoiceData.bookingId || !invoiceData.customerEmail || !invoiceData.bookingNumber) {
+    // Verify authentication
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      console.error("No authorization header provided");
       return new Response(
-        JSON.stringify({ error: "Missing required invoice data" }),
+        JSON.stringify({ error: "Authorization required" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+
+    // Create user client to verify authentication
+    const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+
+    const { data: { user }, error: userError } = await userClient.auth.getUser();
+    if (userError || !user) {
+      console.error("Failed to get user:", userError);
+      return new Response(
+        JSON.stringify({ error: "Authentication failed" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    console.log("User authenticated:", user.id);
+
+    // Service role client for fetching data
+    const adminClient = createClient(supabaseUrl, supabaseServiceKey);
+
+    const { bookingId }: InvoiceRequest = await req.json();
+    
+    if (!bookingId) {
+      return new Response(
+        JSON.stringify({ error: "Missing booking ID" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    // Verify booking belongs to the authenticated user
+    const { data: booking, error: bookingError } = await adminClient
+      .from('bookings_public')
+      .select(`
+        id,
+        booking_number,
+        booking_date,
+        user_id,
+        supplier_id
+      `)
+      .eq('id', bookingId)
+      .single();
+
+    if (bookingError || !booking) {
+      console.error("Booking not found:", bookingError);
+      return new Response(
+        JSON.stringify({ error: "Booking not found" }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (booking.user_id !== user.id) {
+      console.error("User not authorized for this booking");
+      return new Response(
+        JSON.stringify({ error: "Not authorized to access this booking" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Fetch financial data
+    const { data: financial } = await adminClient
+      .from('bookings_financial')
+      .select('total_amount')
+      .eq('booking_id', bookingId)
+      .single();
+
+    // Fetch supplier name
+    let supplierName = 'Concierge Service';
+    if (booking.supplier_id) {
+      const { data: supplier } = await adminClient
+        .from('suppliers')
+        .select('name')
+        .eq('id', booking.supplier_id)
+        .single();
+      if (supplier?.name) {
+        supplierName = supplier.name;
+      }
+    }
+    const { data: publicProfile } = await adminClient
+      .from('profiles_public')
+      .select('full_name')
+      .eq('id', user.id)
+      .single();
+
+    const { data: privateProfile } = await adminClient
+      .from('profiles_private')
+      .select('email, invoice_email')
+      .eq('id', user.id)
+      .single();
+
+    const customerName = publicProfile?.full_name || 'Valued Customer';
+    const customerEmail = privateProfile?.invoice_email || privateProfile?.email || user.email;
+    const amount = financial?.total_amount || 0;
+    const itemTitle = supplierName;
+
+    if (!customerEmail) {
+      return new Response(
+        JSON.stringify({ error: "No email address found for customer" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const invoiceData = {
+      bookingNumber: booking.booking_number,
+      customerName,
+      customerEmail,
+      itemTitle,
+      amount,
+      currency: 'AED',
+      bookingDate: booking.booking_date,
+    };
 
     // Generate invoice HTML with premium branding
     const invoiceHtml = generateInvoiceHtml(invoiceData);
@@ -46,7 +148,6 @@ serve(async (req) => {
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     
     if (!resendApiKey) {
-      // Log the invoice for manual processing but return success
       console.log("Invoice generated (email not configured):", {
         bookingNumber: invoiceData.bookingNumber,
         customerEmail: invoiceData.customerEmail,
@@ -72,7 +173,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: "AI My Dubai <invoices@aimydubai.com>",
-        to: [invoiceData.customerEmail],
+        to: [customerEmail],
         subject: `Your AI My Dubai Invoice - ${invoiceData.bookingNumber}`,
         html: invoiceHtml,
       }),
@@ -94,6 +195,8 @@ serve(async (req) => {
 
     const emailResult = await emailResponse.json();
     
+    console.log("Invoice sent successfully to:", customerEmail);
+
     return new Response(
       JSON.stringify({ 
         success: true, 
@@ -114,7 +217,17 @@ serve(async (req) => {
   }
 });
 
-function generateInvoiceHtml(data: InvoiceRequest): string {
+interface InvoiceHtmlData {
+  bookingNumber: string;
+  customerName: string;
+  customerEmail: string;
+  itemTitle: string;
+  amount: number;
+  currency: string;
+  bookingDate: string;
+}
+
+function generateInvoiceHtml(data: InvoiceHtmlData): string {
   const invoiceDate = new Date().toLocaleDateString('en-AE', { 
     year: 'numeric', 
     month: 'long', 
