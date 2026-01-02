@@ -128,6 +128,107 @@ export type Database = {
           },
         ]
       }
+      bookings_financial: {
+        Row: {
+          admin_notes: string | null
+          booking_id: string
+          commission_amount: number | null
+          created_at: string
+          id: string
+          payout_amount: number | null
+          total_amount: number | null
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          booking_id: string
+          commission_amount?: number | null
+          created_at?: string
+          id?: string
+          payout_amount?: number | null
+          total_amount?: number | null
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          booking_id?: string
+          commission_amount?: number | null
+          created_at?: string
+          id?: string
+          payout_amount?: number | null
+          total_amount?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_financial_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bookings_public: {
+        Row: {
+          booking_date: string
+          booking_number: string
+          booking_time: string | null
+          conversation_id: string | null
+          created_at: string
+          id: string
+          party_size: number | null
+          special_requests: string | null
+          status: string
+          supplier_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          booking_date: string
+          booking_number: string
+          booking_time?: string | null
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          party_size?: number | null
+          special_requests?: string | null
+          status?: string
+          supplier_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          booking_date?: string
+          booking_number?: string
+          booking_time?: string | null
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          party_size?: number | null
+          special_requests?: string | null
+          status?: string
+          supplier_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_public_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_public_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       catalog_items: {
         Row: {
           category: string
@@ -417,6 +518,90 @@ export type Database = {
           preferred_areas?: string[] | null
           role?: Database["public"]["Enums"]["user_role"]
           special_notes?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles_private: {
+        Row: {
+          ai_memories: Json | null
+          created_at: string
+          email: string
+          id: string
+          invoice_email: string | null
+          phone: string
+          special_notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          ai_memories?: Json | null
+          created_at?: string
+          email: string
+          id: string
+          invoice_email?: string | null
+          phone?: string
+          special_notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ai_memories?: Json | null
+          created_at?: string
+          email?: string
+          id?: string
+          invoice_email?: string | null
+          phone?: string
+          special_notes?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles_public: {
+        Row: {
+          apartment_unit: string | null
+          budget_style: string | null
+          building_name: string
+          city: string | null
+          created_at: string
+          dietary_preferences: string[] | null
+          favorite_cuisines: string[] | null
+          full_name: string
+          id: string
+          language: string | null
+          last_seen: string | null
+          preferred_areas: string[] | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+        }
+        Insert: {
+          apartment_unit?: string | null
+          budget_style?: string | null
+          building_name?: string
+          city?: string | null
+          created_at?: string
+          dietary_preferences?: string[] | null
+          favorite_cuisines?: string[] | null
+          full_name: string
+          id: string
+          language?: string | null
+          last_seen?: string | null
+          preferred_areas?: string[] | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+        }
+        Update: {
+          apartment_unit?: string | null
+          budget_style?: string | null
+          building_name?: string
+          city?: string | null
+          created_at?: string
+          dietary_preferences?: string[] | null
+          favorite_cuisines?: string[] | null
+          full_name?: string
+          id?: string
+          language?: string | null
+          last_seen?: string | null
+          preferred_areas?: string[] | null
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
         }
         Relationships: []
