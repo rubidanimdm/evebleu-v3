@@ -2,3 +2,15 @@ project_id = "aehuburejilheyoyoisj"
 
 [functions.concierge-chat]
 verify_jwt = true
+
+[functions.get-admin-customers]
+verify_jwt = true
+
+[functions.get-customer-detail]
+verify_jwt = true
+
+[functions.get-admin-inbox-profiles]
+verify_jwt = true
+
+[functions.get-admin-bookings]
+verify_jwt = true

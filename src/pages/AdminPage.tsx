@@ -98,18 +98,29 @@ export default function AdminPage() {
   }, []);
 
   async function fetchData() {
-    const [suppliersRes, bookingsRes] = await Promise.all([
-      supabase.from('suppliers').select('*').order('name'),
-      supabase.from('bookings').select(`
-        *,
-        user:profiles(full_name, email),
-        supplier:suppliers(name)
-      `).order('created_at', { ascending: false }).limit(50),
-    ]);
+    try {
+      // Fetch suppliers directly (admins have RLS access)
+      const suppliersRes = await supabase.from('suppliers').select('*').order('name');
+      setSuppliers(suppliersRes.data || []);
 
-    setSuppliers(suppliersRes.data || []);
-    setBookings((bookingsRes.data as unknown as Booking[]) || []);
-    setLoading(false);
+      // Fetch bookings via secure Edge Function
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (sessionData?.session?.access_token) {
+        const response = await supabase.functions.invoke('get-admin-bookings', {
+          headers: {
+            Authorization: `Bearer ${sessionData.session.access_token}`,
+          },
+        });
+
+        if (response.data?.bookings) {
+          setBookings(response.data.bookings);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching admin data:', error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function resetForm() {
@@ -204,7 +215,8 @@ export default function AdminPage() {
   }
 
   async function updateBookingStatus(id: string, status: string) {
-    const { error } = await supabase.from('bookings').update({ status }).eq('id', id);
+    // Update via bookings_public table which admins have access to
+    const { error } = await supabase.from('bookings_public').update({ status }).eq('id', id);
     if (error) {
       toast({ title: 'Error updating booking', variant: 'destructive' });
       return;
