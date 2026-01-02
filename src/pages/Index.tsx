@@ -10,7 +10,7 @@ export default function Index() {
 
   useEffect(() => {
     if (!loading && !profile) {
-      navigate('/auth');
+      navigate('/login');
     }
   }, [profile, loading, navigate]);
 
