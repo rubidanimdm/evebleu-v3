@@ -57,14 +57,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(session);
         setUser(session?.user ?? null);
 
-        // Fetch profile when user logs in
+        // Fetch public profile when user logs in (sensitive data via edge function)
         if (session?.user) {
           setTimeout(async () => {
             const { data } = await supabase
-              .from('profiles')
+              .from('profiles_public')
               .select('*')
               .eq('id', session.user.id)
-              .single();
+              .maybeSingle();
             setProfile(data);
           }, 0);
         } else {
@@ -91,10 +91,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (session?.user) {
           const { data } = await supabase
-            .from('profiles')
+            .from('profiles_public')
             .select('*')
             .eq('id', session.user.id)
-            .single();
+            .maybeSingle();
           setProfile(data);
         }
       }

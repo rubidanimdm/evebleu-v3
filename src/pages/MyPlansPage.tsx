@@ -2,29 +2,12 @@ import { useEffect, useState } from 'react';
 import { BottomNav } from '@/components/BottomNav';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
+import { useSecureBookings, Booking } from '@/hooks/useSecureBookings';
 import { useAuth } from '@/lib/supabase';
 import { Calendar, Clock, Users, MapPin } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { LargePageHeader, LuxuryCard, GoldParticles, GoldDivider } from '@/components/LuxuryElements';
-
-interface Booking {
-  id: string;
-  booking_number: string;
-  booking_date: string;
-  booking_time: string | null;
-  party_size: number;
-  special_requests: string | null;
-  total_amount: number | null;
-  status: string;
-  created_at: string;
-  supplier: {
-    name: string;
-    category: string;
-    location: string | null;
-  } | null;
-}
 
 const statusStyles: Record<string, string> = {
   pending: 'bg-warning/10 text-warning border-warning/20',
@@ -34,29 +17,15 @@ const statusStyles: Record<string, string> = {
 };
 
 export default function MyPlansPage() {
-  const { profile } = useAuth();
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const { bookings, loading, fetchBookings } = useSecureBookings();
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchBookings() {
-      if (!profile?.id) return;
-
-      const { data } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          supplier:suppliers(name, category, location)
-        `)
-        .eq('user_id', profile.id)
-        .order('booking_date', { ascending: false });
-
-      setBookings((data as unknown as Booking[]) || []);
-      setLoading(false);
+    if (user) {
+      fetchBookings();
     }
-    fetchBookings();
-  }, [profile?.id]);
+  }, [user, fetchBookings]);
 
   const upcomingBookings = bookings.filter(b => 
     b.status !== 'completed' && b.status !== 'cancelled' && 
@@ -171,11 +140,7 @@ function BookingCard({ booking }: { booking: Booking }) {
         )}
       </div>
 
-      {booking.total_amount && (
-        <div className="text-sm text-foreground pt-3 border-t border-primary/10">
-          Total: <span className="text-primary font-medium">${booking.total_amount.toLocaleString()}</span>
-        </div>
-      )}
+      {/* Note: Financial data (total_amount) is only accessible via edge function for authorized users */}
     </LuxuryCard>
   );
 }

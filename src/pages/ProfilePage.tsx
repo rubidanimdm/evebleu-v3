@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
+import { useSecureProfile } from '@/hooks/useSecureProfile';
+import { useSecureBookings } from '@/hooks/useSecureBookings';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { BottomNav } from '@/components/BottomNav';
-import { LargePageHeader, GoldDivider, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
+import { GoldDivider, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { User, MessageSquare, Calendar, Settings, ChevronRight, Trash2, Lock, Compass, Utensils, Car, Hotel, Plane, Sparkles, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
@@ -21,16 +23,6 @@ interface Conversation {
   title: string;
   created_at: string;
   updated_at: string;
-}
-
-interface Booking {
-  id: string;
-  booking_number: string;
-  booking_date: string;
-  status: string;
-  total_amount: number;
-  supplier_id: string;
-  conversation_id: string | null;
 }
 
 interface CatalogItem {
@@ -53,12 +45,13 @@ const categoryIcons: Record<string, React.ElementType> = {
 };
 
 export default function ProfilePage() {
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
+  const { profile, fetchProfile, updateProfile, loading: profileLoading } = useSecureProfile();
+  const { bookings, fetchBookings, loading: bookingsLoading } = useSecureBookings();
   const navigate = useNavigate();
   const { toast } = useToast();
   
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [bookings, setBookings] = useState<Booking[]>([]);
   const [catalogItems, setCatalogItems] = useState<CatalogItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -75,7 +68,6 @@ export default function ProfilePage() {
   const [isSaving, setIsSaving] = useState(false);
 
   // Password change state
-  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
@@ -92,20 +84,26 @@ export default function ProfilePage() {
     if (profile) {
       setFullName(profile.full_name || '');
       setPhone(profile.phone || '');
-      setCity((profile as any).city || '');
-      setLanguage((profile as any).language || 'en');
-      setBudgetStyle((profile as any).budget_style || 'premium');
-      setDietaryPreferences(((profile as any).dietary_preferences || []).join(', '));
-      setFavoriteCuisines(((profile as any).favorite_cuisines || []).join(', '));
-      setPreferredAreas(((profile as any).preferred_areas || []).join(', '));
-      setSpecialNotes((profile as any).special_notes || '');
+      setCity(profile.city || '');
+      setLanguage(profile.language || 'en');
+      setBudgetStyle(profile.budget_style || 'premium');
+      setDietaryPreferences((profile.dietary_preferences || []).join(', '));
+      setFavoriteCuisines((profile.favorite_cuisines || []).join(', '));
+      setPreferredAreas((profile.preferred_areas || []).join(', '));
+      setSpecialNotes(profile.special_notes || '');
     }
   }, [profile]);
 
   const loadData = async () => {
     setIsLoading(true);
     try {
-      // Load conversations
+      // Fetch profile via edge function
+      await fetchProfile();
+      
+      // Fetch bookings via edge function
+      await fetchBookings();
+
+      // Load conversations (user can access their own via RLS)
       const { data: convData } = await supabase
         .from('conversations')
         .select('id, title, created_at, updated_at')
@@ -114,16 +112,7 @@ export default function ProfilePage() {
       
       if (convData) setConversations(convData);
 
-      // Load bookings using secure view (excludes admin_notes, commission_amount)
-      const { data: bookingData } = await supabase
-        .from('user_bookings')
-        .select('id, booking_number, booking_date, status, total_amount, supplier_id, conversation_id')
-        .eq('user_id', user!.id)
-        .order('created_at', { ascending: false });
-      
-      if (bookingData) setBookings(bookingData);
-
-      // Load catalog items for explore section
+      // Load catalog items (public data, accessible via RLS)
       const { data: catalogData } = await supabase
         .from('catalog_items')
         .select('id, title, category, short_description, price, currency, image_url')
@@ -144,24 +133,22 @@ export default function ProfilePage() {
     setIsSaving(true);
     
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          full_name: fullName,
-          phone,
-          city,
-          language,
-          budget_style: budgetStyle,
-          dietary_preferences: dietaryPreferences ? dietaryPreferences.split(',').map(s => s.trim()) : [],
-          favorite_cuisines: favoriteCuisines ? favoriteCuisines.split(',').map(s => s.trim()) : [],
-          preferred_areas: preferredAreas ? preferredAreas.split(',').map(s => s.trim()) : [],
-          special_notes: specialNotes
-        })
-        .eq('id', user.id);
+      // Use edge function to update both public and private profile data
+      const success = await updateProfile({
+        full_name: fullName,
+        phone,
+        city,
+        language,
+        budget_style: budgetStyle,
+        dietary_preferences: dietaryPreferences ? dietaryPreferences.split(',').map(s => s.trim()) : [],
+        favorite_cuisines: favoriteCuisines ? favoriteCuisines.split(',').map(s => s.trim()) : [],
+        preferred_areas: preferredAreas ? preferredAreas.split(',').map(s => s.trim()) : [],
+        special_notes: specialNotes
+      });
 
-      if (error) throw error;
-      
-      toast({ title: 'Profile updated successfully' });
+      if (!success) {
+        throw new Error('Failed to update profile');
+      }
     } catch (error) {
       toast({ title: 'Failed to update profile', variant: 'destructive' });
     } finally {
@@ -188,7 +175,6 @@ export default function ProfilePage() {
       if (error) throw error;
       
       toast({ title: 'Password updated successfully' });
-      setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
     } catch (error: any) {
@@ -200,17 +186,12 @@ export default function ProfilePage() {
 
   const handleClearData = async () => {
     if (!user) return;
-    if (!confirm('Are you sure you want to clear all your chat history and memories? This cannot be undone.')) return;
+    if (!confirm('Are you sure you want to clear all your chat history? This cannot be undone.')) return;
 
     try {
       await supabase.from('conversations').delete().eq('user_id', user.id);
-      await supabase
-        .from('profiles')
-        .update({ ai_memories: [] })
-        .eq('id', user.id);
-      
       setConversations([]);
-      toast({ title: 'Data cleared successfully' });
+      toast({ title: 'Chat history cleared' });
     } catch (error) {
       toast({ title: 'Failed to clear data', variant: 'destructive' });
     }
@@ -239,7 +220,7 @@ export default function ProfilePage() {
             Welcome, {firstName}!
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            {profile?.email}
+            {profile?.email || 'Loading...'}
           </p>
         </div>
       </div>
@@ -277,7 +258,7 @@ export default function ProfilePage() {
                 <CardDescription>Your past and upcoming reservations</CardDescription>
               </CardHeader>
               <CardContent>
-                {isLoading ? (
+                {bookingsLoading ? (
                   <p className="text-center text-muted-foreground py-8">Loading...</p>
                 ) : bookings.length === 0 ? (
                   <div className="text-center py-8">
@@ -312,8 +293,8 @@ export default function ProfilePage() {
                           </div>
                           <div className="flex items-center justify-between text-sm text-muted-foreground">
                             <span>{format(new Date(booking.booking_date), 'MMM d, yyyy')}</span>
-                            {booking.total_amount && (
-                              <span className="font-medium text-foreground">AED {booking.total_amount}</span>
+                            {booking.supplier?.name && (
+                              <span className="text-foreground">{booking.supplier.name}</span>
                             )}
                           </div>
                           {booking.conversation_id && (
@@ -649,7 +630,7 @@ export default function ProfilePage() {
                   className="w-full border-destructive/30 text-destructive hover:bg-destructive/10"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Clear All Chat History & Data
+                  Clear All Chat History
                 </Button>
               </CardContent>
             </LuxuryCard>
