@@ -17,6 +17,23 @@ import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryE
 import { CatalogManager } from '@/components/admin/CatalogManager';
 import { AdminCustomers } from '@/components/admin/AdminCustomers';
 import { AdminInbox } from '@/components/admin/AdminInbox';
+import { z } from 'zod';
+
+const supplierSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(200, 'Name must be less than 200 characters'),
+  category: z.enum(['restaurant', 'nightlife', 'transport', 'yacht', 'event']),
+  description: z.string().max(1000, 'Description must be less than 1000 characters').optional().nullable(),
+  location: z.string().max(200, 'Location must be less than 200 characters').optional().nullable(),
+  min_spend: z.number().min(0, 'Min spend cannot be negative').max(1000000, 'Min spend too high').optional().nullable(),
+  price_range: z.string().max(20).optional().nullable(),
+  commission_percent: z.number().min(0, 'Commission cannot be negative').max(100, 'Commission cannot exceed 100'),
+  availability_notes: z.string().max(500, 'Availability notes must be less than 500 characters').optional().nullable(),
+  image_url: z.string().url('Invalid image URL').optional().nullable().or(z.literal('')),
+  phone: z.string().max(30, 'Phone must be less than 30 characters').optional().nullable(),
+  whatsapp_link: z.string().url('Invalid WhatsApp link').optional().nullable().or(z.literal('')),
+  is_active: z.boolean(),
+  tags: z.array(z.string().max(50)).max(20, 'Too many tags').optional().nullable(),
+});
 
 interface Supplier {
   id: string;
@@ -126,26 +143,35 @@ export default function AdminPage() {
   }
 
   async function handleSaveSupplier() {
-    const payload = {
-      name: formData.name,
+    // Build payload
+    const rawPayload = {
+      name: formData.name.trim(),
       category: formData.category,
-      description: formData.description || null,
-      location: formData.location || null,
+      description: formData.description.trim() || null,
+      location: formData.location.trim() || null,
       min_spend: formData.min_spend ? parseFloat(formData.min_spend) : null,
-      price_range: formData.price_range || null,
+      price_range: formData.price_range.trim() || null,
       commission_percent: parseFloat(formData.commission_percent) || 10,
-      availability_notes: formData.availability_notes || null,
-      image_url: formData.image_url || null,
-      phone: formData.phone || null,
-      whatsapp_link: formData.whatsapp_link || null,
+      availability_notes: formData.availability_notes.trim() || null,
+      image_url: formData.image_url.trim() || null,
+      phone: formData.phone.trim() || null,
+      whatsapp_link: formData.whatsapp_link.trim() || null,
       is_active: formData.is_active,
       tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : null,
     };
 
+    // Validate with Zod schema
+    const validation = supplierSchema.safeParse(rawPayload);
+    if (!validation.success) {
+      const errorMessage = validation.error.errors.map(e => e.message).join(', ');
+      toast({ title: 'Validation Error', description: errorMessage, variant: 'destructive' });
+      return;
+    }
+
     if (editingSupplier) {
       const { error } = await supabase
         .from('suppliers')
-        .update(payload)
+        .update(rawPayload)
         .eq('id', editingSupplier.id);
       
       if (error) {
@@ -154,7 +180,7 @@ export default function AdminPage() {
       }
       toast({ title: 'Supplier updated' });
     } else {
-      const { error } = await supabase.from('suppliers').insert(payload);
+      const { error } = await supabase.from('suppliers').insert(rawPayload);
       if (error) {
         toast({ title: 'Error creating supplier', variant: 'destructive' });
         return;

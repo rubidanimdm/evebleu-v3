@@ -7,6 +7,21 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { Upload, X, Loader2 } from 'lucide-react';
+import { z } from 'zod';
+import { useToast } from '@/hooks/use-toast';
+
+const catalogItemSchema = z.object({
+  category: z.enum(['DINING', 'TRANSPORT', 'HOTEL', 'FLIGHT', 'CLUB', 'EXPERIENCE']),
+  title: z.string().min(1, 'Title is required').max(200, 'Title must be less than 200 characters'),
+  image_url: z.string().url('Invalid image URL').optional().or(z.literal('')),
+  price: z.number().min(0, 'Price cannot be negative').max(10000000, 'Price is too high'),
+  currency: z.enum(['AED', 'USD', 'EUR']),
+  pricing_unit: z.enum(['per day', 'per hour', 'per night', 'per person', 'total']),
+  short_description: z.string().max(500, 'Description must be less than 500 characters').optional(),
+  details: z.record(z.string().max(200, 'Detail value too long')).optional(),
+  is_active: z.boolean(),
+  sort_order: z.number().int().min(0).max(10000),
+});
 
 export interface CatalogItemFormData {
   id?: string;
@@ -40,6 +55,7 @@ interface Props {
 }
 
 export function CatalogItemForm({ initialData, onSave, onCancel }: Props) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<CatalogItemFormData>(
     initialData || {
       category: 'TRANSPORT',
@@ -76,7 +92,28 @@ export function CatalogItemForm({ initialData, onSave, onCancel }: Props) {
   };
 
   const handleSubmit = async () => {
-    if (!formData.title.trim()) return;
+    // Build validation payload
+    const rawPayload = {
+      category: formData.category,
+      title: formData.title.trim(),
+      image_url: formData.image_url.trim() || '',
+      price: formData.price,
+      currency: formData.currency,
+      pricing_unit: formData.pricing_unit,
+      short_description: formData.short_description?.trim() || '',
+      details: formData.details,
+      is_active: formData.is_active,
+      sort_order: formData.sort_order,
+    };
+
+    // Validate with Zod schema
+    const validation = catalogItemSchema.safeParse(rawPayload);
+    if (!validation.success) {
+      const errorMessage = validation.error.errors.map(e => e.message).join(', ');
+      toast({ title: 'Validation Error', description: errorMessage, variant: 'destructive' });
+      return;
+    }
+
     setSaving(true);
     try {
       await onSave(formData);
