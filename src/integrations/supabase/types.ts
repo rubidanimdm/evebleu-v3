@@ -870,6 +870,7 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_admin_current_user: { Args: never; Returns: boolean }
       is_admin_user: { Args: { user_id: string }; Returns: boolean }
       is_manager: { Args: { _user_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
