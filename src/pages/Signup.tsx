@@ -60,7 +60,7 @@ export default function Signup() {
       }
 
       toast({ title: 'Welcome to AI My Dubai!' });
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
