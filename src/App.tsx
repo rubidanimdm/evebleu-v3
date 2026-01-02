@@ -136,8 +136,8 @@ function AppContent() {
         <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
-        <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
-        <Route path="/admin/customers/:id" element={<ProtectedRoute><CustomerDetailPage /></ProtectedRoute>} />
+        <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
+        <Route path="/admin/customers/:id" element={<AdminRoute><CustomerDetailPage /></AdminRoute>} />
         
         {/* Legacy route redirects */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />
