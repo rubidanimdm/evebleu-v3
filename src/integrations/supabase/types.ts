@@ -120,6 +120,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "bookings_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "bookings_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -165,6 +172,13 @@ export type Database = {
             columns: ["booking_id"]
             isOneToOne: false
             referencedRelation: "bookings_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_financial_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "user_bookings"
             referencedColumns: ["id"]
           },
         ]
@@ -225,6 +239,13 @@ export type Database = {
             columns: ["supplier_id"]
             isOneToOne: false
             referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_public_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -746,6 +767,57 @@ export type Database = {
       }
     }
     Views: {
+      suppliers_public: {
+        Row: {
+          availability_notes: string | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          is_active: boolean | null
+          location: string | null
+          name: string | null
+          phone: string | null
+          price_range: string | null
+          tags: string[] | null
+          updated_at: string | null
+          whatsapp_link: string | null
+        }
+        Insert: {
+          availability_notes?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          is_active?: boolean | null
+          location?: string | null
+          name?: string | null
+          phone?: string | null
+          price_range?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          whatsapp_link?: string | null
+        }
+        Update: {
+          availability_notes?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          is_active?: boolean | null
+          location?: string | null
+          name?: string | null
+          phone?: string | null
+          price_range?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          whatsapp_link?: string | null
+        }
+        Relationships: []
+      }
       user_bookings: {
         Row: {
           booking_date: string | null
@@ -762,56 +834,26 @@ export type Database = {
           updated_at: string | null
           user_id: string | null
         }
-        Insert: {
-          booking_date?: string | null
-          booking_number?: string | null
-          booking_time?: string | null
-          conversation_id?: string | null
-          created_at?: string | null
-          id?: string | null
-          party_size?: number | null
-          special_requests?: string | null
-          status?: string | null
-          supplier_id?: string | null
-          total_amount?: number | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          booking_date?: string | null
-          booking_number?: string | null
-          booking_time?: string | null
-          conversation_id?: string | null
-          created_at?: string | null
-          id?: string | null
-          party_size?: number | null
-          special_requests?: string | null
-          status?: string | null
-          supplier_id?: string | null
-          total_amount?: number | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
         Relationships: [
           {
-            foreignKeyName: "bookings_conversation_id_fkey"
+            foreignKeyName: "bookings_public_conversation_id_fkey"
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "conversations"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "bookings_supplier_id_fkey"
+            foreignKeyName: "bookings_public_supplier_id_fkey"
             columns: ["supplier_id"]
             isOneToOne: false
             referencedRelation: "suppliers"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "bookings_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "bookings_public_supplier_id_fkey"
+            columns: ["supplier_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "suppliers_public"
             referencedColumns: ["id"]
           },
         ]
