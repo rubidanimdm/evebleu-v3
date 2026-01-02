@@ -67,10 +67,32 @@ export default {
         },
         champagne: "hsl(var(--champagne))",
       },
+      fontFamily: {
+        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
+      },
+      fontSize: {
+        // Mobile-first premium sizing
+        'xs': ['0.8125rem', { lineHeight: '1.25rem' }],      // 13px
+        'sm': ['0.9375rem', { lineHeight: '1.5rem' }],       // 15px
+        'base': ['1.0625rem', { lineHeight: '1.75rem' }],    // 17px - default body
+        'lg': ['1.1875rem', { lineHeight: '1.875rem' }],     // 19px
+        'xl': ['1.375rem', { lineHeight: '2rem' }],          // 22px
+        '2xl': ['1.625rem', { lineHeight: '2.25rem' }],      // 26px
+        '3xl': ['2rem', { lineHeight: '2.5rem' }],           // 32px
+        '4xl': ['2.5rem', { lineHeight: '3rem' }],           // 40px
+        '5xl': ['3rem', { lineHeight: '3.5rem' }],           // 48px
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
       },
       keyframes: {
         "accordion-down": {

@@ -112,32 +112,50 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 16px;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-weight: 500;
     letter-spacing: -0.01em;
   }
 
+  /* Premium typography hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
   h1 {
-    @apply text-2xl font-medium tracking-tight;
+    @apply text-3xl font-semibold tracking-tight;
   }
 
   h2 {
-    @apply text-xl font-medium;
+    @apply text-2xl font-semibold;
   }
 
   h3 {
+    @apply text-xl font-medium;
+  }
+
+  h4 {
     @apply text-lg font-medium;
   }
 
+  /* Larger touch targets for app-first design */
   button {
-    @apply min-h-[48px] text-base;
+    @apply min-h-[52px] text-base font-medium;
+  }
+
+  /* Premium text rendering */
+  p, span, li, a {
+    @apply text-base;
+  }
+
+  /* Better input sizing */
+  input, textarea, select {
+    @apply text-base min-h-[52px];
   }
 
   /* Subtle gold glow utility */
