@@ -203,11 +203,6 @@ export default function Login() {
                 </Link>
               </div>
 
-              <div className="text-center">
-                <Link to="/" className="text-muted-foreground hover:text-primary text-sm">
-                  Back to Home
-                </Link>
-              </div>
             </form>
           )}
 
