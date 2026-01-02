@@ -80,7 +80,7 @@ export function AdminInbox() {
   const loadConversations = async () => {
     setIsLoading(true);
     try {
-      // Fetch HUMAN conversations
+      // Fetch HUMAN conversations - admins can view these via RLS
       const { data: convData, error } = await supabase
         .from('conversations')
         .select('*')
@@ -89,17 +89,26 @@ export function AdminInbox() {
 
       if (error) throw error;
 
+      // Get unique user IDs
+      const userIds = [...new Set((convData || []).map(c => c.user_id))];
+
+      // Fetch customer profiles using edge function
+      let profileMap: Record<string, { full_name: string; email: string }> = {};
+      if (userIds.length > 0) {
+        const { data: profilesData } = await supabase.functions.invoke('get-admin-inbox-profiles', {
+          body: { userIds },
+        });
+        if (profilesData?.profiles) {
+          profilesData.profiles.forEach((p: any) => {
+            profileMap[p.id] = { full_name: p.full_name, email: p.email };
+          });
+        }
+      }
+
       // Enrich with customer info and last message
       const enrichedConvs = await Promise.all(
         (convData || []).map(async (conv) => {
-          // Get customer profile
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('full_name, email')
-            .eq('id', conv.user_id)
-            .single();
-
-          // Get last message
+          // Get last message - admins can view these via RLS
           const { data: lastMsg } = await supabase
             .from('chat_messages')
             .select('content, sender_type')
@@ -110,7 +119,7 @@ export function AdminInbox() {
 
           return {
             ...conv,
-            customer: profile || { full_name: 'Unknown', email: '' },
+            customer: profileMap[conv.user_id] || { full_name: 'Unknown', email: '' },
             last_message: lastMsg?.content?.slice(0, 50) + (lastMsg?.content?.length > 50 ? '...' : '') || '',
           };
         })
