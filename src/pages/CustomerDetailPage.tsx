@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -11,7 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/BottomNav';
 import { LargePageHeader } from '@/components/LuxuryElements';
-import { ArrowLeft, Calendar, CreditCard, MessageSquare, StickyNote, User, TrendingUp, Send } from 'lucide-react';
+import { ArrowLeft, Calendar, StickyNote, User, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format, subDays, subMonths } from 'date-fns';
 import { z } from 'zod';
@@ -54,7 +53,7 @@ interface Note {
 export default function CustomerDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user, profile: adminProfile } = useAuth();
+  const { user } = useAuth();
   const { toast } = useToast();
 
   const [customer, setCustomer] = useState<CustomerProfile | null>(null);
@@ -78,28 +77,29 @@ export default function CustomerDetailPage() {
     setIsLoading(true);
 
     try {
-      // Fetch customer profile
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', id)
-        .single();
+      // Use secure edge function instead of direct table access
+      const { data, error } = await supabase.functions.invoke('get-customer-detail', {
+        body: { customerId: id },
+      });
 
-      if (profileError) throw profileError;
-      setCustomer(profileData as CustomerProfile);
+      if (error) {
+        console.error('Error loading customer:', error);
+        toast({ title: 'Error loading customer data', variant: 'destructive' });
+        return;
+      }
 
-      // Fetch bookings
-      const { data: bookingsData } = await supabase
-        .from('bookings')
-        .select('*')
-        .eq('user_id', id)
-        .order('created_at', { ascending: false });
+      if (!data?.customer) {
+        setCustomer(null);
+        return;
+      }
 
-      setBookings(bookingsData || []);
+      setCustomer(data.customer as CustomerProfile);
+      setBookings(data.bookings || []);
+      setNotes(data.notes || []);
 
       // Calculate spend metrics
-      const confirmedBookings = (bookingsData || []).filter(b => b.status === 'confirmed');
-      const lifetime = confirmedBookings.reduce((sum, b) => sum + (b.total_amount || 0), 0);
+      const confirmedBookings = (data.bookings || []).filter((b: Booking) => b.status === 'confirmed');
+      const lifetime = confirmedBookings.reduce((sum: number, b: Booking) => sum + (b.total_amount || 0), 0);
       setLifetimeSpend(lifetime);
 
       const now = new Date();
@@ -107,24 +107,16 @@ export default function CustomerDetailPage() {
       const twelveMonthsAgo = subMonths(now, 12);
 
       const last30 = confirmedBookings
-        .filter(b => new Date(b.booking_date) >= thirtyDaysAgo)
-        .reduce((sum, b) => sum + (b.total_amount || 0), 0);
+        .filter((b: Booking) => new Date(b.booking_date) >= thirtyDaysAgo)
+        .reduce((sum: number, b: Booking) => sum + (b.total_amount || 0), 0);
       setLast30DaysSpend(last30);
 
       const last12 = confirmedBookings
-        .filter(b => new Date(b.booking_date) >= twelveMonthsAgo)
-        .reduce((sum, b) => sum + (b.total_amount || 0), 0);
+        .filter((b: Booking) => new Date(b.booking_date) >= twelveMonthsAgo)
+        .reduce((sum: number, b: Booking) => sum + (b.total_amount || 0), 0);
       setLast12MonthsSpend(last12);
-
-      // Fetch admin notes
-      const { data: notesData } = await supabase
-        .from('customer_notes')
-        .select('*')
-        .eq('customer_id', id)
-        .order('created_at', { ascending: false });
-
-      setNotes(notesData || []);
     } catch (error) {
+      console.error('Error loading customer:', error);
       toast({ title: 'Error loading customer data', variant: 'destructive' });
     } finally {
       setIsLoading(false);
@@ -145,6 +137,7 @@ export default function CustomerDetailPage() {
     setIsSavingNote(true);
 
     try {
+      // customer_notes has RLS for managers
       const { data, error } = await supabase
         .from('customer_notes')
         .insert({
@@ -160,6 +153,7 @@ export default function CustomerDetailPage() {
       setNewNote('');
       toast({ title: 'Note added' });
     } catch (error) {
+      console.error('Error adding note:', error);
       toast({ title: 'Failed to add note', variant: 'destructive' });
     } finally {
       setIsSavingNote(false);
@@ -280,7 +274,7 @@ export default function CustomerDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Last Seen</p>
-                    <p className="font-medium">{format(new Date(customer.last_seen), 'MMM d, yyyy h:mm a')}</p>
+                    <p className="font-medium">{customer.last_seen ? format(new Date(customer.last_seen), 'MMM d, yyyy h:mm a') : 'N/A'}</p>
                   </div>
                 </div>
               </CardContent>

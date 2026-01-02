@@ -8,7 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Users, ChevronRight, Download } from 'lucide-react';
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
 
 interface CustomerSummary {
   id: string;
@@ -23,6 +24,7 @@ interface CustomerSummary {
 
 export function AdminCustomers() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [customers, setCustomers] = useState<CustomerSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,48 +38,19 @@ export function AdminCustomers() {
   const loadCustomers = async () => {
     setIsLoading(true);
     try {
-      // Fetch all profiles with resident role
-      const { data: profiles, error: profilesError } = await supabase
-        .from('profiles')
-        .select('id, full_name, email, phone, created_at, last_seen')
-        .eq('role', 'resident');
+      // Use secure edge function instead of direct table access
+      const { data, error } = await supabase.functions.invoke('get-admin-customers');
 
-      if (profilesError) throw profilesError;
+      if (error) {
+        console.error('Error loading customers:', error);
+        toast({ title: 'Error loading customers', variant: 'destructive' });
+        return;
+      }
 
-      // Fetch booking counts and payment totals for each customer
-      const customerData: CustomerSummary[] = await Promise.all(
-        (profiles || []).map(async (profile) => {
-          // Get booking count
-          const { count: bookingCount } = await supabase
-            .from('bookings')
-            .select('id', { count: 'exact', head: true })
-            .eq('user_id', profile.id);
-
-          // Get total paid from bookings (using total_amount as payment proxy)
-          const { data: bookings } = await supabase
-            .from('bookings')
-            .select('total_amount')
-            .eq('user_id', profile.id)
-            .eq('status', 'confirmed');
-
-          const totalPaid = bookings?.reduce((sum, b) => sum + (b.total_amount || 0), 0) || 0;
-
-          return {
-            id: profile.id,
-            full_name: profile.full_name,
-            email: profile.email,
-            phone: profile.phone || '',
-            created_at: profile.created_at,
-            last_seen: profile.last_seen || profile.created_at,
-            total_paid: totalPaid,
-            booking_count: bookingCount || 0,
-          };
-        })
-      );
-
-      setCustomers(customerData);
+      setCustomers(data.customers || []);
     } catch (error) {
       console.error('Error loading customers:', error);
+      toast({ title: 'Error loading customers', variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
