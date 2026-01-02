@@ -1,16 +1,13 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
-import { Button } from '@/components/ui/button';
-import { Home, MessageSquare, Compass, Calendar, User, LogOut, Settings } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { Home, MessageSquare, Compass, Calendar, User, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { icon: Home, label: 'Home', path: '/' },
   { icon: MessageSquare, label: 'Concierge', path: '/concierge' },
   { icon: Compass, label: 'Explore', path: '/explore' },
-  { icon: Calendar, label: 'My Plans', path: '/my-plans' },
+  { icon: Calendar, label: 'Plans', path: '/my-plans' },
   { icon: User, label: 'Profile', path: '/profile' },
 ];
 
@@ -22,52 +19,47 @@ export function BottomNav() {
   const { profile } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { toast } = useToast();
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast({ title: 'Signed out' });
-    navigate('/');
-  };
 
   const isAdmin = profile?.role === 'manager' || profile?.role === 'staff';
   const allItems = isAdmin ? [...navItems, ...adminItems] : navItems;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-primary/10 z-50 safe-area-pb">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card/98 backdrop-blur-xl border-t border-primary/10 z-50 safe-area-pb">
       {/* Gold accent line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
       
-      <div className="max-w-2xl mx-auto flex items-center justify-around py-2 px-2">
+      <div className="max-w-2xl mx-auto flex items-center justify-around py-3 px-2">
         {allItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
-            <Button
+            <button
               key={item.path}
-              variant="ghost"
-              size="sm"
               onClick={() => navigate(item.path)}
               className={cn(
-                "flex flex-col gap-1 h-auto py-2.5 px-3 min-w-[56px] rounded-xl transition-all duration-300",
+                "flex flex-col items-center gap-1.5 py-2 px-4 min-w-[60px] rounded-xl transition-all duration-300",
                 isActive 
-                  ? "text-primary bg-primary/10" 
-                  : "text-muted-foreground hover:text-primary hover:bg-primary/5"
+                  ? "text-primary" 
+                  : "text-muted-foreground hover:text-primary/80"
               )}
             >
-              <item.icon className="w-5 h-5" strokeWidth={1.5} />
-              <span className="text-[10px] font-medium">{item.label}</span>
-            </Button>
+              <div className={cn(
+                "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+                isActive ? "bg-primary/15" : "bg-transparent"
+              )}>
+                <item.icon 
+                  className={cn("w-5 h-5", isActive && "text-primary")} 
+                  strokeWidth={isActive ? 2 : 1.5} 
+                />
+              </div>
+              <span className={cn(
+                "text-[11px] font-medium",
+                isActive && "text-primary"
+              )}>
+                {item.label}
+              </span>
+            </button>
           );
         })}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleLogout}
-          className="flex flex-col gap-1 h-auto py-2.5 px-3 min-w-[56px] text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-300"
-        >
-          <LogOut className="w-5 h-5" strokeWidth={1.5} />
-          <span className="text-[10px] font-medium">Exit</span>
-        </Button>
       </div>
     </nav>
   );
