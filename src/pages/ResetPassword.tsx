@@ -64,7 +64,7 @@ export default function ResetPassword() {
       // Sign out and redirect to login
       setTimeout(async () => {
         await supabase.auth.signOut();
-        navigate('/auth');
+        navigate('/login');
       }, 2000);
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -103,7 +103,7 @@ export default function ResetPassword() {
             <div className="text-center space-y-6">
               <p className="text-destructive">{error}</p>
               <Button 
-                onClick={() => navigate('/auth')}
+                onClick={() => navigate('/login')}
                 className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg"
               >
                 Back to Sign In

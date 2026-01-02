@@ -10,7 +10,6 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Onboarding from "./pages/Onboarding";
-import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
 import ConciergePage from "./pages/ConciergePage";
 import ExplorePage from "./pages/ExplorePage";
@@ -21,6 +20,7 @@ import ResetPassword from "./pages/ResetPassword";
 import CustomerDetailPage from "./pages/CustomerDetailPage";
 import SupportPage from "./pages/SupportPage";
 import AdminPage from "./pages/AdminPage";
+import AuthCallback from "./pages/AuthCallback";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +30,10 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+        <div className="text-center space-y-4">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-muted-foreground text-sm">Loading...</p>
+        </div>
       </div>
     );
   }
@@ -42,16 +45,56 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function PublicRoute({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-muted-foreground text-sm">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect authenticated users to dashboard
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+function RootRedirect() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-muted-foreground text-sm">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return <Navigate to={user ? "/dashboard" : "/login"} replace />;
+}
+
 function AppContent() {
   const { user } = useAuth();
   
   return (
     <>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<RootRedirect />} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/dashboard" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
@@ -62,6 +105,9 @@ function AppContent() {
         <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
         <Route path="/admin/customers/:id" element={<ProtectedRoute><CustomerDetailPage /></ProtectedRoute>} />
+        {/* Legacy route redirects */}
+        <Route path="/home" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/auth" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {/* Floating chat button visible on all pages except concierge and auth */}
