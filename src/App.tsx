@@ -59,9 +59,9 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Redirect authenticated users to dashboard
+  // Redirect authenticated users to main home
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
@@ -81,7 +81,8 @@ function RootRedirect() {
     );
   }
 
-  return <Navigate to={user ? "/dashboard" : "/login"} replace />;
+  // Authenticated users go to main home ("/"), unauthenticated to login
+  return <Navigate to={user ? "/" : "/login"} replace />;
 }
 
 function AppContent() {
@@ -90,13 +91,17 @@ function AppContent() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<RootRedirect />} />
+        {/* Main App Home - authenticated users land here */}
+        <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        
+        {/* Auth Routes */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/dashboard" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        
+        {/* App Screens */}
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
         <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
         <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
@@ -105,8 +110,10 @@ function AppContent() {
         <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
         <Route path="/admin/customers/:id" element={<ProtectedRoute><CustomerDetailPage /></ProtectedRoute>} />
+        
         {/* Legacy route redirects */}
-        <Route path="/home" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<Navigate to="/" replace />} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/auth" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

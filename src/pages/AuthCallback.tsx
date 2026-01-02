@@ -33,16 +33,16 @@ export default function AuthCallback() {
             return;
           }
 
-          // Clear hash and redirect
+          // Clear hash and redirect to main home
           window.history.replaceState(null, '', window.location.pathname);
-          navigate('/dashboard', { replace: true });
+          navigate('/', { replace: true });
           return;
         }
 
         // Check for existing session
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
-          navigate('/dashboard', { replace: true });
+          navigate('/', { replace: true });
         } else {
           navigate('/login', { replace: true });
         }

@@ -42,9 +42,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
         
         if (!error && data.session) {
-          // Clear the hash from URL and redirect to dashboard
+          // Clear the hash from URL and redirect to main home
           window.history.replaceState(null, '', window.location.pathname);
-          navigate('/dashboard', { replace: true });
+          navigate('/', { replace: true });
           return true;
         }
       }
@@ -73,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // Redirect authenticated users away from auth pages
         if (event === 'SIGNED_IN' && (location.pathname === '/login' || location.pathname === '/signup')) {
-          navigate('/dashboard', { replace: true });
+          navigate('/', { replace: true });
         }
       }
     );

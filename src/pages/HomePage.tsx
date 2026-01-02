@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
-import { GoldParticles, LuxuryCard, GoldDivider } from '@/components/LuxuryElements';
+import { GoldParticles, GoldDivider, LuxuryCard } from '@/components/LuxuryElements';
 import { Button } from '@/components/ui/button';
 import { 
   UtensilsCrossed, 
@@ -9,111 +9,165 @@ import {
   Hotel, 
   Plane, 
   Music, 
-  Sparkles, 
-  MessageSquare,
-  Calendar,
-  ChevronRight 
+  Sparkles,
+  User,
+  CalendarCheck,
+  Settings,
+  LogOut,
+  Check,
+  Star,
+  Shield,
+  Heart
 } from 'lucide-react';
+import heroImage from '@/assets/ai-mydubai-hero.jpeg';
 import logo from '@/assets/logo.png';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const quickActions = [
   { 
     icon: UtensilsCrossed, 
     label: 'Book a Table', 
-    route: '/explore?category=DINING',
-    description: 'Fine dining reservations'
+    route: '/concierge?intent=TABLE',
+    gradient: 'from-amber-500/20 to-orange-500/20'
   },
   { 
     icon: Car, 
     label: 'Book a Car', 
-    route: '/explore?category=TRANSPORT',
-    description: 'Luxury transportation'
+    route: '/concierge?intent=CAR',
+    gradient: 'from-blue-500/20 to-cyan-500/20'
   },
   { 
     icon: Hotel, 
     label: 'Book a Hotel', 
     route: '/concierge?intent=HOTEL',
-    description: 'Premium accommodations'
+    gradient: 'from-purple-500/20 to-pink-500/20'
   },
   { 
     icon: Plane, 
     label: 'Book a Flight', 
     route: '/concierge?intent=FLIGHT',
-    description: 'First-class travel'
+    gradient: 'from-sky-500/20 to-indigo-500/20'
   },
   { 
     icon: Music, 
-    label: 'Nightlife', 
-    route: '/explore?category=CLUB',
-    description: 'VIP access'
+    label: 'Book a Club', 
+    route: '/concierge?intent=CLUB',
+    gradient: 'from-rose-500/20 to-red-500/20'
   },
   { 
     icon: Sparkles, 
-    label: 'Experiences', 
-    route: '/explore?category=EXPERIENCE',
-    description: 'Curated activities'
+    label: 'Handle It For Me', 
+    route: '/concierge',
+    gradient: 'from-primary/30 to-primary/10'
   },
+];
+
+const services = [
+  { icon: UtensilsCrossed, label: 'Restaurants & Reservations' },
+  { icon: Hotel, label: 'Luxury Hotels & Stays' },
+  { icon: Car, label: 'Chauffeur & Car Booking' },
+  { icon: Plane, label: 'Flights & Premium Travel' },
+  { icon: Music, label: 'Clubs, Beach Clubs & Nightlife' },
+  { icon: Star, label: 'Experiences & VIP Access' },
+  { icon: Heart, label: 'Personal Requests (Anything you need)' },
+];
+
+const advantages = [
+  { icon: Check, label: 'One place for everything (no WhatsApp chaos)' },
+  { icon: Check, label: 'Fast response and clear confirmations' },
+  { icon: Star, label: 'Premium curated options (not random lists)' },
+  { icon: User, label: 'Personal account + saved preferences' },
+  { icon: Shield, label: 'Secure and private' },
 ];
 
 export default function HomePage() {
   const { profile } = useAuth();
   const navigate = useNavigate();
-  
-  const firstName = profile?.full_name?.split(' ')[0] || 'Guest';
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({ title: 'Signed out' });
+    navigate('/login');
+  };
 
   return (
-    <div className="min-h-screen bg-background pb-24 relative">
-      <GoldParticles count={15} />
-      
-      {/* Header */}
-      <header className="relative bg-card/80 backdrop-blur border-b border-primary/10 px-4 py-6">
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        <div className="max-w-2xl mx-auto flex items-center gap-4">
-          <div className="relative">
-            <div className="absolute inset-0 blur-xl bg-primary/10 rounded-full" />
-            <img 
-              src={logo} 
-              alt="AI My Dubai" 
-              className="relative w-12 h-12 rounded-lg object-contain"
-            />
+    <div className="min-h-screen bg-background pb-24 relative overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-[70vh] flex items-end justify-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0">
+          <img 
+            src={heroImage} 
+            alt="AI My Dubai - Premium Dubai Experience" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent" />
+        </div>
+
+        {/* Gold Particles */}
+        <GoldParticles count={25} />
+
+        {/* Top Bar - Personal Area Access */}
+        <div className="absolute top-0 left-0 right-0 z-20 safe-area-pt">
+          <div className="flex items-center justify-between px-4 py-3">
+            <div className="flex items-center gap-2">
+              <img src={logo} alt="AI My Dubai" className="w-10 h-10 rounded-lg" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate('/profile')}
+                className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-md text-white hover:bg-black/40"
+              >
+                <User className="w-5 h-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate('/my-plans')}
+                className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-md text-white hover:bg-black/40"
+              >
+                <CalendarCheck className="w-5 h-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleLogout}
+                className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-md text-white hover:bg-black/40"
+              >
+                <LogOut className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
-          <div className="flex-1">
-            <h1 className="text-lg font-medium text-primary tracking-tight">
-              Welcome, {firstName}
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 text-center px-6 pb-12 pt-8 w-full">
+          <div className="space-y-2 mb-6">
+            <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight drop-shadow-lg">
+              AI My Dubai
             </h1>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xl text-primary font-medium tracking-wide drop-shadow-md">
               Concierge. It. Done.
             </p>
           </div>
+          
+          {profile?.full_name && (
+            <p className="text-white/80 text-sm mb-4">
+              Welcome back, {profile.full_name.split(' ')[0]}
+            </p>
+          )}
         </div>
-      </header>
+      </section>
 
-      <main className="max-w-2xl mx-auto p-4 space-y-6">
-        {/* Hero CTA */}
-        <LuxuryCard className="p-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-              <MessageSquare className="w-6 h-6 text-primary" />
-            </div>
-            <div className="flex-1">
-              <h2 className="font-medium text-foreground">AI Concierge</h2>
-              <p className="text-sm text-muted-foreground">Let me handle everything for you</p>
-            </div>
-          </div>
-          <Button 
-            onClick={() => navigate('/concierge')}
-            className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl text-base"
-          >
-            <MessageSquare className="w-5 h-5 mr-2" />
-            Start a Conversation
-          </Button>
-        </LuxuryCard>
-
-        <GoldDivider />
-
+      {/* Main Content */}
+      <main className="relative z-10 -mt-8">
         {/* Quick Actions Grid */}
-        <section className="space-y-4">
-          <h2 className="text-primary font-medium uppercase tracking-wider text-sm">Quick Access</h2>
+        <section className="px-4 mb-8">
           <div className="grid grid-cols-2 gap-3">
             {quickActions.map((action) => {
               const Icon = action.icon;
@@ -121,16 +175,13 @@ export default function HomePage() {
                 <button
                   key={action.label}
                   onClick={() => navigate(action.route)}
-                  className="p-4 rounded-xl border border-primary/10 bg-card/50 hover:bg-card hover:border-primary/20 transition-all text-left group"
+                  className={`p-4 rounded-2xl border border-primary/20 bg-card/90 backdrop-blur-sm hover:border-primary/40 hover:scale-[1.02] transition-all duration-300 text-left group shadow-lg`}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
-                    <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.gradient} flex items-center justify-center mb-3`}>
+                    <Icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
                   </div>
-                  <p className="font-medium text-sm group-hover:text-primary transition-colors">
+                  <p className="font-medium text-foreground group-hover:text-primary transition-colors">
                     {action.label}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {action.description}
                   </p>
                 </button>
               );
@@ -138,40 +189,97 @@ export default function HomePage() {
           </div>
         </section>
 
-        <GoldDivider />
+        <div className="px-4 space-y-8">
+          <GoldDivider />
 
-        {/* Secondary Actions */}
-        <section className="space-y-3">
-          <button
-            onClick={() => navigate('/my-plans')}
-            className="w-full p-4 rounded-xl border border-primary/10 bg-card/50 hover:bg-card hover:border-primary/20 transition-all flex items-center gap-4 group"
-          >
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Calendar className="w-5 h-5 text-primary" strokeWidth={1.5} />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="font-medium group-hover:text-primary transition-colors">My Plans</p>
-              <p className="text-xs text-muted-foreground">View your reservations</p>
-            </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-          </button>
+          {/* About Us Section */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-semibold text-primary tracking-tight">About Us</h2>
+            <LuxuryCard className="p-5">
+              <p className="text-muted-foreground leading-relaxed">
+                AI My Dubai is your premium concierge assistant for Dubai — built to save you time, 
+                remove confusion, and deliver the exact experience you want. From restaurants and hotels 
+                to transport and nightlife — you ask, we handle it.
+              </p>
+            </LuxuryCard>
+          </section>
 
-          <button
-            onClick={() => navigate('/explore')}
-            className="w-full p-4 rounded-xl border border-primary/10 bg-card/50 hover:bg-card hover:border-primary/20 transition-all flex items-center gap-4 group"
-          >
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-primary" strokeWidth={1.5} />
+          <GoldDivider />
+
+          {/* Who We Are Section */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-semibold text-primary tracking-tight">Who We Are</h2>
+            <LuxuryCard className="p-5">
+              <p className="text-muted-foreground leading-relaxed">
+                We are a discreet concierge team powered by a smart personal assistant. We combine 
+                human-level taste and local knowledge with fast automation — so every request is 
+                handled accurately and efficiently.
+              </p>
+            </LuxuryCard>
+          </section>
+
+          <GoldDivider />
+
+          {/* Our Services Section */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-semibold text-primary tracking-tight">Our Services</h2>
+            <div className="space-y-2">
+              {services.map((service, index) => {
+                const Icon = service.icon;
+                return (
+                  <LuxuryCard key={index} className="p-4 flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                    </div>
+                    <p className="text-foreground font-medium">{service.label}</p>
+                  </LuxuryCard>
+                );
+              })}
             </div>
-            <div className="flex-1 text-left">
-              <p className="font-medium group-hover:text-primary transition-colors">Explore</p>
-              <p className="text-xs text-muted-foreground">Browse curated experiences</p>
+          </section>
+
+          <GoldDivider />
+
+          {/* Why Us Section */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-semibold text-primary tracking-tight">Why Us</h2>
+            <div className="space-y-2">
+              {advantages.map((advantage, index) => {
+                const Icon = advantage.icon;
+                return (
+                  <div key={index} className="flex items-center gap-3 p-3">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-4 h-4 text-primary" strokeWidth={2} />
+                    </div>
+                    <p className="text-muted-foreground">{advantage.label}</p>
+                  </div>
+                );
+              })}
             </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-          </button>
-        </section>
+          </section>
+
+          <GoldDivider />
+
+          {/* CTA Section */}
+          <section className="pb-8">
+            <LuxuryCard className="p-6 text-center space-y-4">
+              <h3 className="text-lg font-semibold text-foreground">Ready to Experience Dubai?</h3>
+              <p className="text-muted-foreground text-sm">
+                Let our AI concierge handle everything for you
+              </p>
+              <Button 
+                onClick={() => navigate('/concierge')}
+                className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl text-base font-medium"
+              >
+                <Sparkles className="w-5 h-5 mr-2" />
+                Start a Conversation
+              </Button>
+            </LuxuryCard>
+          </section>
+        </div>
       </main>
 
+      {/* Bottom Navigation */}
       <BottomNav />
     </div>
   );
