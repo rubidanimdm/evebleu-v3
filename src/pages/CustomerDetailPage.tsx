@@ -14,6 +14,14 @@ import { LargePageHeader } from '@/components/LuxuryElements';
 import { ArrowLeft, Calendar, CreditCard, MessageSquare, StickyNote, User, TrendingUp, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format, subDays, subMonths } from 'date-fns';
+import { z } from 'zod';
+
+const customerNoteSchema = z.object({
+  content: z.string()
+    .min(1, 'Note cannot be empty')
+    .max(2000, 'Note must be less than 2000 characters')
+    .transform(val => val.trim()),
+});
 
 interface CustomerProfile {
   id: string;
@@ -124,7 +132,16 @@ export default function CustomerDetailPage() {
   };
 
   const handleAddNote = async () => {
-    if (!newNote.trim() || !id || !user) return;
+    if (!id || !user) return;
+    
+    // Validate with Zod schema
+    const validation = customerNoteSchema.safeParse({ content: newNote });
+    if (!validation.success) {
+      const errorMessage = validation.error.errors.map(e => e.message).join(', ');
+      toast({ title: 'Validation Error', description: errorMessage, variant: 'destructive' });
+      return;
+    }
+
     setIsSavingNote(true);
 
     try {
@@ -133,7 +150,7 @@ export default function CustomerDetailPage() {
         .insert({
           customer_id: id,
           admin_id: user.id,
-          content: newNote.trim(),
+          content: validation.data.content,
         })
         .select()
         .single();
