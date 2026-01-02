@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { icon: Home, label: 'Home', path: '/dashboard' },
+  { icon: Home, label: 'Home', path: '/' },
   { icon: MessageSquare, label: 'Concierge', path: '/concierge' },
   { icon: Compass, label: 'Explore', path: '/explore' },
   { icon: Calendar, label: 'My Plans', path: '/my-plans' },
