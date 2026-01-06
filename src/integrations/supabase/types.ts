@@ -876,7 +876,7 @@ export type Database = {
       is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "manager" | "staff" | "resident" | "owner"
+      app_role: "manager" | "staff" | "resident" | "owner" | "supplier"
       payment_status: "paid" | "unpaid"
       ticket_category:
         | "electricity"
@@ -1014,7 +1014,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["manager", "staff", "resident", "owner"],
+      app_role: ["manager", "staff", "resident", "owner", "supplier"],
       payment_status: ["paid", "unpaid"],
       ticket_category: [
         "electricity",
