@@ -224,6 +224,17 @@ interface InvoiceHtmlData {
   bookingDate: string;
 }
 
+// HTML escaping utility to prevent XSS attacks in email content
+function escapeHtml(unsafe: string): string {
+  if (!unsafe) return '';
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function generateInvoiceHtml(data: InvoiceHtmlData): string {
   const invoiceDate = new Date().toLocaleDateString('en-AE', { 
     year: 'numeric', 
@@ -400,19 +411,19 @@ function generateInvoiceHtml(data: InvoiceHtmlData): string {
     <div class="invoice-title">
       <div>
         <div class="invoice-label">Invoice Number</div>
-        <div class="invoice-number">${data.bookingNumber}</div>
+        <div class="invoice-number">${escapeHtml(data.bookingNumber)}</div>
       </div>
       <div class="invoice-date">
         <div class="invoice-label">Date</div>
-        <div>${invoiceDate}</div>
+        <div>${escapeHtml(invoiceDate)}</div>
       </div>
     </div>
     
     <div class="content">
       <div class="section">
         <div class="section-title">Billed To</div>
-        <div class="customer-name">${data.customerName}</div>
-        <div class="customer-email">${data.customerEmail}</div>
+        <div class="customer-name">${escapeHtml(data.customerName)}</div>
+        <div class="customer-email">${escapeHtml(data.customerEmail)}</div>
       </div>
       
       <div class="divider"></div>
@@ -420,8 +431,8 @@ function generateInvoiceHtml(data: InvoiceHtmlData): string {
       <div class="section">
         <div class="section-title">Service Details</div>
         <div class="line-item">
-          <div class="item-title">${data.itemTitle}</div>
-          <div class="item-date">Service Date: ${data.bookingDate}</div>
+          <div class="item-title">${escapeHtml(data.itemTitle)}</div>
+          <div class="item-date">Service Date: ${escapeHtml(data.bookingDate)}</div>
         </div>
       </div>
       
