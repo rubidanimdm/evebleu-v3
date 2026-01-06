@@ -26,8 +26,27 @@ export default function AdminRoles() {
 
   async function fetchRoles() {
     try {
-      const { data } = await supabase.from('user_roles').select('*, profile:profiles_public(full_name)').order('created_at', { ascending: false });
-      setRoles(data || []);
+      const { data: rolesData } = await supabase.from('user_roles').select('*').order('created_at', { ascending: false });
+      
+      if (rolesData && rolesData.length > 0) {
+        // Fetch profiles separately since there's no direct FK relation
+        const userIds = rolesData.map(r => r.user_id);
+        const { data: profilesData } = await supabase
+          .from('profiles_public')
+          .select('id, full_name')
+          .in('id', userIds);
+        
+        const profileMap = new Map(profilesData?.map(p => [p.id, p]) || []);
+        
+        const rolesWithProfiles = rolesData.map(role => ({
+          ...role,
+          profile: profileMap.get(role.user_id) || null
+        }));
+        
+        setRoles(rolesWithProfiles);
+      } else {
+        setRoles([]);
+      }
     } catch (error) {
       console.error('Error fetching roles:', error);
     } finally {
