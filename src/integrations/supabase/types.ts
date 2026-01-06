@@ -52,6 +52,45 @@ export type Database = {
           },
         ]
       }
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          entity_id: string | null
+          entity_type: string
+          id: string
+          ip_address: string | null
+          new_data: Json | null
+          old_data: Json | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          ip_address?: string | null
+          new_data?: Json | null
+          old_data?: Json | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          ip_address?: string | null
+          new_data?: Json | null
+          old_data?: Json | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           admin_notes: string | null
@@ -252,51 +291,90 @@ export type Database = {
       }
       catalog_items: {
         Row: {
+          cancellation_policy: string | null
           category: string
           created_at: string
           currency: string
+          deposit_percent: number | null
           details: Json | null
+          duration_minutes: number | null
           id: string
           image_url: string | null
           is_active: boolean
+          location: string | null
+          max_people: number | null
+          min_people: number | null
+          operating_hours: Json | null
           price: number
           pricing_unit: string
           short_description: string | null
           sort_order: number
+          supplier_id: string | null
           title: string
           updated_at: string
         }
         Insert: {
+          cancellation_policy?: string | null
           category: string
           created_at?: string
           currency?: string
+          deposit_percent?: number | null
           details?: Json | null
+          duration_minutes?: number | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          location?: string | null
+          max_people?: number | null
+          min_people?: number | null
+          operating_hours?: Json | null
           price?: number
           pricing_unit?: string
           short_description?: string | null
           sort_order?: number
+          supplier_id?: string | null
           title: string
           updated_at?: string
         }
         Update: {
+          cancellation_policy?: string | null
           category?: string
           created_at?: string
           currency?: string
+          deposit_percent?: number | null
           details?: Json | null
+          duration_minutes?: number | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          location?: string | null
+          max_people?: number | null
+          min_people?: number | null
+          operating_hours?: Json | null
           price?: number
           pricing_unit?: string
           short_description?: string | null
           sort_order?: number
+          supplier_id?: string | null
           title?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "catalog_items_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "catalog_items_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       chat_messages: {
         Row: {
@@ -480,6 +558,71 @@ export type Database = {
           },
         ]
       }
+      pricing_rules: {
+        Row: {
+          catalog_item_id: string
+          created_at: string
+          days_of_week: number[] | null
+          end_date: string | null
+          id: string
+          is_active: boolean
+          max_advance_days: number | null
+          min_advance_days: number | null
+          min_quantity: number | null
+          name: string
+          price_modifier_type: string
+          price_modifier_value: number
+          priority: number
+          rule_type: string
+          start_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          catalog_item_id: string
+          created_at?: string
+          days_of_week?: number[] | null
+          end_date?: string | null
+          id?: string
+          is_active?: boolean
+          max_advance_days?: number | null
+          min_advance_days?: number | null
+          min_quantity?: number | null
+          name: string
+          price_modifier_type: string
+          price_modifier_value: number
+          priority?: number
+          rule_type: string
+          start_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          catalog_item_id?: string
+          created_at?: string
+          days_of_week?: number[] | null
+          end_date?: string | null
+          id?: string
+          is_active?: boolean
+          max_advance_days?: number | null
+          min_advance_days?: number | null
+          min_quantity?: number | null
+          name?: string
+          price_modifier_type?: string
+          price_modifier_value?: number
+          priority?: number
+          rule_type?: string
+          start_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pricing_rules_catalog_item_id_fkey"
+            columns: ["catalog_item_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           ai_memories: Json | null
@@ -578,6 +721,7 @@ export type Database = {
       }
       profiles_public: {
         Row: {
+          admin_notes: string | null
           apartment_unit: string | null
           budget_style: string | null
           building_name: string
@@ -587,6 +731,7 @@ export type Database = {
           favorite_cuisines: string[] | null
           full_name: string
           id: string
+          is_vip: boolean | null
           language: string | null
           last_seen: string | null
           preferred_areas: string[] | null
@@ -594,6 +739,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          admin_notes?: string | null
           apartment_unit?: string | null
           budget_style?: string | null
           building_name?: string
@@ -603,6 +749,7 @@ export type Database = {
           favorite_cuisines?: string[] | null
           full_name: string
           id: string
+          is_vip?: boolean | null
           language?: string | null
           last_seen?: string | null
           preferred_areas?: string[] | null
@@ -610,6 +757,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          admin_notes?: string | null
           apartment_unit?: string | null
           budget_style?: string | null
           building_name?: string
@@ -619,6 +767,7 @@ export type Database = {
           favorite_cuisines?: string[] | null
           full_name?: string
           id?: string
+          is_vip?: boolean | null
           language?: string | null
           last_seen?: string | null
           preferred_areas?: string[] | null
@@ -626,6 +775,85 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      service_availability: {
+        Row: {
+          capacity: number | null
+          catalog_item_id: string
+          created_at: string
+          date: string
+          id: string
+          is_available: boolean
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          capacity?: number | null
+          catalog_item_id: string
+          created_at?: string
+          date: string
+          id?: string
+          is_available?: boolean
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          capacity?: number | null
+          catalog_item_id?: string
+          created_at?: string
+          date?: string
+          id?: string
+          is_available?: boolean
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_availability_catalog_item_id_fkey"
+            columns: ["catalog_item_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_media: {
+        Row: {
+          alt_text: string | null
+          catalog_item_id: string
+          created_at: string
+          id: string
+          is_primary: boolean
+          sort_order: number
+          url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          catalog_item_id: string
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          sort_order?: number
+          url: string
+        }
+        Update: {
+          alt_text?: string | null
+          catalog_item_id?: string
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          sort_order?: number
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_media_catalog_item_id_fkey"
+            columns: ["catalog_item_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_items"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       suppliers: {
         Row: {
@@ -873,6 +1101,7 @@ export type Database = {
       is_admin_current_user: { Args: never; Returns: boolean }
       is_admin_user: { Args: { user_id: string }; Returns: boolean }
       is_manager: { Args: { _user_id: string }; Returns: boolean }
+      is_owner: { Args: { _user_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
