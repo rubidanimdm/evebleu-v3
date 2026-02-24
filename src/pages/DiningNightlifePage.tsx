@@ -26,7 +26,7 @@ const VENUES: Venue[] = [
   { name: 'Bar De Pres', logo: '/logos/bar-de-pres.jpeg' },
   { name: 'BCH:CLB', logo: '/logos/bch-clb.png' },
   { name: 'Beach by FIVE', logo: '/logos/beach-by-five.png' },
-  { name: 'Billionaire', domain: 'billionairelife.com' },
+  { name: 'Billionaire', logo: '/logos/billionaire.jpeg' },
   { name: 'Blume', logo: '/logos/blume.jpg' },
   { name: 'Bohemia', logo: '/logos/bohemia.jpeg' },
   { name: 'Carnival', logo: '/logos/carnival.jpeg' },
