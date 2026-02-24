@@ -48,7 +48,7 @@ export function FloatingChatButton() {
                 <img 
                   src={logo} 
                   alt="EVE BLUE" 
-                  className="relative w-10 h-10 rounded-lg object-contain"
+                  className="relative w-24 h-auto rounded object-contain"
                 />
               </div>
               <div className="flex-1">
