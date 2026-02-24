@@ -3,7 +3,7 @@ import { MessageCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ConciergeChat } from '@/components/ConciergeChat';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-transparent.png';
 import { useAuth } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
 
