@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-white.gif';
 import { GoldParticles } from '@/components/LuxuryElements';
 
 export default function AuthCallback() {

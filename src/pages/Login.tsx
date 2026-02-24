@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-white.gif';
 import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 import { ArrowLeft, Mail } from 'lucide-react';
 

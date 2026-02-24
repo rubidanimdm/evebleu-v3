@@ -6,7 +6,7 @@ import { useConciergeChat } from '@/hooks/useConciergeChat';
 import { useHumanChat } from '@/hooks/useHumanChat';
 import { Send, User, RotateCcw, Bot, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-white.gif';
 import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 
 interface ConciergeChatProps {
