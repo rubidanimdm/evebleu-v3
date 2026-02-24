@@ -34,7 +34,7 @@ export default function SupportPage() {
       icon: Mail,
       title: 'Email',
       description: 'For detailed requests',
-      action: () => window.open('mailto:concierge@aimydubai.com'),
+      action: () => window.open('mailto:dekel@evebleu.vip'),
       buttonText: 'Send',
     },
   ];

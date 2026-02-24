@@ -3,8 +3,9 @@
 
 const ALLOWED_ORIGINS = [
   "https://wpczgwxsriezaubncuom.lovableproject.com",
-  "https://aimydubai.com",
-  "https://www.aimydubai.com",
+  "https://ai-my-dubai.lovable.app",
+  "https://evebleu.vip",
+  "https://www.evebleu.vip",
 ] as const;
 
 export function getCorsHeaders(requestOrigin: string | null): Record<string, string> {

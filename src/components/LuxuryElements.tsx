@@ -1,4 +1,4 @@
-// Premium luxury visual components for AI My Dubai
+// Premium luxury visual components for EVE BLUE
 import { cn } from '@/lib/utils';
 
 // Gold particles effect - subtle and elegant
