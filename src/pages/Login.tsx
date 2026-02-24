@@ -136,11 +136,8 @@ export default function Login() {
           <div className="text-center mb-8">
             <div className="relative inline-block">
               <div className="absolute inset-0 blur-2xl bg-primary/10 rounded-full scale-150" />
-              <img src={logo} alt="EVE BLUE" className="relative w-20 h-20 object-contain mx-auto" />
+              <img src={logo} alt="EVE BLUE" className="relative w-44 h-auto object-contain mx-auto rounded" />
             </div>
-            <h1 className="text-2xl font-medium text-primary tracking-tight mt-6">
-              EVE BLUE
-            </h1>
             <p className="text-muted-foreground text-sm mt-1">
               {mode === 'login' && 'Sign in to your account'}
               {mode === 'forgot' && 'Reset your password'}

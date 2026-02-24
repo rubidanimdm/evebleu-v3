@@ -77,7 +77,7 @@ export default function ResidentHome() {
       <div className="relative z-10 min-h-screen flex flex-col safe-area-pt safe-area-pb pb-24">
         {/* Top Bar */}
         <header className="flex items-center justify-between px-5 py-4">
-          <img src={logo} alt="EVE BLUE" className="w-12 h-12 rounded-xl shadow-lg" />
+          <img src={logo} alt="EVE BLUE" className="w-28 h-auto rounded shadow-lg" />
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"

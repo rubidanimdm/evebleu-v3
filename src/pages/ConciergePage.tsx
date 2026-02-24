@@ -90,7 +90,7 @@ export default function ConciergePage() {
               <img 
                 src={logo} 
                 alt="EVE BLUE" 
-                className="relative w-11 h-11 rounded-lg object-contain"
+                className="relative w-24 h-auto rounded object-contain"
               />
             </div>
           )}
