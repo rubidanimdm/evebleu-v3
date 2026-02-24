@@ -7,22 +7,130 @@ import { GoldParticles } from '@/components/LuxuryElements';
 import { useLanguage } from '@/lib/i18n';
 import { MessageCircle, Search, UtensilsCrossed, X } from 'lucide-react';
 
-const VENUES = [
-  'Adaline', 'African Queen', 'Alaya', 'Amazonico', 'Amelia', 'Aretha',
-  'Arrogante', 'Avenue', 'Baoli', 'Bar De Pres', 'BCH:CLB', 'Beach by FIVE',
-  'Billionaire', 'Blume', 'Bohemia', 'Carnival', 'Casa Amor', 'Ce La Vi',
-  'Chic Nonna', 'Cinque', 'CoveBeach', 'Cou Cou', 'Coya', 'Dream', 'Eva',
-  'FIVE Venues', 'GAL', 'Gatsby', 'Gigi', 'Gitano', 'Hanu', "Il'Gatto Pardo",
-  'Iliana', 'Kaspia', 'Kinugawa', 'Krasota', "L'amo Bistro", 'La Nina',
-  'La Cantine', 'Ly-La', 'Maiden Shanghai', 'Maison De Curry',
-  'Maison De La Page', 'Maison Revka', 'Mamabella', 'Mimi Kakushi', 'Mott 32',
-  'Nahate', 'Nammos', 'Nazcaa', 'Nikki Beach', 'Ninive beach', 'Nobu',
-  'O Beach', 'Opa', 'Ora', 'Pacha Icons', 'Paris Paradis', 'Playa Pacha',
-  'Pool by FIVE', 'Ram & Roll', 'Raspoutine', 'Revelry', 'Rialto', 'Sakhalin',
-  'Salvaje', 'Sana', 'Sexy Fish', 'Signor Sassi', 'Surf Club', 'Sushi Samba',
-  'Tang', 'Tattu', 'Terra Solis', 'Theater', 'Trésind', 'Urla', 'Verde Beach',
-  'Verde Restaurant', 'Villa Coconut', 'Woohoo', 'Zenon',
+type Venue = {
+  name: string;
+  domain?: string;
+};
+
+const VENUES: Venue[] = [
+  { name: 'Adaline' },
+  { name: 'African Queen' },
+  { name: 'Alaya' },
+  { name: 'Amazonico', domain: 'amazonicorestaurant.com' },
+  { name: 'Amelia' },
+  { name: 'Aretha' },
+  { name: 'Arrogante' },
+  { name: 'Avenue', domain: 'avenuedubai.com' },
+  { name: 'Baoli', domain: 'bfrgroup.com' },
+  { name: 'Bar De Pres' },
+  { name: 'BCH:CLB' },
+  { name: 'Beach by FIVE', domain: 'fivehotelsandresorts.com' },
+  { name: 'Billionaire', domain: 'billionairelife.com' },
+  { name: 'Blume' },
+  { name: 'Bohemia' },
+  { name: 'Carnival' },
+  { name: 'Casa Amor' },
+  { name: 'Ce La Vi', domain: 'celavi.com' },
+  { name: 'Chic Nonna' },
+  { name: 'Cinque', domain: 'cinquedubai.com' },
+  { name: 'CoveBeach', domain: 'cfrgroup.com' },
+  { name: 'Cou Cou' },
+  { name: 'Coya', domain: 'coyarestaurant.com' },
+  { name: 'Dream', domain: 'dreamdubai.com' },
+  { name: 'Eva' },
+  { name: 'FIVE Venues', domain: 'fivehotelsandresorts.com' },
+  { name: 'GAL' },
+  { name: 'Gatsby', domain: 'gatsbydubai.com' },
+  { name: 'Gigi', domain: 'gigidubai.com' },
+  { name: 'Gitano', domain: 'gitanodubai.com' },
+  { name: 'Hanu' },
+  { name: "Il'Gatto Pardo" },
+  { name: 'Iliana' },
+  { name: 'Kaspia', domain: 'kaspia.com' },
+  { name: 'Kinugawa', domain: 'kinugawa.fr' },
+  { name: 'Krasota', domain: 'krasota.ae' },
+  { name: "L'amo Bistro" },
+  { name: 'La Nina', domain: 'laninadubai.com' },
+  { name: 'La Cantine', domain: 'lacantine.ae' },
+  { name: 'Ly-La' },
+  { name: 'Maiden Shanghai', domain: 'maidenshanghai.com' },
+  { name: 'Maison De Curry' },
+  { name: 'Maison De La Page' },
+  { name: 'Maison Revka' },
+  { name: 'Mamabella' },
+  { name: 'Mimi Kakushi', domain: 'mimikakushi.com' },
+  { name: 'Mott 32', domain: 'mott32.com' },
+  { name: 'Nahate' },
+  { name: 'Nammos', domain: 'nammosdubai.com' },
+  { name: 'Nazcaa' },
+  { name: 'Nikki Beach', domain: 'nikkibeach.com' },
+  { name: 'Ninive beach' },
+  { name: 'Nobu', domain: 'noburestaurants.com' },
+  { name: 'O Beach', domain: 'obeachdubai.com' },
+  { name: 'Opa', domain: 'opadubai.com' },
+  { name: 'Ora' },
+  { name: 'Pacha Icons', domain: 'pacha.com' },
+  { name: 'Paris Paradis' },
+  { name: 'Playa Pacha' },
+  { name: 'Pool by FIVE', domain: 'fivehotelsandresorts.com' },
+  { name: 'Ram & Roll' },
+  { name: 'Raspoutine', domain: 'raspoutine.com' },
+  { name: 'Revelry' },
+  { name: 'Rialto' },
+  { name: 'Sakhalin' },
+  { name: 'Salvaje', domain: 'salvajedubai.com' },
+  { name: 'Sana' },
+  { name: 'Sexy Fish', domain: 'sexyfish.com' },
+  { name: 'Signor Sassi', domain: 'signorsassi.com' },
+  { name: 'Surf Club' },
+  { name: 'Sushi Samba', domain: 'sushisamba.com' },
+  { name: 'Tang' },
+  { name: 'Tattu', domain: 'tattu.co.uk' },
+  { name: 'Terra Solis', domain: 'terrasolis.com' },
+  { name: 'Theater' },
+  { name: 'Trésind', domain: 'tresind.com' },
+  { name: 'Urla', domain: 'urladubai.com' },
+  { name: 'Verde Beach' },
+  { name: 'Verde Restaurant' },
+  { name: 'Villa Coconut' },
+  { name: 'Woohoo' },
+  { name: 'Zenon' },
 ];
+
+function VenueLogo({ venue }: { venue: Venue }) {
+  const [imgError, setImgError] = useState(false);
+
+  if (venue.domain && !imgError) {
+    return (
+      <img
+        src={`https://logo.clearbit.com/${venue.domain}`}
+        alt={venue.name}
+        className="w-10 h-10 rounded-xl object-contain bg-white p-1"
+        onError={() => setImgError(true)}
+        loading="lazy"
+      />
+    );
+  }
+
+  // Fallback: styled initial
+  const colors = [
+    'bg-rose-500/15 text-rose-400',
+    'bg-amber-500/15 text-amber-400',
+    'bg-emerald-500/15 text-emerald-400',
+    'bg-sky-500/15 text-sky-400',
+    'bg-violet-500/15 text-violet-400',
+    'bg-pink-500/15 text-pink-400',
+    'bg-teal-500/15 text-teal-400',
+    'bg-orange-500/15 text-orange-400',
+  ];
+  const colorIndex = venue.name.charCodeAt(0) % colors.length;
+
+  return (
+    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${colors[colorIndex]}`}>
+      <span className="font-bold text-sm">{venue.name.charAt(0)}</span>
+    </div>
+  );
+}
 
 export default function DiningNightlifePage() {
   const [search, setSearch] = useState('');
@@ -30,7 +138,7 @@ export default function DiningNightlifePage() {
   const { t } = useLanguage();
 
   const filtered = search
-    ? VENUES.filter(v => v.toLowerCase().includes(search.toLowerCase()))
+    ? VENUES.filter(v => v.name.toLowerCase().includes(search.toLowerCase()))
     : VENUES;
 
   const handleContact = (venue: string) => {
@@ -55,7 +163,7 @@ export default function DiningNightlifePage() {
             {t('mainScreen.diningNightlife')}
           </h1>
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            82 exclusive venues · Tables & VIP bookings through your concierge
+            {VENUES.length} exclusive venues · Tables & VIP bookings through your concierge
           </p>
           <div className="w-16 h-px bg-primary/30 mx-auto mt-5" />
         </div>
@@ -84,7 +192,7 @@ export default function DiningNightlifePage() {
         </div>
       </div>
 
-      {/* Venue Grid */}
+      {/* Venue List */}
       <main className="max-w-2xl mx-auto px-4 pt-4">
         {filtered.length === 0 ? (
           <div className="text-center py-16 space-y-3">
@@ -99,28 +207,24 @@ export default function DiningNightlifePage() {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="space-y-2">
             {filtered.map(venue => (
               <div
-                key={venue}
-                className="group flex items-center justify-between gap-3 p-4 rounded-2xl bg-card/60 border border-primary/10 hover:border-primary/25 backdrop-blur-sm transition-all duration-200"
+                key={venue.name}
+                className="group flex items-center justify-between gap-4 p-4 rounded-2xl bg-card/50 border border-border/40 hover:border-primary/25 hover:bg-card/80 backdrop-blur-sm transition-all duration-200"
               >
-                {/* Venue initial + name */}
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center flex-shrink-0">
-                    <span className="text-primary font-semibold text-sm">
-                      {venue.charAt(0)}
-                    </span>
-                  </div>
-                  <span className="font-medium text-foreground truncate text-sm">
-                    {venue}
+                {/* Logo + name */}
+                <div className="flex items-center gap-4 min-w-0">
+                  <VenueLogo venue={venue} />
+                  <span className="font-medium text-foreground truncate">
+                    {venue.name}
                   </span>
                 </div>
 
                 {/* Contact button */}
                 <Button
                   size="sm"
-                  onClick={() => handleContact(venue)}
+                  onClick={() => handleContact(venue.name)}
                   className="flex-shrink-0 h-9 px-4 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 text-xs"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
