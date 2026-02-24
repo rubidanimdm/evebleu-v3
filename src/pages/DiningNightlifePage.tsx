@@ -107,7 +107,7 @@ function VenueLogo({ venue }: { venue: Venue }) {
       <img
         src={venue.logo}
         alt={venue.name}
-        className="w-12 h-12 rounded-xl object-contain"
+        className="h-9 w-9 rounded-xl object-contain"
         onError={() => setImgError(true)}
         loading="lazy"
       />
@@ -120,7 +120,7 @@ function VenueLogo({ venue }: { venue: Venue }) {
       <img
         src={`https://www.google.com/s2/favicons?domain=${venue.domain}&sz=128`}
         alt={venue.name}
-        className="w-12 h-12 rounded-xl object-contain"
+        className="h-9 w-9 rounded-xl object-contain"
         onError={() => setImgError(true)}
         loading="lazy"
       />
@@ -141,7 +141,7 @@ function VenueLogo({ venue }: { venue: Venue }) {
   const colorIndex = venue.name.charCodeAt(0) % colors.length;
 
   return (
-    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${colors[colorIndex]}`}>
+    <div className={`h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0 ${colors[colorIndex]}`}>
       <span className="font-bold text-sm">{venue.name.charAt(0)}</span>
     </div>
   );
