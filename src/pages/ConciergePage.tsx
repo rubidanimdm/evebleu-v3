@@ -2,7 +2,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ConciergeChat } from '@/components/ConciergeChat';
 import { BottomNav } from '@/components/BottomNav';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-white.gif';
 import { GoldWaveAccent } from '@/components/LuxuryElements';
 import { INTENT_MESSAGES } from '@/lib/constants';
 import { supabase } from '@/integrations/supabase/client';

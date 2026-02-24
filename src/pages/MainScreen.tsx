@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { User, LogOut, ArrowRight, Phone, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 
 /* ── 6 category tiles ── */

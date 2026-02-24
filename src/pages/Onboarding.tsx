@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { User, Shield } from 'lucide-react';
 import { z } from 'zod';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-white.gif';
 import { GoldParticles, GoldDivider, LuxuryCard } from '@/components/LuxuryElements';
 
 const signupSchema = z.object({
