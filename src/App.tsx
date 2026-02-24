@@ -14,6 +14,7 @@ import Onboarding from "./pages/Onboarding";
 import MainScreen from "./pages/MainScreen";
 import ConciergePage from "./pages/ConciergePage";
 import ExplorePage from "./pages/ExplorePage";
+import DiningNightlifePage from "./pages/DiningNightlifePage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
 import MyPlansPage from "./pages/MyPlansPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -93,6 +94,7 @@ function AppContent() {
         {/* App Screens - protected */}
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
         <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
+        <Route path="/dining" element={<ProtectedRoute><DiningNightlifePage /></ProtectedRoute>} />
         <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
         <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
