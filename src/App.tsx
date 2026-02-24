@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/lib/supabase";
 import { LanguageProvider } from "@/lib/i18n";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
+import { FloatingHomeButton } from "@/components/FloatingHomeButton";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -105,6 +106,8 @@ function AppContent() {
         <Route path="/auth" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {/* Floating home button visible on all pages except home */}
+      <FloatingHomeButton />
       {/* Floating chat button visible on all pages except concierge and auth */}
       {user && <FloatingChatButton />}
     </>
