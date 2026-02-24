@@ -167,20 +167,20 @@ export default function DiningNightlifePage() {
       {/* Hero */}
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/8 via-primary/3 to-transparent" />
-        <div className="relative max-w-2xl mx-auto px-4 pt-14 pb-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4">
-            <UtensilsCrossed className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-medium text-primary tracking-wide uppercase">
+        <div className="relative max-w-2xl mx-auto px-4 pt-8 pb-4 text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-2">
+            <UtensilsCrossed className="w-3 h-3 text-primary" />
+            <span className="text-[10px] font-medium text-primary tracking-wide uppercase">
               Our Partners
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2 font-display">
+          <h1 className="text-2xl font-bold text-foreground mb-1 font-display">
             {t('mainScreen.diningNightlife')}
           </h1>
-          <p className="text-muted-foreground text-sm max-w-md mx-auto">
+          <p className="text-muted-foreground text-xs max-w-md mx-auto">
             {VENUES.length} exclusive venues · Tables & VIP bookings through your concierge
           </p>
-          <div className="w-16 h-px bg-primary/30 mx-auto mt-5" />
+          <div className="w-12 h-px bg-primary/30 mx-auto mt-3" />
         </div>
       </header>
 
