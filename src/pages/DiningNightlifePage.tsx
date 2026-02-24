@@ -10,11 +10,12 @@ import { MessageCircle, Search, UtensilsCrossed, X } from 'lucide-react';
 type Venue = {
   name: string;
   domain?: string;
+  logo?: string;
 };
 
 const VENUES: Venue[] = [
-  { name: 'Adaline' },
-  { name: 'African Queen' },
+  { name: 'Adaline', logo: '/logos/adaline.jpeg' },
+  { name: 'African Queen', logo: '/logos/african-queen.png' },
   { name: 'Alaya' },
   { name: 'Amazonico', domain: 'amazonicorestaurant.com' },
   { name: 'Amelia' },
@@ -100,6 +101,20 @@ const VENUES: Venue[] = [
 function VenueLogo({ venue }: { venue: Venue }) {
   const [imgError, setImgError] = useState(false);
 
+  // Priority 1: Local logo
+  if (venue.logo && !imgError) {
+    return (
+      <img
+        src={venue.logo}
+        alt={venue.name}
+        className="w-10 h-10 rounded-xl object-contain bg-white p-1"
+        onError={() => setImgError(true)}
+        loading="lazy"
+      />
+    );
+  }
+
+  // Priority 2: Google favicon
   if (venue.domain && !imgError) {
     return (
       <img
