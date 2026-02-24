@@ -103,7 +103,7 @@ function VenueLogo({ venue }: { venue: Venue }) {
   if (venue.domain && !imgError) {
     return (
       <img
-        src={`https://img.logo.dev/${venue.domain}?token=pk_a8V0HoOGRjOJnJCGlhKphw&size=80&format=png`}
+        src={`https://www.google.com/s2/favicons?domain=${venue.domain}&sz=128`}
         alt={venue.name}
         className="w-10 h-10 rounded-xl object-contain bg-white p-1"
         onError={() => setImgError(true)}
