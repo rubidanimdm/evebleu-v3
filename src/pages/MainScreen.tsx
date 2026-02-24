@@ -68,7 +68,7 @@ const getCategoryIcon = (key: string) => {
 const categoryKeys = [
   { key: 'attractions', route: '/concierge?intent=ATTRACTION' },
   { key: 'luxuryCars', route: '/concierge?intent=CAR' },
-  { key: 'diningNightlife', route: '/concierge?intent=TABLE' },
+  { key: 'diningNightlife', route: '/dining' },
   { key: 'yachtCharters', route: '/concierge?intent=YACHT' },
   { key: 'desertAction', route: '/concierge?intent=DESERT' },
   { key: 'extremeFlights', route: '/concierge?intent=EXTREME' },
