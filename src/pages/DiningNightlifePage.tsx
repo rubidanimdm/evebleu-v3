@@ -14,13 +14,13 @@ type Venue = {
 };
 
 const VENUES: Venue[] = [
-  { name: 'Adaline' },
+  { name: 'Adaline', logo: '/logos/adaline.jpeg' },
   { name: 'African Queen', logo: '/logos/african-queen.png' },
   { name: 'Alaya', logo: '/logos/alaya.png' },
   { name: 'Amazonico', domain: 'amazonicorestaurant.com' },
   { name: 'Amelia', logo: '/logos/amelia.jpeg' },
-  { name: 'Aretha' },
-  { name: 'Arrogante' },
+  { name: 'Aretha', logo: '/logos/aretha.jpeg' },
+  { name: 'Arrogante', logo: '/logos/arrogante.png' },
   { name: 'Avenue', logo: '/logos/avenue.jpeg' },
   { name: 'Baoli', logo: '/logos/baoli.jpeg' },
   { name: 'Bar De Pres', logo: '/logos/bar-de-pres.jpeg' },
