@@ -20,7 +20,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'aimydubai_language';
+const STORAGE_KEY = 'eveblue_language';
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
@@ -90,9 +90,9 @@ export function useLanguage() {
 const translations: Record<Language, Record<string, unknown>> = {
   en: {
     brand: {
-      name: 'AI MY DUBAI',
+      name: 'EVE BLUE',
       tagline: 'Concierge. It. Done.',
-      description: 'Your private AI concierge for Dubai.',
+      description: 'Your private luxury concierge for Dubai.',
     },
     landing: {
       enterConcierge: 'Enter Concierge',
@@ -104,15 +104,15 @@ const translations: Record<Language, Record<string, unknown>> = {
       categories: 'Dining. Nightlife. Transport. Experiences.',
       howItWorks: 'How it works.',
       notService: 'Not a service. A control layer.',
-      notRecommendations: 'AI My Dubai is not about recommendations.',
+      notRecommendations: 'EVE BLUE is not about recommendations.',
       aboutExecution: 'It is about execution.',
       quietly: 'Quietly. Precisely. Reliably.',
       beginExperience: 'Begin Your Experience',
-      accessConcierge: 'Access your private AI concierge and discover what it means to have Dubai handled.',
+      accessConcierge: 'Access your private concierge and discover what it means to have Dubai handled.',
       privateAccess: 'Private Access',
       contact: 'Contact',
       privacy: 'Privacy',
-      copyright: '© 2026 AI My Dubai. Private Access Only.',
+      copyright: '© 2026 EVE BLUE. Private Access Only.',
     },
     features: {
       aiConcierge: 'AI Concierge',
@@ -238,9 +238,9 @@ const translations: Record<Language, Record<string, unknown>> = {
   },
   ar: {
     brand: {
-      name: 'AI MY DUBAI',
+      name: 'EVE BLUE',
       tagline: 'كونسيرج. تم. أنجز.',
-      description: 'مساعدك الشخصي بالذكاء الاصطناعي في دبي.',
+      description: 'مساعدك الشخصي الفاخر في دبي.',
     },
     landing: {
       enterConcierge: 'ادخل الكونسيرج',
@@ -252,7 +252,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       categories: 'مطاعم. حياة ليلية. مواصلات. تجارب.',
       howItWorks: 'كيف يعمل.',
       notService: 'ليست خدمة. طبقة تحكم.',
-      notRecommendations: 'AI My Dubai ليس عن التوصيات.',
+      notRecommendations: 'EVE BLUE ليس عن التوصيات.',
       aboutExecution: 'إنه عن التنفيذ.',
       quietly: 'بهدوء. بدقة. بموثوقية.',
       beginExperience: 'ابدأ تجربتك',
@@ -260,7 +260,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       privateAccess: 'وصول خاص',
       contact: 'اتصل',
       privacy: 'الخصوصية',
-      copyright: '© 2026 AI My Dubai. وصول خاص فقط.',
+      copyright: '© 2026 EVE BLUE. وصول خاص فقط.',
     },
     features: {
       aiConcierge: 'كونسيرج الذكاء الاصطناعي',
@@ -386,9 +386,9 @@ const translations: Record<Language, Record<string, unknown>> = {
   },
   fr: {
     brand: {
-      name: 'AI MY DUBAI',
+      name: 'EVE BLUE',
       tagline: 'Concierge. C\'est. Fait.',
-      description: 'Votre concierge IA privé pour Dubaï.',
+      description: 'Votre concierge privé de luxe pour Dubaï.',
     },
     landing: {
       enterConcierge: 'Accéder au Concierge',
@@ -400,7 +400,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       categories: 'Gastronomie. Vie nocturne. Transport. Expériences.',
       howItWorks: 'Comment ça marche.',
       notService: 'Pas un service. Une couche de contrôle.',
-      notRecommendations: 'AI My Dubai ne fait pas de recommandations.',
+      notRecommendations: 'EVE BLUE ne fait pas de recommandations.',
       aboutExecution: 'Il s\'agit d\'exécution.',
       quietly: 'Discrètement. Précisément. Fiablement.',
       beginExperience: 'Commencez Votre Expérience',
@@ -408,7 +408,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       privateAccess: 'Accès Privé',
       contact: 'Contact',
       privacy: 'Confidentialité',
-      copyright: '© 2026 AI My Dubai. Accès Privé Uniquement.',
+      copyright: '© 2026 EVE BLUE. Accès Privé Uniquement.',
     },
     features: {
       aiConcierge: 'Concierge IA',
@@ -534,9 +534,9 @@ const translations: Record<Language, Record<string, unknown>> = {
   },
   de: {
     brand: {
-      name: 'AI MY DUBAI',
+      name: 'EVE BLUE',
       tagline: 'Concierge. Es. Erledigt.',
-      description: 'Ihr privater KI-Concierge für Dubai.',
+      description: 'Ihr privater Luxus-Concierge für Dubai.',
     },
     landing: {
       enterConcierge: 'Concierge Betreten',
@@ -548,7 +548,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       categories: 'Dining. Nachtleben. Transport. Erlebnisse.',
       howItWorks: 'So funktioniert es.',
       notService: 'Kein Service. Eine Kontrollschicht.',
-      notRecommendations: 'AI My Dubai macht keine Empfehlungen.',
+      notRecommendations: 'EVE BLUE macht keine Empfehlungen.',
       aboutExecution: 'Es geht um Ausführung.',
       quietly: 'Ruhig. Präzise. Zuverlässig.',
       beginExperience: 'Starten Sie Ihr Erlebnis',
@@ -556,7 +556,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       privateAccess: 'Privater Zugang',
       contact: 'Kontakt',
       privacy: 'Datenschutz',
-      copyright: '© 2026 AI My Dubai. Nur Privater Zugang.',
+      copyright: '© 2026 EVE BLUE. Nur Privater Zugang.',
     },
     features: {
       aiConcierge: 'KI Concierge',
@@ -682,9 +682,9 @@ const translations: Record<Language, Record<string, unknown>> = {
   },
   ru: {
     brand: {
-      name: 'AI MY DUBAI',
+      name: 'EVE BLUE',
       tagline: 'Консьерж. Готово. Сделано.',
-      description: 'Ваш персональный ИИ-консьерж для Дубая.',
+      description: 'Ваш персональный люкс-консьерж для Дубая.',
     },
     landing: {
       enterConcierge: 'Войти в Консьерж',
@@ -696,7 +696,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       categories: 'Рестораны. Ночная жизнь. Транспорт. Впечатления.',
       howItWorks: 'Как это работает.',
       notService: 'Не сервис. Слой управления.',
-      notRecommendations: 'AI My Dubai — не о рекомендациях.',
+      notRecommendations: 'EVE BLUE — не о рекомендациях.',
       aboutExecution: 'Это об исполнении.',
       quietly: 'Тихо. Точно. Надёжно.',
       beginExperience: 'Начните Ваш Опыт',
@@ -704,7 +704,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       privateAccess: 'Приватный Доступ',
       contact: 'Контакт',
       privacy: 'Конфиденциальность',
-      copyright: '© 2026 AI My Dubai. Только Приватный Доступ.',
+      copyright: '© 2026 EVE BLUE. Только Приватный Доступ.',
     },
     features: {
       aiConcierge: 'ИИ Консьерж',
@@ -830,9 +830,9 @@ const translations: Record<Language, Record<string, unknown>> = {
   },
   he: {
     brand: {
-      name: 'AI MY DUBAI',
+      name: 'EVE BLUE',
       tagline: 'קונסיירז׳. זה. נעשה.',
-      description: 'הקונסיירז׳ הפרטי שלך בדובאי.',
+      description: 'הקונסיירז׳ הפרטי והיוקרתי שלך בדובאי.',
     },
     landing: {
       enterConcierge: 'כניסה לקונסיירז׳',
@@ -844,7 +844,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       categories: 'מסעדות. חיי לילה. הסעות. חוויות.',
       howItWorks: 'איך זה עובד.',
       notService: 'לא שירות. שכבת שליטה.',
-      notRecommendations: 'AI My Dubai לא על המלצות.',
+      notRecommendations: 'EVE BLUE לא על המלצות.',
       aboutExecution: 'זה על ביצוע.',
       quietly: 'בשקט. במדויק. באמינות.',
       beginExperience: 'התחל את החוויה שלך',
@@ -852,7 +852,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       privateAccess: 'גישה פרטית',
       contact: 'יצירת קשר',
       privacy: 'פרטיות',
-      copyright: '© 2026 AI My Dubai. גישה פרטית בלבד.',
+      copyright: '© 2026 EVE BLUE. גישה פרטית בלבד.',
     },
     features: {
       aiConcierge: 'קונסיירז׳ AI',

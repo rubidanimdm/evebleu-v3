@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { User, Shield } from 'lucide-react';
 import { z } from 'zod';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/eve-blue-logo.jpeg';
 import { GoldParticles, GoldDivider, LuxuryCard } from '@/components/LuxuryElements';
 
 const signupSchema = z.object({
@@ -49,7 +49,7 @@ export default function Onboarding() {
           data: {
             full_name: formData.fullName,
             phone: formData.phone,
-            building_name: 'AI My Dubai Member',
+            building_name: 'EVE BLUE Member',
             role: role,
           },
           emailRedirectTo: `${window.location.origin}/concierge`,
@@ -103,10 +103,10 @@ export default function Onboarding() {
           <div className="text-center space-y-6">
             <div className="relative inline-block">
               <div className="absolute inset-0 blur-2xl bg-primary/10 rounded-full scale-150" />
-              <img src={logo} alt="AI My Dubai" className="relative w-24 h-24 object-contain mx-auto" />
+              <img src={logo} alt="EVE BLUE" className="relative w-24 h-24 object-contain mx-auto" />
             </div>
             <div>
-              <h1 className="text-2xl font-medium text-primary tracking-tight">AI MY DUBAI</h1>
+              <h1 className="text-2xl font-medium text-primary tracking-tight">EVE BLUE</h1>
               <p className="text-muted-foreground text-sm mt-1">
                 Concierge. It. Done.
               </p>
@@ -181,7 +181,7 @@ export default function Onboarding() {
           <div className="text-center mb-8">
             <div className="relative inline-block">
               <div className="absolute inset-0 blur-xl bg-primary/10 rounded-full" />
-              <img src={logo} alt="AI My Dubai" className="relative w-16 h-16 object-contain mx-auto" />
+              <img src={logo} alt="EVE BLUE" className="relative w-16 h-16 object-contain mx-auto" />
             </div>
             <h2 className="text-xl font-medium text-primary mt-4">Create Account</h2>
             <p className="text-sm text-muted-foreground mt-1">

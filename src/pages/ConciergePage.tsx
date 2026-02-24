@@ -2,7 +2,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ConciergeChat } from '@/components/ConciergeChat';
 import { BottomNav } from '@/components/BottomNav';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/eve-blue-logo.jpeg';
 import { GoldWaveAccent } from '@/components/LuxuryElements';
 import { INTENT_MESSAGES } from '@/lib/constants';
 import { supabase } from '@/integrations/supabase/client';
@@ -89,14 +89,14 @@ export default function ConciergePage() {
               <div className="absolute inset-0 blur-xl bg-primary/10 rounded-full" />
               <img 
                 src={logo} 
-                alt="AI My Dubai" 
+                alt="EVE BLUE" 
                 className="relative w-11 h-11 rounded-lg object-contain"
               />
             </div>
           )}
           <div className="flex-1">
             <h1 className="text-base font-medium text-primary tracking-tight">
-              {showHistory ? 'Chat History' : 'AI MY DUBAI'}
+              {showHistory ? 'Chat History' : 'EVE BLUE'}
             </h1>
             <p className="text-xs text-muted-foreground">
               {showHistory ? 'View past conversations' : 'Concierge. It. Done.'}

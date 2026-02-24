@@ -169,9 +169,9 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "AI My Dubai <invoices@aimydubai.com>",
+        from: "EVE BLUE <invoices@evebleu.vip>",
         to: [customerEmail],
-        subject: `Your AI My Dubai Invoice - ${invoiceData.bookingNumber}`,
+        subject: `Your EVE BLUE Invoice - ${invoiceData.bookingNumber}`,
         html: invoiceHtml,
       }),
     });
@@ -401,11 +401,11 @@ function generateInvoiceHtml(data: InvoiceHtmlData): string {
 <body>
   <div class="invoice-container">
     <div class="header">
-      <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #D6B46A, #B88A2A); border-radius: 16px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
-        <span style="font-size: 32px; color: #0B0B0F; font-weight: bold;">AI</span>
+      <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #D8B35A, #B9923E); border-radius: 16px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+        <span style="font-size: 24px; color: #071423; font-weight: bold;">EB</span>
       </div>
-      <div class="brand-name">AI MY DUBAI</div>
-      <div class="tagline">Premium Concierge Service</div>
+      <div class="brand-name">EVE BLUE</div>
+      <div class="tagline">Concierge. It. Done.</div>
     </div>
     
     <div class="invoice-title">
@@ -443,10 +443,10 @@ function generateInvoiceHtml(data: InvoiceHtmlData): string {
     </div>
     
     <div class="footer">
-      <div class="footer-text">Thank you for choosing AI My Dubai</div>
+      <div class="footer-text">Thank you for choosing EVE BLUE</div>
       <div class="footer-text">Your satisfaction is our priority</div>
       <div class="divider"></div>
-      <div class="footer-brand">AI MY DUBAI</div>
+      <div class="footer-brand">EVE BLUE</div>
       <div class="footer-text">Concierge. It. Done.</div>
     </div>
   </div>

@@ -13,7 +13,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/eve-blue-logo.jpeg';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { BottomNav } from '@/components/BottomNav';
@@ -77,7 +77,7 @@ export default function ResidentHome() {
       <div className="relative z-10 min-h-screen flex flex-col safe-area-pt safe-area-pb pb-24">
         {/* Top Bar */}
         <header className="flex items-center justify-between px-5 py-4">
-          <img src={logo} alt="AI My Dubai" className="w-12 h-12 rounded-xl shadow-lg" />
+          <img src={logo} alt="EVE BLUE" className="w-12 h-12 rounded-xl shadow-lg" />
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"

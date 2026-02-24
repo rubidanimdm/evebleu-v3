@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/eve-blue-logo.jpeg';
 import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 import { ArrowLeft, Mail } from 'lucide-react';
 
@@ -136,10 +136,10 @@ export default function Login() {
           <div className="text-center mb-8">
             <div className="relative inline-block">
               <div className="absolute inset-0 blur-2xl bg-primary/10 rounded-full scale-150" />
-              <img src={logo} alt="AI My Dubai" className="relative w-20 h-20 object-contain mx-auto" />
+              <img src={logo} alt="EVE BLUE" className="relative w-20 h-20 object-contain mx-auto" />
             </div>
             <h1 className="text-2xl font-medium text-primary tracking-tight mt-6">
-              AI MY DUBAI
+              EVE BLUE
             </h1>
             <p className="text-muted-foreground text-sm mt-1">
               {mode === 'login' && 'Sign in to your account'}

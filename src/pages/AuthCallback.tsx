@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/eve-blue-logo.jpeg';
 import { GoldParticles } from '@/components/LuxuryElements';
 
 export default function AuthCallback() {
@@ -60,7 +60,7 @@ export default function AuthCallback() {
         <GoldParticles count={15} />
         <div className="relative z-10 w-full max-w-md text-center">
           <div className="bg-card/50 border border-primary/10 rounded-2xl backdrop-blur-sm p-8">
-            <img src={logo} alt="AI My Dubai" className="w-16 h-16 object-contain mx-auto mb-6" />
+            <img src={logo} alt="EVE BLUE" className="w-16 h-16 object-contain mx-auto mb-6" />
             <h1 className="text-xl font-medium text-destructive mb-4">Authentication Error</h1>
             <p className="text-muted-foreground mb-6">{error}</p>
             <button

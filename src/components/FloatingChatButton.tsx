@@ -3,7 +3,7 @@ import { MessageCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ConciergeChat } from '@/components/ConciergeChat';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/eve-blue-logo.jpeg';
 import { useAuth } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
 
@@ -47,13 +47,13 @@ export function FloatingChatButton() {
                 <div className="absolute inset-0 blur-xl bg-primary/10 rounded-full" />
                 <img 
                   src={logo} 
-                  alt="AI My Dubai" 
+                  alt="EVE BLUE" 
                   className="relative w-10 h-10 rounded-lg object-contain"
                 />
               </div>
               <div className="flex-1">
                 <SheetTitle className="text-primary text-sm font-medium tracking-tight">
-                  AI MY DUBAI
+                  EVE BLUE
                 </SheetTitle>
                 <p className="text-xs text-muted-foreground">Concierge. It. Done.</p>
               </div>

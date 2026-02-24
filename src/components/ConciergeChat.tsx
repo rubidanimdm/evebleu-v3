@@ -6,7 +6,7 @@ import { useConciergeChat } from '@/hooks/useConciergeChat';
 import { useHumanChat } from '@/hooks/useHumanChat';
 import { Send, User, RotateCcw, Bot, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/eve-blue-logo.jpeg';
 import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
 
 interface ConciergeChatProps {
@@ -120,7 +120,7 @@ export function ConciergeChat({ initialMessage, conversationId }: ConciergeChatP
               {/* Logo with glow */}
               <div className="relative inline-block">
                 <div className="absolute inset-0 blur-2xl bg-primary/15 rounded-full scale-150" />
-                <img src={logo} alt="AI My Dubai" className="relative w-20 h-20 object-contain" />
+                <img src={logo} alt="EVE BLUE" className="relative w-20 h-20 object-contain" />
               </div>
               
               <div className="space-y-3">
