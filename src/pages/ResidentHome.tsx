@@ -13,7 +13,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
-import logo from '@/assets/eve-blue-logo.jpeg';
+import logo from '@/assets/eve-blue-logo-transparent.png';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { BottomNav } from '@/components/BottomNav';
