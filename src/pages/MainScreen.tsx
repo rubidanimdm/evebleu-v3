@@ -100,7 +100,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           HERO — Full-screen cinematic video
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-screen min-h-[600px] max-h-[900px] overflow-hidden">
+      <section className="relative w-full h-screen min-h-[500px] max-h-[750px] overflow-hidden">
         {/* Video background */}
         <video
           src={heroVideo}
