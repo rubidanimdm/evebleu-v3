@@ -252,6 +252,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       extremeFlights: 'Search Flights',
       birthdays: 'Birthdays',
       airportPickup: 'Airport Pickup',
+      vipDriver: 'VIP Private Driver',
     },
     booking: {
       bookVenue: 'Book',
@@ -449,6 +450,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       extremeFlights: 'חפש טיסות',
       birthdays: 'ימי הולדת',
       airportPickup: 'איסוף משדה התעופה',
+      vipDriver: 'הזמן נהג פרטי VIP',
     },
     booking: {
       bookVenue: 'הזמן',
@@ -646,6 +648,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       extremeFlights: 'البحث عن رحلات',
       birthdays: 'أعياد ميلاد',
       airportPickup: 'التوصيل من المطار',
+      vipDriver: 'سائق خاص VIP',
     },
     booking: {
       bookVenue: 'احجز',
@@ -843,6 +846,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       extremeFlights: 'Rechercher des Vols',
       birthdays: 'Anniversaires',
       airportPickup: 'Transfert Aéroport',
+      vipDriver: 'Chauffeur Privé VIP',
     },
     booking: {
       bookVenue: 'Réserver',
