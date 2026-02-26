@@ -325,7 +325,12 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8">
+      <section
+        className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8 cursor-pointer"
+        onClick={() => navigate('/dining')}
+        role="link"
+        aria-label="Dining & Nightlife"
+      >
         <video
           src={yachtVideo}
           autoPlay
