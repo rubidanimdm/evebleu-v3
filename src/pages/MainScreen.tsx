@@ -274,7 +274,7 @@ export default function MainScreen() {
       ═══════════════════════════════════════════════ */}
       <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden">
         <video
-          src={yachtVideo}
+          src={attractionsVideo}
           autoPlay
           loop
           muted
@@ -323,7 +323,7 @@ export default function MainScreen() {
       ═══════════════════════════════════════════════ */}
       <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden">
         <video
-          src={attractionsVideo}
+          src={yachtVideo}
           autoPlay
           loop
           muted
