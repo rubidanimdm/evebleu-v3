@@ -159,6 +159,25 @@ const getCategoryIcon = (key: string) => {
         <path d="M38 8L39.2 10.5L42 11L40 13L40.5 16L38 14.8L35.5 16L36 13L34 11L36.8 10.5Z" fill="currentColor" opacity="0.4"/>
       </svg>
     ),
+    helicopterTour: (
+      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Rotor */}
+        <line x1="8" y1="10" x2="40" y2="10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <line x1="24" y1="10" x2="24" y2="16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        {/* Body */}
+        <ellipse cx="24" cy="22" rx="10" ry="6" stroke="currentColor" strokeWidth="1.2"/>
+        {/* Tail */}
+        <path d="M34 22L42 18V24L34 22Z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" opacity="0.7"/>
+        {/* Skids */}
+        <path d="M16 28V32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+        <path d="M32 28V32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+        <line x1="12" y1="32" x2="36" y2="32" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        {/* Dubai skyline hint */}
+        <path d="M10 44V38L12 36L14 38V44" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
+        <path d="M20 44V36L22 34L24 32L26 34L28 36V44" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
+        <path d="M34 44V40L36 38L38 40V44" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
+      </svg>
+    ),
   };
   return icons[key];
 };
@@ -173,6 +192,7 @@ const categoryKeys = [
   { key: 'birthdays', route: '/concierge?intent=BIRTHDAY' },
   { key: 'airportPickup', route: '/concierge?intent=AIRPORT_PICKUP' },
   { key: 'vipDriver', route: '/concierge?intent=VIP_DRIVER' },
+  { key: 'helicopterTour', route: '/concierge?intent=HELICOPTER' },
 ];
 
 export default function MainScreen() {

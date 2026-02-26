@@ -253,6 +253,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       birthdays: 'Birthdays',
       airportPickup: 'Airport Pickup',
       vipDriver: 'VIP Private Driver',
+      helicopterTour: 'Helicopter over Dubai',
     },
     booking: {
       bookVenue: 'Book',
@@ -451,6 +452,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       birthdays: 'ימי הולדת',
       airportPickup: 'איסוף משדה התעופה',
       vipDriver: 'הזמן נהג פרטי VIP',
+      helicopterTour: 'הזמן מסוק מעל דובאי',
     },
     booking: {
       bookVenue: 'הזמן',
@@ -649,6 +651,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       birthdays: 'أعياد ميلاد',
       airportPickup: 'التوصيل من المطار',
       vipDriver: 'سائق خاص VIP',
+      helicopterTour: 'مروحية فوق دبي',
     },
     booking: {
       bookVenue: 'احجز',
@@ -847,6 +850,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       birthdays: 'Anniversaires',
       airportPickup: 'Transfert Aéroport',
       vipDriver: 'Chauffeur Privé VIP',
+      helicopterTour: 'Hélicoptère sur Dubaï',
     },
     booking: {
       bookVenue: 'Réserver',
