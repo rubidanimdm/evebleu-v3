@@ -7,6 +7,7 @@ import { User, LogOut, ArrowRight, Phone, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
+import { openExternalUrl } from '@/lib/openExternalUrl';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
@@ -46,7 +47,7 @@ const getCategoryIcon = (key: string) => {
 };
 
 const categoryKeys = [
-  { key: 'attractions', route: '/concierge?intent=ATTRACTION' },
+  { key: 'attractions', route: '#hotel-booking' },
   { key: 'extremeFlights', route: '#flights' },
   { key: 'diningNightlife', route: '#strip-dining' },
   { key: 'yachtCharters', route: '/concierge?intent=YACHT' },
@@ -78,6 +79,10 @@ export default function MainScreen() {
     }
     if (route === '#flights') {
       setFlightFormOpen(true);
+      return;
+    }
+    if (route === '#hotel-booking') {
+      openExternalUrl('https://www.booking.com/?aid=304142');
       return;
     }
     if (route.startsWith('#')) {
