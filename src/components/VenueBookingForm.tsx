@@ -11,6 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/lib/openExternalUrl';
 
 interface VenueBookingFormProps {
   open: boolean;
@@ -55,14 +56,8 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
     ].join('\n');
 
     const whatsappNumber = '971551523121';
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    const a = document.createElement('a');
-    a.href = whatsappUrl;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+    openExternalUrl(whatsappUrl);
 
     toast({
       title: 'Booking request sent!',

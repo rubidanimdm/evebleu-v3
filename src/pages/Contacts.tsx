@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Phone, Mail, MessageCircle, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { openExternalUrl } from '@/lib/openExternalUrl';
 
 export default function Contacts() {
   const [contacts, setContacts] = useState<any[]>([]);
@@ -71,7 +72,7 @@ export default function Contacts() {
                     <Button
                       variant="destructive"
                       className="flex-1"
-                      onClick={() => window.open(`tel:${contact.phone}`)}
+                      onClick={() => openExternalUrl(`tel:${contact.phone}`, '_self')}
                     >
                       <Phone className="h-4 w-4 mr-2" />
                       Call {contact.phone}
@@ -97,7 +98,7 @@ export default function Contacts() {
                   <Button
                     variant="default"
                     className="w-full"
-                    onClick={() => window.open(`tel:${contact.phone}`)}
+                    onClick={() => openExternalUrl(`tel:${contact.phone}`, '_self')}
                   >
                     <Phone className="h-4 w-4 mr-2" />
                     Call
@@ -106,7 +107,7 @@ export default function Contacts() {
                     <Button
                       variant="outline"
                       className="w-full"
-                      onClick={() => window.open(contact.whatsapp_link, '_blank')}
+                      onClick={() => openExternalUrl(contact.whatsapp_link)}
                     >
                       <MessageCircle className="h-4 w-4 mr-2" />
                       WhatsApp
@@ -116,7 +117,7 @@ export default function Contacts() {
                     <Button
                       variant="outline"
                       className="w-full"
-                      onClick={() => window.open(`mailto:${contact.email}`)}
+                      onClick={() => openExternalUrl(`mailto:${contact.email}`, '_self')}
                     >
                       <Mail className="h-4 w-4 mr-2" />
                       Email
