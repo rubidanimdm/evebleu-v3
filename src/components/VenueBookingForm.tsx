@@ -54,7 +54,13 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
 
     const whatsappNumber = '971551523121';
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.location.href = whatsappUrl;
+    const a = document.createElement('a');
+    a.href = whatsappUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 
     toast({
       title: 'Booking request sent!',
