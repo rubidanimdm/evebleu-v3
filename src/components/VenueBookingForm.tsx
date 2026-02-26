@@ -41,20 +41,20 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
 
     const formattedDate = format(date, 'dd/MM/yyyy');
     const message = [
-      `🎉 *New Booking Request*`,
-      ``,
-      `📍 *Venue:* ${venueName}`,
-      `📅 *Date:* ${formattedDate}`,
-      `⏰ *Time:* ${time}`,
-      `👤 *Name:* ${fullName}`,
-      `📞 *Phone:* ${phone}`,
-      `📧 *Email:* ${email}`,
-      `👥 *Pax:* ${pax}`,
+      '--- New Booking Request ---',
+      '',
+      `Venue: ${venueName}`,
+      `Date: ${formattedDate}`,
+      `Time: ${time}`,
+      `Name: ${fullName}`,
+      `Phone: ${phone}`,
+      `Email: ${email}`,
+      `Pax: ${pax}`,
     ].join('\n');
 
     const whatsappNumber = '971551523121';
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    window.location.href = whatsappUrl;
 
     toast({
       title: 'Booking request sent!',
