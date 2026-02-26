@@ -128,6 +128,21 @@ const getCategoryIcon = (key: string) => {
         <path d="M14 34C16 32 18 32 20 34C22 36 24 36 26 34C28 32 30 32 32 34" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.4"/>
       </svg>
     ),
+    airportPickup: (
+      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Airplane */}
+        <path d="M24 6L24 18" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <path d="M24 14L38 20L24 18L10 20Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+        <path d="M24 26L30 30L24 28L18 30Z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" opacity="0.7"/>
+        {/* Arrow down to car */}
+        <path d="M24 30V36" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <path d="M21 34L24 37L27 34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+        {/* Car base */}
+        <path d="M14 40H34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <circle cx="18" cy="40" r="2" stroke="currentColor" strokeWidth="1"/>
+        <circle cx="30" cy="40" r="2" stroke="currentColor" strokeWidth="1"/>
+      </svg>
+    ),
   };
   return icons[key];
 };
@@ -140,6 +155,7 @@ const categoryKeys = [
   { key: 'desertAction', route: '/concierge?intent=DESERT' },
   { key: 'luxuryCars', route: '/concierge?intent=CAR' },
   { key: 'birthdays', route: '/concierge?intent=BIRTHDAY' },
+  { key: 'airportPickup', route: '/concierge?intent=AIRPORT_PICKUP' },
 ];
 
 export default function MainScreen() {
