@@ -7,6 +7,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CalendarIcon, Send, Users, Clock } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
@@ -33,8 +34,9 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
   const [pax, setPax] = useState('');
   const [time, setTime] = useState('');
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [agreedToPolicy, setAgreedToPolicy] = useState(false);
 
-  const isValid = date && fullName.trim() && phone.trim() && email.trim() && pax && time;
+  const isValid = date && fullName.trim() && phone.trim() && email.trim() && pax && time && agreedToPolicy;
 
   const handleSubmit = () => {
     if (!isValid || !date) return;
@@ -74,7 +76,7 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
     setEmail('');
     setPax('');
     setTime('');
-    onOpenChange(false);
+    setAgreedToPolicy(false);
   };
 
   return (
@@ -209,6 +211,17 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
               <li>Your booking is <span className="font-semibold text-foreground">only confirmed</span> after you receive a confirmation message from us on WhatsApp <span className="font-semibold text-foreground">and</span> complete the payment.</li>
             </ol>
           </div>
+
+          <label className="flex items-start gap-2.5 cursor-pointer select-none">
+            <Checkbox
+              checked={agreedToPolicy}
+              onCheckedChange={(checked) => setAgreedToPolicy(checked === true)}
+              className="mt-0.5"
+            />
+            <span className="text-[11px] text-muted-foreground leading-relaxed">
+              I have read and agree to the <span className="font-semibold text-foreground">Booking Policy</span> above.
+            </span>
+          </label>
         </div>
       </DialogContent>
     </Dialog>
