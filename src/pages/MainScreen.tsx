@@ -24,7 +24,7 @@ import desertIcon from '@/assets/desert-icon.jpeg';
 import yachtIcon from '@/assets/yacht-icon.jpeg';
 import luxuryCarIcon from '@/assets/luxury-car-icon.jpeg';
 import helicopterIcon from '@/assets/helicopter-icon.jpeg';
-import diningIcon from '@/assets/dining-icon.jpeg';
+import diningIcon from '@/assets/dining-icon-new.png';
 import airportIcon from '@/assets/airport-icon.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 
