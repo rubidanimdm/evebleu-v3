@@ -212,7 +212,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/concierge?intent=YACHT')} role="link" aria-label="Yacht Charters">
         <video
           src={nightlifeVideo}
           autoPlay
