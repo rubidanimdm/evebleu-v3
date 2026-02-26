@@ -143,6 +143,22 @@ const getCategoryIcon = (key: string) => {
         <circle cx="30" cy="40" r="2" stroke="currentColor" strokeWidth="1"/>
       </svg>
     ),
+    vipDriver: (
+      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Driver figure */}
+        <circle cx="24" cy="12" r="4" stroke="currentColor" strokeWidth="1.2"/>
+        <path d="M20 10L24 6L28 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
+        <path d="M18 24C18 20 20 18 24 18C28 18 30 20 30 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        {/* Steering wheel */}
+        <circle cx="24" cy="34" r="6" stroke="currentColor" strokeWidth="1.2"/>
+        <circle cx="24" cy="34" r="2" stroke="currentColor" strokeWidth="0.8" opacity="0.5"/>
+        <line x1="24" y1="28" x2="24" y2="32" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
+        <line x1="18" y1="34" x2="22" y2="34" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
+        <line x1="26" y1="34" x2="30" y2="34" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
+        {/* VIP star */}
+        <path d="M38 8L39.2 10.5L42 11L40 13L40.5 16L38 14.8L35.5 16L36 13L34 11L36.8 10.5Z" fill="currentColor" opacity="0.4"/>
+      </svg>
+    ),
   };
   return icons[key];
 };
@@ -156,6 +172,7 @@ const categoryKeys = [
   { key: 'luxuryCars', route: '/concierge?intent=CAR' },
   { key: 'birthdays', route: '/concierge?intent=BIRTHDAY' },
   { key: 'airportPickup', route: '/concierge?intent=AIRPORT_PICKUP' },
+  { key: 'vipDriver', route: '/concierge?intent=VIP_DRIVER' },
 ];
 
 export default function MainScreen() {
