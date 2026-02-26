@@ -263,7 +263,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8">
+      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/concierge?intent=HELICOPTER')} role="link" aria-label="Helicopter Tour">
         <video
           src={yachtVideo}
           autoPlay
@@ -313,7 +313,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/concierge?intent=DESERT')} role="link" aria-label="Desert Action">
         <video
           src={strip5Video}
           autoPlay
