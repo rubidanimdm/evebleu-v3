@@ -12,6 +12,7 @@ import heroVideo from '@/assets/hero-video.mp4';
 import yachtVideo from '@/assets/yacht-marina-video.mp4';
 import nightlifeVideo from '@/assets/nightlife-video.mp4';
 import attractionsVideo from '@/assets/attractions-video.mp4';
+import strip4Video from '@/assets/strip4-video.mp4';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -331,6 +332,31 @@ export default function MainScreen() {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0" style={{
+          background: `
+            linear-gradient(180deg,
+              hsl(var(--background)) 0%,
+              transparent 20%,
+              transparent 80%,
+              hsl(var(--background)) 100%
+            )
+          `,
+        }} />
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          STRIP 4 VIDEO
+      ═══════════════════════════════════════════════ */}
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
+        <video
+          src={strip4Video}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
         />
         <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
