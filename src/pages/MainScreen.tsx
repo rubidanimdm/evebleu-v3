@@ -17,40 +17,19 @@ import strip5Video from '@/assets/strip5-video.mp4';
 import birthdayIcon from '@/assets/birthday-icon.jpeg';
 import vipDriverIcon from '@/assets/vip-driver-icon.jpeg';
 import flightsIcon from '@/assets/flights-icon.jpeg';
+import hotelIcon from '@/assets/hotel-icon.jpeg';
+import desertIcon from '@/assets/desert-icon.jpeg';
+import yachtIcon from '@/assets/yacht-icon.jpeg';
+import luxuryCarIcon from '@/assets/luxury-car-icon.jpeg';
+import helicopterIcon from '@/assets/helicopter-icon.jpeg';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
   const cls = "w-10 h-10 sm:w-12 sm:h-12";
+  const imgCls = "w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl";
   const icons: Record<string, JSX.Element> = {
-    attractions: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Burj-style landmark tower */}
-        <path d="M24 4L24 6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <path d="M24 6C24 6 20 14 20 22V42H28V22C28 14 24 6 24 6Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-        <path d="M20 42H14V30C14 28 16 26 20 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M28 42H34V30C34 28 32 26 28 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M14 42H10V34C10 32 11 31 14 30" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M34 42H38V34C38 32 37 31 34 30" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <line x1="8" y1="42" x2="40" y2="42" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <circle cx="24" cy="16" r="1.5" fill="currentColor" opacity="0.5"/>
-      </svg>
-    ),
-    luxuryCars: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Sports car silhouette */}
-        <path d="M8 30L12 22C13 20 15 19 17 19H31C33 19 35 20 36 22L40 30" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M6 30H42C43.1 30 44 30.9 44 32V34C44 35.1 43.1 36 42 36H6C4.9 36 4 35.1 4 34V32C4 30.9 4.9 30 6 30Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-        <circle cx="14" cy="36" r="3.5" stroke="currentColor" strokeWidth="1.2"/>
-        <circle cx="14" cy="36" r="1.5" stroke="currentColor" strokeWidth="0.8" opacity="0.5"/>
-        <circle cx="34" cy="36" r="3.5" stroke="currentColor" strokeWidth="1.2"/>
-        <circle cx="34" cy="36" r="1.5" stroke="currentColor" strokeWidth="0.8" opacity="0.5"/>
-        <path d="M16 24H32" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.4"/>
-        <path d="M18 22L20 19" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.3"/>
-        <path d="M30 22L28 19" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.3"/>
-        <line x1="7" y1="33" x2="10" y2="33" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-        <line x1="38" y1="33" x2="41" y2="33" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-      </svg>
-    ),
+    attractions: <img src={hotelIcon} alt="Hotel" className={imgCls} />,
+    luxuryCars: <img src={luxuryCarIcon} alt="Luxury Cars" className={imgCls} />,
     diningNightlife: (
       <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Cocktail glass + fork */}
@@ -59,84 +38,30 @@ const getCategoryIcon = (key: string) => {
         <line x1="12" y1="8" x2="36" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
         <path d="M18 36H30" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
         <ellipse cx="24" cy="38" rx="6" ry="2" stroke="currentColor" strokeWidth="1.2"/>
-        {/* Bubbles */}
         <circle cx="20" cy="12" r="1" fill="currentColor" opacity="0.3"/>
         <circle cx="26" cy="14" r="0.8" fill="currentColor" opacity="0.25"/>
         <circle cx="22" cy="17" r="1.2" fill="currentColor" opacity="0.2"/>
-        {/* Star accent */}
         <path d="M38 12L39 14L41 14.5L39.5 16L40 18L38 17L36 18L36.5 16L35 14.5L37 14Z" fill="currentColor" opacity="0.4"/>
       </svg>
     ),
-    yachtCharters: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Yacht with sail */}
-        <path d="M24 8V34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <path d="M24 10L38 30H24" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-        <path d="M24 14L14 30H24" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-        {/* Hull */}
-        <path d="M10 34H38L36 40H12Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-        {/* Waves */}
-        <path d="M4 44C8 42 12 42 16 44C20 46 24 46 28 44C32 42 36 42 40 44C42 45 44 45 44 44" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.4"/>
-        {/* Flag */}
-        <path d="M24 8L28 10L24 12" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" fill="currentColor" opacity="0.3"/>
-      </svg>
-    ),
-    desertAction: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Sun */}
-        <circle cx="38" cy="12" r="4" stroke="currentColor" strokeWidth="1.2"/>
-        <path d="M38 5V6.5M38 17.5V19M31 12H32.5M43.5 12H45M32.8 6.8L33.8 7.8M42.2 16.2L43.2 17.2M32.8 17.2L33.8 16.2M42.2 6.8L43.2 7.8" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.5"/>
-        {/* Dunes */}
-        <path d="M2 40C10 28 18 22 26 28C30 31 34 30 38 26C42 22 46 24 48 28" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M2 40C8 34 14 32 20 36C26 40 32 38 38 34C42 32 46 34 48 36" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
-        <line x1="2" y1="40" x2="48" y2="40" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        {/* Camel silhouette hint */}
-        <path d="M12 34V30L14 28L15 30L16 28L18 30V34" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.6"/>
-      </svg>
-    ),
-    extremeFlights: (
-      <img src={flightsIcon} alt="Flights" className="w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl" />
-    ),
-    birthdays: (
-      <img src={birthdayIcon} alt="Birthday" className="w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl" />
-    ),
+    yachtCharters: <img src={yachtIcon} alt="Yacht" className={imgCls} />,
+    desertAction: <img src={desertIcon} alt="Desert" className={imgCls} />,
+    extremeFlights: <img src={flightsIcon} alt="Flights" className={imgCls} />,
+    birthdays: <img src={birthdayIcon} alt="Birthday" className={imgCls} />,
     airportPickup: (
       <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Airplane */}
         <path d="M24 6L24 18" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
         <path d="M24 14L38 20L24 18L10 20Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
         <path d="M24 26L30 30L24 28L18 30Z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" opacity="0.7"/>
-        {/* Arrow down to car */}
         <path d="M24 30V36" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
         <path d="M21 34L24 37L27 34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        {/* Car base */}
         <path d="M14 40H34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
         <circle cx="18" cy="40" r="2" stroke="currentColor" strokeWidth="1"/>
         <circle cx="30" cy="40" r="2" stroke="currentColor" strokeWidth="1"/>
       </svg>
     ),
-    vipDriver: (
-      <img src={vipDriverIcon} alt="VIP Driver" className="w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl" />
-    ),
-    helicopterTour: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Rotor */}
-        <line x1="8" y1="10" x2="40" y2="10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <line x1="24" y1="10" x2="24" y2="16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        {/* Body */}
-        <ellipse cx="24" cy="22" rx="10" ry="6" stroke="currentColor" strokeWidth="1.2"/>
-        {/* Tail */}
-        <path d="M34 22L42 18V24L34 22Z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" opacity="0.7"/>
-        {/* Skids */}
-        <path d="M16 28V32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-        <path d="M32 28V32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-        <line x1="12" y1="32" x2="36" y2="32" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        {/* Dubai skyline hint */}
-        <path d="M10 44V38L12 36L14 38V44" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
-        <path d="M20 44V36L22 34L24 32L26 34L28 36V44" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
-        <path d="M34 44V40L36 38L38 40V44" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
-      </svg>
-    ),
+    vipDriver: <img src={vipDriverIcon} alt="VIP Driver" className={imgCls} />,
+    helicopterTour: <img src={helicopterIcon} alt="Helicopter" className={imgCls} />,
   };
   return icons[key];
 };
@@ -297,12 +222,12 @@ export default function MainScreen() {
               key={cat.key}
               onClick={() => handleCategoryClick(cat.route)}
               className={`group flex flex-col items-center justify-center gap-2 sm:gap-3 aspect-square rounded-xl sm:rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
-                ['birthdays', 'vipDriver', 'extremeFlights'].includes(cat.key)
+                !['diningNightlife', 'airportPickup'].includes(cat.key)
                   ? 'relative overflow-hidden border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] p-0'
                   : 'border-primary/30 bg-card/50 backdrop-blur-sm hover:border-primary hover:bg-card/80 hover:shadow-[0_12px_40px_rgba(216,179,90,0.12)] p-3 sm:p-4'
               }`}
             >
-              {['birthdays', 'vipDriver', 'extremeFlights'].includes(cat.key) ? (
+              {!['diningNightlife', 'airportPickup'].includes(cat.key) ? (
                 <>
                   {getCategoryIcon(cat.key)}
                   <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
