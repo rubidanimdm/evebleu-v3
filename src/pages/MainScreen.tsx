@@ -379,7 +379,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section id="strip-dining" className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
+      <section id="strip-dining" className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
         <video
           src={attractionsVideo}
           autoPlay
