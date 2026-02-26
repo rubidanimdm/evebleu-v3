@@ -272,14 +272,14 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden">
         <video
           src={yachtVideo}
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
         />
         {/* Top + bottom fade into background */}
         <div className="absolute inset-0" style={{
@@ -297,14 +297,14 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden">
         <video
           src={nightlifeVideo}
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
         />
         <div className="absolute inset-0" style={{
           background: `
