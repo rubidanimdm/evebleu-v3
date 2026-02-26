@@ -307,6 +307,7 @@ export default function MainScreen() {
           playsInline
           className="absolute inset-0 w-full h-full object-contain sm:object-cover"
         />
+        <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
           background: `
             linear-gradient(180deg,
@@ -331,6 +332,7 @@ export default function MainScreen() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
           background: `
             linear-gradient(180deg,
