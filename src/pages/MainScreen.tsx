@@ -11,6 +11,7 @@ import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 import yachtVideo from '@/assets/yacht-marina-video.mp4';
 import nightlifeVideo from '@/assets/nightlife-video.mp4';
+import attractionsVideo from '@/assets/attractions-video.mp4';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -299,6 +300,30 @@ export default function MainScreen() {
       <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden">
         <video
           src={nightlifeVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0" style={{
+          background: `
+            linear-gradient(180deg,
+              hsl(var(--background)) 0%,
+              transparent 20%,
+              transparent 80%,
+              hsl(var(--background)) 100%
+            )
+          `,
+        }} />
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          ATTRACTIONS VIDEO STRIP
+      ═══════════════════════════════════════════════ */}
+      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden">
+        <video
+          src={attractionsVideo}
           autoPlay
           loop
           muted
