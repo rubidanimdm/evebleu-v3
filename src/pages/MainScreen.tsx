@@ -110,6 +110,24 @@ const getCategoryIcon = (key: string) => {
         <line x1="6" y1="26" x2="12" y2="24" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.3"/>
       </svg>
     ),
+    birthdays: (
+      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Birthday cake */}
+        <path d="M12 28H36V40C36 41.1 35.1 42 34 42H14C12.9 42 12 41.1 12 40V28Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+        <path d="M10 28H38" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <path d="M16 28V24C16 22.9 16.9 22 18 22H30C31.1 22 32 22.9 32 24V28" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+        {/* Candles */}
+        <line x1="20" y1="22" x2="20" y2="16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <line x1="24" y1="22" x2="24" y2="14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <line x1="28" y1="22" x2="28" y2="16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        {/* Flames */}
+        <path d="M20 16C20 14.5 19 13 20 12C21 13 20 14.5 20 16Z" fill="currentColor" opacity="0.5"/>
+        <path d="M24 14C24 12.5 23 11 24 10C25 11 24 12.5 24 14Z" fill="currentColor" opacity="0.5"/>
+        <path d="M28 16C28 14.5 27 13 28 12C29 13 28 14.5 28 16Z" fill="currentColor" opacity="0.5"/>
+        {/* Decoration line */}
+        <path d="M14 34C16 32 18 32 20 34C22 36 24 36 26 34C28 32 30 32 32 34" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.4"/>
+      </svg>
+    ),
   };
   return icons[key];
 };
@@ -121,6 +139,7 @@ const categoryKeys = [
   { key: 'yachtCharters', route: '/concierge?intent=YACHT' },
   { key: 'desertAction', route: '/concierge?intent=DESERT' },
   { key: 'luxuryCars', route: '/concierge?intent=CAR' },
+  { key: 'birthdays', route: '/concierge?intent=BIRTHDAY' },
 ];
 
 export default function MainScreen() {

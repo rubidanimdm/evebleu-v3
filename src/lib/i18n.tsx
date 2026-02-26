@@ -250,6 +250,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       yachtCharters: 'Yacht Charters',
       desertAction: 'Desert & Action',
       extremeFlights: 'Search Flights',
+      birthdays: 'Birthdays',
     },
     booking: {
       bookVenue: 'Book',
@@ -445,6 +446,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       yachtCharters: 'השכרות יאכטות',
       desertAction: 'מדבר ואקשן',
       extremeFlights: 'חפש טיסות',
+      birthdays: 'ימי הולדת',
     },
     booking: {
       bookVenue: 'הזמן',
@@ -640,6 +642,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       yachtCharters: 'تأجير يخوت',
       desertAction: 'صحراء ومغامرات',
       extremeFlights: 'البحث عن رحلات',
+      birthdays: 'أعياد ميلاد',
     },
     booking: {
       bookVenue: 'احجز',
@@ -835,6 +838,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       yachtCharters: 'Location de Yachts',
       desertAction: 'Désert & Action',
       extremeFlights: 'Rechercher des Vols',
+      birthdays: 'Anniversaires',
     },
     booking: {
       bookVenue: 'Réserver',
