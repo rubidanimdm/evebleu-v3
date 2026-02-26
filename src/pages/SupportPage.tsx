@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, Mail, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
+import { openExternalUrl } from '@/lib/openExternalUrl';
 
 export default function SupportPage() {
   const navigate = useNavigate();
@@ -20,21 +21,21 @@ export default function SupportPage() {
       icon: MessageCircle,
       title: 'WhatsApp',
       description: 'Direct line to our team',
-      action: () => window.open('https://wa.me/1234567890', '_blank'),
+      action: () => openExternalUrl('https://wa.me/1234567890'),
       buttonText: 'Message',
     },
     {
       icon: Phone,
       title: 'Call',
       description: 'Speak with a specialist',
-      action: () => window.open('tel:+1234567890'),
+      action: () => openExternalUrl('tel:+1234567890', '_self'),
       buttonText: 'Call',
     },
     {
       icon: Mail,
       title: 'Email',
       description: 'For detailed requests',
-      action: () => window.open('mailto:dekel@evebleu.vip'),
+      action: () => openExternalUrl('mailto:dekel@evebleu.vip', '_self'),
       buttonText: 'Send',
     },
   ];

@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { StatusBadge } from '@/components/StatusBadge';
 import { ArrowLeft, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { openExternalUrl } from '@/lib/openExternalUrl';
 
 export default function Payments() {
   const [payments, setPayments] = useState<any[]>([]);
@@ -80,7 +81,7 @@ export default function Payments() {
                     <Button
                       variant="outline"
                       className="w-full mt-4"
-                      onClick={() => window.open(payment.invoice_url, '_blank')}
+                      onClick={() => openExternalUrl(payment.invoice_url)}
                     >
                       View Invoice
                     </Button>
