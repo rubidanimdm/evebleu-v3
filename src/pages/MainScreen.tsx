@@ -16,6 +16,7 @@ import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
 import birthdayIcon from '@/assets/birthday-icon.jpeg';
 import vipDriverIcon from '@/assets/vip-driver-icon.jpeg';
+import flightsIcon from '@/assets/flights-icon.jpeg';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -94,23 +95,7 @@ const getCategoryIcon = (key: string) => {
       </svg>
     ),
     extremeFlights: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Helicopter / skydive */}
-        <ellipse cx="24" cy="22" rx="8" ry="5" stroke="currentColor" strokeWidth="1.2"/>
-        <path d="M24 17V10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <line x1="14" y1="10" x2="34" y2="10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <path d="M32 22L38 28H34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M38 28L40 30" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
-        <path d="M16 22L10 28" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        {/* Landing skids */}
-        <path d="M18 27V32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-        <path d="M30 27V32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-        <line x1="14" y1="32" x2="34" y2="32" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        {/* Speed lines */}
-        <line x1="6" y1="18" x2="12" y2="20" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.3"/>
-        <line x1="4" y1="22" x2="10" y2="22" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.3"/>
-        <line x1="6" y1="26" x2="12" y2="24" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.3"/>
-      </svg>
+      <img src={flightsIcon} alt="Flights" className="w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl" />
     ),
     birthdays: (
       <img src={birthdayIcon} alt="Birthday" className="w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl" />
@@ -312,12 +297,12 @@ export default function MainScreen() {
               key={cat.key}
               onClick={() => handleCategoryClick(cat.route)}
               className={`group flex flex-col items-center justify-center gap-2 sm:gap-3 aspect-square rounded-xl sm:rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
-                cat.key === 'birthdays' || cat.key === 'vipDriver'
+                ['birthdays', 'vipDriver', 'extremeFlights'].includes(cat.key)
                   ? 'relative overflow-hidden border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] p-0'
                   : 'border-primary/30 bg-card/50 backdrop-blur-sm hover:border-primary hover:bg-card/80 hover:shadow-[0_12px_40px_rgba(216,179,90,0.12)] p-3 sm:p-4'
               }`}
             >
-              {cat.key === 'birthdays' || cat.key === 'vipDriver' ? (
+              {['birthdays', 'vipDriver', 'extremeFlights'].includes(cat.key) ? (
                 <>
                   {getCategoryIcon(cat.key)}
                   <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
