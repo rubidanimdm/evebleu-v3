@@ -22,44 +22,21 @@ import desertIcon from '@/assets/desert-icon.jpeg';
 import yachtIcon from '@/assets/yacht-icon.jpeg';
 import luxuryCarIcon from '@/assets/luxury-car-icon.jpeg';
 import helicopterIcon from '@/assets/helicopter-icon.jpeg';
+import diningIcon from '@/assets/dining-icon.jpeg';
+import airportIcon from '@/assets/airport-icon.jpeg';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
-  const cls = "w-10 h-10 sm:w-12 sm:h-12";
   const imgCls = "w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl";
   const icons: Record<string, JSX.Element> = {
     attractions: <img src={hotelIcon} alt="Hotel" className={imgCls} />,
     luxuryCars: <img src={luxuryCarIcon} alt="Luxury Cars" className={imgCls} />,
-    diningNightlife: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Cocktail glass + fork */}
-        <path d="M14 8L24 24V36" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M34 8L24 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <line x1="12" y1="8" x2="36" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <path d="M18 36H30" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <ellipse cx="24" cy="38" rx="6" ry="2" stroke="currentColor" strokeWidth="1.2"/>
-        <circle cx="20" cy="12" r="1" fill="currentColor" opacity="0.3"/>
-        <circle cx="26" cy="14" r="0.8" fill="currentColor" opacity="0.25"/>
-        <circle cx="22" cy="17" r="1.2" fill="currentColor" opacity="0.2"/>
-        <path d="M38 12L39 14L41 14.5L39.5 16L40 18L38 17L36 18L36.5 16L35 14.5L37 14Z" fill="currentColor" opacity="0.4"/>
-      </svg>
-    ),
+    diningNightlife: <img src={diningIcon} alt="Dining & Nightlife" className={imgCls} />,
     yachtCharters: <img src={yachtIcon} alt="Yacht" className={imgCls} />,
     desertAction: <img src={desertIcon} alt="Desert" className={imgCls} />,
     extremeFlights: <img src={flightsIcon} alt="Flights" className={imgCls} />,
     birthdays: <img src={birthdayIcon} alt="Birthday" className={imgCls} />,
-    airportPickup: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M24 6L24 18" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <path d="M24 14L38 20L24 18L10 20Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-        <path d="M24 26L30 30L24 28L18 30Z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" opacity="0.7"/>
-        <path d="M24 30V36" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <path d="M21 34L24 37L27 34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M14 40H34" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        <circle cx="18" cy="40" r="2" stroke="currentColor" strokeWidth="1"/>
-        <circle cx="30" cy="40" r="2" stroke="currentColor" strokeWidth="1"/>
-      </svg>
-    ),
+    airportPickup: <img src={airportIcon} alt="Airport Pickup" className={imgCls} />,
     vipDriver: <img src={vipDriverIcon} alt="VIP Driver" className={imgCls} />,
     helicopterTour: <img src={helicopterIcon} alt="Helicopter" className={imgCls} />,
   };
@@ -221,29 +198,12 @@ export default function MainScreen() {
             <button
               key={cat.key}
               onClick={() => handleCategoryClick(cat.route)}
-              className={`group flex flex-col items-center justify-center gap-2 sm:gap-3 aspect-square rounded-xl sm:rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
-                !['diningNightlife', 'airportPickup'].includes(cat.key)
-                  ? 'relative overflow-hidden border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] p-0'
-                  : 'border-primary/30 bg-card/50 backdrop-blur-sm hover:border-primary hover:bg-card/80 hover:shadow-[0_12px_40px_rgba(216,179,90,0.12)] p-3 sm:p-4'
-              }`}
+              className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl border border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
             >
-              {!['diningNightlife', 'airportPickup'].includes(cat.key) ? (
-                <>
-                  {getCategoryIcon(cat.key)}
-                  <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
-                    {t(`mainScreen.${cat.key}`)}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <div className="text-primary transition-transform duration-300 group-hover:scale-110">
-                    {getCategoryIcon(cat.key)}
-                  </div>
-                  <span className="text-[10px] sm:text-xs font-semibold text-primary/80 text-center leading-tight tracking-wide group-hover:text-primary transition-colors">
-                    {t(`mainScreen.${cat.key}`)}
-                  </span>
-                </>
-              )}
+              {getCategoryIcon(cat.key)}
+              <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
+                {t(`mainScreen.${cat.key}`)}
+              </span>
             </button>
           ))}
         </div>
