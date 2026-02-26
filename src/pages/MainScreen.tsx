@@ -15,6 +15,7 @@ import attractionsVideo from '@/assets/attractions-video.mp4';
 import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
 import birthdayIcon from '@/assets/birthday-icon.jpeg';
+import vipDriverIcon from '@/assets/vip-driver-icon.jpeg';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -130,20 +131,7 @@ const getCategoryIcon = (key: string) => {
       </svg>
     ),
     vipDriver: (
-      <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Driver figure */}
-        <circle cx="24" cy="12" r="4" stroke="currentColor" strokeWidth="1.2"/>
-        <path d="M20 10L24 6L28 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
-        <path d="M18 24C18 20 20 18 24 18C28 18 30 20 30 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        {/* Steering wheel */}
-        <circle cx="24" cy="34" r="6" stroke="currentColor" strokeWidth="1.2"/>
-        <circle cx="24" cy="34" r="2" stroke="currentColor" strokeWidth="0.8" opacity="0.5"/>
-        <line x1="24" y1="28" x2="24" y2="32" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
-        <line x1="18" y1="34" x2="22" y2="34" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
-        <line x1="26" y1="34" x2="30" y2="34" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
-        {/* VIP star */}
-        <path d="M38 8L39.2 10.5L42 11L40 13L40.5 16L38 14.8L35.5 16L36 13L34 11L36.8 10.5Z" fill="currentColor" opacity="0.4"/>
-      </svg>
+      <img src={vipDriverIcon} alt="VIP Driver" className="w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl" />
     ),
     helicopterTour: (
       <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -324,12 +312,12 @@ export default function MainScreen() {
               key={cat.key}
               onClick={() => handleCategoryClick(cat.route)}
               className={`group flex flex-col items-center justify-center gap-2 sm:gap-3 aspect-square rounded-xl sm:rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
-                cat.key === 'birthdays'
+                cat.key === 'birthdays' || cat.key === 'vipDriver'
                   ? 'relative overflow-hidden border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] p-0'
                   : 'border-primary/30 bg-card/50 backdrop-blur-sm hover:border-primary hover:bg-card/80 hover:shadow-[0_12px_40px_rgba(216,179,90,0.12)] p-3 sm:p-4'
               }`}
             >
-              {cat.key === 'birthdays' ? (
+              {cat.key === 'birthdays' || cat.key === 'vipDriver' ? (
                 <>
                   {getCategoryIcon(cat.key)}
                   <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
