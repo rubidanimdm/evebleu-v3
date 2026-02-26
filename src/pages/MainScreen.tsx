@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
@@ -24,6 +25,7 @@ import luxuryCarIcon from '@/assets/luxury-car-icon.jpeg';
 import helicopterIcon from '@/assets/helicopter-icon.jpeg';
 import diningIcon from '@/assets/dining-icon.jpeg';
 import airportIcon from '@/assets/airport-icon.jpeg';
+import { FlightSearchForm } from '@/components/FlightSearchForm';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -45,7 +47,7 @@ const getCategoryIcon = (key: string) => {
 
 const categoryKeys = [
   { key: 'attractions', route: '/concierge?intent=ATTRACTION' },
-  { key: 'extremeFlights', route: '/concierge?intent=EXTREME' },
+  { key: 'extremeFlights', route: '#flights' },
   { key: 'diningNightlife', route: '#strip-dining' },
   { key: 'yachtCharters', route: '/concierge?intent=YACHT' },
   { key: 'desertAction', route: '/concierge?intent=DESERT' },
@@ -62,6 +64,7 @@ export default function MainScreen() {
   const { toast } = useToast();
   const { t } = useLanguage();
   const isLoggedIn = !!user;
+  const [flightFormOpen, setFlightFormOpen] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -71,6 +74,10 @@ export default function MainScreen() {
   const handleCategoryClick = (route: string) => {
     if (!isLoggedIn) {
       navigate('/login');
+      return;
+    }
+    if (route === '#flights') {
+      setFlightFormOpen(true);
       return;
     }
     if (route.startsWith('#')) {
@@ -387,6 +394,8 @@ export default function MainScreen() {
       </footer>
 
       {isLoggedIn && <BottomNav />}
+
+      <FlightSearchForm open={flightFormOpen} onOpenChange={setFlightFormOpen} />
 
       {/* Fade-in keyframe */}
       <style>{`
