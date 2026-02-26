@@ -37,14 +37,14 @@ export function LanguageSwitcher({ variant = 'minimal', className }: LanguageSwi
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300",
-          "border border-primary/20 hover:border-primary/40 hover:bg-primary/5",
-          "text-sm text-muted-foreground hover:text-foreground"
+          "w-10 h-10 rounded-full flex items-center justify-center",
+          "bg-card/90 backdrop-blur-xl border border-primary/20",
+          "text-muted-foreground hover:text-primary hover:border-primary/40",
+          "shadow-lg transition-all duration-300 hover:scale-105"
         )}
         aria-label="Select language"
       >
-        <Globe className="w-4 h-4 text-primary/60" strokeWidth={1.5} />
-        <span className="font-medium">{currentLang?.label}</span>
+        <Globe className="w-4 h-4" strokeWidth={1.5} />
       </button>
 
       {/* Dropdown menu */}
