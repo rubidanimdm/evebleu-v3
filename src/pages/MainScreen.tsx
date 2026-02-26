@@ -9,6 +9,7 @@ import { useLanguage } from '@/lib/i18n';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
+import yachtVideo from '@/assets/yacht-marina-video.mp4';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -264,6 +265,31 @@ export default function MainScreen() {
             </button>
           ))}
         </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          YACHT VIDEO STRIP — full-width cinematic band
+      ═══════════════════════════════════════════════ */}
+      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden">
+        <video
+          src={yachtVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Top + bottom fade into background */}
+        <div className="absolute inset-0" style={{
+          background: `
+            linear-gradient(180deg,
+              hsl(var(--background)) 0%,
+              transparent 20%,
+              transparent 80%,
+              hsl(var(--background)) 100%
+            )
+          `,
+        }} />
       </section>
 
       {/* ═══════════════════════════════════════════════
