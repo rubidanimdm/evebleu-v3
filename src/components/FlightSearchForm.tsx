@@ -36,6 +36,7 @@ export function FlightSearchForm({ open, onOpenChange }: FlightSearchFormProps) 
   const [returnCalendarOpen, setReturnCalendarOpen] = useState(false);
   const [agreedToPolicy, setAgreedToPolicy] = useState(false);
   const [tripType, setTripType] = useState<'roundtrip' | 'oneway'>('roundtrip');
+  const [flexibleDates, setFlexibleDates] = useState(false);
 
   const isValid =
     origin.trim() &&
@@ -65,6 +66,7 @@ export function FlightSearchForm({ open, onOpenChange }: FlightSearchFormProps) 
       tripType === 'roundtrip' ? `Return: ${formattedReturn}` : null,
       `Passengers: ${passengers}`,
       `Class: ${t(`flights.${cabinClass}`)}`,
+      flexibleDates ? 'Flexible Dates: ±3 days' : null,
       '',
       `Name: ${fullName}`,
       `Phone: ${phone}`,
@@ -93,6 +95,7 @@ export function FlightSearchForm({ open, onOpenChange }: FlightSearchFormProps) 
     setPhone('');
     setEmail('');
     setAgreedToPolicy(false);
+    setFlexibleDates(false);
   };
 
   return (
@@ -219,6 +222,17 @@ export function FlightSearchForm({ open, onOpenChange }: FlightSearchFormProps) 
               </Popover>
             </div>
           )}
+
+          {/* Flexible Dates */}
+          <label className="flex items-center gap-2.5 cursor-pointer select-none py-1">
+            <Checkbox
+              checked={flexibleDates}
+              onCheckedChange={(checked) => setFlexibleDates(checked === true)}
+            />
+            <span className="text-xs text-muted-foreground">
+              {t('flights.flexibleDates')}
+            </span>
+          </label>
 
           {/* Passengers & Class row */}
           <div className="grid grid-cols-2 gap-3">
