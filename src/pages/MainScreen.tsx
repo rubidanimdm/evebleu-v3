@@ -323,12 +323,20 @@ export default function MainScreen() {
             <button
               key={cat.key}
               onClick={() => handleCategoryClick(cat.route)}
-              className="group flex flex-col items-center justify-center gap-2 sm:gap-3 aspect-square rounded-xl sm:rounded-2xl border border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary hover:bg-card/80 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(216,179,90,0.12)] p-3 sm:p-4"
+              className={`group flex flex-col items-center justify-center gap-2 sm:gap-3 aspect-square rounded-xl sm:rounded-2xl border transition-all duration-300 hover:-translate-y-1 p-3 sm:p-4 ${
+                cat.key === 'birthdays'
+                  ? 'border-[#1a1a5e]/50 bg-[#0a0a2e] hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(10,10,46,0.4)]'
+                  : 'border-primary/30 bg-card/50 backdrop-blur-sm hover:border-primary hover:bg-card/80 hover:shadow-[0_12px_40px_rgba(216,179,90,0.12)]'
+              }`}
             >
-              <div className="text-primary transition-transform duration-300 group-hover:scale-110">
+              <div className={`transition-transform duration-300 group-hover:scale-110 ${cat.key === 'birthdays' ? '' : 'text-primary'}`}>
                 {getCategoryIcon(cat.key)}
               </div>
-              <span className="text-[10px] sm:text-xs font-semibold text-primary/80 text-center leading-tight tracking-wide group-hover:text-primary transition-colors">
+              <span className={`text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide transition-colors ${
+                cat.key === 'birthdays'
+                  ? 'text-[#d4af37] group-hover:text-[#e5c54a]'
+                  : 'text-primary/80 group-hover:text-primary'
+              }`}>
                 {t(`mainScreen.${cat.key}`)}
               </span>
             </button>
