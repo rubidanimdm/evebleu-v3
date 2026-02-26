@@ -4,6 +4,7 @@ import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { GoldParticles } from '@/components/LuxuryElements';
+import { VenueBookingForm } from '@/components/VenueBookingForm';
 import { useLanguage } from '@/lib/i18n';
 import { MessageCircle, Search, UtensilsCrossed, X } from 'lucide-react';
 
@@ -152,12 +153,14 @@ export default function DiningNightlifePage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
 
+  const [bookingVenue, setBookingVenue] = useState<string | null>(null);
+
   const filtered = search
     ? VENUES.filter(v => v.name.toLowerCase().includes(search.toLowerCase()))
     : VENUES;
 
   const handleContact = (venue: string) => {
-    navigate(`/concierge?intent=TABLE&supplier=${encodeURIComponent(venue)}`);
+    setBookingVenue(venue);
   };
 
   return (
@@ -260,6 +263,12 @@ export default function DiningNightlifePage() {
           </button>
         </p>
       </main>
+
+      <VenueBookingForm
+        open={!!bookingVenue}
+        onOpenChange={(open) => !open && setBookingVenue(null)}
+        venueName={bookingVenue || ''}
+      />
 
       <BottomNav />
     </div>
