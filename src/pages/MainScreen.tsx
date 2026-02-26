@@ -117,7 +117,7 @@ const getCategoryIcon = (key: string) => {
 const categoryKeys = [
   { key: 'attractions', route: '/concierge?intent=ATTRACTION' },
   { key: 'luxuryCars', route: '/concierge?intent=CAR' },
-  { key: 'diningNightlife', route: '/dining' },
+  { key: 'diningNightlife', route: '#strip-dining' },
   { key: 'yachtCharters', route: '/concierge?intent=YACHT' },
   { key: 'desertAction', route: '/concierge?intent=DESERT' },
   { key: 'extremeFlights', route: '/concierge?intent=EXTREME' },
@@ -139,6 +139,13 @@ export default function MainScreen() {
     if (!isLoggedIn) {
       navigate('/login');
       return;
+    }
+    if (route.startsWith('#')) {
+      const el = document.getElementById(route.slice(1));
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
     }
     navigate(route);
   };
@@ -300,7 +307,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
+      <section id="strip-dining" className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
         <video
           src={attractionsVideo}
           autoPlay
@@ -325,12 +332,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section
-        className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8 cursor-pointer"
-        onClick={() => navigate('/dining')}
-        role="link"
-        aria-label="Dining & Nightlife"
-      >
+      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8">
         <video
           src={yachtVideo}
           autoPlay
