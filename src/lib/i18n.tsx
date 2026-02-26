@@ -249,7 +249,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       diningNightlife: 'Dining & Nightlife',
       yachtCharters: 'Yacht Charters',
       desertAction: 'Desert & Action',
-      extremeFlights: 'Extreme & Flights',
+      extremeFlights: 'Search Flights',
     },
     booking: {
       bookVenue: 'Book',
@@ -444,7 +444,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       diningNightlife: 'מסעדות וחיי לילה',
       yachtCharters: 'השכרות יאכטות',
       desertAction: 'מדבר ואקשן',
-      extremeFlights: 'אקסטרים וטיסות',
+      extremeFlights: 'חפש טיסות',
     },
     booking: {
       bookVenue: 'הזמן',
@@ -639,7 +639,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       diningNightlife: 'مطاعم وحياة ليلية',
       yachtCharters: 'تأجير يخوت',
       desertAction: 'صحراء ومغامرات',
-      extremeFlights: 'رياضات متطرفة وطيران',
+      extremeFlights: 'البحث عن رحلات',
     },
     booking: {
       bookVenue: 'احجز',
@@ -834,7 +834,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       diningNightlife: 'Restaurants & Vie Nocturne',
       yachtCharters: 'Location de Yachts',
       desertAction: 'Désert & Action',
-      extremeFlights: 'Extrême & Vols',
+      extremeFlights: 'Rechercher des Vols',
     },
     booking: {
       bookVenue: 'Réserver',
