@@ -251,6 +251,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       desertAction: 'Desert & Action',
       extremeFlights: 'Search Flights',
       birthdays: 'Birthdays',
+      airportPickup: 'Airport Pickup',
     },
     booking: {
       bookVenue: 'Book',
@@ -447,6 +448,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       desertAction: 'מדבר ואקשן',
       extremeFlights: 'חפש טיסות',
       birthdays: 'ימי הולדת',
+      airportPickup: 'איסוף משדה התעופה',
     },
     booking: {
       bookVenue: 'הזמן',
@@ -643,6 +645,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       desertAction: 'صحراء ومغامرات',
       extremeFlights: 'البحث عن رحلات',
       birthdays: 'أعياد ميلاد',
+      airportPickup: 'التوصيل من المطار',
     },
     booking: {
       bookVenue: 'احجز',
@@ -839,6 +842,7 @@ const translations: Record<Language, Record<string, unknown>> = {
       desertAction: 'Désert & Action',
       extremeFlights: 'Rechercher des Vols',
       birthdays: 'Anniversaires',
+      airportPickup: 'Transfert Aéroport',
     },
     booking: {
       bookVenue: 'Réserver',
