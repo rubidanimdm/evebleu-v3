@@ -55,7 +55,7 @@ export function LanguageSwitcher({ variant = 'minimal', className }: LanguageSwi
             "bg-card/95 backdrop-blur-xl border border-primary/20 rounded-xl shadow-xl",
             "min-w-[140px] py-2 overflow-hidden",
             // Position based on RTL
-            isRTL ? "left-0" : "right-0"
+            isRTL ? "right-0" : "left-0"
           )}
         >
           {/* Gold accent line */}
