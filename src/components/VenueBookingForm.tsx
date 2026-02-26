@@ -200,9 +200,15 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
             Send Booking Request
           </Button>
 
-          <p className="text-[10px] text-center text-muted-foreground">
-            Your request will be sent via WhatsApp. We'll check availability and confirm your reservation.
-          </p>
+          <div className="rounded-xl border border-primary/15 bg-primary/5 p-3 space-y-2">
+            <p className="text-[11px] font-semibold text-foreground text-center">⚠️ Important – Booking Policy</p>
+            <ol className="text-[10px] text-muted-foreground space-y-1.5 list-decimal list-inside leading-relaxed">
+              <li>Your request will be sent to our concierge team via WhatsApp.</li>
+              <li>We will check availability with the venue for your requested date & time.</li>
+              <li>Once the venue confirms availability, we will send you a secure payment link to complete your reservation deposit.</li>
+              <li>Your booking is <span className="font-semibold text-foreground">only confirmed</span> after you receive a confirmation message from us on WhatsApp <span className="font-semibold text-foreground">and</span> complete the payment.</li>
+            </ol>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
