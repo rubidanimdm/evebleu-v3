@@ -112,7 +112,7 @@ const getCategoryIcon = (key: string) => {
       </svg>
     ),
     birthdays: (
-      <img src={birthdayIcon} alt="Birthday" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover" />
+      <img src={birthdayIcon} alt="Birthday" className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover" />
     ),
     airportPickup: (
       <svg viewBox="0 0 48 48" className={cls} fill="none" xmlns="http://www.w3.org/2000/svg">
