@@ -281,7 +281,8 @@ export default function MainScreen() {
           playsInline
           className="absolute inset-0 w-full h-full object-contain sm:object-cover"
         />
-        {/* Top + bottom fade into background */}
+        {/* Dark overlay at 50% + top/bottom fade */}
+        <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
           background: `
             linear-gradient(180deg,
