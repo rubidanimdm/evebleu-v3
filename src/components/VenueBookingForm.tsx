@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { openExternalUrl } from '@/lib/openExternalUrl';
+import { useLanguage } from '@/lib/i18n';
 
 interface VenueBookingFormProps {
   open: boolean;
@@ -28,6 +29,7 @@ const TIME_SLOTS = [
 ];
 
 export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBookingFormProps) {
+  const { t } = useLanguage();
   const [date, setDate] = useState<Date>();
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -60,8 +62,8 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
     openExternalUrl(whatsappUrl);
 
     toast({
-      title: 'Booking request sent!',
-      description: `Your reservation request for ${venueName} has been submitted. We'll confirm shortly.`,
+      title: t('booking.requestSent'),
+      description: t('booking.requestSentDesc').replace('{venue}', venueName),
     });
 
     // Reset form
@@ -79,20 +81,20 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
       <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-lg font-bold text-center">
-            Book {venueName}
+            {t('booking.bookVenue')} {venueName}
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 pt-2">
           {/* Venue (read-only) */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Venue</Label>
+            <Label className="text-xs text-muted-foreground">{t('booking.venue')}</Label>
             <Input value={venueName} disabled className="bg-muted/50 font-medium" />
           </div>
 
           {/* Date */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Date *</Label>
+            <Label className="text-xs text-muted-foreground">{t('booking.date')} *</Label>
             <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
               <PopoverTrigger asChild>
                 <Button
@@ -103,7 +105,7 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, 'PPP') : 'Select date'}
+                  {date ? format(date, 'PPP') : t('booking.selectDate')}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 z-50" align="start">
@@ -123,11 +125,11 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
 
           {/* Time */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Time *</Label>
+            <Label className="text-xs text-muted-foreground">{t('booking.time')} *</Label>
             <Select value={time} onValueChange={setTime}>
               <SelectTrigger className="w-full">
                 <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
-                <SelectValue placeholder="Select time" />
+                <SelectValue placeholder={t('booking.selectTime')} />
               </SelectTrigger>
               <SelectContent className="max-h-60">
                 {TIME_SLOTS.map(t => (
@@ -139,7 +141,7 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
 
           {/* Full Name */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Full Name *</Label>
+            <Label className="text-xs text-muted-foreground">{t('booking.fullName')} *</Label>
             <Input
               placeholder="John Doe"
               value={fullName}
@@ -149,7 +151,7 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
 
           {/* Phone */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Phone Number *</Label>
+            <Label className="text-xs text-muted-foreground">{t('booking.phone')} *</Label>
             <Input
               type="tel"
               placeholder="+971 50 123 4567"
@@ -160,7 +162,7 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
 
           {/* Email */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Email *</Label>
+            <Label className="text-xs text-muted-foreground">{t('booking.email')} *</Label>
             <Input
               type="email"
               placeholder="john@example.com"
@@ -171,16 +173,16 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
 
           {/* Pax */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Number of Guests *</Label>
+            <Label className="text-xs text-muted-foreground">{t('booking.guests')} *</Label>
             <Select value={pax} onValueChange={setPax}>
               <SelectTrigger className="w-full">
                 <Users className="mr-2 h-4 w-4 text-muted-foreground" />
-                <SelectValue placeholder="Select guests" />
+                <SelectValue placeholder={t('booking.selectGuests')} />
               </SelectTrigger>
               <SelectContent>
                 {Array.from({ length: 15 }, (_, i) => i + 1).map(n => (
                   <SelectItem key={n} value={String(n)}>
-                    {n} {n === 1 ? 'Guest' : 'Guests'}
+                    {n} {n === 1 ? t('booking.guest') : t('booking.guestPlural')}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -194,16 +196,16 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
             className="w-full h-12 gap-2 text-sm font-semibold"
           >
             <Send className="w-4 h-4" />
-            Send Booking Request
+            {t('booking.sendRequest')}
           </Button>
 
           <div className="rounded-xl border border-primary/15 bg-primary/5 p-3 space-y-2">
-            <p className="text-[11px] font-semibold text-foreground text-center">⚠️ Important – Booking Policy</p>
+            <p className="text-[11px] font-semibold text-foreground text-center">{t('booking.policyTitle')}</p>
             <ol className="text-[10px] text-muted-foreground space-y-1.5 list-decimal list-inside leading-relaxed">
-              <li>Your request will be sent to our concierge team via WhatsApp.</li>
-              <li>We will check availability with the venue for your requested date & time.</li>
-              <li>Once the venue confirms availability, we will send you a secure payment link to complete your reservation deposit.</li>
-              <li>Your booking is <span className="font-semibold text-foreground">only confirmed</span> after you receive a confirmation message from us on WhatsApp <span className="font-semibold text-foreground">and</span> complete the payment.</li>
+              <li>{t('booking.policyStep1')}</li>
+              <li>{t('booking.policyStep2')}</li>
+              <li>{t('booking.policyStep3')}</li>
+              <li>{t('booking.policyStep4Pre')} <span className="font-semibold text-foreground">{t('booking.policyStep4OnlyConfirmed')}</span> {t('booking.policyStep4Mid')} <span className="font-semibold text-foreground">{t('booking.policyStep4And')}</span> {t('booking.policyStep4End')}</li>
             </ol>
           </div>
 
@@ -214,7 +216,7 @@ export function VenueBookingForm({ open, onOpenChange, venueName }: VenueBooking
               className="mt-0.5"
             />
             <span className="text-[11px] text-muted-foreground leading-relaxed">
-              I have read and agree to the <span className="font-semibold text-foreground">Booking Policy</span> above.
+              {t('booking.agreePolicy')} <span className="font-semibold text-foreground">{t('booking.bookingPolicy')}</span> {t('booking.agreeSuffix')}
             </span>
           </label>
         </div>
