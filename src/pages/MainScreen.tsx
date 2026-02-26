@@ -272,9 +272,9 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
         <video
-          src={attractionsVideo}
+          src={nightlifeVideo}
           autoPlay
           loop
           muted
@@ -298,9 +298,9 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8">
         <video
-          src={nightlifeVideo}
+          src={attractionsVideo}
           autoPlay
           loop
           muted
@@ -323,7 +323,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden">
+      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8">
         <video
           src={yachtVideo}
           autoPlay
