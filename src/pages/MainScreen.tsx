@@ -16,23 +16,24 @@ import nightlifeVideo from '@/assets/nightlife-video.mp4';
 import attractionsVideo from '@/assets/attractions-video.mp4';
 import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
-import birthdayIcon from '@/assets/birthday-icon.jpeg';
-import vipDriverIcon from '@/assets/vip-driver-icon.jpeg';
-import flightsIcon from '@/assets/flights-icon.jpeg';
-import hotelIcon from '@/assets/hotel-icon.jpeg';
-import desertIcon from '@/assets/desert-icon.jpeg';
-import yachtIcon from '@/assets/yacht-icon.jpeg';
-import luxuryCarIcon from '@/assets/luxury-car-icon.jpeg';
-import helicopterIcon from '@/assets/helicopter-icon.jpeg';
+import birthdayIcon from '@/assets/icon-birthday.jpeg';
+import vipDriverIcon from '@/assets/icon-vip-driver.jpeg';
+import flightsIcon from '@/assets/icon-flights.jpeg';
+import hotelIcon from '@/assets/icon-hotel.jpeg';
+import desertIcon from '@/assets/icon-desert.jpeg';
+import yachtIcon from '@/assets/icon-yacht.jpeg';
+import luxuryCarIcon from '@/assets/icon-luxury-car.jpeg';
+import helicopterIcon from '@/assets/icon-helicopter.jpeg';
 import diningIcon from '@/assets/dining-icon-new.png';
 import airportIcon from '@/assets/airport-icon.jpeg';
+import attractionsIcon from '@/assets/icon-attractions.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
-  const imgCls = "w-[140%] h-[140%] object-cover absolute top-[-10%] left-[-20%] rounded-xl sm:rounded-2xl";
+  const imgCls = "w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl";
   const icons: Record<string, JSX.Element> = {
-    attractions: <img src={hotelIcon} alt="Hotel" className={imgCls} />,
+    attractions: <img src={attractionsIcon} alt="Attractions" className={imgCls} />,
     luxuryCars: <img src={luxuryCarIcon} alt="Luxury Cars" className={imgCls} />,
     diningNightlife: <img src={diningIcon} alt="Dining & Nightlife" className={imgCls} />,
     yachtCharters: <img src={yachtIcon} alt="Yacht" className={imgCls} />,
