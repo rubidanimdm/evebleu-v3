@@ -30,7 +30,7 @@ import { FlightSearchForm } from '@/components/FlightSearchForm';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
-  const imgCls = "w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl";
+  const imgCls = "w-[140%] h-[140%] object-cover absolute top-[-10%] left-[-20%] rounded-xl sm:rounded-2xl";
   const icons: Record<string, JSX.Element> = {
     attractions: <img src={hotelIcon} alt="Hotel" className={imgCls} />,
     luxuryCars: <img src={luxuryCarIcon} alt="Luxury Cars" className={imgCls} />,
@@ -213,6 +213,9 @@ export default function MainScreen() {
               className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl border border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
             >
               {getCategoryIcon(cat.key)}
+              <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
+                {t(`mainScreen.${cat.key}`)}
+              </span>
             </button>
           ))}
         </div>
