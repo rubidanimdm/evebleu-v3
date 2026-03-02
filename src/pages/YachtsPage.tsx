@@ -130,6 +130,11 @@ export default function YachtsPage() {
                       expanded={expandedId === yacht.id}
                       onToggle={() => setExpandedId(expandedId === yacht.id ? null : yacht.id)}
                       onBook={() => navigate(`/concierge?intent=YACHT&yacht=${encodeURIComponent(yacht.title)}`)}
+                      onNavigateDetail={
+                        yacht.details.code === 'E4'
+                          ? () => navigate('/yachts/elite-4')
+                          : undefined
+                      }
                     />
                   ))}
                 </div>
@@ -181,18 +186,25 @@ function YachtCard({
   expanded,
   onToggle,
   onBook,
+  onNavigateDetail,
 }: {
   item: YachtItem;
   expanded: boolean;
   onToggle: () => void;
   onBook: () => void;
+  onNavigateDetail?: () => void;
 }) {
   const { details } = item;
 
   return (
-    <LuxuryCard className="overflow-hidden transition-all duration-300">
+    <LuxuryCard
+      className="overflow-hidden transition-all duration-300 cursor-pointer"
+      onClick={onNavigateDetail}
+    >
       {/* Image Carousel */}
-      <YachtImageCarousel images={item.gallery} title={item.title} />
+      <div onClick={onNavigateDetail ? (e) => { e.stopPropagation(); onNavigateDetail(); } : undefined}>
+        <YachtImageCarousel images={item.gallery} title={item.title} />
+      </div>
       {/* Header - always visible */}
       <div
         className="p-5 cursor-pointer"
