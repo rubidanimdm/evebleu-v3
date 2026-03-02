@@ -51,7 +51,7 @@ const categoryKeys = [
   { key: 'attractions', route: '#hotel-booking' },
   { key: 'extremeFlights', route: '#flights' },
   { key: 'diningNightlife', route: '/dining' },
-  { key: 'yachtCharters', route: '/concierge?intent=YACHT' },
+  { key: 'yachtCharters', route: '/yachts' },
   { key: 'desertAction', route: '/concierge?intent=DESERT' },
   { key: 'luxuryCars', route: '/concierge?intent=CAR' },
   { key: 'birthdays', route: '/concierge?intent=BIRTHDAY' },
