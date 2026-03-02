@@ -35,7 +35,7 @@ const getCategoryIcon = (key: string) => {
   const icons: Record<string, JSX.Element> = {
     attractions: <img src={hotelIcon} alt="Search Hotel" className={imgCls} />,
     luxuryCars: <img src={luxuryCarIcon} alt="Luxury Cars" className={imgCls} />,
-    diningNightlife: <img src={diningIcon} alt="Dining & Nightlife" className={imgCls} />,
+    diningNightlife: <img src={diningIcon} alt="Dining & Nightlife" className="w-[140%] h-[140%] object-cover absolute top-[-20%] left-[-20%] rounded-xl sm:rounded-2xl" />,
     yachtCharters: <img src={yachtIcon} alt="Yacht" className={imgCls} />,
     desertAction: <img src={desertIcon} alt="Desert" className={imgCls} />,
     extremeFlights: <img src={flightsIcon} alt="Flights" className={imgCls} />,
