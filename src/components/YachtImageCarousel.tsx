@@ -35,11 +35,11 @@ export function YachtImageCarousel({ images, title }: YachtImageCarouselProps) {
 
   if (images.length === 1) {
     return (
-      <div className="h-48 overflow-hidden">
+      <div className="w-full overflow-hidden">
         <img
           src={images[0].url}
           alt={images[0].alt_text || title}
-          className="w-full h-full object-cover"
+          className="w-full h-auto object-contain"
           loading="lazy"
         />
       </div>
@@ -47,15 +47,15 @@ export function YachtImageCarousel({ images, title }: YachtImageCarouselProps) {
   }
 
   return (
-    <div className="relative h-48 overflow-hidden group">
-      <div ref={emblaRef} className="h-full">
-        <div className="flex h-full">
+    <div className="relative w-full overflow-hidden group">
+      <div ref={emblaRef} className="w-full">
+        <div className="flex">
           {images.map((img, i) => (
-            <div key={i} className="flex-[0_0_100%] min-w-0 h-full">
+            <div key={i} className="flex-[0_0_100%] min-w-0">
               <img
                 src={img.url}
                 alt={img.alt_text || `${title} ${i + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-contain"
                 loading="lazy"
               />
             </div>
