@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
 import { openExternalUrl } from '@/lib/openExternalUrl';
+import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
@@ -52,12 +53,12 @@ const categoryKeys = [
   { key: 'extremeFlights', route: '#flights' },
   { key: 'diningNightlife', route: '/dining' },
   { key: 'yachtCharters', route: '/yachts' },
-  { key: 'desertAction', route: '/concierge?intent=DESERT' },
-  { key: 'luxuryCars', route: '/concierge?intent=CAR' },
-  { key: 'birthdays', route: '/concierge?intent=BIRTHDAY' },
-  { key: 'airportPickup', route: '/concierge?intent=AIRPORT_PICKUP' },
-  { key: 'vipDriver', route: '/concierge?intent=VIP_DRIVER' },
-  { key: 'helicopterTour', route: '/concierge?intent=HELICOPTER' },
+  { key: 'desertAction', route: 'whatsapp:DESERT' },
+  { key: 'luxuryCars', route: 'whatsapp:CAR' },
+  { key: 'birthdays', route: 'whatsapp:BIRTHDAY' },
+  { key: 'airportPickup', route: 'whatsapp:AIRPORT_PICKUP' },
+  { key: 'vipDriver', route: 'whatsapp:VIP_DRIVER' },
+  { key: 'helicopterTour', route: 'whatsapp:HELICOPTER' },
 ];
 
 export default function MainScreen() {
@@ -84,6 +85,11 @@ export default function MainScreen() {
     }
     if (route === '#hotel-booking') {
       openExternalUrl('https://www.booking.com/?aid=304142');
+      return;
+    }
+    if (route.startsWith('whatsapp:')) {
+      const intent = route.replace('whatsapp:', '');
+      openWhatsAppConcierge(intent);
       return;
     }
     if (route.startsWith('#')) {
@@ -176,7 +182,7 @@ export default function MainScreen() {
           {/* CTA */}
           <div className="animate-[fadeIn_2.2s_ease-out]">
             <Button
-              onClick={() => isLoggedIn ? navigate('/concierge') : navigate('/login')}
+              onClick={() => isLoggedIn ? openWhatsAppConcierge() : navigate('/login')}
               className="h-14 sm:h-16 px-10 sm:px-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-primary/30 gap-3"
             >
               {isLoggedIn ? t('mainScreen.talkToConcierge') : t('mainScreen.getStarted')}
@@ -225,7 +231,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/concierge?intent=YACHT')} role="link" aria-label="Yacht Charters">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('YACHT')} role="link" aria-label="Yacht Charters">
         <video
           src={nightlifeVideo}
           autoPlay
@@ -276,7 +282,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/concierge?intent=HELICOPTER')} role="link" aria-label="Helicopter Tour">
+      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('HELICOPTER')} role="link" aria-label="Helicopter Tour">
         <video
           src={yachtVideo}
           autoPlay
@@ -301,7 +307,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 4 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/concierge?intent=CAR')} role="link" aria-label="Luxury Cars">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('CAR')} role="link" aria-label="Luxury Cars">
         <video
           src={strip4Video}
           autoPlay
@@ -326,7 +332,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/concierge?intent=DESERT')} role="link" aria-label="Desert Action">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Desert Action">
         <video
           src={strip5Video}
           autoPlay
@@ -363,7 +369,7 @@ export default function MainScreen() {
             {t('mainScreen.conciergeAvailable')}
           </p>
           <Button
-            onClick={() => isLoggedIn ? navigate('/concierge') : navigate('/login')}
+            onClick={() => isLoggedIn ? openWhatsAppConcierge() : navigate('/login')}
             className="relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
           >
             {isLoggedIn ? t('mainScreen.chatNow') : t('mainScreen.joinUs')}

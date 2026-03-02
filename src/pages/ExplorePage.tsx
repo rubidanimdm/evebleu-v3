@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { UtensilsCrossed, Plane, Car, Hotel, Music, Sparkles } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
+import { openWhatsAppConcierge } from '@/lib/whatsapp';
 
 const categoryIcons: Record<string, React.ElementType> = {
   DINING: UtensilsCrossed,
@@ -138,7 +139,7 @@ export default function ExplorePage() {
                 : 'No items available yet.'}
             </p>
             <Button 
-              onClick={() => navigate('/concierge')}
+              onClick={() => openWhatsAppConcierge()}
               className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-6"
             >
               Ask Concierge

@@ -4,6 +4,7 @@ import { Phone, MessageCircle, Mail, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { openExternalUrl } from '@/lib/openExternalUrl';
+import { openWhatsAppConcierge } from '@/lib/whatsapp';
 
 export default function SupportPage() {
   const navigate = useNavigate();
@@ -11,18 +12,11 @@ export default function SupportPage() {
   const contactOptions = [
     {
       icon: MessageCircle,
-      title: 'AI Concierge',
-      description: 'Instant assistance, 24/7',
-      action: () => navigate('/concierge'),
-      buttonText: 'Open Chat',
-      primary: true,
-    },
-    {
-      icon: MessageCircle,
-      title: 'WhatsApp',
-      description: 'Direct line to our team',
-      action: () => openExternalUrl('https://wa.me/1234567890'),
+      title: 'WhatsApp Concierge',
+      description: 'Direct line to our team, 24/7',
+      action: () => openWhatsAppConcierge(),
       buttonText: 'Message',
+      primary: true,
     },
     {
       icon: Phone,
