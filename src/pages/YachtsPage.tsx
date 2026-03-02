@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorOpen } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
+import { YachtImageCarousel } from '@/components/YachtImageCarousel';
 import type { Json } from '@/integrations/supabase/types';
 
 interface YachtDetails {
@@ -16,6 +17,12 @@ interface YachtDetails {
   inclusions: string[];
   manufacturer?: string;
   cabins?: number;
+}
+
+interface MediaItem {
+  url: string;
+  alt_text: string | null;
+  sort_order: number;
 }
 
 interface YachtItem {
@@ -30,6 +37,7 @@ interface YachtItem {
   duration_minutes: number | null;
   image_url: string | null;
   details: YachtDetails;
+  gallery: MediaItem[];
 }
 
 function parseDetails(d: Json | null): YachtDetails {
@@ -47,12 +55,25 @@ export default function YachtsPage() {
 
   useEffect(() => {
     async function fetchYachts() {
-      const { data } = await supabase
-        .from('catalog_items')
-        .select('id, title, price, currency, pricing_unit, short_description, location, max_people, duration_minutes, image_url, details')
-        .eq('is_active', true)
-        .eq('category', 'EXPERIENCE')
-        .order('sort_order');
+      const [{ data }, { data: mediaData }] = await Promise.all([
+        supabase
+          .from('catalog_items')
+          .select('id, title, price, currency, pricing_unit, short_description, location, max_people, duration_minutes, image_url, details')
+          .eq('is_active', true)
+          .eq('category', 'EXPERIENCE')
+          .order('sort_order'),
+        supabase
+          .from('service_media')
+          .select('catalog_item_id, url, alt_text, sort_order')
+          .order('sort_order'),
+      ]);
+
+      const mediaMap = new Map<string, MediaItem[]>();
+      (mediaData || []).forEach(m => {
+        const list = mediaMap.get(m.catalog_item_id) || [];
+        list.push({ url: m.url, alt_text: m.alt_text, sort_order: m.sort_order });
+        mediaMap.set(m.catalog_item_id, list);
+      });
 
       const yachtItems = (data || [])
         .filter(item => {
@@ -62,6 +83,7 @@ export default function YachtsPage() {
         .map(item => ({
           ...item,
           details: parseDetails(item.details),
+          gallery: mediaMap.get(item.id) || (item.image_url ? [{ url: item.image_url, alt_text: item.title, sort_order: 0 }] : []),
         }));
 
       setItems(yachtItems);
@@ -169,17 +191,8 @@ function YachtCard({
 
   return (
     <LuxuryCard className="overflow-hidden transition-all duration-300">
-      {/* Image */}
-      {item.image_url && (
-        <div className="h-48 overflow-hidden">
-          <img
-            src={item.image_url}
-            alt={item.title}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-            loading="lazy"
-          />
-        </div>
-      )}
+      {/* Image Carousel */}
+      <YachtImageCarousel images={item.gallery} title={item.title} />
       {/* Header - always visible */}
       <div
         className="p-5 cursor-pointer"
