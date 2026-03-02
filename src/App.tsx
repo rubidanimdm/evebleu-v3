@@ -23,6 +23,7 @@ import CustomerDetailPage from "./pages/CustomerDetailPage";
 import SupportPage from "./pages/SupportPage";
 import AdminPage from "./pages/AdminPage";
 import YachtsPage from "./pages/YachtsPage";
+import YachtDetailPage from "./pages/YachtDetailPage";
 import AuthCallback from "./pages/AuthCallback";
 
 const queryClient = new QueryClient();
@@ -98,6 +99,7 @@ function AppContent() {
         <Route path="/dining" element={<ProtectedRoute><DiningNightlifePage /></ProtectedRoute>} />
         <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
         <Route path="/yachts" element={<ProtectedRoute><YachtsPage /></ProtectedRoute>} />
+        <Route path="/yachts/:slug" element={<ProtectedRoute><YachtDetailPage /></ProtectedRoute>} />
         <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
