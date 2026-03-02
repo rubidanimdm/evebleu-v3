@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -130,7 +131,7 @@ export default function YachtsPage() {
                       item={yacht}
                       expanded={expandedId === yacht.id}
                       onToggle={() => setExpandedId(expandedId === yacht.id ? null : yacht.id)}
-                      onBook={() => navigate(`/concierge?intent=YACHT&yacht=${encodeURIComponent(yacht.title)}`)}
+                      onBook={() => openWhatsAppConcierge('YACHT', `Yacht: ${yacht.title}`)}
                       onNavigateDetail={
                         CODE_TO_SLUG[yacht.details.code]
                           ? () => navigate(`/yachts/${CODE_TO_SLUG[yacht.details.code]}`)
@@ -156,7 +157,7 @@ export default function YachtsPage() {
                       item={boat}
                       expanded={expandedId === boat.id}
                       onToggle={() => setExpandedId(expandedId === boat.id ? null : boat.id)}
-                      onBook={() => navigate(`/concierge?intent=YACHT&yacht=${encodeURIComponent(boat.title)}`)}
+                      onBook={() => openWhatsAppConcierge('YACHT', `Boat: ${boat.title}`)}
                     />
                   ))}
                 </div>
@@ -167,7 +168,7 @@ export default function YachtsPage() {
             <div className="text-center pt-4">
               <p className="text-sm text-muted-foreground mb-3">Need a custom arrangement?</p>
               <Button
-                onClick={() => navigate('/concierge?intent=YACHT')}
+                onClick={() => openWhatsAppConcierge('YACHT')}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8"
               >
                 Talk to Concierge

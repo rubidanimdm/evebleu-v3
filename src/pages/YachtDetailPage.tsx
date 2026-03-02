@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Anchor, Users, MapPin, Clock, Ship, DoorOpen, Sparkles } from 'lucide-react';
+import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/BottomNav';
 import { YachtImageCarousel } from '@/components/YachtImageCarousel';
@@ -316,7 +317,7 @@ export default function YachtDetailPage() {
         {/* Book CTA */}
         <div className="p-4">
           <Button
-            onClick={() => navigate(`/concierge?intent=YACHT&yacht=${encodeURIComponent(`${yacht.title} - ${yacht.subtitle}`)}`)}
+            onClick={() => openWhatsAppConcierge('YACHT', `Yacht: ${yacht.title} - ${yacht.subtitle}`)}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl h-12 text-base"
           >
             Book This Yacht
