@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorOpen } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { YachtImageCarousel } from '@/components/YachtImageCarousel';
+import { CODE_TO_SLUG } from '@/pages/YachtDetailPage';
 import type { Json } from '@/integrations/supabase/types';
 
 interface YachtDetails {
@@ -131,8 +132,8 @@ export default function YachtsPage() {
                       onToggle={() => setExpandedId(expandedId === yacht.id ? null : yacht.id)}
                       onBook={() => navigate(`/concierge?intent=YACHT&yacht=${encodeURIComponent(yacht.title)}`)}
                       onNavigateDetail={
-                        yacht.details.code === 'E4'
-                          ? () => navigate('/yachts/elite-4')
+                        CODE_TO_SLUG[yacht.details.code]
+                          ? () => navigate(`/yachts/${CODE_TO_SLUG[yacht.details.code]}`)
                           : undefined
                       }
                     />
