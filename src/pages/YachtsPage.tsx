@@ -70,8 +70,8 @@ export default function YachtsPage() {
     fetchYachts();
   }, []);
 
-  const yachts = items.filter(i => i.details.type === 'yacht');
-  const fishingBoats = items.filter(i => i.details.type === 'fishing');
+  const yachts = items.filter(i => i.details.type === 'yacht').sort((a, b) => a.price - b.price);
+  const fishingBoats = items.filter(i => i.details.type === 'fishing').sort((a, b) => a.price - b.price);
 
   return (
     <div className="min-h-screen bg-background pb-24 relative">
