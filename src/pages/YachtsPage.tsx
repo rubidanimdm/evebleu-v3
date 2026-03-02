@@ -4,7 +4,7 @@ import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles } from 'lucide-react';
+import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorOpen } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import type { Json } from '@/integrations/supabase/types';
 
@@ -14,6 +14,8 @@ interface YachtDetails {
   type: 'yacht' | 'fishing';
   min_hours: number;
   inclusions: string[];
+  manufacturer?: string;
+  cabins?: number;
 }
 
 interface YachtItem {
@@ -167,6 +169,17 @@ function YachtCard({
 
   return (
     <LuxuryCard className="overflow-hidden transition-all duration-300">
+      {/* Image */}
+      {item.image_url && (
+        <div className="h-48 overflow-hidden">
+          <img
+            src={item.image_url}
+            alt={item.title}
+            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            loading="lazy"
+          />
+        </div>
+      )}
       {/* Header - always visible */}
       <div
         className="p-5 cursor-pointer"
@@ -194,6 +207,18 @@ function YachtCard({
                 <span className="flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
                   {item.location}
+                </span>
+              )}
+              {details.manufacturer && (
+                <span className="flex items-center gap-1">
+                  <Ship className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
+                  {details.manufacturer}
+                </span>
+              )}
+              {details.cabins && (
+                <span className="flex items-center gap-1">
+                  <DoorOpen className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
+                  {details.cabins} cabins
                 </span>
               )}
             </div>
