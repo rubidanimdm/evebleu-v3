@@ -33,7 +33,7 @@ import { FlightSearchForm } from '@/components/FlightSearchForm';
 const getCategoryIcon = (key: string) => {
   const imgCls = "w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl";
   const icons: Record<string, JSX.Element> = {
-    attractions: <img src={attractionsIcon} alt="Attractions" className={imgCls} />,
+    attractions: <img src={hotelIcon} alt="Search Hotel" className={imgCls} />,
     luxuryCars: <img src={luxuryCarIcon} alt="Luxury Cars" className={imgCls} />,
     diningNightlife: <img src={diningIcon} alt="Dining & Nightlife" className={imgCls} />,
     yachtCharters: <img src={yachtIcon} alt="Yacht" className={imgCls} />,
