@@ -197,18 +197,13 @@ function YachtCard({
   const { details } = item;
 
   return (
-    <LuxuryCard
-      className="overflow-hidden transition-all duration-300 cursor-pointer"
-      onClick={onNavigateDetail}
-    >
+    <LuxuryCard className="overflow-hidden transition-all duration-300">
       {/* Image Carousel */}
-      <div onClick={onNavigateDetail ? (e) => { e.stopPropagation(); onNavigateDetail(); } : undefined}>
-        <YachtImageCarousel images={item.gallery} title={item.title} />
-      </div>
+      <YachtImageCarousel images={item.gallery} title={item.title} />
       {/* Header - always visible */}
       <div
         className="p-5 cursor-pointer"
-        onClick={onToggle}
+        onClick={onNavigateDetail || onToggle}
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
@@ -261,8 +256,8 @@ function YachtCard({
         )}
 
         <div className="flex items-center gap-1 mt-3 text-xs text-primary/60">
-          <ChevronRight className={`w-3.5 h-3.5 transition-transform duration-200 ${expanded ? 'rotate-90' : ''}`} />
-          <span>{expanded ? 'Hide details' : 'View inclusions'}</span>
+          <ChevronRight className={`w-3.5 h-3.5 transition-transform duration-200 ${!onNavigateDetail && expanded ? 'rotate-90' : ''}`} />
+          <span>{onNavigateDetail ? 'View full details' : (expanded ? 'Hide details' : 'View inclusions')}</span>
         </div>
       </div>
 
