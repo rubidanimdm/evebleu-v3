@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
@@ -399,6 +399,13 @@ export default function MainScreen() {
             </a>
           </div>
           <div className="w-24 h-px bg-primary/15" />
+          <div className="flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/50">
+            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <span>·</span>
+            <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <span>·</span>
+            <Link to="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
+          </div>
           <p className="text-[10px] text-muted-foreground/40 tracking-[0.15em] uppercase">
             © {new Date().getFullYear()} EVE BLUE · Concierge. It. Done.
           </p>

@@ -25,6 +25,10 @@ import SupportPage from "./pages/SupportPage";
 import YachtsPage from "./pages/YachtsPage";
 import YachtDetailPage from "./pages/YachtDetailPage";
 import AuthCallback from "./pages/AuthCallback";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import CookiePolicy from "./pages/CookiePolicy";
+import { CookieConsent } from "@/components/CookieConsent";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminSuppliers from "./pages/admin/AdminSuppliers";
@@ -101,6 +105,9 @@ function AppContent() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/cookies" element={<CookiePolicy />} />
         
         {/* App Screens - protected */}
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
@@ -136,6 +143,7 @@ function AppContent() {
       </Routes>
       <FloatingHomeButton />
       {user && <FloatingChatButton />}
+      <CookieConsent />
     </>
   );
 }
