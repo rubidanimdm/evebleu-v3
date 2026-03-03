@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "@/lib/supabase";
 import { LanguageProvider } from "@/lib/i18n";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
 import { FloatingHomeButton } from "@/components/FloatingHomeButton";
+import { useAdminRole } from "@/hooks/useAdminRole";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -21,10 +22,20 @@ import ProfilePage from "./pages/ProfilePage";
 import ResetPassword from "./pages/ResetPassword";
 import CustomerDetailPage from "./pages/CustomerDetailPage";
 import SupportPage from "./pages/SupportPage";
-import AdminPage from "./pages/AdminPage";
 import YachtsPage from "./pages/YachtsPage";
 import YachtDetailPage from "./pages/YachtDetailPage";
 import AuthCallback from "./pages/AuthCallback";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminSuppliers from "./pages/admin/AdminSuppliers";
+import AdminCatalog from "./pages/admin/AdminCatalog";
+import AdminAvailability from "./pages/admin/AdminAvailability";
+import AdminPricing from "./pages/admin/AdminPricing";
+import AdminMedia from "./pages/admin/AdminMedia";
+import AdminBookings from "./pages/admin/AdminBookings";
+import AdminCustomersPage from "./pages/admin/AdminCustomersPage";
+import AdminSettings from "./pages/admin/AdminSettings";
+import AdminRoles from "./pages/admin/AdminRoles";
 
 const queryClient = new QueryClient();
 
@@ -50,9 +61,10 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AdminRoute({ children }: { children: React.ReactNode }) {
-  const { user, profile, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { isAdmin, loading: roleLoading } = useAdminRole();
 
-  if (loading) {
+  if (authLoading || roleLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -67,9 +79,6 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" replace />;
   }
 
-  // Check for admin role (manager or staff)
-  const isAdmin = profile?.role === 'manager' || profile?.role === 'staff';
-  
   if (!isAdmin) {
     return <Navigate to="/" replace />;
   }
@@ -83,7 +92,7 @@ function AppContent() {
   return (
     <>
       <Routes>
-        {/* Main Screen - same design for logged-in and logged-out users */}
+        {/* Main Screen */}
         <Route path="/" element={<MainScreen />} />
         
         {/* Auth Routes */}
@@ -103,8 +112,21 @@ function AppContent() {
         <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
-        <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
-        <Route path="/admin/customers/:id" element={<AdminRoute><CustomerDetailPage /></AdminRoute>} />
+
+        {/* Admin routes with layout */}
+        <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="suppliers" element={<AdminSuppliers />} />
+          <Route path="catalog" element={<AdminCatalog />} />
+          <Route path="availability" element={<AdminAvailability />} />
+          <Route path="pricing" element={<AdminPricing />} />
+          <Route path="media" element={<AdminMedia />} />
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route path="customers" element={<AdminCustomersPage />} />
+          <Route path="customers/:id" element={<CustomerDetailPage />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="roles" element={<AdminRoles />} />
+        </Route>
         
         {/* Legacy route redirects */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />
@@ -112,9 +134,7 @@ function AppContent() {
         <Route path="/auth" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {/* Floating home button visible on all pages except home */}
       <FloatingHomeButton />
-      {/* Floating chat button visible on all pages except concierge and auth */}
       {user && <FloatingChatButton />}
     </>
   );

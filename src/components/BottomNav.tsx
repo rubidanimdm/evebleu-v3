@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
+import { useAdminRole } from '@/hooks/useAdminRole';
 import { Home, MessageSquare, Compass, Calendar, User, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -17,10 +18,10 @@ const adminItems = [
 
 export function BottomNav() {
   const { profile } = useAuth();
+  const { isAdmin } = useAdminRole();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isAdmin = profile?.role === 'manager' || profile?.role === 'staff';
   const allItems = isAdmin ? [...navItems, ...adminItems] : navItems;
 
   return (
