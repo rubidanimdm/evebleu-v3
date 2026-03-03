@@ -17,3 +17,6 @@ verify_jwt = true
 
 [functions.send-invoice]
 verify_jwt = true
+
+[functions.manage-staff]
+verify_jwt = true
