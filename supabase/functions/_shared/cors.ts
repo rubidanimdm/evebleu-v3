@@ -2,10 +2,10 @@
 // No wildcard (*), no dynamic fallback
 
 const ALLOWED_ORIGINS = [
-  "https://wpczgwxsriezaubncuom.lovableproject.com",
-  "https://ai-my-dubai.lovable.app",
   "https://evebleu.vip",
   "https://www.evebleu.vip",
+  "https://evebleu-web.web.app",
+  "https://evebleu-web.firebaseapp.com",
 ] as const;
 
 export function getCorsHeaders(requestOrigin: string | null): Record<string, string> {

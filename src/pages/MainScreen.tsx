@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
-import { User, LogOut, ArrowRight, Phone, Mail } from 'lucide-react';
+import { User, LogOut, ArrowRight, Phone, Mail, Hotel, Plane, CalendarDays, Users, Search } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
@@ -116,6 +116,9 @@ export default function MainScreen() {
           loop
           muted
           playsInline
+          preload="auto"
+          // @ts-ignore — webkit vendor attribute for iOS
+          webkit-playsinline="true"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
@@ -377,6 +380,117 @@ export default function MainScreen() {
           </Button>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════
+          SEARCH HOTELS & FLIGHTS — hidden until API access
+      ═══════════════════════════════════════════════ */}
+      {false && <section className="px-4 sm:px-6 pb-14 max-w-[720px] mx-auto w-full space-y-6">
+        {/* Hotels Search */}
+        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-6">
+          <div className="flex items-center gap-2 mb-5">
+            <Hotel className="w-5 h-5 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">Search Hotels</h3>
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const fd = new FormData(e.currentTarget);
+              const checkin = fd.get('checkin') as string;
+              const checkout = fd.get('checkout') as string;
+              const adults = fd.get('adults') as string;
+              const rooms = fd.get('rooms') as string;
+              const url = `https://www.booking.com/searchresults.html?aid=304142&dest_id=-782831&dest_type=city&checkin=${checkin}&checkout=${checkout}&group_adults=${adults}&no_rooms=${rooms}&selected_currency=AED&label=evebleu-homepage`;
+              openExternalUrl(url);
+            }}
+            className="space-y-4"
+          >
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                  <CalendarDays className="w-3.5 h-3.5 text-primary/60" />
+                  Check-in
+                </label>
+                <input
+                  type="date"
+                  name="checkin"
+                  required
+                  min={new Date().toISOString().split('T')[0]}
+                  defaultValue=""
+                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                  <CalendarDays className="w-3.5 h-3.5 text-primary/60" />
+                  Check-out
+                </label>
+                <input
+                  type="date"
+                  name="checkout"
+                  required
+                  min={new Date().toISOString().split('T')[0]}
+                  defaultValue=""
+                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 text-primary/60" />
+                  Guests
+                </label>
+                <select
+                  name="adults"
+                  defaultValue="2"
+                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
+                >
+                  {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>)}
+                </select>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                  <Hotel className="w-3.5 h-3.5 text-primary/60" />
+                  Rooms
+                </label>
+                <select
+                  name="rooms"
+                  defaultValue="1"
+                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
+                >
+                  {[1,2,3,4].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Room' : 'Rooms'}</option>)}
+                </select>
+              </div>
+            </div>
+            <Button type="submit" className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl text-base font-medium gap-2">
+              <Search className="w-4 h-4" />
+              Search Hotels in Dubai
+            </Button>
+          </form>
+          <p className="text-[10px] text-muted-foreground/50 text-center mt-3">Powered by Booking.com</p>
+        </div>
+
+        {/* Flights Search */}
+        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-6">
+          <div className="flex items-center gap-2 mb-5">
+            <Plane className="w-5 h-5 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">Search Flights</h3>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4">
+            Our concierge team will find you the best flights and handle everything.
+          </p>
+          <Button
+            onClick={() => {
+              if (!isLoggedIn) { navigate('/login'); return; }
+              setFlightFormOpen(true);
+            }}
+            className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl text-base font-medium gap-2"
+          >
+            <Plane className="w-4 h-4" />
+            Request Flight Search
+          </Button>
+        </div>
+      </section>}
 
       {/* ═══════════════════════════════════════════════
           FOOTER

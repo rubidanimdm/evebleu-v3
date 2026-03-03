@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useConciergeChat } from '@/hooks/useConciergeChat';
 import { useHumanChat } from '@/hooks/useHumanChat';
-import { Send, User, RotateCcw, Bot, UserCircle } from 'lucide-react';
+import { Send, User, RotateCcw, Bot, UserCircle, MessageCircle } from 'lucide-react';
+import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { cn } from '@/lib/utils';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import { GoldParticles, GoldDivider } from '@/components/LuxuryElements';
@@ -145,7 +146,7 @@ export function ConciergeChat({ initialMessage, conversationId }: ConciergeChatP
                       <Button
                         key={i}
                         variant="outline"
-                        className="text-sm h-auto py-3 px-4 text-left justify-start border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-xl"
+                        className="text-sm h-auto py-3 px-4 text-left justify-start border-primary/20 hover:border-primary/40 hover:bg-primary/5 hover:text-foreground transition-all duration-300 rounded-xl"
                         onClick={() => {
                           setInput(prompt);
                           inputRef.current?.focus();
@@ -227,8 +228,36 @@ export function ConciergeChat({ initialMessage, conversationId }: ConciergeChatP
           )}
 
           {error && (
-            <div className="bg-destructive/10 text-destructive rounded-xl p-4 text-sm text-center border border-destructive/20">
-              {error}
+            <div className="bg-destructive/10 text-destructive rounded-xl p-4 text-sm text-center border border-destructive/20 space-y-2">
+              <p>{error}</p>
+              <button
+                onClick={() => openWhatsAppConcierge()}
+                className="text-[#25D366] font-medium hover:underline text-xs"
+              >
+                Try WhatsApp instead
+              </button>
+            </div>
+          )}
+
+          {/* WhatsApp escalation after 3+ exchanges in AI mode */}
+          {chatMode === 'AI' && messages.filter(m => m.role === 'user').length >= 3 && !isLoading && (
+            <div className="text-center py-3">
+              <div className="inline-flex items-center gap-2 bg-card/80 border border-primary/10 rounded-xl px-4 py-2.5">
+                <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                <p className="text-xs text-muted-foreground">
+                  Need more help?{' '}
+                  <button
+                    onClick={() => {
+                      const lastMsg = [...messages].reverse().find(m => m.role === 'user');
+                      openWhatsAppConcierge(undefined, lastMsg?.content);
+                    }}
+                    className="text-[#25D366] font-medium hover:underline"
+                  >
+                    Chat on WhatsApp
+                  </button>
+                  {' '}with our concierge team
+                </p>
+              </div>
             </div>
           )}
 
@@ -237,7 +266,7 @@ export function ConciergeChat({ initialMessage, conversationId }: ConciergeChatP
             <div className="text-center py-4">
               <p className="text-xs text-muted-foreground">
                 We'll reply soon. AI can help immediately.{' '}
-                <button 
+                <button
                   onClick={() => setChatMode('AI')}
                   className="text-primary hover:underline"
                 >

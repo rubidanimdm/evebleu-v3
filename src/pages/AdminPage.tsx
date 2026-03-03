@@ -11,12 +11,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit2, Trash2, Users, DollarSign, Calendar, Package, MessageSquare } from 'lucide-react';
+import { Plus, Edit2, Trash2, Users, DollarSign, Calendar, Package, MessageSquare, Shield } from 'lucide-react';
 import { format } from 'date-fns';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { CatalogManager } from '@/components/admin/CatalogManager';
 import { AdminCustomers } from '@/components/admin/AdminCustomers';
 import { AdminInbox } from '@/components/admin/AdminInbox';
+import { AdminUsers } from '@/components/admin/AdminUsers';
 import { z } from 'zod';
 
 const supplierSchema = z.object({
@@ -263,7 +264,7 @@ export default function AdminPage() {
         </div>
 
         <Tabs defaultValue="catalog" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5 bg-card/50 border border-primary/10 rounded-xl p-1">
+          <TabsList className="grid w-full grid-cols-6 bg-card/50 border border-primary/10 rounded-xl p-1">
             <TabsTrigger value="catalog" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary gap-1.5 text-xs">
               <Package className="w-4 h-4" />
               <span className="hidden sm:inline">Catalog</span>
@@ -284,6 +285,10 @@ export default function AdminPage() {
               <MessageSquare className="w-4 h-4" />
               <span className="hidden sm:inline">Inbox</span>
             </TabsTrigger>
+            <TabsTrigger value="users" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary gap-1.5 text-xs">
+              <Shield className="w-4 h-4" />
+              <span className="hidden sm:inline">Users</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="catalog" className="space-y-4">
@@ -296,6 +301,10 @@ export default function AdminPage() {
 
           <TabsContent value="inbox" className="space-y-4">
             <AdminInbox />
+          </TabsContent>
+
+          <TabsContent value="users" className="space-y-4">
+            <AdminUsers />
           </TabsContent>
 
           <TabsContent value="suppliers" className="space-y-4">

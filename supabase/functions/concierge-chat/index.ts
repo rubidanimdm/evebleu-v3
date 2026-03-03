@@ -2,46 +2,156 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { getCorsHeaders, handleCorsPreflightStrict } from "../_shared/cors.ts";
 
+// --- Message format conversion ---
+
+function toGeminiContents(
+  messages: { role: string; content: string }[]
+): { systemInstruction?: object; contents: object[] } {
+  let systemInstruction: object | undefined;
+  const contents: object[] = [];
+
+  for (const msg of messages) {
+    if (msg.role === "system") {
+      systemInstruction = { parts: [{ text: msg.content }] };
+    } else {
+      contents.push({
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }],
+      });
+    }
+  }
+
+  return { systemInstruction, contents };
+}
+
+// --- SSE transform: Gemini → OpenAI-compatible ---
+
+function geminiToOpenAIStream(geminiStream: ReadableStream<Uint8Array>): ReadableStream<Uint8Array> {
+  const decoder = new TextDecoder();
+  const encoder = new TextEncoder();
+  let buffer = "";
+
+  return new ReadableStream({
+    async start(controller) {
+      const reader = geminiStream.getReader();
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+
+          let newlineIdx: number;
+          while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+            const line = buffer.slice(0, newlineIdx).trim();
+            buffer = buffer.slice(newlineIdx + 1);
+
+            if (!line.startsWith("data: ")) continue;
+            const jsonStr = line.slice(6).trim();
+            if (!jsonStr || jsonStr === "[DONE]") continue;
+
+            try {
+              const gemini = JSON.parse(jsonStr);
+              const text =
+                gemini.candidates?.[0]?.content?.parts?.[0]?.text;
+
+              if (text) {
+                const openaiChunk = {
+                  choices: [{ index: 0, delta: { content: text } }],
+                };
+                controller.enqueue(
+                  encoder.encode(`data: ${JSON.stringify(openaiChunk)}\n\n`)
+                );
+              }
+            } catch {
+              // Skip malformed chunks
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Stream transform error:", err);
+      } finally {
+        // Flush remaining buffer
+        if (buffer.trim()) {
+          for (const line of buffer.split("\n")) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith("data: ")) continue;
+            const jsonStr = trimmed.slice(6).trim();
+            if (!jsonStr || jsonStr === "[DONE]") continue;
+            try {
+              const gemini = JSON.parse(jsonStr);
+              const text = gemini.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (text) {
+                controller.enqueue(
+                  encoder.encode(
+                    `data: ${JSON.stringify({ choices: [{ index: 0, delta: { content: text } }] })}\n\n`
+                  )
+                );
+              }
+            } catch { /* skip */ }
+          }
+        }
+        controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+        controller.close();
+      }
+    },
+  });
+}
+
+// --- Main handler ---
+
+const MODEL = "gemini-2.5-flash-preview-05-20";
+
 serve(async (req) => {
   // Strict CORS - production origins only
   const corsResponse = handleCorsPreflightStrict(req);
   if (corsResponse) return corsResponse;
-  
+
   const corsHeaders = getCorsHeaders(req.headers.get("Origin"));
 
   try {
     // SECURITY: Validate authentication
     const authHeader = req.headers.get("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return new Response(JSON.stringify({ error: "Authentication required" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Authentication required" }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
     }
 
     const token = authHeader.replace("Bearer ", "");
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-    
+
     // Create client with user's token to verify authentication
     const userClient = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: `Bearer ${token}` } }
+      global: { headers: { Authorization: `Bearer ${token}` } },
     });
-    
-    const { data: { user }, error: authError } = await userClient.auth.getUser();
+
+    const {
+      data: { user },
+      error: authError,
+    } = await userClient.auth.getUser();
     if (authError || !user) {
       console.log("Auth error:", authError?.message || "No user found");
-      return new Response(JSON.stringify({ error: "Please sign in to use the concierge" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Please sign in to use the concierge" }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
     }
 
-    const { messages, conversationId } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    const { messages } = await req.json();
+
+    // Get Gemini API key
+    const apiKey = Deno.env.get("GEMINI_API_KEY");
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not configured");
     }
 
     // Use service role for fetching data (bypasses RLS)
@@ -69,27 +179,36 @@ serve(async (req) => {
       .order("created_at", { ascending: false })
       .limit(5);
 
-    const supplierContext = suppliers?.map(s => 
-      `- ${s.name} (${s.category}): ${s.description || 'No description'}. Location: ${s.location || 'N/A'}. Price range: ${s.price_range || 'N/A'}. Min spend: $${s.min_spend || 0}. Tags: ${s.tags?.join(', ') || 'None'}`
-    ).join('\n') || 'No suppliers available yet.';
+    const supplierContext =
+      suppliers
+        ?.map(
+          (s) =>
+            `- ${s.name} (${s.category}): ${s.description || "No description"}. Location: ${s.location || "N/A"}. Price range: ${s.price_range || "N/A"}. Min spend: $${s.min_spend || 0}. Tags: ${s.tags?.join(", ") || "None"}`
+        )
+        .join("\n") || "No suppliers available yet.";
 
     // Build user context
-    const userContext = profile ? `
+    const userContext = profile
+      ? `
 USER PROFILE:
-- Name: ${profile.full_name || 'Guest'}
-- Language: ${profile.language || 'en'}
-- City: ${profile.city || 'Not specified'}
-- Budget Style: ${profile.budget_style || 'premium'}
-- Dietary Preferences: ${profile.dietary_preferences?.join(', ') || 'None specified'}
-- Favorite Cuisines: ${profile.favorite_cuisines?.join(', ') || 'None specified'}
-- Preferred Areas: ${profile.preferred_areas?.join(', ') || 'None specified'}
-- Special Notes: ${profile.special_notes || 'None'}
-` : '';
+- Name: ${profile.full_name || "Guest"}
+- Language: ${profile.language || "en"}
+- City: ${profile.city || "Not specified"}
+- Budget Style: ${profile.budget_style || "premium"}
+- Dietary Preferences: ${profile.dietary_preferences?.join(", ") || "None specified"}
+- Favorite Cuisines: ${profile.favorite_cuisines?.join(", ") || "None specified"}
+- Preferred Areas: ${profile.preferred_areas?.join(", ") || "None specified"}
+- Special Notes: ${profile.special_notes || "None"}
+`
+      : "";
 
-    const bookingContext = recentBookings && recentBookings.length > 0 ? `
+    const bookingContext =
+      recentBookings && recentBookings.length > 0
+        ? `
 RECENT BOOKINGS (for context):
-${recentBookings.map(b => `- ${b.booking_number}: ${(b as any).suppliers?.name || 'Unknown'} on ${b.booking_date} (${b.status})`).join('\n')}
-` : '';
+${recentBookings.map((b) => `- ${b.booking_number}: ${(b as any).suppliers?.name || "Unknown"} on ${b.booking_date} (${b.status})`).join("\n")}
+`
+        : "";
 
     const systemPrompt = `You are EVE BLUE — a premium personal luxury concierge for Dubai.
 
@@ -101,6 +220,24 @@ Your behavior must feel human, calm, confident, discreet, and professional — l
 ${userContext}
 
 ${bookingContext}
+
+══════════════════════════════════════════════════════════════
+0. LANGUAGE RULES (HIGHEST PRIORITY)
+══════════════════════════════════════════════════════════════
+- ALWAYS detect the language the user writes in and respond in that SAME language.
+- If the user writes in Arabic, respond in Arabic. If Hebrew, respond in Hebrew. If French, respond in French. If Russian, respond in Russian. Etc.
+- If the user switches language mid-conversation, switch with them immediately.
+- You are fluent in ALL languages. Never say you cannot speak a language.
+- Maintain the same luxury concierge tone in every language.
+- If unsure of the language, default to English.
+
+══════════════════════════════════════════════════════════════
+0.5 GENERAL KNOWLEDGE
+══════════════════════════════════════════════════════════════
+- You are a highly knowledgeable assistant. You can answer ANY question on any topic — not just Dubai or concierge services.
+- If the user asks about history, science, math, culture, sports, news, technology, health, cooking, or anything else — answer it helpfully and accurately.
+- However, always gently steer back to your concierge role when natural. For example, if they ask about Italian food, answer their question, then mention "By the way, if you'd like amazing Italian in Dubai, I know just the place."
+- Your PRIMARY role is luxury concierge, but you are also a smart, worldly companion.
 
 ══════════════════════════════════════════════════════════════
 1. CORE IDENTITY
@@ -246,51 +383,76 @@ You are EVE BLUE. Concierge. It. Done.
 
 Keep responses concise but warm. Use line breaks for readability. Address users by name when known.`;
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
+    // Build Gemini request
+    const allMessages = [
+      { role: "system", content: systemPrompt },
+      ...messages,
+    ];
+    const { systemInstruction, contents } = toGeminiContents(allMessages);
+
+    const geminiBody: Record<string, unknown> = {
+      contents,
+      generationConfig: {
+        temperature: 1.0,
+        maxOutputTokens: 4096,
       },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...messages,
-        ],
-        stream: true,
-      }),
+    };
+    if (systemInstruction) {
+      geminiBody.systemInstruction = systemInstruction;
+    }
+
+    // Call Gemini via API key
+    const geminiUrl = `https://aiplatform.googleapis.com/v1/publishers/google/models/${MODEL}:streamGenerateContent?key=${apiKey}&alt=sse`;
+
+    const response = await fetch(geminiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(geminiBody),
     });
 
     if (!response.ok) {
       if (response.status === 429) {
-        return new Response(JSON.stringify({ error: "Our concierge is very busy right now. Please try again in a moment." }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+        return new Response(
+          JSON.stringify({
+            error:
+              "Our concierge is very busy right now. Please try again in a moment.",
+          }),
+          {
+            status: 429,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Service temporarily unavailable. Please contact support." }), {
-          status: 402,
+      const errText = await response.text();
+      console.error("Vertex AI error:", response.status, errText);
+      return new Response(
+        JSON.stringify({ error: "Unable to connect to concierge service" }),
+        {
+          status: 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      const t = await response.text();
-      console.error("AI gateway error:", response.status, t);
-      return new Response(JSON.stringify({ error: "Unable to connect to concierge service" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+        }
+      );
     }
 
-    return new Response(response.body, {
+    // Transform Gemini SSE → OpenAI-compatible SSE
+    const openaiStream = geminiToOpenAIStream(response.body!);
+
+    return new Response(openaiStream, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (e) {
     console.error("concierge-chat error:", e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        error: e instanceof Error ? e.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: {
+          ...getCorsHeaders(req.headers.get("Origin")),
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 });

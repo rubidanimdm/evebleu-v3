@@ -49,6 +49,52 @@ function parseDetails(d: Json | null): YachtDetails {
   return { length: '', code: '', type: 'yacht', min_hours: 2, inclusions: [] };
 }
 
+// Hardcoded fallback when DB has no yacht catalog items
+const FALLBACK_YACHTS: YachtItem[] = [
+  {
+    id: 'fallback-e4', title: 'Elite 4', price: 600, currency: 'AED', pricing_unit: 'per hour',
+    short_description: 'Classic 48ft Majesty yacht for up to 15 guests.', location: 'Dubai Marina',
+    max_people: 15, duration_minutes: 120, image_url: '/yachts/elite-4-48ft.jpg',
+    details: { length: '48FT', code: 'E4', type: 'yacht', min_hours: 2, inclusions: ['Fuel cost within Dubai', 'Professional Captain and Crew', 'Welcome drink', 'Bottle of water', 'Surround speaker system (AUX/Bluetooth)', 'Safety Equipment', 'Amenities (Fridge, Microwave, Utensils)', 'Towels for swimming & bathing'], manufacturer: 'Majesty', cabins: 2 },
+    gallery: [{ url: '/yachts/elite-4-48ft.jpg', alt_text: 'Elite 4 exterior', sort_order: 0 }, { url: '/yachts/elite-4-1.jpg', alt_text: 'Elite 4 interior', sort_order: 1 }, { url: '/yachts/elite-4-2.jpg', alt_text: 'Elite 4 deck', sort_order: 2 }, { url: '/yachts/elite-4-3.jpg', alt_text: 'Elite 4 lounge', sort_order: 3 }, { url: '/yachts/elite-4-4.jpg', alt_text: 'Elite 4 cabin', sort_order: 4 }],
+  },
+  {
+    id: 'fallback-e5', title: 'Elite 5', price: 600, currency: 'AED', pricing_unit: 'per hour',
+    short_description: 'Sporty 36ft Oryx mini sports yacht for up to 10 guests.', location: 'Dubai Marina',
+    max_people: 10, duration_minutes: 120, image_url: '/yachts/elite-5-36ft.jpg',
+    details: { length: '36FT', code: 'E5', type: 'yacht', min_hours: 2, inclusions: ['Fuel cost within Dubai', 'Professional Captain and Crew', 'Welcome drink', 'Bottle of water', 'Surround speaker system (AUX/Bluetooth)', 'Safety Equipment', 'Amenities (Fridge, Microwave, Utensils)', 'Towels for swimming & bathing'], manufacturer: 'Oryx', cabins: 2 },
+    gallery: [{ url: '/yachts/elite-5-36ft.jpg', alt_text: 'Elite 5 exterior', sort_order: 0 }, { url: '/yachts/elite-5-1.jpg', alt_text: 'Elite 5 interior', sort_order: 1 }, { url: '/yachts/elite-5-2.jpg', alt_text: 'Elite 5 deck', sort_order: 2 }, { url: '/yachts/elite-5-3.jpg', alt_text: 'Elite 5 seating', sort_order: 3 }, { url: '/yachts/elite-5-4.jpg', alt_text: 'Elite 5 cabin', sort_order: 4 }],
+  },
+  {
+    id: 'fallback-e14', title: 'Elite 14', price: 700, currency: 'AED', pricing_unit: 'per hour',
+    short_description: 'Compact 44ft Majesty yacht for up to 10 guests.', location: 'Dubai Marina',
+    max_people: 10, duration_minutes: 120, image_url: '/yachts/elite-14-44ft.jpg',
+    details: { length: '44FT', code: 'E14', type: 'yacht', min_hours: 2, inclusions: ['Fuel cost within Dubai', 'Professional Captain and Crew', 'Welcome drink', 'Bottle of water', 'Surround speaker system (AUX/Bluetooth)', 'Safety Equipment', 'Amenities (Fridge, Microwave, Utensils)', 'Towels for swimming & bathing'], manufacturer: 'Majesty', cabins: 3 },
+    gallery: [{ url: '/yachts/elite-14-44ft.jpg', alt_text: 'Elite 14 exterior', sort_order: 0 }, { url: '/yachts/elite-14-1.jpg', alt_text: 'Elite 14 interior', sort_order: 1 }, { url: '/yachts/elite-14-2.jpg', alt_text: 'Elite 14 deck', sort_order: 2 }, { url: '/yachts/elite-14-3.jpg', alt_text: 'Elite 14 lounge', sort_order: 3 }, { url: '/yachts/elite-14-4.jpg', alt_text: 'Elite 14 cabin', sort_order: 4 }],
+  },
+  {
+    id: 'fallback-e12', title: 'Elite 12', price: 1200, currency: 'AED', pricing_unit: 'per hour',
+    short_description: 'Spacious 56ft Majesty yacht for up to 25 guests.', location: 'Dubai Marina',
+    max_people: 25, duration_minutes: 120, image_url: '/yachts/elite-12-56ft.jpg',
+    details: { length: '56FT', code: 'E12', type: 'yacht', min_hours: 2, inclusions: ['Fuel cost within Dubai', 'Professional Captain and Crew', 'Welcome drink', 'Bottle of water', 'Surround speaker system (AUX/Bluetooth)', 'Safety Equipment', 'Amenities (Fridge, Microwave, Utensils)', 'Towels for swimming & bathing'], manufacturer: 'Majesty', cabins: 3 },
+    gallery: [{ url: '/yachts/elite-12-56ft.jpg', alt_text: 'Elite 12 exterior', sort_order: 0 }, { url: '/yachts/elite-12-1.jpg', alt_text: 'Elite 12 interior', sort_order: 1 }, { url: '/yachts/elite-12-2.jpg', alt_text: 'Elite 12 deck', sort_order: 2 }, { url: '/yachts/elite-12-3.jpg', alt_text: 'Elite 12 lounge', sort_order: 3 }, { url: '/yachts/elite-12-4.jpg', alt_text: 'Elite 12 cabin', sort_order: 4 }],
+  },
+  {
+    id: 'fallback-e16', title: 'Elite 16', price: 1700, currency: 'AED', pricing_unit: 'per hour',
+    short_description: 'Elegant 70ft Sunseeker yacht for up to 22 guests.', location: 'Dubai Marina',
+    max_people: 22, duration_minutes: 120, image_url: '/yachts/elite-16-70ft.jpg',
+    details: { length: '70FT', code: 'E16', type: 'yacht', min_hours: 2, inclusions: ['Fuel cost within Dubai', 'Professional Captain and Crew', 'Welcome drink', 'Bottle of water', 'Surround speaker system (AUX/Bluetooth)', 'Safety Equipment', 'Amenities (Fridge, Microwave, Utensils)', 'Towels for swimming & bathing'], manufacturer: 'Sunseeker', cabins: 3 },
+    gallery: [{ url: '/yachts/elite-16-70ft.jpg', alt_text: 'Elite 16 exterior', sort_order: 0 }, { url: '/yachts/elite-16-1.jpg', alt_text: 'Elite 16 interior', sort_order: 1 }, { url: '/yachts/elite-16-2.jpg', alt_text: 'Elite 16 deck', sort_order: 2 }, { url: '/yachts/elite-16-3.jpg', alt_text: 'Elite 16 lounge', sort_order: 3 }, { url: '/yachts/elite-16-4.jpg', alt_text: 'Elite 16 cabin', sort_order: 4 }, { url: '/yachts/elite-16-5.jpg', alt_text: 'Elite 16 flybridge', sort_order: 5 }],
+  },
+  {
+    id: 'fallback-e100', title: 'Elite 100', price: 3500, currency: 'AED', pricing_unit: 'per hour',
+    short_description: 'Premium 100ft modern yacht with full luxury amenities.', location: 'Dubai Marina',
+    max_people: 50, duration_minutes: 120, image_url: '/yachts/elite-100ft.jpg',
+    details: { length: '100FT', code: '100FT', type: 'yacht', min_hours: 2, inclusions: ['Fuel cost within Dubai', 'Professional Captain and Crew', 'Welcome drink', 'Bottle of water', 'Surround speaker system (AUX/Bluetooth)', 'Safety Equipment', 'Amenities (Fridge, Microwave, Utensils)', 'Towels for swimming & bathing'], manufacturer: 'OLAS', cabins: 2 },
+    gallery: [{ url: '/yachts/elite-100ft.jpg', alt_text: 'Elite 100 exterior', sort_order: 0 }, { url: '/yachts/elite-100-1.jpg', alt_text: 'Elite 100 interior', sort_order: 1 }, { url: '/yachts/elite-100-2.jpg', alt_text: 'Elite 100 deck', sort_order: 2 }, { url: '/yachts/elite-100-3.jpg', alt_text: 'Elite 100 lounge', sort_order: 3 }, { url: '/yachts/elite-100-4.jpg', alt_text: 'Elite 100 cabin', sort_order: 4 }, { url: '/yachts/elite-100-5.jpg', alt_text: 'Elite 100 flybridge', sort_order: 5 }],
+  },
+];
+
 export default function YachtsPage() {
   const [items, setItems] = useState<YachtItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -88,7 +134,8 @@ export default function YachtsPage() {
           gallery: mediaMap.get(item.id) || (item.image_url ? [{ url: item.image_url, alt_text: item.title, sort_order: 0 }] : []),
         }));
 
-      setItems(yachtItems);
+      // Use fallback data if DB has no yacht items
+      setItems(yachtItems.length > 0 ? yachtItems : FALLBACK_YACHTS);
       setLoading(false);
     }
     fetchYachts();
