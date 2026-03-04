@@ -73,10 +73,7 @@ export default function ProfilePage() {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
+    if (!user) return;
     loadData();
   }, [user]);
 

@@ -100,26 +100,26 @@ function AppContent() {
         {/* Main Screen */}
         <Route path="/" element={<MainScreen />} />
         
-        {/* Auth Routes */}
+        {/* Auth Routes (admin only) */}
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/cookies" element={<CookiePolicy />} />
         
-        {/* App Screens - protected */}
-        <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
-        <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
-        <Route path="/dining" element={<ProtectedRoute><DiningNightlifePage /></ProtectedRoute>} />
-        <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
-        <Route path="/yachts" element={<ProtectedRoute><YachtsPage /></ProtectedRoute>} />
-        <Route path="/yachts/:slug" element={<ProtectedRoute><YachtDetailPage /></ProtectedRoute>} />
-        <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
+        {/* App Screens - public browsing */}
+        <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/dining" element={<DiningNightlifePage />} />
+        <Route path="/item/:id" element={<ItemDetailsPage />} />
+        <Route path="/yachts" element={<YachtsPage />} />
+        <Route path="/yachts/:slug" element={<YachtDetailPage />} />
+        
+        {/* All pages open - contact via WhatsApp */}
+        <Route path="/concierge" element={<ConciergePage />} />
+        <Route path="/my-plans" element={<MyPlansPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/support" element={<SupportPage />} />
 
         {/* Admin routes with layout */}
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
@@ -140,11 +140,11 @@ function AppContent() {
         {/* Legacy route redirects */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="/auth" element={<Navigate to="/login" replace />} />
+        <Route path="/auth" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <FloatingHomeButton />
-      {user && <FloatingChatButton />}
+      <FloatingChatButton />
       <CookieConsent />
     </>
   );
