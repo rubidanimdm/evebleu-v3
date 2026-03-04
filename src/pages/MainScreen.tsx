@@ -403,6 +403,60 @@ export default function MainScreen() {
       </section>
 
       {/* ═══════════════════════════════════════════════
+          RECOMMENDED HOTELS STRIP
+      ═══════════════════════════════════════════════ */}
+      {(() => {
+        const hotelArticles = BLOG_ARTICLES.filter(a => 
+          ['jw-marriott-marquis-dubai', 'shangri-la-dubai', 'sofitel-dubai-jumeirah-beach', 'park-hyatt-dubai', 'rixos-premium-dubai-jbr'].includes(a.id)
+        );
+        const hotelStripTitle: Record<string, string> = {
+          he: '🏨 המלונות המומלצים שלנו',
+          en: '🏨 Our Recommended Hotels',
+          ar: '🏨 فنادقنا الموصى بها',
+          fr: '🏨 Nos hôtels recommandés',
+          ru: '🏨 Наши рекомендуемые отели',
+        };
+        return (
+          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+                {hotelStripTitle[language] || hotelStripTitle.en}
+              </h2>
+              <div className="w-16 h-px shimmer-line mx-auto mt-4" />
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+              {hotelArticles.map((hotel) => (
+                <button
+                  key={hotel.id}
+                  onClick={() => navigate(`/blog/${hotel.id}`)}
+                  className="group flex-shrink-0 w-[200px] sm:w-[220px] rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.15)] text-start snap-start"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={hotel.image}
+                      alt={hotel.title[language] || hotel.title.en}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                  </div>
+                  <div className="p-3 space-y-1">
+                    <h3 className="text-xs sm:text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                      {hotel.title[language] || hotel.title.en}
+                    </h3>
+                    <div className="flex items-center gap-1 text-primary text-[10px] font-medium pt-0.5">
+                      <span>{language === 'he' ? 'קרא עוד' : language === 'ar' ? 'اقرأ المزيد' : 'Read more'}</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* ═══════════════════════════════════════════════
           BLOG SECTION
       ═══════════════════════════════════════════════ */}
       <BlogSection />
