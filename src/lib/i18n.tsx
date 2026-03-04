@@ -29,7 +29,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         return stored as Language;
       }
     }
-    return 'en';
+    return 'ru';
   });
 
   const isRTL = LANGUAGES.find(l => l.code === language)?.rtl ?? false;
