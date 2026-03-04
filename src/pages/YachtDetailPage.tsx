@@ -4,6 +4,7 @@ import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/BottomNav';
 import { YachtImageCarousel } from '@/components/YachtImageCarousel';
+import { useLanguage } from '@/lib/i18n';
 
 interface YachtPageData {
   title: string;
@@ -218,6 +219,7 @@ export const CODE_TO_SLUG: Record<string, string> = {
 export default function YachtDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const yacht = slug ? YACHT_PAGES[slug] : undefined;
 
   if (!yacht) {
@@ -245,10 +247,8 @@ export default function YachtDetailPage() {
       </div>
 
       <main className="max-w-2xl mx-auto">
-        {/* Hero Image Carousel */}
         <YachtImageCarousel images={yacht.images} title={yacht.title} />
 
-        {/* Specs bar */}
         <div className="bg-card border-b border-primary/10 px-4 py-4">
           <h2 className="text-2xl font-bold text-foreground mb-3">{yacht.title}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
@@ -271,16 +271,15 @@ export default function YachtDetailPage() {
             {yacht.cabins && (
               <div className="flex items-center gap-2 text-muted-foreground">
                 <DoorOpen className="w-4 h-4 text-primary/70" strokeWidth={1.5} />
-                <span>{yacht.cabins} cabins</span>
+                <span>{t('yachtsPage.cabins').replace('{n}', String(yacht.cabins))}</span>
               </div>
             )}
             <div className="flex items-center gap-2 text-muted-foreground">
               <Clock className="w-4 h-4 text-primary/70" strokeWidth={1.5} />
-              <span>Min {yacht.minHours}h</span>
+              <span>{t('yachtsPage.minHours').replace('{n}', String(yacht.minHours))}</span>
             </div>
           </div>
 
-          {/* Price */}
           <div className="mt-4 flex items-baseline gap-2">
             <span className="text-xl font-bold text-primary">
               {yacht.price.toLocaleString()} {yacht.currency}
@@ -291,10 +290,9 @@ export default function YachtDetailPage() {
           <p className="text-sm text-muted-foreground mt-2">{yacht.description}</p>
         </div>
 
-        {/* Inclusions */}
         <div className="px-4 py-5">
           <h3 className="text-xs font-medium text-primary/80 uppercase tracking-wider mb-3">
-            What's Included
+            {t('yachtsPage.whatsIncluded')}
           </h3>
           <ul className="space-y-2">
             {yacht.inclusions.map((inc, i) => (
@@ -306,13 +304,12 @@ export default function YachtDetailPage() {
           </ul>
         </div>
 
-        {/* Book CTA */}
         <div className="p-4">
           <Button
             onClick={() => openWhatsAppConcierge('YACHT', `Yacht: ${yacht.title} - ${yacht.subtitle}`)}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl h-12 text-base"
           >
-            Book This Yacht
+            {t('yachtsPage.bookThisYacht')}
           </Button>
         </div>
       </main>

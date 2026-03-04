@@ -9,6 +9,7 @@ import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorO
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { YachtImageCarousel } from '@/components/YachtImageCarousel';
 import { CODE_TO_SLUG } from '@/pages/YachtDetailPage';
+import { useLanguage } from '@/lib/i18n';
 import type { Json } from '@/integrations/supabase/types';
 
 interface YachtDetails {
@@ -54,6 +55,7 @@ export default function YachtsPage() {
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   useEffect(() => {
     async function fetchYachts() {
@@ -102,8 +104,8 @@ export default function YachtsPage() {
       <GoldParticles count={12} />
 
       <LargePageHeader
-        title="Yacht Charters"
-        subtitle="Sail Dubai's stunning coastline in style"
+        title={t('yachtsPage.title')}
+        subtitle={t('yachtsPage.subtitle')}
       />
 
       <main className="max-w-2xl mx-auto p-4 space-y-8">
@@ -117,12 +119,11 @@ export default function YachtsPage() {
           </div>
         ) : (
           <>
-            {/* Yachts Section */}
             {yachts.length > 0 && (
               <section>
                 <div className="flex items-center gap-2 mb-4">
                   <Anchor className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  <h2 className="text-lg font-semibold text-foreground tracking-wide">Luxury Yachts</h2>
+                  <h2 className="text-lg font-semibold text-foreground tracking-wide">{t('yachtsPage.luxuryYachts')}</h2>
                 </div>
                 <div className="grid gap-4">
                   {yachts.map(yacht => (
@@ -137,18 +138,18 @@ export default function YachtsPage() {
                           ? () => navigate(`/yachts/${CODE_TO_SLUG[yacht.details.code]}`)
                           : undefined
                       }
+                      t={t}
                     />
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Fishing Boats Section */}
             {fishingBoats.length > 0 && (
               <section>
                 <div className="flex items-center gap-2 mb-4">
                   <Fish className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  <h2 className="text-lg font-semibold text-foreground tracking-wide">Fishing Boats</h2>
+                  <h2 className="text-lg font-semibold text-foreground tracking-wide">{t('yachtsPage.fishingBoats')}</h2>
                 </div>
                 <div className="grid gap-4">
                   {fishingBoats.map(boat => (
@@ -158,20 +159,20 @@ export default function YachtsPage() {
                       expanded={expandedId === boat.id}
                       onToggle={() => setExpandedId(expandedId === boat.id ? null : boat.id)}
                       onBook={() => openWhatsAppConcierge('YACHT', `Boat: ${boat.title}`)}
+                      t={t}
                     />
                   ))}
                 </div>
               </section>
             )}
 
-            {/* CTA */}
             <div className="text-center pt-4">
-              <p className="text-sm text-muted-foreground mb-3">Need a custom arrangement?</p>
+              <p className="text-sm text-muted-foreground mb-3">{t('yachtsPage.customArrangement')}</p>
               <Button
                 onClick={() => openWhatsAppConcierge('YACHT')}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8"
               >
-                Talk to Concierge
+                {t('yachtsPage.talkToConcierge')}
               </Button>
             </div>
           </>
@@ -189,20 +190,20 @@ function YachtCard({
   onToggle,
   onBook,
   onNavigateDetail,
+  t,
 }: {
   item: YachtItem;
   expanded: boolean;
   onToggle: () => void;
   onBook: () => void;
   onNavigateDetail?: () => void;
+  t: (key: string) => string;
 }) {
   const { details } = item;
 
   return (
     <LuxuryCard className="overflow-hidden transition-all duration-300">
-      {/* Image Carousel */}
       <YachtImageCarousel images={item.gallery} title={item.title} />
-      {/* Header - always visible */}
       <div
         className="p-5 cursor-pointer"
         onClick={onNavigateDetail || onToggle}
@@ -218,12 +219,12 @@ function YachtCard({
               {item.max_people && (
                 <span className="flex items-center gap-1">
                   <Users className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
-                  Up to {item.max_people} guests
+                  {t('yachtsPage.upToGuests').replace('{n}', String(item.max_people))}
                 </span>
               )}
               <span className="flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
-                Min {details.min_hours}h
+                {t('yachtsPage.minHours').replace('{n}', String(details.min_hours))}
               </span>
               {item.location && (
                 <span className="flex items-center gap-1">
@@ -240,7 +241,7 @@ function YachtCard({
               {details.cabins && (
                 <span className="flex items-center gap-1">
                   <DoorOpen className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
-                  {details.cabins} cabins
+                  {t('yachtsPage.cabins').replace('{n}', String(details.cabins))}
                 </span>
               )}
             </div>
@@ -259,17 +260,20 @@ function YachtCard({
 
         <div className="flex items-center gap-1 mt-3 text-xs text-primary/60">
           <ChevronRight className={`w-3.5 h-3.5 transition-transform duration-200 ${!onNavigateDetail && expanded ? 'rotate-90' : ''}`} />
-          <span>{onNavigateDetail ? 'View full details' : (expanded ? 'Hide details' : 'View inclusions')}</span>
+          <span>
+            {onNavigateDetail
+              ? t('yachtsPage.viewFullDetails')
+              : (expanded ? t('yachtsPage.hideDetails') : t('yachtsPage.viewInclusions'))}
+          </span>
         </div>
       </div>
 
-      {/* Expandable details */}
       {expanded && (
         <div className="px-5 pb-5 border-t border-primary/10 pt-4 space-y-4 animate-in fade-in slide-in-from-top-2 duration-200">
           {details.inclusions.length > 0 && (
             <div>
               <h4 className="text-xs font-medium text-primary/80 uppercase tracking-wider mb-2">
-                What's Included
+                {t('yachtsPage.whatsIncluded')}
               </h4>
               <ul className="space-y-1.5">
                 {details.inclusions.map((inc, i) => (
@@ -289,7 +293,7 @@ function YachtCard({
             }}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl h-11"
           >
-            Book This {details.type === 'fishing' ? 'Boat' : 'Yacht'}
+            {details.type === 'fishing' ? t('yachtsPage.bookThisBoat') : t('yachtsPage.bookThisYacht')}
           </Button>
         </div>
       )}
