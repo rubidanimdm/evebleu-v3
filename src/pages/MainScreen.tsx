@@ -86,11 +86,11 @@ export default function MainScreen() {
   const footerReveal = useScrollReveal<HTMLElement>();
 
   // Parallax refs for video strips
-  const yachtParallax = useParallax(0.12);
-  const nightlifeParallax = useParallax(0.12);
-  const attractionsParallax = useParallax(0.12);
-  const carsParallax = useParallax(0.12);
-  const desertParallax = useParallax(0.12);
+  useParallax(yachtStripReveal.ref);
+  useParallax(nightlifeStripReveal.ref);
+  useParallax(attractionsStripReveal.ref);
+  useParallax(carsStripReveal.ref);
+  useParallax(desertStripReveal.ref);
 
   const handleCategoryClick = (route: string) => {
     if (route === '#flights') {
