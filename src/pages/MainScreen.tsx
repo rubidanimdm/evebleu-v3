@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
@@ -31,6 +31,7 @@ import diningIcon from '@/assets/dining-icon-new.jpeg';
 import airportIcon from '@/assets/airport-pickup-icon.jpeg';
 import attractionsIcon from '@/assets/icon-attractions.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -70,6 +71,18 @@ export default function MainScreen() {
   const { t } = useLanguage();
   const isLoggedIn = !!user;
   const [flightFormOpen, setFlightFormOpen] = useState(false);
+
+  // Scroll-reveal refs
+  const introReveal = useScrollReveal<HTMLElement>();
+  const servicesReveal = useScrollReveal<HTMLElement>();
+  const gridReveal = useScrollReveal<HTMLDivElement>();
+  const yachtStripReveal = useScrollReveal<HTMLElement>();
+  const nightlifeStripReveal = useScrollReveal<HTMLElement>();
+  const attractionsStripReveal = useScrollReveal<HTMLElement>();
+  const carsStripReveal = useScrollReveal<HTMLElement>();
+  const desertStripReveal = useScrollReveal<HTMLElement>();
+  const ctaReveal = useScrollReveal<HTMLElement>();
+  const footerReveal = useScrollReveal<HTMLElement>();
 
 
   const handleCategoryClick = (route: string) => {
