@@ -155,7 +155,7 @@ export default function DiningNightlifePage() {
 
   const [bookingVenue, setBookingVenue] = useState<string | null>(null);
 
-  const FEATURED_NAMES = ['Baoli', 'Amelia', 'Billionaire', 'Cou Cou', 'Amazonico', 'Gigi', 'Raspoutine', 'Verde Beach', 'O Beach'];
+  const FEATURED_NAMES = ['Baoli', 'Amelia', 'Billionaire', 'Cou Cou', 'Amazonico', 'Gigi', 'Raspoutine', 'Verde Beach', 'O Beach', 'Opa'];
 
   const featured = FEATURED_NAMES
     .map(name => VENUES.find(v => v.name === name))
