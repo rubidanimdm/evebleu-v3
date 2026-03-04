@@ -85,6 +85,12 @@ export default function MainScreen() {
   const ctaReveal = useScrollReveal<HTMLElement>();
   const footerReveal = useScrollReveal<HTMLElement>();
 
+  // Parallax refs for video strips
+  const yachtParallax = useParallax(0.12);
+  const nightlifeParallax = useParallax(0.12);
+  const attractionsParallax = useParallax(0.12);
+  const carsParallax = useParallax(0.12);
+  const desertParallax = useParallax(0.12);
 
   const handleCategoryClick = (route: string) => {
     if (route === '#flights') {
