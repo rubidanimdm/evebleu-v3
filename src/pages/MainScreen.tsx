@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
-import { User, LogOut, ArrowRight, Phone, Mail, Hotel, Plane, CalendarDays, Users, Search } from 'lucide-react';
+import { User, ArrowRight, Phone, Mail, Hotel, Plane, CalendarDays, Users, Search } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
 import { openExternalUrl } from '@/lib/openExternalUrl';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
+import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 import yachtVideo from '@/assets/yacht-marina-video.mp4';
@@ -17,6 +19,7 @@ import nightlifeVideo from '@/assets/nightlife-video.mp4';
 import attractionsVideo from '@/assets/attractions-video.mp4';
 import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
+import birthdayIcon from '@/assets/icon-birthday.jpeg';
 import vipDriverIcon from '@/assets/vip-driver-icon-new.jpeg';
 import flightsIcon from '@/assets/flights-icon.jpeg';
 import hotelIcon from '@/assets/icon-hotel.jpeg';
@@ -27,7 +30,8 @@ import diningIcon from '@/assets/dining-icon-new.jpeg';
 import airportIcon from '@/assets/airport-pickup-icon.jpeg';
 import attractionsIcon from '@/assets/icon-attractions.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
-import { AccountButton } from '@/components/AccountButton';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { useParallax } from '@/hooks/useParallax';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -60,10 +64,28 @@ export default function MainScreen() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const isLoggedIn = !!user;
   const [flightFormOpen, setFlightFormOpen] = useState(false);
 
+  // Scroll-reveal refs
+  const introReveal = useScrollReveal<HTMLElement>();
+  const servicesReveal = useScrollReveal<HTMLElement>();
+  const gridReveal = useScrollReveal<HTMLDivElement>();
+  const yachtStripReveal = useScrollReveal<HTMLElement>();
+  const nightlifeStripReveal = useScrollReveal<HTMLElement>();
+  const attractionsStripReveal = useScrollReveal<HTMLElement>();
+  const carsStripReveal = useScrollReveal<HTMLElement>();
+  const desertStripReveal = useScrollReveal<HTMLElement>();
+  const ctaReveal = useScrollReveal<HTMLElement>();
+  const footerReveal = useScrollReveal<HTMLElement>();
+
+  // Parallax refs for video strips
+  useParallax(yachtStripReveal.ref);
+  useParallax(nightlifeStripReveal.ref);
+  useParallax(attractionsStripReveal.ref);
+  useParallax(carsStripReveal.ref);
+  useParallax(desertStripReveal.ref);
 
   const handleCategoryClick = (route: string) => {
     if (route === '#flights') {
@@ -91,6 +113,10 @@ export default function MainScreen() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      {/* ═══════════════════════════════════════════════
+          INFO STRIP — Time, Weather, Exchange Rate
+      ═══════════════════════════════════════════════ */}
+      <DubaiInfoStrip />
 
       {/* ═══════════════════════════════════════════════
           HERO — Full-screen cinematic video
@@ -103,9 +129,6 @@ export default function MainScreen() {
           loop
           muted
           playsInline
-          preload="auto"
-          // @ts-ignore — webkit vendor attribute for iOS
-          webkit-playsinline="true"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
@@ -127,10 +150,9 @@ export default function MainScreen() {
           background: 'radial-gradient(ellipse at center, transparent 50%, rgba(7,20,35,0.5) 100%)',
         }} />
 
-        {/* Language switcher + Account — top left */}
-        <div className="absolute top-4 left-4 z-30 flex items-center gap-2">
+        {/* Language switcher — top left */}
+        <div className="absolute top-4 left-4 z-30">
           <LanguageSwitcher variant="full" className="[&_button]:bg-black/40 [&_button]:backdrop-blur-md [&_button]:border-white/10 [&_button]:text-foreground [&_button]:hover:bg-black/50" />
-          <AccountButton className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10" />
         </div>
 
         {/* Profile button — top right (only if logged in) */}
@@ -180,27 +202,44 @@ export default function MainScreen() {
       </section>
 
       {/* ═══════════════════════════════════════════════
+          INTRO TEXT — Elegant welcome copy
+      ═══════════════════════════════════════════════ */}
+      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`}>
+        <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
+          {t('mainScreen.introTitle')}
+        </h2>
+        <div className="space-y-5 text-sm sm:text-base text-foreground/70 leading-[1.85]">
+          <p>{t('mainScreen.introP1')}</p>
+          <p>{t('mainScreen.introP2')}</p>
+          <p>{t('mainScreen.introP3')}</p>
+          <p className="text-foreground/50 italic">{t('mainScreen.introTip')}</p>
+          <p className="text-foreground/80 font-medium">{t('mainScreen.introClosing')}</p>
+        </div>
+        <div className="w-20 h-px shimmer-line mx-auto mt-8" />
+      </section>
+
+      {/* ═══════════════════════════════════════════════
           SERVICES — Category grid
       ═══════════════════════════════════════════════ */}
-      <section className="px-4 sm:px-6 py-14 sm:py-20 max-w-[720px] mx-auto w-full">
+      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
         {/* Section header */}
         <div className="text-center mb-10">
           <p className="text-primary text-xs uppercase tracking-[0.3em] mb-3">{t('mainScreen.premiumServices')}</p>
           <h2 className="text-2xl sm:text-3xl font-semibold text-foreground">
             {t('mainScreen.everythingYouNeed')}
           </h2>
-          <div className="w-16 h-px bg-primary/40 mx-auto mt-4" />
+          <div className="w-16 h-px shimmer-line mx-auto mt-4" />
         </div>
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div ref={gridReveal.ref} className={`grid grid-cols-3 gap-3 sm:gap-4 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
           {categoryKeys.map((cat) => (
             <button
               key={cat.key}
               onClick={() => handleCategoryClick(cat.route)}
-              className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl border border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
+              className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl border border-primary/40 hover:border-primary hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
             >
               {getCategoryIcon(cat.key)}
-              <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
+              <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-primary drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
                 {t(`mainScreen.${cat.key}`)}
               </span>
             </button>
@@ -211,14 +250,14 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('YACHT')} role="link" aria-label="Yacht Charters">
+      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
         <video
-          src={nightlifeVideo}
+          src={yachtVideo}
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Dark overlay at 50% + top/bottom fade */}
         <div className="absolute inset-0 bg-background/50" />
@@ -237,14 +276,14 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section id="strip-dining" className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
+      <section ref={nightlifeStripReveal.ref} id="strip-dining" className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
         <video
-          src={attractionsVideo}
+          src={nightlifeVideo}
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
@@ -260,11 +299,47 @@ export default function MainScreen() {
       </section>
 
       {/* ═══════════════════════════════════════════════
+          CTA — READY FOR SOMETHING SPECIAL
+      ═══════════════════════════════════════════════ */}
+      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-14 max-w-[720px] mx-auto w-full transition-all duration-1000 ease-out ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
+        <div className={`relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center transition-all duration-700 delay-300 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Animated decorative glows */}
+          <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/8 blur-3xl rounded-full transition-all duration-1000 delay-500 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          <div className={`absolute -bottom-8 -right-8 w-48 h-48 bg-primary/5 blur-3xl rounded-full transition-all duration-1200 delay-700 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          <div className={`absolute -bottom-8 -left-8 w-40 h-40 bg-accent/5 blur-3xl rounded-full transition-all duration-1200 delay-800 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          
+          {/* Shimmer border effect */}
+          <div className={`absolute inset-0 rounded-2xl transition-opacity duration-1000 delay-600 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`} style={{
+            background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, transparent 40%, transparent 60%, hsl(var(--primary) / 0.1) 100%)',
+            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'exclude',
+            WebkitMaskComposite: 'xor',
+            padding: '1px',
+          }} />
+          
+          <h3 className={`relative text-xl sm:text-2xl font-semibold text-foreground mb-3 transition-all duration-700 delay-400 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            {t('mainScreen.readyForSomethingSpecial')}
+          </h3>
+          <p className={`relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto transition-all duration-700 delay-500 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            {t('mainScreen.conciergeAvailable')}
+          </p>
+          <Button
+            onClick={() => openWhatsAppConcierge()}
+            className={`relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2 transition-all duration-700 delay-600 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}
+          >
+            {t('mainScreen.chatNow')}
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('HELICOPTER')} role="link" aria-label="Helicopter Tour">
+      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions">
         <video
-          src={yachtVideo}
+          src={attractionsVideo}
           autoPlay
           loop
           muted
@@ -287,14 +362,14 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 4 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('CAR')} role="link" aria-label="Luxury Cars">
+      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('CAR')} role="link" aria-label="Luxury Cars">
         <video
           src={strip4Video}
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
@@ -312,7 +387,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Desert Action">
+      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions - Desert">
         <video
           src={strip5Video}
           autoPlay
@@ -334,29 +409,119 @@ export default function MainScreen() {
         }} />
       </section>
 
+
       {/* ═══════════════════════════════════════════════
-          SECOND CTA
+          RECOMMENDED HOTELS STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="px-4 sm:px-6 pb-14 max-w-[720px] mx-auto w-full">
-        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center">
-          {/* Decorative glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/5 blur-3xl rounded-full" />
-          
-          <h3 className="relative text-xl sm:text-2xl font-semibold text-foreground mb-3">
-            {t('mainScreen.readyForSomethingSpecial')}
-          </h3>
-          <p className="relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto">
-            {t('mainScreen.conciergeAvailable')}
-          </p>
-          <Button
-            onClick={() => openWhatsAppConcierge()}
-            className="relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
-          >
-            {t('mainScreen.chatNow')}
-            <ArrowRight className="w-4 h-4" />
-          </Button>
-        </div>
-      </section>
+      {(() => {
+        const hotelArticles = BLOG_ARTICLES.filter(a => 
+          ['atlantis-the-royal', 'atlantis-the-palm', 'five-palm-jumeirah', 'armani-hotel-burj-khalifa', 'address-dubai-marina'].includes(a.id)
+        );
+        const hotelStripTitle: Record<string, string> = {
+          he: '🏨 המלונות המומלצים שלנו',
+          en: '🏨 Our Recommended Hotels',
+          ar: '🏨 فنادقنا الموصى بها',
+          fr: '🏨 Nos hôtels recommandés',
+          ru: '🏨 Наши рекомендуемые отели',
+        };
+        return (
+          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+                {hotelStripTitle[language] || hotelStripTitle.en}
+              </h2>
+              <div className="w-16 h-px shimmer-line mx-auto mt-4" />
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+              {hotelArticles.map((hotel) => (
+                <button
+                  key={hotel.id}
+                  onClick={() => navigate(`/blog/${hotel.id}`)}
+                  className="group flex-shrink-0 w-[200px] sm:w-[220px] rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.15)] text-start snap-start"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={hotel.image}
+                      alt={hotel.title[language] || hotel.title.en}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                  </div>
+                  <div className="p-3 space-y-1">
+                    <h3 className="text-xs sm:text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                      {hotel.title[language] || hotel.title.en}
+                    </h3>
+                    <div className="flex items-center gap-1 text-primary text-[10px] font-medium pt-0.5">
+                      <span>{language === 'he' ? 'קרא עוד' : language === 'ar' ? 'اقرأ المزيد' : 'Read more'}</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* ═══════════════════════════════════════════════
+          TOP ATTRACTIONS STRIP
+      ═══════════════════════════════════════════════ */}
+      {(() => {
+        const attractionArticles = BLOG_ARTICLES.filter(a => 
+          ['hot-air-balloon-dubai', 'helicopter-tour-dubai', 'skydiving-dubai', 'desert-safari-dubai', 'ain-dubai-guide'].includes(a.id)
+        );
+        const attractionStripTitle: Record<string, string> = {
+          he: '🌟 האטרקציות הפופולריות שלנו',
+          en: '🌟 Our Top Attractions',
+          ar: '🌟 أفضل معالمنا السياحية',
+          fr: '🌟 Nos attractions incontournables',
+          ru: '🌟 Наши лучшие достопримечательности',
+        };
+        return (
+          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+                {attractionStripTitle[language] || attractionStripTitle.en}
+              </h2>
+              <div className="w-16 h-px shimmer-line mx-auto mt-4" />
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+              {attractionArticles.map((attraction) => (
+                <button
+                  key={attraction.id}
+                  onClick={() => navigate(`/blog/${attraction.id}`)}
+                  className="group flex-shrink-0 w-[200px] sm:w-[220px] rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.15)] text-start snap-start"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={attraction.image}
+                      alt={attraction.title[language] || attraction.title.en}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                  </div>
+                  <div className="p-3 space-y-1">
+                    <h3 className="text-xs sm:text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                      {attraction.title[language] || attraction.title.en}
+                    </h3>
+                    <div className="flex items-center gap-1 text-primary text-[10px] font-medium pt-0.5">
+                      <span>{language === 'he' ? 'קרא עוד' : language === 'ar' ? 'اقرأ المزيد' : 'Read more'}</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* ═══════════════════════════════════════════════
+          BLOG SECTION
+      ═══════════════════════════════════════════════ */}
+      <BlogSection />
 
       {/* ═══════════════════════════════════════════════
           SEARCH HOTELS & FLIGHTS — hidden until API access
@@ -472,7 +637,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           FOOTER
       ═══════════════════════════════════════════════ */}
-      <footer className="mt-auto border-t border-primary/10 bg-card/30 py-10 px-4">
+      <footer ref={footerReveal.ref} className={`mt-auto border-t border-primary/10 bg-card/30 py-10 px-4 reveal-base ${footerReveal.isVisible ? 'revealed' : ''}`}>
         <div className="max-w-[720px] mx-auto flex flex-col items-center space-y-5">
           <img
             src={logo}
@@ -491,11 +656,11 @@ export default function MainScreen() {
           </div>
           <div className="w-24 h-px bg-primary/15" />
           <div className="flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/50">
-            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/privacy" className="hover:text-primary transition-colors">{t('mainScreen.footerPrivacy')}</Link>
             <span>·</span>
-            <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link to="/terms" className="hover:text-primary transition-colors">{t('mainScreen.footerTerms')}</Link>
             <span>·</span>
-            <Link to="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
+            <Link to="/cookies" className="hover:text-primary transition-colors">{t('mainScreen.footerCookies')}</Link>
           </div>
           <p className="text-[10px] text-muted-foreground/40 tracking-[0.15em] uppercase">
             © {new Date().getFullYear()} EVE BLUE · Concierge. It. Done.

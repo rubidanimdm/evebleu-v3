@@ -5,11 +5,12 @@ import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorOpen } from 'lucide-react';
+import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorOpen, UtensilsCrossed, Wine, ArrowRight } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { YachtImageCarousel } from '@/components/YachtImageCarousel';
 import { CODE_TO_SLUG } from '@/pages/YachtDetailPage';
 import { useLanguage } from '@/lib/i18n';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 import type { Json } from '@/integrations/supabase/types';
 
 interface YachtDetails {
@@ -103,6 +104,10 @@ export default function YachtsPage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
 
+  const yachtSectionReveal = useScrollReveal<HTMLElement>();
+  const fishingSectionReveal = useScrollReveal<HTMLElement>();
+  const ctaReveal = useScrollReveal<HTMLDivElement>();
+
   useEffect(() => {
     async function fetchYachts() {
       const [{ data }, { data: mediaData }] = await Promise.all([
@@ -167,53 +172,55 @@ export default function YachtsPage() {
         ) : (
           <>
             {yachts.length > 0 && (
-              <section>
+              <section ref={yachtSectionReveal.ref} className={`reveal-base ${yachtSectionReveal.isVisible ? 'revealed' : ''}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <Anchor className="w-5 h-5 text-primary" strokeWidth={1.5} />
                   <h2 className="text-lg font-semibold text-foreground tracking-wide">{t('yachtsPage.luxuryYachts')}</h2>
                 </div>
                 <div className="grid gap-4">
-                  {yachts.map(yacht => (
-                    <YachtCard
-                      key={yacht.id}
-                      item={yacht}
-                      expanded={expandedId === yacht.id}
-                      onToggle={() => setExpandedId(expandedId === yacht.id ? null : yacht.id)}
-                      onBook={() => openWhatsAppConcierge('YACHT', `Yacht: ${yacht.title}`)}
-                      onNavigateDetail={
-                        CODE_TO_SLUG[yacht.details.code]
-                          ? () => navigate(`/yachts/${CODE_TO_SLUG[yacht.details.code]}`)
-                          : undefined
-                      }
-                      t={t}
-                    />
+                  {yachts.map((yacht, index) => (
+                    <div key={yacht.id} className="animate-[fadeIn_0.5s_ease-out]" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}>
+                      <YachtCard
+                        item={yacht}
+                        expanded={expandedId === yacht.id}
+                        onToggle={() => setExpandedId(expandedId === yacht.id ? null : yacht.id)}
+                        onBook={() => openWhatsAppConcierge('YACHT', `Yacht: ${yacht.title}`)}
+                        onNavigateDetail={
+                          CODE_TO_SLUG[yacht.details.code]
+                            ? () => navigate(`/yachts/${CODE_TO_SLUG[yacht.details.code]}`)
+                            : undefined
+                        }
+                        t={t}
+                      />
+                    </div>
                   ))}
                 </div>
               </section>
             )}
 
             {fishingBoats.length > 0 && (
-              <section>
+              <section ref={fishingSectionReveal.ref} className={`reveal-base ${fishingSectionReveal.isVisible ? 'revealed' : ''}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <Fish className="w-5 h-5 text-primary" strokeWidth={1.5} />
                   <h2 className="text-lg font-semibold text-foreground tracking-wide">{t('yachtsPage.fishingBoats')}</h2>
                 </div>
                 <div className="grid gap-4">
-                  {fishingBoats.map(boat => (
-                    <YachtCard
-                      key={boat.id}
-                      item={boat}
-                      expanded={expandedId === boat.id}
-                      onToggle={() => setExpandedId(expandedId === boat.id ? null : boat.id)}
-                      onBook={() => openWhatsAppConcierge('YACHT', `Boat: ${boat.title}`)}
-                      t={t}
-                    />
+                  {fishingBoats.map((boat, index) => (
+                    <div key={boat.id} className="animate-[fadeIn_0.5s_ease-out]" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}>
+                      <YachtCard
+                        item={boat}
+                        expanded={expandedId === boat.id}
+                        onToggle={() => setExpandedId(expandedId === boat.id ? null : boat.id)}
+                        onBook={() => openWhatsAppConcierge('YACHT', `Boat: ${boat.title}`)}
+                        t={t}
+                      />
+                    </div>
                   ))}
                 </div>
               </section>
             )}
 
-            <div className="text-center pt-4">
+            <div ref={ctaReveal.ref} className={`text-center pt-4 reveal-scale ${ctaReveal.isVisible ? 'revealed' : ''}`}>
               <p className="text-sm text-muted-foreground mb-3">{t('yachtsPage.customArrangement')}</p>
               <Button
                 onClick={() => openWhatsAppConcierge('YACHT')}
@@ -227,6 +234,13 @@ export default function YachtsPage() {
       </main>
 
       <BottomNav />
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
@@ -297,7 +311,8 @@ function YachtCard({
             <Badge className="bg-primary/10 text-primary border border-primary/20 text-sm font-semibold whitespace-nowrap">
               {item.price.toLocaleString()} {item.currency}
             </Badge>
-            <p className="text-[10px] text-muted-foreground mt-1">{item.pricing_unit}</p>
+            <p className="text-[10px] text-muted-foreground mt-1">{t('yachtsPage.perHour')}</p>
+            <p className="text-[9px] text-primary/50 font-medium">{t('yachtsPage.minHours').replace('{n}', String(details.min_hours))}</p>
           </div>
         </div>
 
@@ -332,6 +347,34 @@ function YachtCard({
               </ul>
             </div>
           )}
+
+          {/* Add-on packages */}
+          <div className="border-t border-primary/10 pt-4">
+            <h4 className="text-xs font-medium text-primary/80 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <UtensilsCrossed className="w-3.5 h-3.5" />
+              {t('yachtsPage.addOnsTitle')}
+            </h4>
+            <p className="text-[11px] text-muted-foreground/60 mb-3">{t('yachtsPage.addOnsSubtitle')}</p>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { key: 'packageColdMeze', icon: '🥗' },
+                { key: 'packageHotFood', icon: '🍖' },
+                { key: 'packagePremiumBBQ', icon: '🔥' },
+                { key: 'packageSoftDrinks', icon: '🥤' },
+                { key: 'packageAlcohol', icon: '🍾' },
+                { key: 'packageFruits', icon: '🍓' },
+              ].map(pkg => (
+                <div key={pkg.key} className="bg-primary/5 border border-primary/10 rounded-lg p-2.5">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-sm">{pkg.icon}</span>
+                    <span className="text-[11px] font-semibold text-foreground leading-tight">{t(`yachtsPage.${pkg.key}`)}</span>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground/70 leading-snug">{t(`yachtsPage.${pkg.key}Desc`)}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-[10px] text-primary/50 mt-2 text-center italic">{t('yachtsPage.addOnPriceOnRequest')}</p>
+          </div>
 
           <Button
             onClick={(e) => {

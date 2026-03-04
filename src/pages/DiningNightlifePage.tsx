@@ -7,6 +7,7 @@ import { GoldParticles } from '@/components/LuxuryElements';
 import { VenueBookingForm } from '@/components/VenueBookingForm';
 import { useLanguage } from '@/lib/i18n';
 import { supabase } from '@/integrations/supabase/client';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { MessageCircle, Search, UtensilsCrossed, X } from 'lucide-react';
 
 type Venue = {
@@ -57,7 +58,6 @@ function VenueLogo({ venue }: { venue: Venue }) {
     );
   }
 
-  // Fallback: styled initial
   const colors = [
     'bg-rose-500/15 text-rose-400',
     'bg-amber-500/15 text-amber-400',
@@ -103,8 +103,11 @@ export default function DiningNightlifePage() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { t } = useLanguage();
-
   const [bookingVenue, setBookingVenue] = useState<string | null>(null);
+
+  const heroReveal = useScrollReveal<HTMLElement>();
+  const featuredReveal = useScrollReveal<HTMLDivElement>();
+  const venuesReveal = useScrollReveal<HTMLDivElement>();
 
   useEffect(() => {
     const fetchVenues = async () => {
@@ -149,7 +152,7 @@ export default function DiningNightlifePage() {
       <GoldParticles count={8} />
 
       {/* Hero */}
-      <header className="relative overflow-hidden">
+      <header ref={heroReveal.ref} className={`relative overflow-hidden reveal-base ${heroReveal.isVisible ? 'revealed' : ''}`}>
         <div className="absolute inset-0 bg-gradient-to-b from-primary/8 via-primary/3 to-transparent" />
         <div className="relative max-w-2xl mx-auto px-4 pt-8 pb-4 text-center">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-2">
@@ -164,7 +167,7 @@ export default function DiningNightlifePage() {
           <p className="text-muted-foreground text-xs max-w-md mx-auto">
             {venues.length} {t('diningPage.subtitle')}
           </p>
-          <div className="w-12 h-px bg-primary/30 mx-auto mt-3" />
+          <div className="w-12 h-px shimmer-line mx-auto mt-3" />
         </div>
       </header>
 
@@ -206,20 +209,20 @@ export default function DiningNightlifePage() {
         </div>
       </div>
 
-      {/* Venue List */}
       <main className="max-w-2xl mx-auto px-4 pt-4">
         {/* Featured Section - only when not searching */}
         {!search && !loading && featured.length > 0 && categoryFilter === 'ALL' && (
-          <div className="mb-6">
+          <div ref={featuredReveal.ref} className={`mb-6 reveal-base ${featuredReveal.isVisible ? 'revealed' : ''}`}>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xs font-semibold text-primary uppercase tracking-wider">⭐ {t('diningPage.topRecommended') || 'Our Top 10 Recommended'}</span>
               <div className="flex-1 h-px bg-primary/15" />
             </div>
             <div className="space-y-2">
-              {featured.map(venue => (
+              {featured.map((venue, index) => (
                 <div
                   key={venue.id}
-                  className="group flex items-center justify-between gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/20 hover:border-primary/40 hover:bg-primary/10 backdrop-blur-sm transition-all duration-200"
+                  className="group flex items-center justify-between gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/20 hover:border-primary/40 hover:bg-primary/10 backdrop-blur-sm transition-all duration-200 animate-[fadeIn_0.4s_ease-out]"
+                  style={{ animationDelay: `${index * 60}ms`, animationFillMode: 'both' }}
                 >
                   <div className="flex items-center gap-4 min-w-0">
                     <VenueLogo venue={venue} />
@@ -249,6 +252,7 @@ export default function DiningNightlifePage() {
           </div>
         )}
 
+        {/* Venue List */}
         {loading ? (
           <VenueSkeleton />
         ) : filtered.length === 0 ? (
@@ -264,21 +268,18 @@ export default function DiningNightlifePage() {
             </Button>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div ref={venuesReveal.ref} className={`space-y-2 reveal-base ${venuesReveal.isVisible ? 'revealed' : ''}`}>
             {filtered.map(venue => (
               <div
                 key={venue.id}
                 className="group flex items-center justify-between gap-4 p-4 rounded-2xl bg-card/50 border border-border/40 hover:border-primary/25 hover:bg-card/80 backdrop-blur-sm transition-all duration-200"
               >
-                {/* Logo + name */}
                 <div className="flex items-center gap-4 min-w-0">
                   <VenueLogo venue={venue} />
                   <span className="font-medium text-foreground truncate">
                     {venue.title}
                   </span>
                 </div>
-
-                {/* Contact button */}
                 <Button
                   size="sm"
                   onClick={() => handleContact(venue.title)}
@@ -310,6 +311,13 @@ export default function DiningNightlifePage() {
       />
 
       <BottomNav />
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
