@@ -2,16 +2,18 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 
 const COOKIE_CONSENT_KEY = 'eve-blue-cookie-consent';
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const { language } = useLanguage();
+  const isHebrew = language === 'he';
 
   useEffect(() => {
     const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
     if (!consent) {
-      // Small delay so it doesn't flash on load
       const timer = setTimeout(() => setVisible(true), 1500);
       return () => clearTimeout(timer);
     }
@@ -34,11 +36,17 @@ export function CookieConsent() {
       <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl p-5 shadow-2xl shadow-black/40">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 space-y-2">
-            <p className="text-sm font-medium text-foreground">🍪 We use cookies</p>
+            <p className="text-sm font-medium text-foreground">
+              {isHebrew ? '🍪 אנו משתמשים בעוגיות' : '🍪 We use cookies'}
+            </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              We use essential cookies to keep you signed in and functional cookies to remember your preferences. 
-              We also use analytics cookies to improve our service.{' '}
-              <Link to="/cookies" className="text-primary hover:underline">Learn more</Link>
+              {isHebrew 
+                ? 'אנו משתמשים בעוגיות הכרחיות כדי לשמור אותך מחובר ובעוגיות פונקציונליות לזכירת ההעדפות שלך. אנו גם משתמשים בעוגיות אנליטיות לשיפור השירות. '
+                : 'We use essential cookies to keep you signed in and functional cookies to remember your preferences. We also use analytics cookies to improve our service. '
+              }
+              <Link to="/cookies" className="text-primary hover:underline">
+                {isHebrew ? 'למידע נוסף' : 'Learn more'}
+              </Link>
             </p>
           </div>
           <button onClick={acceptEssential} className="text-muted-foreground hover:text-foreground">
@@ -47,10 +55,10 @@ export function CookieConsent() {
         </div>
         <div className="flex items-center gap-3 mt-4">
           <Button onClick={accept} size="sm" className="flex-1">
-            Accept All
+            {isHebrew ? 'אשר הכל' : 'Accept All'}
           </Button>
           <Button onClick={acceptEssential} variant="outline" size="sm" className="flex-1">
-            Essential Only
+            {isHebrew ? 'הכרחיות בלבד' : 'Essential Only'}
           </Button>
         </div>
       </div>
