@@ -116,7 +116,7 @@ function AppContent() {
         <Route path="/yachts" element={<YachtsPage />} />
         <Route path="/yachts/:slug" element={<YachtDetailPage />} />
         
-        {/* Protected - requires login */}
+        {/* All pages open - contact via WhatsApp */}
         <Route path="/concierge" element={<ConciergePage />} />
         <Route path="/my-plans" element={<MyPlansPage />} />
         <Route path="/profile" element={<ProfilePage />} />
