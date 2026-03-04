@@ -304,6 +304,30 @@ export default function MainScreen() {
       </section>
 
       {/* ═══════════════════════════════════════════════
+          CTA — READY FOR SOMETHING SPECIAL
+      ═══════════════════════════════════════════════ */}
+      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-14 max-w-[720px] mx-auto w-full reveal-scale ${ctaReveal.isVisible ? 'revealed' : ''}`}>
+        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center">
+          {/* Decorative glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/5 blur-3xl rounded-full" />
+          
+          <h3 className="relative text-xl sm:text-2xl font-semibold text-foreground mb-3">
+            {t('mainScreen.readyForSomethingSpecial')}
+          </h3>
+          <p className="relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto">
+            {t('mainScreen.conciergeAvailable')}
+          </p>
+          <Button
+            onClick={() => openWhatsAppConcierge()}
+            className="relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
+          >
+            {t('mainScreen.chatNow')}
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
       <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions">
@@ -378,29 +402,6 @@ export default function MainScreen() {
         }} />
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          SECOND CTA
-      ═══════════════════════════════════════════════ */}
-      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 pb-14 max-w-[720px] mx-auto w-full reveal-scale ${ctaReveal.isVisible ? 'revealed' : ''}`}>
-        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center">
-          {/* Decorative glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/5 blur-3xl rounded-full" />
-          
-          <h3 className="relative text-xl sm:text-2xl font-semibold text-foreground mb-3">
-            {t('mainScreen.readyForSomethingSpecial')}
-          </h3>
-          <p className="relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto">
-            {t('mainScreen.conciergeAvailable')}
-          </p>
-          <Button
-            onClick={() => openWhatsAppConcierge()}
-            className="relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
-          >
-            {t('mainScreen.chatNow')}
-            <ArrowRight className="w-4 h-4" />
-          </Button>
-        </div>
-      </section>
 
       {/* ═══════════════════════════════════════════════
           RECOMMENDED HOTELS STRIP
