@@ -5,7 +5,7 @@ import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorOpen } from 'lucide-react';
+import { Anchor, Fish, Users, Clock, MapPin, ChevronRight, Sparkles, Ship, DoorOpen, UtensilsCrossed, Wine, ArrowRight } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { YachtImageCarousel } from '@/components/YachtImageCarousel';
 import { CODE_TO_SLUG } from '@/pages/YachtDetailPage';
@@ -264,7 +264,8 @@ function YachtCard({
             <Badge className="bg-primary/10 text-primary border border-primary/20 text-sm font-semibold whitespace-nowrap">
               {item.price.toLocaleString()} {item.currency}
             </Badge>
-            <p className="text-[10px] text-muted-foreground mt-1">{item.pricing_unit}</p>
+            <p className="text-[10px] text-muted-foreground mt-1">{t('yachtsPage.perHour')}</p>
+            <p className="text-[9px] text-primary/50 font-medium">{t('yachtsPage.minHours').replace('{n}', String(details.min_hours))}</p>
           </div>
         </div>
 
