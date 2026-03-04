@@ -12,6 +12,11 @@ import blogDining from '@/assets/blog-dining.jpg';
 import blogNightlifeClub from '@/assets/blog-nightlife.jpg';
 import blogShopping from '@/assets/blog-shopping.jpg';
 import blogFamily from '@/assets/blog-family.jpg';
+import blogJWMarriott from '@/assets/blog-jw-marriott.jpg';
+import blogShangriLa from '@/assets/blog-shangrila.jpg';
+import blogSofitel from '@/assets/blog-sofitel.jpg';
+import blogParkHyatt from '@/assets/blog-park-hyatt.jpg';
+import blogRixos from '@/assets/blog-rixos.jpg';
 
 export interface BlogArticle {
   id: string;
@@ -778,6 +783,527 @@ Want us to plan your perfect family vacation? Talk to us and we'll handle all th
       ar: 'دبي هي وجهة مثالية للعائلات. استثمرت المدينة المليارات في معالم سياحية عالمية المستوى.',
       fr: "Dubaï est une destination parfaite pour les familles avec des attractions de classe mondiale.",
       ru: 'Дубай — идеальное семейное направление. Город инвестировал миллиарды в достопримечательности мирового уровня.',
+    },
+  },
+  {
+    id: 'jw-marriott-marquis-dubai',
+    image: blogJWMarriott,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'JW Marriott Marquis Hotel Dubai — המלון הגבוה ביותר בעולם',
+      en: 'JW Marriott Marquis Hotel Dubai — The World\'s Tallest Hotel',
+      ar: 'فندق JW ماريوت ماركيز دبي — أطول فندق في العالم',
+      fr: 'JW Marriott Marquis Hotel Dubai — L\'hôtel le plus haut du monde',
+      ru: 'JW Marriott Marquis Hotel Dubai — Самый высокий отель в мире',
+    },
+    excerpt: {
+      he: 'שני מגדלי תאומים מרשימים בלב Business Bay, עם מסעדות עולמיות, ספא מפנק ונוף פנורמי שאין לו תחרות.',
+      en: 'Two impressive twin towers in the heart of Business Bay, with world-class restaurants, a luxurious spa, and unrivaled panoramic views.',
+      ar: 'برجان توأمان مذهلان في قلب الخليج التجاري مع مطاعم عالمية ومنتجع صحي فاخر.',
+      fr: 'Deux tours jumelles impressionnantes au cœur de Business Bay avec des restaurants de classe mondiale.',
+      ru: 'Две впечатляющие башни-близнецы в самом сердце Business Bay с ресторанами мирового класса.',
+    },
+    content: {
+      he: `מלון JW Marriott Marquis Dubai הוא אחד המלונות האייקוניים ביותר בדובאי, ונחשב למלון הגבוה ביותר בעולם עם שני מגדלי תאומים שמתנשאים לגובה של 355 מטרים. המלון ממוקם באזור Business Bay היוקרתי, במרחק דקות מ-Downtown Dubai, ה-Dubai Mall וברג' ח'ליפה.
+
+**מיקום אסטרטגי**
+
+המלון שוכן לצד תעלת דובאי (Dubai Water Canal), ומציע גישה נוחה הן למרכז העסקים של העיר והן לאזורי הבילוי. תוך 10 דקות נסיעה תגיעו ל-Dubai Mall, ותוך 15 דקות לחוף ג'ומיירה.
+
+**חדרים וסוויטות**
+
+המלון מציע למעלה מ-1,600 חדרים וסוויטות מרווחים, כולם מעוצבים ברמה גבוהה עם נוף מרהיב לקו הרקיע של דובאי. הסוויטות הנשיאותיות מציעות מרפסות פרטיות, ג'קוזי ושירות באטלר אישי. כל חדר מצויד בטכנולוגיה מתקדמת, מצעים יוקרתיים וחדרי רחצה מפנקים מאבן שיש.
+
+**מסעדות ובארים**
+
+זהו ללא ספק אחד היתרונות הגדולים של המלון — מגוון קולינרי עצום:
+- **Tong Thai** — מסעדה תאילנדית אותנטית עם אווירה מזרחית קסומה
+- **Positano** — מטבח איטלקי משובח עם נוף פנורמי מדהים
+- **Rang Mahal** — מסעדה הודית זוכת פרסים, אחת הטובות בדובאי
+- **Prime68** — סטייקהאוס יוקרתי בקומה 68 עם נוף של 360 מעלות
+- **Vault** — בר קוקטיילים יוקרתי בקומה העליונה עם אווירה אינטימית
+
+**ספא ובריאות**
+
+ה-Saray Spa משתרע על פני 3,000 מ"ר ומציע טיפולים מפנקים בהשראה ערבית מסורתית. יש גם חמאם טורקי אותנטי, סאונה, ג'קוזי וחדר אדים. חדר הכושר מצויד בציוד מתקדם ופתוח 24 שעות. הבריכה החיצונית ממוקמת בקומה 4 ומציעה נוף עירוני מרהיב.
+
+**חווית שהייה**
+
+המלון מתאים הן לאנשי עסקים (עם מרכז כנסים ענק ואולמות ישיבות) והן למטיילים שרוצים חוויה יוקרתית. צוות הקונסיירז' המקצועי ישמח לסייע בהזמנת מסעדות, סיורים ואטרקציות.
+
+**למה אנחנו ב-EVE BLUE אוהבים את JW Marriott Marquis?**
+
+- מיקום מעולה ליד כל האטרקציות המרכזיות
+- מגוון מסעדות שלא מצריך לצאת מהמלון
+- תמורה מצוינת לכסף ברמת 5 כוכבים
+- שירות מקצועי וחם
+
+רוצים שנזמין לכם חדר? דברו איתנו ונדאג לכל הפרטים, כולל איסוף משדה התעופה והעברות.`,
+      en: `JW Marriott Marquis Hotel Dubai is one of Dubai's most iconic hotels and holds the title of the world's tallest hotel, with twin towers soaring to 355 meters. Located in the prestigious Business Bay area, it's just minutes from Downtown Dubai, Dubai Mall, and Burj Khalifa.
+
+**Strategic Location**
+
+The hotel sits alongside the Dubai Water Canal, offering convenient access to both the city's business district and entertainment areas. Dubai Mall is a 10-minute drive, and Jumeirah Beach is just 15 minutes away.
+
+**Rooms & Suites**
+
+With over 1,600 spacious rooms and suites, all elegantly designed with stunning views of Dubai's skyline, the hotel offers something for every traveler. Presidential suites feature private balconies, jacuzzis, and personal butler service. Every room is equipped with advanced technology, luxury linens, and marble bathrooms.
+
+**Restaurants & Bars**
+
+One of the hotel's greatest strengths is its incredible culinary diversity:
+- **Tong Thai** — Authentic Thai cuisine with enchanting Eastern ambiance
+- **Positano** — Fine Italian dining with stunning panoramic views
+- **Rang Mahal** — Award-winning Indian restaurant, one of Dubai's finest
+- **Prime68** — Luxury steakhouse on the 68th floor with 360-degree views
+- **Vault** — Premium cocktail bar on the top floor with intimate atmosphere
+
+**Spa & Wellness**
+
+The Saray Spa spans 3,000 sqm and offers pampering treatments inspired by traditional Arabian wellness. Features include an authentic Turkish hammam, sauna, jacuzzi, and steam room. The gym is equipped with state-of-the-art equipment and open 24 hours. The outdoor pool on the 4th floor offers stunning city views.
+
+**The Experience**
+
+Perfect for both business travelers (with a massive convention center and meeting rooms) and leisure guests seeking luxury. The professional concierge team assists with restaurant reservations, tours, and attractions.
+
+**Why EVE BLUE Loves JW Marriott Marquis**
+
+- Excellent location near all major attractions
+- Diverse restaurants — no need to leave the hotel
+- Outstanding value for 5-star quality
+- Professional and warm service
+
+Want us to book a room? Talk to us and we'll handle everything, including airport pickup and transfers.`,
+      ar: 'فندق JW ماريوت ماركيز دبي هو أحد أكثر الفنادق شهرة في دبي ويحمل لقب أطول فندق في العالم.',
+      fr: "Le JW Marriott Marquis Hotel Dubai est l'un des hôtels les plus emblématiques de Dubaï et détient le titre de l'hôtel le plus haut du monde.",
+      ru: 'JW Marriott Marquis Hotel Dubai — один из самых знаковых отелей Дубая, удерживающий титул самого высокого отеля в мире.',
+    },
+  },
+  {
+    id: 'shangri-la-dubai',
+    image: blogShangriLa,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Shangri‑La Dubai — אלגנטיות אסייתית עם נוף לברג\' ח\'ליפה',
+      en: 'Shangri‑La Dubai — Asian Elegance with Burj Khalifa Views',
+      ar: 'شانغريلا دبي — أناقة آسيوية مع إطلالة على برج خليفة',
+      fr: 'Shangri‑La Dubai — Élégance asiatique avec vue sur le Burj Khalifa',
+      ru: 'Shangri‑La Dubai — Азиатская элегантность с видом на Бурдж-Халифу',
+    },
+    excerpt: {
+      he: 'מלון 5 כוכבים ברמה הגבוהה ביותר, ממוקם ב-Sheikh Zayed Road עם נוף ישיר לברג\' ח\'ליפה. שילוב מושלם של הכנסת אורחים אסייתית מסורתית ויוקרה מודרנית.',
+      en: 'A top-tier 5-star hotel on Sheikh Zayed Road with direct Burj Khalifa views. A perfect blend of traditional Asian hospitality and modern luxury.',
+      ar: 'فندق 5 نجوم من الدرجة الأولى على شارع الشيخ زايد مع إطلالة مباشرة على برج خليفة.',
+      fr: 'Un hôtel 5 étoiles haut de gamme sur Sheikh Zayed Road avec vue directe sur le Burj Khalifa.',
+      ru: '5-звёздочный отель высочайшего уровня на Sheikh Zayed Road с прямым видом на Бурдж-Халифу.',
+    },
+    content: {
+      he: `Shangri-La Dubai הוא מלון יוקרה קלאסי שמביא את המסורת האסייתית המפורסמת של הכנסת אורחים אל לב דובאי. המלון ממוקם בשדרות Sheikh Zayed Road, ומציע גישה ישירה למטרו ומיקום אידיאלי לחקירת העיר.
+
+**מיקום מרכזי ונגיש**
+
+המלון צמוד לתחנת מטרו Financial Centre, מה שמאפשר גישה קלה לכל רחבי העיר. ה-Dubai Mall וברג' ח'ליפה נמצאים במרחק הליכה קצר. כמו כן, DIFC (מרכז הפיננסים) נמצא ממש מעבר לכביש.
+
+**חדרים וסוויטות**
+
+302 חדרים וסוויטות מרווחים, מעוצבים בסגנון אלגנטי עם השפעות אסייתיות עדינות. רבים מהחדרים מציעים נוף ישיר לברג' ח'ליפה — חוויה בלתי נשכחת, במיוחד בלילה. הסוויטות כוללות סלון נפרד, חדר ארונות מפנק וחדרי רחצה מאבן שיש.
+
+**חוויה קולינרית**
+
+- **Shang Palace** — מסעדה סינית מפורסמת, אחת הטובות בדובאי, המגישה מאכלים קנטונזיים מסורתיים ודים סאם מעולה
+- **Dunes Café** — מסעדה בינלאומית עם בופה עשיר ומגוון
+- **Hoi An** — מטבח וייטנאמי אותנטי באווירה רומנטית
+- **Lobby Lounge** — תה אחר הצהריים מסורתי בסגנון בריטי-אסייתי
+
+**ספא CHI**
+
+ספא CHI המפורסם של Shangri-La הוא חוויה בפני עצמה. טיפולים בהשראה אסייתית עתיקה, חדרי טיפול זוגיים, סאונה, ג'קוזי ובריכת אינפיניטי מרהיבה עם נוף לקו הרקיע של דובאי.
+
+**בריכה ופנאי**
+
+הבריכה החיצונית בקומה הגבוהה מציעה נוף עוצר נשימה ואווירה רגועה. יש גם חדר כושר מתקדם, מגרש טניס ומועדון ילדים.
+
+**למה אנחנו ב-EVE BLUE ממליצים על Shangri-La?**
+
+- שירות אסייתי מסורתי ברמה הגבוהה ביותר — חם, מדויק ואנושי
+- נוף לברג' ח'ליפה שאין דומה לו
+- המסעדה הסינית Shang Palace שווה ביקור בפני עצמה
+- מיקום מרכזי עם גישה למטרו
+- אווירה שקטה ואלגנטית בלב עיר סוערת
+
+צרו איתנו קשר ונדאג להזמנת חדר, שדרוגים ותוספות מיוחדות.`,
+      en: `Shangri-La Dubai is a classic luxury hotel bringing Asia's renowned hospitality tradition to the heart of Dubai. Located on Sheikh Zayed Road, it offers direct metro access and an ideal base for exploring the city.
+
+**Central & Accessible Location**
+
+Adjacent to the Financial Centre metro station, providing easy access across the city. Dubai Mall and Burj Khalifa are within walking distance. DIFC (Dubai International Financial Centre) is just across the road.
+
+**Rooms & Suites**
+
+302 spacious rooms and suites elegantly designed with subtle Asian influences. Many rooms offer direct Burj Khalifa views — an unforgettable experience, especially at night. Suites include separate living rooms, walk-in closets, and marble bathrooms.
+
+**Culinary Experience**
+
+- **Shang Palace** — Renowned Chinese restaurant, one of Dubai's best, serving traditional Cantonese cuisine and excellent dim sum
+- **Dunes Café** — International restaurant with a rich and diverse buffet
+- **Hoi An** — Authentic Vietnamese cuisine in a romantic setting
+- **Lobby Lounge** — Traditional afternoon tea in British-Asian style
+
+**CHI Spa**
+
+Shangri-La's famous CHI Spa is an experience in itself. Ancient Asian-inspired treatments, couples treatment rooms, sauna, jacuzzi, and a stunning infinity pool with views of Dubai's skyline.
+
+**Pool & Leisure**
+
+The outdoor pool on the upper floor offers breathtaking views and a serene atmosphere. Also features an advanced gym, tennis court, and kids' club.
+
+**Why EVE BLUE Recommends Shangri-La**
+
+- Traditional Asian service at the highest level — warm, precise, and personal
+- Unmatched Burj Khalifa views
+- Shang Palace Chinese restaurant is worth a visit on its own
+- Central location with metro access
+- Quiet, elegant atmosphere in the heart of a bustling city
+
+Contact us and we'll arrange room bookings, upgrades, and special additions.`,
+      ar: 'شانغريلا دبي هو فندق فاخر كلاسيكي يجلب تقاليد الضيافة الآسيوية الشهيرة إلى قلب دبي.',
+      fr: "Le Shangri-La Dubai est un hôtel de luxe classique qui apporte la tradition d'hospitalité asiatique au cœur de Dubaï.",
+      ru: 'Shangri-La Dubai — классический роскошный отель, привносящий знаменитые азиатские традиции гостеприимства в самое сердце Дубая.',
+    },
+  },
+  {
+    id: 'sofitel-dubai-jumeirah-beach',
+    image: blogSofitel,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Sofitel Dubai Jumeirah Beach — אלגנטיות צרפתית על חוף הים',
+      en: 'Sofitel Dubai Jumeirah Beach — French Elegance on the Beach',
+      ar: 'سوفيتيل دبي جميرا بيتش — أناقة فرنسية على الشاطئ',
+      fr: 'Sofitel Dubai Jumeirah Beach — L\'élégance française sur la plage',
+      ru: 'Sofitel Dubai Jumeirah Beach — Французская элегантность на пляже',
+    },
+    excerpt: {
+      he: 'מלון בוטיק יוקרתי בסגנון צרפתי, ממוקם ישירות על חוף ג\'ומיירה. שילוב מושלם של Art de Vivre צרפתי, חוף פרטי מדהים ומיקום מעולה ליד JBR.',
+      en: 'A luxurious French-style boutique hotel directly on Jumeirah Beach. A perfect blend of French Art de Vivre, stunning private beach, and prime location near JBR.',
+      ar: 'فندق بوتيك فاخر بطراز فرنسي على شاطئ جميرا مباشرةً.',
+      fr: 'Un hôtel-boutique de luxe de style français directement sur la plage de Jumeirah.',
+      ru: 'Роскошный бутик-отель во французском стиле прямо на пляже Джумейра.',
+    },
+    content: {
+      he: `Sofitel Dubai Jumeirah Beach הוא מלון 5 כוכבים מרשים שמשלב את האלגנטיות הצרפתית המפורסמת עם מיקום חלומי על חוף הים. המלון ממוקם באזור JBR (Jumeirah Beach Residence) הפופולרי, עם גישה ישירה לחוף חול לבן ולטיילת The Walk.
+
+**מיקום חלומי**
+
+המלון פונה ישירות לים, עם חוף פרטי מטופח. ברחבי JBR תמצאו מסעדות, חנויות ובילויים ללא סוף. טרם דובאי מרינה וטיילת Marina Walk נמצאים במרחק הליכה קצר. הנוף מהמלון כולל את Ain Dubai (הגלגל הגדול ביותר בעולם) ואי Bluewaters.
+
+**חדרים וסוויטות**
+
+444 חדרים מרווחים ומעוצבים בסגנון צרפתי מודרני — ניחוח פריזאי עם טאצ' דובאיאני. כל חדר מציע מרפסת פרטית עם נוף לים או לעיר. המיטות של Sofitel MyBed מפורסמות בנוחות שלהן. חדרי הרחצה מצוידים במוצרי Hermès.
+
+**מסעדות ובארים**
+
+- **Plantation Brasserie** — מסעדה צרפתית קלאסית עם בופה עשיר ומפנק
+- **A.O.C International Buffet** — בופה בינלאומי עם תחנות בישול חי
+- **Infini Pool Lounge** — אוכל קל וקוקטיילים ליד הבריכה עם נוף לים
+- **Café Macchiato** — בית קפה צרפתי אותנטי עם מאפים טריים ופטיסרי
+
+**ספא SO SPA**
+
+ספא SO SPA מציע חוויה צרפתית אותנטית עם טיפולי פנים וגוף בשיטות מתקדמות. חדרי טיפול מפנקים, סאונה, חמאם ובריכת מנוחה. המוצרים של הספא הם ממותגים צרפתיים מובילים.
+
+**חוף ובריכה**
+
+החוף הפרטי של Sofitel הוא אחד היפים ב-JBR — חול לבן, מים צלולים ושירות מושלם. הבריכה האינפיניטי בקומה העליונה מציעה נוף פנורמי מרהיב לים ולקו הרקיע.
+
+**חדר כושר ופעילויות**
+
+חדר כושר מאובזר היטב עם ציוד Technogym, שיעורי יוגה ופילאטיס. המלון מארגן גם פעילויות חוף כמו וולי, פדלבורד וקייאק.
+
+**למה אנחנו ב-EVE BLUE אוהבים את Sofitel?**
+
+- חוף פרטי מדהים — מהיפים בדובאי
+- אווירה צרפתית אלגנטית שמרגישה כמו פריז על הים
+- מיקום מושלם ב-JBR עם חיי לילה ובילויים מסביב
+- מוצרי Hermès בחדרי הרחצה — פרט קטן שעושה הבדל גדול
+- יחס אישי ושירות ברמה גבוהה
+
+נשמח לעזור לכם להזמין חדר, לארגן ארוחת ערב רומנטית על החוף או כל חוויה אחרת.`,
+      en: `Sofitel Dubai Jumeirah Beach is an impressive 5-star hotel blending renowned French elegance with a dreamy beachfront location. Situated in the popular JBR (Jumeirah Beach Residence) area, it offers direct access to white sandy beach and The Walk promenade.
+
+**Dream Location**
+
+The hotel faces the sea directly with a well-maintained private beach. JBR offers endless restaurants, shops, and entertainment. Dubai Marina and Marina Walk are within walking distance. Views include Ain Dubai (world's largest Ferris wheel) and Bluewaters Island.
+
+**Rooms & Suites**
+
+444 spacious rooms designed in modern French style — Parisian flair with a Dubai touch. Every room offers a private balcony with sea or city views. Sofitel's famous MyBed mattresses are renowned for comfort. Bathrooms feature Hermès amenities.
+
+**Restaurants & Bars**
+
+- **Plantation Brasserie** — Classic French restaurant with a rich buffet
+- **A.O.C International Buffet** — International buffet with live cooking stations
+- **Infini Pool Lounge** — Light bites and cocktails poolside with sea views
+- **Café Macchiato** — Authentic French café with fresh pastries and pâtisserie
+
+**SO SPA**
+
+SO SPA offers an authentic French experience with advanced facial and body treatments. Luxurious treatment rooms, sauna, hammam, and relaxation pool. Products from leading French brands.
+
+**Beach & Pool**
+
+Sofitel's private beach is one of JBR's finest — white sand, crystal waters, impeccable service. The infinity pool on the upper floor offers panoramic sea and skyline views.
+
+**Why EVE BLUE Loves Sofitel**
+
+- Stunning private beach — one of Dubai's best
+- Elegant French atmosphere that feels like Paris by the sea
+- Perfect JBR location with nightlife and entertainment all around
+- Hermès bathroom amenities — a small detail that makes a big difference
+- Personal attention and high-level service
+
+We'd love to help you book a room, arrange a romantic beachfront dinner, or any other experience.`,
+      ar: 'سوفيتيل دبي جميرا بيتش هو فندق 5 نجوم مذهل يمزج بين الأناقة الفرنسية والموقع الشاطئي المثالي.',
+      fr: "Le Sofitel Dubai Jumeirah Beach est un impressionnant hôtel 5 étoiles alliant l'élégance française à un emplacement de rêve en bord de mer.",
+      ru: 'Sofitel Dubai Jumeirah Beach — впечатляющий 5-звёздочный отель, сочетающий французскую элегантность с идеальным расположением на берегу моря.',
+    },
+  },
+  {
+    id: 'park-hyatt-dubai',
+    image: blogParkHyatt,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Park Hyatt Dubai — ריזורט שקט ויוקרתי על גדות ה-Creek',
+      en: 'Park Hyatt Dubai — A Serene Luxury Resort on Dubai Creek',
+      ar: 'بارك حياة دبي — منتجع هادئ وفاخر على ضفاف الخور',
+      fr: 'Park Hyatt Dubai — Un resort luxueux et serein sur le Dubai Creek',
+      ru: 'Park Hyatt Dubai — Тихий роскошный курорт на берегу Дубайского залива',
+    },
+    excerpt: {
+      he: 'אואזיס של שקט ויוקרה על גדות Dubai Creek, עם אדריכלות בהשראה ערבית-ים תיכונית, מרינה פרטית ושירות אישי ברמה שלא תמצאו במקום אחר.',
+      en: 'An oasis of tranquility and luxury on the banks of Dubai Creek, with Moorish-Mediterranean architecture, a private marina, and personal service you won\'t find elsewhere.',
+      ar: 'واحة من الهدوء والفخامة على ضفاف خور دبي.',
+      fr: 'Une oasis de tranquillité et de luxe sur les rives du Dubai Creek.',
+      ru: 'Оазис спокойствия и роскоши на берегу Дубайского залива.',
+    },
+    content: {
+      he: `Park Hyatt Dubai הוא אחד המלונות המיוחדים ביותר בדובאי — מלון בוטיק יוקרתי שמציע חוויה אחרת לגמרי מהמלונות הגדולים והרועשים. ממוקם על גדות Dubai Creek, באזור ההיסטורי של העיר, המלון מציע אווירה של ריזורט שקט בלב מטרופולין תוסס.
+
+**מיקום ייחודי**
+
+בניגוד לרוב המלונות היוקרתיים בדובאי שממוקמים ב-Downtown או ב-JBR, Park Hyatt שוכן באזור Creek — האזור ההיסטורי והאותנטי של דובאי. המרינה הפרטית של המלון מציעה שקט ונופים יפהפיים. שדה הגולף Dubai Creek Golf & Yacht Club נמצא ממש לידו. חובבי תרבות ייהנו מהקרבה ל-Al Fahidi Historical District ולשוקים המסורתיים.
+
+**אדריכלות ועיצוב**
+
+העיצוב בהשראה מורית-ים תיכונית הוא ייחודי ומרהיב. קשתות אבן, חצרות פנימיות ירוקות, בריכות מים שקטות ושפע של אור טבעי. התחושה היא של ריזורט בוטיק במרוקו יותר מאשר מלון בדובאי.
+
+**חדרים וסוויטות**
+
+225 חדרים וסוויטות מרווחים, כולם מעוצבים בסגנון מינימליסטי-יוקרתי עם חומרים טבעיים. חדרי הרחצה מאבן גדולים במיוחד עם אמבטיות שקועות. המרפסות הפרטיות פונות ל-Creek או לגני המלון הירוקים.
+
+**מסעדות ובארים**
+
+- **Traiteur** — מסעדה צרפתית-ים תיכונית מעולה עם מטבח פתוח ואווירה אלגנטית
+- **The Thai Kitchen** — מסעדה תאילנדית אותנטית עם שפים מתאילנד, אחת הטובות בדובאי
+- **Noepe** — בר ומסעדה עם אווירה רומנטית על שפת ה-Creek
+- **Brasserie du Park** — ארוחות בוקר מפורסמות ובופה עשיר
+
+**ספא Amara**
+
+הספא מציע חוויה הוליסטית עם טיפולים בהשראה ערבית ואסייתית. יש חמאם מרוקאי מסורתי, חדרי טיפול זוגיים ואזור מנוחה שקט. הבריכה הגדולה (25 מטר) מוקפת בגנים טרופיים ויוצרת תחושה של ריזורט.
+
+**פעילויות**
+
+- גולף במגרש הסמוך
+- שייט ב-Creek על סירת אבנרה מסורתית
+- סיורים בשוק הזהב ושוק התבלינים
+- טיול רגלי באזור ההיסטורי Al Fahidi
+
+**למה אנחנו ב-EVE BLUE ממליצים על Park Hyatt?**
+
+- חוויה אחרת מכל מלון אחר בדובאי — אותנטית ושקטה
+- אדריכלות מרהיבה שמרגישה כמו ריזורט בוטיק
+- מסעדות ברמה גבוהה מאוד (Thai Kitchen הוא חובה!)
+- מושלם לזוגות ולמי שמחפש רומנטיקה ושלווה
+- קרבה לדובאי ההיסטורית — חוויה תרבותית אמיתית
+
+פנו אלינו ונדאג לכל הפרטים — מההזמנה ועד ההעברות.`,
+      en: `Park Hyatt Dubai is one of Dubai's most unique hotels — a luxury boutique hotel offering a completely different experience from the city's large, bustling properties. Located on the banks of Dubai Creek in the city's historic district, it offers a serene resort atmosphere in the heart of a vibrant metropolis.
+
+**Unique Location**
+
+Unlike most luxury Dubai hotels in Downtown or JBR, Park Hyatt sits in the Creek area — Dubai's historic and authentic district. The hotel's private marina offers tranquility and beautiful views. Dubai Creek Golf & Yacht Club is right next door. Culture lovers will appreciate the proximity to Al Fahidi Historical District and traditional souks.
+
+**Architecture & Design**
+
+The Moorish-Mediterranean inspired design is unique and stunning. Stone arches, green inner courtyards, quiet water features, and abundant natural light. The feeling is more Moroccan boutique resort than Dubai hotel.
+
+**Rooms & Suites**
+
+225 spacious rooms and suites, all designed in minimalist-luxury style with natural materials. Extra-large stone bathrooms with sunken bathtubs. Private balconies overlook the Creek or the hotel's lush gardens.
+
+**Restaurants & Bars**
+
+- **Traiteur** — Superb French-Mediterranean restaurant with open kitchen and elegant atmosphere
+- **The Thai Kitchen** — Authentic Thai restaurant with chefs from Thailand, one of Dubai's best
+- **Noepe** — Bar and restaurant with romantic Creek-side atmosphere
+- **Brasserie du Park** — Famous breakfasts and rich buffet
+
+**Amara Spa**
+
+The spa offers a holistic experience with Arabian and Asian-inspired treatments. Features a traditional Moroccan hammam, couples treatment rooms, and quiet relaxation areas. The large pool (25m) surrounded by tropical gardens creates a resort feel.
+
+**Why EVE BLUE Recommends Park Hyatt**
+
+- A different experience from any other Dubai hotel — authentic and serene
+- Stunning architecture that feels like a boutique resort
+- High-quality restaurants (Thai Kitchen is a must!)
+- Perfect for couples seeking romance and tranquility
+- Close to historic Dubai — a genuine cultural experience
+
+Reach out and we'll handle everything — from booking to transfers.`,
+      ar: 'بارك حياة دبي هو أحد أكثر الفنادق تميزًا في دبي — فندق بوتيك فاخر يقدم تجربة مختلفة تمامًا.',
+      fr: "Le Park Hyatt Dubai est l'un des hôtels les plus uniques de Dubaï — un hôtel-boutique de luxe offrant une expérience complètement différente.",
+      ru: 'Park Hyatt Dubai — один из самых уникальных отелей Дубая, предлагающий совершенно иной опыт роскошного отдыха.',
+    },
+  },
+  {
+    id: 'rixos-premium-dubai-jbr',
+    image: blogRixos,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Rixos Premium Dubai JBR — הכל כלול ברמה הכי גבוהה',
+      en: 'Rixos Premium Dubai JBR — Ultra All-Inclusive at Its Finest',
+      ar: 'ريكسوس بريميوم دبي JBR — شامل كليًا بأعلى مستوى',
+      fr: 'Rixos Premium Dubai JBR — Le tout-inclus ultra premium',
+      ru: 'Rixos Premium Dubai JBR — Ультра всё включено на высшем уровне',
+    },
+    excerpt: {
+      he: 'מלון הכל-כלול יוקרתי על חוף JBR עם בריכות אינפיניטי, מסעדות ללא הגבלה, מועדון חוף תוסס וחוף פרטי מושלם — הכל ברמת 5 כוכבים.',
+      en: 'A luxury all-inclusive hotel on JBR beach with infinity pools, unlimited restaurants, a vibrant beach club, and a perfect private beach — all at 5-star level.',
+      ar: 'فندق فاخر شامل كليًا على شاطئ JBR مع مسابح لا متناهية ومطاعم غير محدودة.',
+      fr: 'Un hôtel tout-inclus de luxe sur la plage JBR avec piscines à débordement et restaurants illimités.',
+      ru: 'Роскошный отель «всё включено» на пляже JBR с панорамными бассейнами и неограниченным количеством ресторанов.',
+    },
+    content: {
+      he: `Rixos Premium Dubai JBR הוא אחד המלונות הפופולריים ביותר בדובאי — ובצדק. זהו מלון All-Inclusive יוקרתי שמציע חוויה שלמה: חוף פרטי, בריכות מדהימות, מסעדות ובארים ללא הגבלה, ומועדון חוף שפועל עד שעות הלילה המאוחרות.
+
+**קונספט All-Inclusive יוקרתי**
+
+הרעיון של Rixos פשוט אבל גאוני: אתם משלמים מחיר אחד ונהנים מהכל. כל המסעדות, כל הבארים, פעילויות חוף, חדר כושר, מועדון ילדים — הכל כלול. ולא מדובר ב-All-Inclusive רגיל — הכל ברמת 5 כוכבים אמיתית.
+
+**מיקום על חוף JBR**
+
+המלון ממוקם ישירות על חוף ה-JBR, אחד החופים הפופולריים ביותר בדובאי. הנוף מהמלון כולל את Ain Dubai ואי Bluewaters. טיילת The Walk עם חנויות ומסעדות נמצאת מול הדלת.
+
+**חדרים וסוויטות**
+
+חדרים מרווחים ומודרניים עם מרפסות פרטיות ונוף לים או לעיר. הסוויטות מציעות סלון נפרד, ג'קוזי פרטי ושירות VIP. כל החדרים מצוידים במיני-בר מלא (כלול!) ומתחדש יומית.
+
+**מסעדות ובארים (הכל כלול!)**
+
+- **Turquoise** — מסעדה ראשית בינלאומית עם בופה עשיר
+- **L'Olivo** — מטבח איטלקי אותנטי עם פסטות ופיצות טריות
+- **A La Turca** — מסעדה טורקית מסורתית עם קבבים ומנות עות'מאניות
+- **Kinara** — מטבח הודי מפואר עם תפריט עשיר
+- **Seven Heights** — בר גג עם נוף פנורמי וקוקטיילים יצירתיים
+- **Black Pearl** — בר ומועדון שפועל עד שעות הלילה
+
+**חוף ובריכות**
+
+החוף הפרטי של Rixos מטופח להפליא, עם שירות מושלם, מיטות שיזוף נוחות ופעילויות מים מגוונות (הכל כלול!). שתי בריכות אינפיניטי — אחת למבוגרים בלבד ואחת משפחתית.
+
+**Rixy Club (מועדון ילדים)**
+
+מועדון הילדים של Rixos הוא אחד הטובים בדובאי. אנימטורים מקצועיים, פעילויות לכל הגילאים, מיני דיסקו בערב, ושטח משחקים ענק. ההורים נהנים בזמן שהילדים מבלים.
+
+**ספא Anjana**
+
+טיפולים מפנקים בהשראה טורקית ואסייתית. חמאם טורקי מסורתי, סאונה וחדרי טיפול זוגיים. הספא גם הוא כלול בחבילה!
+
+**למה אנחנו ב-EVE BLUE ממליצים על Rixos Premium?**
+
+- קונספט All-Inclusive יוקרתי — שקט נפשי מלא בלי חשבונות מפתיעים
+- חוף פרטי מדהים עם שירות מושלם
+- מגוון מסעדות שלא מצריך לצאת מהמלון
+- מועדון ילדים מצוין — מושלם למשפחות
+- אווירה חיה ותוססת עם מועדון חוף ובר גג
+- תמורה מצוינת לכסף — כשמחשבים שהכל כלול
+
+רוצים לשמוע עוד? פנו אלינו ונדאג להזמנה, העברות משדה התעופה ותוספות מיוחדות.`,
+      en: `Rixos Premium Dubai JBR is one of Dubai's most popular hotels — and rightfully so. This luxury All-Inclusive hotel offers a complete experience: private beach, stunning pools, unlimited restaurants and bars, and a beach club that operates late into the night.
+
+**Luxury All-Inclusive Concept**
+
+Rixos's concept is simple but brilliant: you pay one price and enjoy everything. All restaurants, all bars, beach activities, gym, kids' club — everything included. And this isn't ordinary all-inclusive — everything is at genuine 5-star level.
+
+**JBR Beach Location**
+
+Located directly on JBR beach, one of Dubai's most popular beaches. Views include Ain Dubai and Bluewaters Island. The Walk promenade with shops and restaurants is right at the doorstep.
+
+**Rooms & Suites**
+
+Spacious, modern rooms with private balconies and sea or city views. Suites offer separate living rooms, private jacuzzis, and VIP service. All rooms have a full mini-bar (included!) replenished daily.
+
+**Restaurants & Bars (All Included!)**
+
+- **Turquoise** — Main international restaurant with a rich buffet
+- **L'Olivo** — Authentic Italian cuisine with fresh pastas and pizzas
+- **A La Turca** — Traditional Turkish restaurant with kebabs and Ottoman dishes
+- **Kinara** — Grand Indian cuisine with an extensive menu
+- **Seven Heights** — Rooftop bar with panoramic views and creative cocktails
+- **Black Pearl** — Bar and club operating until late night
+
+**Beach & Pools**
+
+Rixos's private beach is immaculately maintained with perfect service, comfortable sun loungers, and various water activities (all included!). Two infinity pools — one adults-only and one family-friendly.
+
+**Rixy Club (Kids' Club)**
+
+Rixos's kids' club is one of Dubai's best. Professional animators, activities for all ages, mini disco in the evening, and a huge playground. Parents relax while kids have fun.
+
+**Why EVE BLUE Recommends Rixos Premium**
+
+- Luxury All-Inclusive concept — complete peace of mind with no surprise bills
+- Stunning private beach with perfect service
+- Diverse restaurants — no need to leave the hotel
+- Excellent kids' club — perfect for families
+- Vibrant atmosphere with beach club and rooftop bar
+- Outstanding value — when you calculate that everything is included
+
+Want to hear more? Contact us and we'll arrange booking, airport transfers, and special additions.`,
+      ar: 'ريكسوس بريميوم دبي JBR هو أحد أكثر الفنادق شعبية في دبي — فندق فاخر شامل كليًا يقدم تجربة متكاملة.',
+      fr: "Le Rixos Premium Dubai JBR est l'un des hôtels les plus populaires de Dubaï — un hôtel tout-inclus de luxe offrant une expérience complète.",
+      ru: 'Rixos Premium Dubai JBR — один из самых популярных отелей Дубая, роскошный отель «всё включено», предлагающий полный спектр услуг.',
     },
   },
 ];
