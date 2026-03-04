@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
@@ -6,108 +6,36 @@ import { Input } from '@/components/ui/input';
 import { GoldParticles } from '@/components/LuxuryElements';
 import { VenueBookingForm } from '@/components/VenueBookingForm';
 import { useLanguage } from '@/lib/i18n';
+import { supabase } from '@/integrations/supabase/client';
 import { MessageCircle, Search, UtensilsCrossed, X } from 'lucide-react';
 
 type Venue = {
-  name: string;
-  domain?: string;
-  logo?: string;
+  id: string;
+  title: string;
+  category: string;
+  logo_path?: string | null;
+  website_url?: string | null;
+  location?: string | null;
+  google_maps_url?: string | null;
+  contact_name?: string | null;
+  contact_phone?: string | null;
+  contact_email?: string | null;
+  instagram_url?: string | null;
+  image_url?: string | null;
+  short_description?: string | null;
 };
 
-const VENUES: Venue[] = [
-  { name: 'Adaline', logo: '/logos/adaline.jpeg' },
-  { name: 'African Queen', logo: '/logos/african-queen.png' },
-  { name: 'Alaya', logo: '/logos/alaya.png' },
-  { name: 'Amazonico', domain: 'amazonicorestaurant.com' },
-  { name: 'Amelia', logo: '/logos/amelia.jpeg' },
-  { name: 'Aretha', logo: '/logos/aretha.jpeg' },
-  { name: 'Arrogante', logo: '/logos/arrogante.png' },
-  { name: 'Avenue', logo: '/logos/avenue.jpeg' },
-  { name: 'Baoli', logo: '/logos/baoli.jpeg' },
-  { name: 'Bar De Pres', logo: '/logos/bar-de-pres.jpeg' },
-  { name: 'BCH:CLB', logo: '/logos/bch-clb.png' },
-  { name: 'Beach by FIVE', logo: '/logos/beach-by-five.png' },
-  { name: 'Billionaire', logo: '/logos/billionaire.jpeg' },
-  { name: 'Blume', logo: '/logos/blume.jpg' },
-  { name: 'Bohemia', logo: '/logos/bohemia.jpeg' },
-  { name: 'Carnival', logo: '/logos/carnival.jpeg' },
-  { name: 'Casa Amor', logo: '/logos/casa-amor.png' },
-  { name: 'Ce La Vi', logo: '/logos/ce-la-vi.webp' },
-  { name: 'Chic Nonna' },
-  { name: 'Cinque', domain: 'cinquedubai.com' },
-  { name: 'CoveBeach', domain: 'cfrgroup.com' },
-  { name: 'Cou Cou' },
-  { name: 'Coya', domain: 'coyarestaurant.com' },
-  { name: 'Dream', domain: 'dreamdubai.com' },
-  { name: 'Eva' },
-  { name: 'FIVE Venues', domain: 'fivehotelsandresorts.com' },
-  { name: 'GAL' },
-  { name: 'Gatsby', domain: 'gatsbydubai.com' },
-  { name: 'Gigi', domain: 'gigidubai.com' },
-  { name: 'Gitano', domain: 'gitanodubai.com' },
-  { name: 'Hanu' },
-  { name: "Il'Gatto Pardo" },
-  { name: 'Iliana' },
-  { name: 'Kaspia', domain: 'kaspia.com' },
-  { name: 'Kinugawa', domain: 'kinugawa.fr' },
-  { name: 'Krasota', domain: 'krasota.ae' },
-  { name: "L'amo Bistro" },
-  { name: 'La Nina', domain: 'laninadubai.com' },
-  { name: 'La Cantine', domain: 'lacantine.ae' },
-  { name: 'Ly-La' },
-  { name: 'Maiden Shanghai', domain: 'maidenshanghai.com' },
-  { name: 'Maison De Curry' },
-  { name: 'Maison De La Page' },
-  { name: 'Maison Revka' },
-  { name: 'Mamabella' },
-  { name: 'Mimi Kakushi', domain: 'mimikakushi.com' },
-  { name: 'Mott 32', domain: 'mott32.com' },
-  { name: 'Nahate' },
-  { name: 'Nammos', domain: 'nammosdubai.com' },
-  { name: 'Nazcaa' },
-  { name: 'Nikki Beach', domain: 'nikkibeach.com' },
-  { name: 'Ninive beach' },
-  { name: 'Nobu', domain: 'noburestaurants.com' },
-  { name: 'O Beach', domain: 'obeachdubai.com' },
-  { name: 'Opa', domain: 'opadubai.com' },
-  { name: 'Ora' },
-  { name: 'Pacha Icons', domain: 'pacha.com' },
-  { name: 'Paris Paradis' },
-  { name: 'Playa Pacha' },
-  { name: 'Pool by FIVE', domain: 'fivehotelsandresorts.com' },
-  { name: 'Ram & Roll' },
-  { name: 'Raspoutine', domain: 'raspoutine.com' },
-  { name: 'Revelry' },
-  { name: 'Rialto' },
-  { name: 'Sakhalin' },
-  { name: 'Salvaje', domain: 'salvajedubai.com' },
-  { name: 'Sana' },
-  { name: 'Sexy Fish', domain: 'sexyfish.com' },
-  { name: 'Signor Sassi', domain: 'signorsassi.com' },
-  { name: 'Surf Club' },
-  { name: 'Sushi Samba', domain: 'sushisamba.com' },
-  { name: 'Tang' },
-  { name: 'Tattu', domain: 'tattu.co.uk' },
-  { name: 'Terra Solis', domain: 'terrasolis.com' },
-  { name: 'Theater' },
-  { name: 'Trésind', domain: 'tresind.com' },
-  { name: 'Urla', domain: 'urladubai.com' },
-  { name: 'Verde Beach' },
-  { name: 'Verde Restaurant' },
-  { name: 'Villa Coconut' },
-  { name: 'Woohoo' },
-  { name: 'Zenon' },
-];
+type CategoryFilter = 'ALL' | 'DINING' | 'CLUB';
 
 function VenueLogo({ venue }: { venue: Venue }) {
   const [imgError, setImgError] = useState(false);
 
   // Priority 1: Local logo
-  if (venue.logo && !imgError) {
+  if (venue.logo_path && !imgError) {
     return (
       <img
-        src={venue.logo}
-        alt={venue.name}
+        src={venue.logo_path}
+        alt={venue.title}
         className="h-[72px] w-[72px] rounded-xl object-contain"
         onError={() => setImgError(true)}
         loading="lazy"
@@ -115,12 +43,13 @@ function VenueLogo({ venue }: { venue: Venue }) {
     );
   }
 
-  // Priority 2: Google favicon
-  if (venue.domain && !imgError) {
+  // Priority 2: Google favicon from website_url
+  if (venue.website_url && !imgError) {
+    const domain = venue.website_url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
     return (
       <img
-        src={`https://www.google.com/s2/favicons?domain=${venue.domain}&sz=128`}
-        alt={venue.name}
+        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=128`}
+        alt={venue.title}
         className="h-[72px] w-[72px] rounded-xl object-contain"
         onError={() => setImgError(true)}
         loading="lazy"
@@ -139,29 +68,75 @@ function VenueLogo({ venue }: { venue: Venue }) {
     'bg-teal-500/15 text-teal-400',
     'bg-orange-500/15 text-orange-400',
   ];
-  const colorIndex = venue.name.charCodeAt(0) % colors.length;
+  const colorIndex = venue.title.charCodeAt(0) % colors.length;
 
   return (
     <div className={`h-[72px] w-[72px] rounded-xl flex items-center justify-center flex-shrink-0 ${colors[colorIndex]}`}>
-      <span className="font-bold text-sm">{venue.name.charAt(0)}</span>
+      <span className="font-bold text-sm">{venue.title.charAt(0)}</span>
+    </div>
+  );
+}
+
+function VenueSkeleton() {
+  return (
+    <div className="space-y-2">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div
+          key={i}
+          className="flex items-center justify-between gap-4 p-4 rounded-2xl bg-card/50 border border-border/40 animate-pulse"
+        >
+          <div className="flex items-center gap-4">
+            <div className="h-[72px] w-[72px] rounded-xl bg-muted/30" />
+            <div className="h-4 w-28 rounded bg-muted/30" />
+          </div>
+          <div className="h-9 w-20 rounded-xl bg-muted/30" />
+        </div>
+      ))}
     </div>
   );
 }
 
 export default function DiningNightlifePage() {
   const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('ALL');
+  const [venues, setVenues] = useState<Venue[]>([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { t } = useLanguage();
 
   const [bookingVenue, setBookingVenue] = useState<string | null>(null);
 
-  const filtered = search
-    ? VENUES.filter(v => v.name.toLowerCase().includes(search.toLowerCase()))
-    : VENUES;
+  useEffect(() => {
+    const fetchVenues = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('catalog_items')
+        .select('*')
+        .in('category', ['DINING', 'CLUB'])
+        .eq('is_active', true)
+        .order('title');
+
+      if (!error && data) {
+        setVenues(data as Venue[]);
+      }
+      setLoading(false);
+    };
+    fetchVenues();
+  }, []);
+
+  const filtered = venues
+    .filter(v => categoryFilter === 'ALL' || v.category === categoryFilter)
+    .filter(v => !search || v.title.toLowerCase().includes(search.toLowerCase()));
 
   const handleContact = (venue: string) => {
     setBookingVenue(venue);
   };
+
+  const categoryTabs: { key: CategoryFilter; label: string }[] = [
+    { key: 'ALL', label: 'All' },
+    { key: 'DINING', label: 'Restaurants' },
+    { key: 'CLUB', label: 'Clubs' },
+  ];
 
   return (
     <div className="min-h-screen bg-background pb-24 relative">
@@ -181,15 +156,15 @@ export default function DiningNightlifePage() {
             {t('mainScreen.diningNightlife')}
           </h1>
           <p className="text-muted-foreground text-xs max-w-md mx-auto">
-            {VENUES.length} exclusive venues · Tables & VIP bookings through your concierge
+            {venues.length} exclusive venues · Tables & VIP bookings through your concierge
           </p>
           <div className="w-12 h-px bg-primary/30 mx-auto mt-3" />
         </div>
       </header>
 
-      {/* Search */}
+      {/* Search + Category Tabs */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-xl border-b border-primary/10">
-        <div className="max-w-2xl mx-auto px-4 py-3">
+        <div className="max-w-2xl mx-auto px-4 py-3 space-y-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
@@ -207,42 +182,59 @@ export default function DiningNightlifePage() {
               </button>
             )}
           </div>
+          <div className="flex gap-2">
+            {categoryTabs.map(tab => (
+              <button
+                key={tab.key}
+                onClick={() => setCategoryFilter(tab.key)}
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  categoryFilter === tab.key
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-card/60 text-muted-foreground border border-primary/15 hover:border-primary/30'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Venue List */}
       <main className="max-w-2xl mx-auto px-4 pt-4">
-        {filtered.length === 0 ? (
+        {loading ? (
+          <VenueSkeleton />
+        ) : filtered.length === 0 ? (
           <div className="text-center py-16 space-y-3">
-            <p className="text-muted-foreground">No venues found for "{search}"</p>
+            <p className="text-muted-foreground">No venues found{search ? ` for "${search}"` : ''}</p>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setSearch('')}
+              onClick={() => { setSearch(''); setCategoryFilter('ALL'); }}
               className="border-primary/20 text-primary"
             >
-              Clear search
+              Clear filters
             </Button>
           </div>
         ) : (
           <div className="space-y-2">
             {filtered.map(venue => (
               <div
-                key={venue.name}
+                key={venue.id}
                 className="group flex items-center justify-between gap-4 p-4 rounded-2xl bg-card/50 border border-border/40 hover:border-primary/25 hover:bg-card/80 backdrop-blur-sm transition-all duration-200"
               >
                 {/* Logo + name */}
                 <div className="flex items-center gap-4 min-w-0">
                   <VenueLogo venue={venue} />
                   <span className="font-medium text-foreground truncate">
-                    {venue.name}
+                    {venue.title}
                   </span>
                 </div>
 
                 {/* Contact button */}
                 <Button
                   size="sm"
-                  onClick={() => handleContact(venue.name)}
+                  onClick={() => handleContact(venue.title)}
                   className="flex-shrink-0 h-9 px-4 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 text-xs"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />

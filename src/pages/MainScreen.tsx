@@ -29,6 +29,7 @@ import diningIcon from '@/assets/dining-icon-new.jpeg';
 import airportIcon from '@/assets/airport-icon-new.jpeg';
 import attractionsIcon from '@/assets/icon-attractions.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
+import { AccountButton } from '@/components/AccountButton';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -140,9 +141,10 @@ export default function MainScreen() {
           background: 'radial-gradient(ellipse at center, transparent 50%, rgba(7,20,35,0.5) 100%)',
         }} />
 
-        {/* Language switcher — top left */}
-        <div className="absolute top-4 left-4 z-30">
+        {/* Language switcher + Account — top left */}
+        <div className="absolute top-4 left-4 z-30 flex items-center gap-2">
           <LanguageSwitcher variant="full" className="[&_button]:bg-black/40 [&_button]:backdrop-blur-md [&_button]:border-white/10 [&_button]:text-foreground [&_button]:hover:bg-black/50" />
+          <AccountButton className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10" />
         </div>
 
         {/* Auth buttons — top right */}

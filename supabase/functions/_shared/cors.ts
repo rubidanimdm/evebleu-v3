@@ -1,18 +1,29 @@
-// Strict CORS Configuration - Production Only
-// No wildcard (*), no dynamic fallback
+// CORS Configuration - Production + Lovable preview origins
+// No wildcard (*), explicit allow-list only
 
-const ALLOWED_ORIGINS = [
+const ALLOWED_ORIGINS: string[] = [
+  // Production
   "https://evebleu.vip",
   "https://www.evebleu.vip",
   "https://evebleu-web.web.app",
   "https://evebleu-web.firebaseapp.com",
-] as const;
+  // Lovable preview/dev
+  "https://eve-concierge-dubai.lovable.app",
+  "https://wpczgwxsriezaubncuom.lovableproject.com",
+];
 
 export function getCorsHeaders(requestOrigin: string | null): Record<string, string> {
-  // Only allow explicitly listed production origins
-  const origin = requestOrigin && ALLOWED_ORIGINS.includes(requestOrigin as typeof ALLOWED_ORIGINS[number])
-    ? requestOrigin
-    : ALLOWED_ORIGINS[0]; // Default to primary production domain
+  // Allow explicitly listed origins + any *.lovable.app / *.lovableproject.com subdomain
+  let origin = ALLOWED_ORIGINS[0];
+  if (requestOrigin) {
+    if (
+      ALLOWED_ORIGINS.includes(requestOrigin) ||
+      requestOrigin.endsWith(".lovable.app") ||
+      requestOrigin.endsWith(".lovableproject.com")
+    ) {
+      origin = requestOrigin;
+    }
+  }
 
   return {
     "Access-Control-Allow-Origin": origin,

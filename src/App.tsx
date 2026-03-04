@@ -40,6 +40,7 @@ import AdminBookings from "./pages/admin/AdminBookings";
 import AdminCustomersPage from "./pages/admin/AdminCustomersPage";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminRoles from "./pages/admin/AdminRoles";
+import AdminVenues from "./pages/admin/AdminVenues";
 
 const queryClient = new QueryClient();
 
@@ -123,6 +124,7 @@ function AppContent() {
         {/* Admin routes with layout */}
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<AdminDashboard />} />
+          <Route path="venues" element={<AdminVenues />} />
           <Route path="suppliers" element={<AdminSuppliers />} />
           <Route path="catalog" element={<AdminCatalog />} />
           <Route path="availability" element={<AdminAvailability />} />

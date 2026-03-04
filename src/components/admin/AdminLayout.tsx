@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import {
   LayoutDashboard,
   Building2,
+  MapPin,
   Package,
   Calendar,
   DollarSign,
@@ -26,6 +27,7 @@ import {
 
 const navItems = [
   { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, end: true },
+  { name: 'Venues', path: '/admin/venues', icon: MapPin },
   { name: 'Suppliers', path: '/admin/suppliers', icon: Building2 },
   { name: 'Services / Catalog', path: '/admin/catalog', icon: Package },
   { name: 'Availability', path: '/admin/availability', icon: Calendar },

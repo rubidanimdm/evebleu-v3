@@ -293,15 +293,21 @@ export type Database = {
         Row: {
           cancellation_policy: string | null
           category: string
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
           created_at: string
           currency: string
           deposit_percent: number | null
           details: Json | null
           duration_minutes: number | null
+          google_maps_url: string | null
           id: string
           image_url: string | null
+          instagram_url: string | null
           is_active: boolean
           location: string | null
+          logo_path: string | null
           max_people: number | null
           min_people: number | null
           operating_hours: Json | null
@@ -312,19 +318,26 @@ export type Database = {
           supplier_id: string | null
           title: string
           updated_at: string
+          website_url: string | null
         }
         Insert: {
           cancellation_policy?: string | null
           category: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           currency?: string
           deposit_percent?: number | null
           details?: Json | null
           duration_minutes?: number | null
+          google_maps_url?: string | null
           id?: string
           image_url?: string | null
+          instagram_url?: string | null
           is_active?: boolean
           location?: string | null
+          logo_path?: string | null
           max_people?: number | null
           min_people?: number | null
           operating_hours?: Json | null
@@ -335,19 +348,26 @@ export type Database = {
           supplier_id?: string | null
           title: string
           updated_at?: string
+          website_url?: string | null
         }
         Update: {
           cancellation_policy?: string | null
           category?: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           currency?: string
           deposit_percent?: number | null
           details?: Json | null
           duration_minutes?: number | null
+          google_maps_url?: string | null
           id?: string
           image_url?: string | null
+          instagram_url?: string | null
           is_active?: boolean
           location?: string | null
+          logo_path?: string | null
           max_people?: number | null
           min_people?: number | null
           operating_hours?: Json | null
@@ -358,6 +378,7 @@ export type Database = {
           supplier_id?: string | null
           title?: string
           updated_at?: string
+          website_url?: string | null
         }
         Relationships: [
           {
@@ -890,7 +911,11 @@ export type Database = {
           availability_notes: string | null
           category: string
           commission_percent: number | null
+          company_name: string | null
+          contact_email: string | null
+          contact_name: string | null
           created_at: string
+          default_commission_split: number | null
           description: string | null
           id: string
           image_url: string | null
@@ -900,6 +925,7 @@ export type Database = {
           name: string
           phone: string | null
           price_range: string | null
+          supplier_type: string | null
           tags: string[] | null
           updated_at: string
           whatsapp_link: string | null
@@ -908,7 +934,11 @@ export type Database = {
           availability_notes?: string | null
           category: string
           commission_percent?: number | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
           created_at?: string
+          default_commission_split?: number | null
           description?: string | null
           id?: string
           image_url?: string | null
@@ -918,6 +948,7 @@ export type Database = {
           name: string
           phone?: string | null
           price_range?: string | null
+          supplier_type?: string | null
           tags?: string[] | null
           updated_at?: string
           whatsapp_link?: string | null
@@ -926,7 +957,11 @@ export type Database = {
           availability_notes?: string | null
           category?: string
           commission_percent?: number | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
           created_at?: string
+          default_commission_split?: number | null
           description?: string | null
           id?: string
           image_url?: string | null
@@ -936,11 +971,76 @@ export type Database = {
           name?: string
           phone?: string | null
           price_range?: string | null
+          supplier_type?: string | null
           tags?: string[] | null
           updated_at?: string
           whatsapp_link?: string | null
         }
         Relationships: []
+      }
+      venue_suppliers: {
+        Row: {
+          catalog_item_id: string
+          commission_split: number | null
+          commission_type: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          id: string
+          is_preferred: boolean | null
+          notes: string | null
+          supplier_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          catalog_item_id: string
+          commission_split?: number | null
+          commission_type?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          is_preferred?: boolean | null
+          notes?: string | null
+          supplier_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          catalog_item_id?: string
+          commission_split?: number | null
+          commission_type?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          is_preferred?: boolean | null
+          notes?: string | null
+          supplier_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "venue_suppliers_catalog_item_id_fkey"
+            columns: ["catalog_item_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "venue_suppliers_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "venue_suppliers_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       tickets: {
         Row: {
@@ -1029,7 +1129,11 @@ export type Database = {
         Row: {
           availability_notes: string | null
           category: string | null
+          company_name: string | null
+          contact_email: string | null
+          contact_name: string | null
           created_at: string | null
+          default_commission_split: number | null
           description: string | null
           id: string | null
           image_url: string | null
@@ -1038,6 +1142,7 @@ export type Database = {
           name: string | null
           phone: string | null
           price_range: string | null
+          supplier_type: string | null
           tags: string[] | null
           updated_at: string | null
           whatsapp_link: string | null
@@ -1045,7 +1150,11 @@ export type Database = {
         Insert: {
           availability_notes?: string | null
           category?: string | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
           created_at?: string | null
+          default_commission_split?: number | null
           description?: string | null
           id?: string | null
           image_url?: string | null
@@ -1054,6 +1163,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           price_range?: string | null
+          supplier_type?: string | null
           tags?: string[] | null
           updated_at?: string | null
           whatsapp_link?: string | null
@@ -1061,7 +1171,11 @@ export type Database = {
         Update: {
           availability_notes?: string | null
           category?: string | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
           created_at?: string | null
+          default_commission_split?: number | null
           description?: string | null
           id?: string | null
           image_url?: string | null
@@ -1070,6 +1184,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           price_range?: string | null
+          supplier_type?: string | null
           tags?: string[] | null
           updated_at?: string | null
           whatsapp_link?: string | null

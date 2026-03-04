@@ -28,6 +28,11 @@ const supplierSchema = z.object({
   whatsapp_link: z.string().url().optional().nullable().or(z.literal('')),
   is_active: z.boolean(),
   tags: z.array(z.string()).optional().nullable(),
+  company_name: z.string().optional().nullable(),
+  contact_name: z.string().optional().nullable(),
+  contact_email: z.string().email().optional().nullable().or(z.literal('')),
+  supplier_type: z.string().optional().nullable(),
+  default_commission_split: z.number().min(0).max(100).optional().nullable(),
 });
 
 interface Supplier {
@@ -45,7 +50,19 @@ interface Supplier {
   whatsapp_link: string | null;
   is_active: boolean;
   tags: string[] | null;
+  company_name: string | null;
+  contact_name: string | null;
+  contact_email: string | null;
+  supplier_type: string | null;
+  default_commission_split: number | null;
 }
+
+const supplierTypes = [
+  { value: 'direct_venue', label: 'Direct Venue', color: 'border-blue-500/50 text-blue-500' },
+  { value: 'concierge_intermediary', label: 'Concierge', color: 'border-purple-500/50 text-purple-500' },
+  { value: 'driver', label: 'Driver', color: 'border-green-500/50 text-green-500' },
+  { value: 'tour_operator', label: 'Tour Operator', color: 'border-orange-500/50 text-orange-500' },
+];
 
 const categories = ['restaurant', 'nightlife', 'transport', 'yacht', 'event', 'spa', 'tours', 'hotel'];
 
@@ -63,6 +80,11 @@ const emptyForm = {
   whatsapp_link: '',
   is_active: true,
   tags: '',
+  company_name: '',
+  contact_name: '',
+  contact_email: '',
+  supplier_type: 'direct_venue',
+  default_commission_split: '50',
 };
 
 export default function AdminSuppliers() {
@@ -119,6 +141,11 @@ export default function AdminSuppliers() {
       whatsapp_link: supplier.whatsapp_link || '',
       is_active: supplier.is_active,
       tags: supplier.tags?.join(', ') || '',
+      company_name: supplier.company_name || '',
+      contact_name: supplier.contact_name || '',
+      contact_email: supplier.contact_email || '',
+      supplier_type: supplier.supplier_type || 'direct_venue',
+      default_commission_split: supplier.default_commission_split?.toString() || '50',
     });
     setIsDialogOpen(true);
   }
@@ -143,6 +170,11 @@ export default function AdminSuppliers() {
       whatsapp_link: formData.whatsapp_link.trim() || null,
       is_active: formData.is_active,
       tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : null,
+      company_name: formData.company_name.trim() || null,
+      contact_name: formData.contact_name.trim() || null,
+      contact_email: formData.contact_email.trim() || null,
+      supplier_type: formData.supplier_type || null,
+      default_commission_split: formData.default_commission_split ? parseFloat(formData.default_commission_split) : null,
     };
 
     const validation = supplierSchema.safeParse(payload);
@@ -248,6 +280,56 @@ export default function AdminSuppliers() {
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Company Name</Label>
+                  <Input
+                    value={formData.company_name}
+                    onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
+                    placeholder="Company / business name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Supplier Type</Label>
+                  <Select value={formData.supplier_type} onValueChange={(v) => setFormData({ ...formData, supplier_type: v })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {supplierTypes.map(t => (
+                        <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label>Contact Name</Label>
+                  <Input
+                    value={formData.contact_name}
+                    onChange={(e) => setFormData({ ...formData, contact_name: e.target.value })}
+                    placeholder="Contact person"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Contact Email</Label>
+                  <Input
+                    value={formData.contact_email}
+                    onChange={(e) => setFormData({ ...formData, contact_email: e.target.value })}
+                    placeholder="email@supplier.com"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Default Commission %</Label>
+                  <Input
+                    type="number"
+                    value={formData.default_commission_split}
+                    onChange={(e) => setFormData({ ...formData, default_commission_split: e.target.value })}
+                    placeholder="50"
+                  />
                 </div>
               </div>
               <div className="space-y-2">
@@ -405,6 +487,7 @@ export default function AdminSuppliers() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Supplier</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Category</TableHead>
                   <TableHead>Location</TableHead>
                   <TableHead>Commission</TableHead>
@@ -429,12 +512,25 @@ export default function AdminSuppliers() {
                           </div>
                         )}
                         <div>
-                          <p className="font-medium">{supplier.name}</p>
-                          {supplier.phone && (
+                          <p className="font-medium">{supplier.company_name || supplier.name}</p>
+                          {supplier.company_name && supplier.name !== supplier.company_name && (
+                            <p className="text-xs text-muted-foreground">{supplier.name}</p>
+                          )}
+                          {!supplier.company_name && supplier.phone && (
                             <p className="text-xs text-muted-foreground">{supplier.phone}</p>
                           )}
                         </div>
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      {(() => {
+                        const st = supplierTypes.find(t => t.value === supplier.supplier_type);
+                        return st ? (
+                          <Badge variant="outline" className={st.color}>{st.label}</Badge>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">-</span>
+                        );
+                      })()}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline">{supplier.category}</Badge>

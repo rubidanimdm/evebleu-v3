@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { MessageSquare, Plus, ChevronLeft } from 'lucide-react';
 import { format } from 'date-fns';
+import { AccountButton } from '@/components/AccountButton';
 
 interface Conversation {
   id: string;
@@ -94,16 +95,10 @@ export default function ConciergePage() {
               />
             </div>
           )}
-          <div className="flex-1">
-            <h1 className="text-base font-medium text-primary tracking-tight">
-              {showHistory ? 'Chat History' : 'EVE BLUE'}
-            </h1>
-            <p className="text-xs text-muted-foreground">
-              {showHistory ? 'View past conversations' : 'Concierge. It. Done.'}
-            </p>
-          </div>
+          <div className="flex-1" />
           {!showHistory && (
             <div className="flex gap-2">
+              <AccountButton className="text-muted-foreground hover:text-primary" />
               <Button
                 variant="ghost"
                 size="icon"
