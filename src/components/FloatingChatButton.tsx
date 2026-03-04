@@ -1,18 +1,9 @@
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/lib/supabase';
-import { useNavigate } from 'react-router-dom';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 
 export function FloatingChatButton() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-
   const handleClick = () => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
     openWhatsAppConcierge();
   };
 
