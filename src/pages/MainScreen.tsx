@@ -69,7 +69,7 @@ export default function MainScreen() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const isLoggedIn = !!user;
   const [flightFormOpen, setFlightFormOpen] = useState(false);
 
