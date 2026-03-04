@@ -474,7 +474,7 @@ export default function MainScreen() {
       ═══════════════════════════════════════════════ */}
       {(() => {
         const attractionArticles = BLOG_ARTICLES.filter(a => 
-          ['burj-khalifa-guide', 'dubai-mall-guide', 'desert-safari-dubai', 'palm-jumeirah-atlantis', 'ain-dubai-guide'].includes(a.id)
+          ['hot-air-balloon-dubai', 'helicopter-tour-dubai', 'skydiving-dubai', 'desert-safari-dubai', 'ain-dubai-guide'].includes(a.id)
         );
         const attractionStripTitle: Record<string, string> = {
           he: '🌟 האטרקציות הפופולריות שלנו',
