@@ -306,20 +306,32 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           CTA — READY FOR SOMETHING SPECIAL
       ═══════════════════════════════════════════════ */}
-      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-14 max-w-[720px] mx-auto w-full reveal-scale ${ctaReveal.isVisible ? 'revealed' : ''}`}>
-        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center">
-          {/* Decorative glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/5 blur-3xl rounded-full" />
+      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-14 max-w-[720px] mx-auto w-full transition-all duration-1000 ease-out ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
+        <div className={`relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center transition-all duration-700 delay-300 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Animated decorative glows */}
+          <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/8 blur-3xl rounded-full transition-all duration-1000 delay-500 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          <div className={`absolute -bottom-8 -right-8 w-48 h-48 bg-primary/5 blur-3xl rounded-full transition-all duration-1200 delay-700 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          <div className={`absolute -bottom-8 -left-8 w-40 h-40 bg-accent/5 blur-3xl rounded-full transition-all duration-1200 delay-800 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
           
-          <h3 className="relative text-xl sm:text-2xl font-semibold text-foreground mb-3">
+          {/* Shimmer border effect */}
+          <div className={`absolute inset-0 rounded-2xl transition-opacity duration-1000 delay-600 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`} style={{
+            background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, transparent 40%, transparent 60%, hsl(var(--primary) / 0.1) 100%)',
+            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'exclude',
+            WebkitMaskComposite: 'xor',
+            padding: '1px',
+          }} />
+          
+          <h3 className={`relative text-xl sm:text-2xl font-semibold text-foreground mb-3 transition-all duration-700 delay-400 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
             {t('mainScreen.readyForSomethingSpecial')}
           </h3>
-          <p className="relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto">
+          <p className={`relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto transition-all duration-700 delay-500 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
             {t('mainScreen.conciergeAvailable')}
           </p>
           <Button
             onClick={() => openWhatsAppConcierge()}
-            className="relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
+            className={`relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2 transition-all duration-700 delay-600 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}
           >
             {t('mainScreen.chatNow')}
             <ArrowRight className="w-4 h-4" />
