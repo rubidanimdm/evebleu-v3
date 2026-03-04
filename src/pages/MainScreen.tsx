@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
-import { User, LogOut, ArrowRight, Phone, Mail } from 'lucide-react';
+import { User, ArrowRight, Phone, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
@@ -69,10 +69,6 @@ export default function MainScreen() {
   const isLoggedIn = !!user;
   const [flightFormOpen, setFlightFormOpen] = useState(false);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast({ title: t('common.signedOut') });
-  };
 
   const handleCategoryClick = (route: string) => {
     if (!isLoggedIn) {
@@ -358,10 +354,10 @@ export default function MainScreen() {
             {t('mainScreen.conciergeAvailable')}
           </p>
           <Button
-            onClick={() => isLoggedIn ? openWhatsAppConcierge() : navigate('/login')}
+            onClick={() => openWhatsAppConcierge()}
             className="relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
           >
-            {isLoggedIn ? t('mainScreen.chatNow') : t('mainScreen.joinUs')}
+            {t('mainScreen.chatNow')}
             <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
