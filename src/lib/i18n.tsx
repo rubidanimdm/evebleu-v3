@@ -20,14 +20,22 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'eveblue_language';
+const LANG_VERSION_KEY = 'eveblue_lang_version';
+const CURRENT_LANG_VERSION = '2'; // bump to reset all users to default
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored && LANGUAGES.some(l => l.code === stored)) {
-        return stored as Language;
+      const version = localStorage.getItem(LANG_VERSION_KEY);
+      if (version === CURRENT_LANG_VERSION) {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored && LANGUAGES.some(l => l.code === stored)) {
+          return stored as Language;
+        }
       }
+      // Reset to Russian for users with old/no version
+      localStorage.setItem(LANG_VERSION_KEY, CURRENT_LANG_VERSION);
+      localStorage.setItem(STORAGE_KEY, 'ru');
     }
     return 'ru';
   });
