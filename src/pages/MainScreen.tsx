@@ -32,6 +32,7 @@ import airportIcon from '@/assets/airport-pickup-icon.jpeg';
 import attractionsIcon from '@/assets/icon-attractions.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { useParallax } from '@/hooks/useParallax';
 
 /* ── 6 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
@@ -84,6 +85,12 @@ export default function MainScreen() {
   const ctaReveal = useScrollReveal<HTMLElement>();
   const footerReveal = useScrollReveal<HTMLElement>();
 
+  // Parallax refs for video strips
+  useParallax(yachtStripReveal.ref);
+  useParallax(nightlifeStripReveal.ref);
+  useParallax(attractionsStripReveal.ref);
+  useParallax(carsStripReveal.ref);
+  useParallax(desertStripReveal.ref);
 
   const handleCategoryClick = (route: string) => {
     if (route === '#flights') {

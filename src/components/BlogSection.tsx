@@ -813,28 +813,30 @@ export function BlogSection() {
           <button
             key={article.id}
             onClick={() => navigate(`/blog/${article.id}`)}
-            className="group text-start rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.1)]"
+            className="group text-start rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15),0_8px_24px_rgba(0,0,0,0.2)]"
           >
-            {/* Image */}
+            {/* Image with parallax-like hover shift */}
             <div className="relative aspect-[3/2] overflow-hidden">
               <img
                 src={article.image}
                 alt={article.title[language] || article.title.en}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent transition-opacity duration-500 group-hover:from-background/80" />
+              {/* Hover glow overlay */}
+              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
             </div>
 
             {/* Content */}
             <div className="p-4 sm:p-5 space-y-2.5">
               {/* Category tag */}
-              <span className="text-[10px] sm:text-xs text-primary/70 uppercase tracking-[0.2em] font-medium">
+              <span className="text-[10px] sm:text-xs text-primary/70 uppercase tracking-[0.2em] font-medium transition-colors duration-300 group-hover:text-primary">
                 {article.category[language] || article.category.en}
               </span>
 
               {/* Title */}
-              <h3 className="text-sm sm:text-base font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+              <h3 className="text-sm sm:text-base font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-300">
                 {article.title[language] || article.title.en}
               </h3>
 
@@ -846,7 +848,7 @@ export function BlogSection() {
               {/* Read more */}
               <div className="flex items-center gap-1.5 text-primary text-xs font-medium pt-1">
                 <span>{language === 'he' ? 'קרא עוד' : language === 'ar' ? 'اقرأ المزيد' : language === 'fr' ? 'Lire la suite' : language === 'ru' ? 'Читать далее' : 'Read more'}</span>
-                <ArrowRight className={`w-3.5 h-3.5 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
+                <ArrowRight className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5 ${isRTL ? 'rotate-180 group-hover:-translate-x-1.5' : ''}`} />
               </div>
             </div>
           </button>
