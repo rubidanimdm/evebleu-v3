@@ -99,12 +99,10 @@ function AppContent() {
         {/* Main Screen */}
         <Route path="/" element={<MainScreen />} />
         
-        {/* Auth Routes */}
+        {/* Auth Routes (admin only) */}
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/cookies" element={<CookiePolicy />} />

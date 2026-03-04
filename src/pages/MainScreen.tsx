@@ -142,26 +142,15 @@ export default function MainScreen() {
           <LanguageSwitcher variant="full" className="[&_button]:bg-black/40 [&_button]:backdrop-blur-md [&_button]:border-white/10 [&_button]:text-foreground [&_button]:hover:bg-black/50" />
         </div>
 
-        {/* Auth buttons — top right */}
-        <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-          {isLoggedIn ? (
-            <>
-              <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}
-                className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
-                <User className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="icon" onClick={handleLogout}
-                className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
-                <LogOut className="w-4 h-4" />
-              </Button>
-            </>
-          ) : (
-            <Button onClick={() => navigate('/login')}
-              className="h-10 px-6 rounded-full bg-primary/90 text-primary-foreground hover:bg-primary text-xs font-semibold backdrop-blur-md shadow-lg border border-primary/30">
-              {t('auth.signIn')}
+        {/* Profile button — top right (only if logged in) */}
+        {isLoggedIn && (
+          <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}
+              className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
+              <User className="w-4 h-4" />
             </Button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Hero content — centered */}
         <div className="relative z-20 h-full flex flex-col items-center justify-center px-6 text-center">
