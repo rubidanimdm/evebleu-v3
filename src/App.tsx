@@ -142,7 +142,7 @@ function AppContent() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <FloatingHomeButton />
-      {user && <FloatingChatButton />}
+      <FloatingChatButton />
       <CookieConsent />
     </>
   );
