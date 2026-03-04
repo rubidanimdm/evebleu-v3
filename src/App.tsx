@@ -117,10 +117,10 @@ function AppContent() {
         <Route path="/yachts/:slug" element={<YachtDetailPage />} />
         
         {/* Protected - requires login */}
-        <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
-        <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
+        <Route path="/concierge" element={<ConciergePage />} />
+        <Route path="/my-plans" element={<MyPlansPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/support" element={<SupportPage />} />
 
         {/* Admin routes with layout */}
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
