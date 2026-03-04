@@ -22,7 +22,7 @@ import vipDriverIcon from '@/assets/vip-driver-icon-new.jpeg';
 import flightsIcon from '@/assets/icon-flights.jpeg';
 import hotelIcon from '@/assets/icon-hotel.jpeg';
 import desertIcon from '@/assets/icon-desert.jpeg';
-import yachtIcon from '@/assets/icon-yacht.jpeg';
+import yachtIcon from '@/assets/yacht-icon-new.jpeg';
 import luxuryCarIcon from '@/assets/icon-luxury-car.jpeg';
 import helicopterIcon from '@/assets/icon-helicopter.jpeg';
 import diningIcon from '@/assets/dining-icon-new.jpeg';
