@@ -71,10 +71,6 @@ export default function MainScreen() {
 
 
   const handleCategoryClick = (route: string) => {
-    if (!isLoggedIn) {
-      navigate('/login');
-      return;
-    }
     if (route === '#flights') {
       setFlightFormOpen(true);
       return;
@@ -167,10 +163,10 @@ export default function MainScreen() {
           {/* CTA */}
           <div className="animate-[fadeIn_2.2s_ease-out]">
             <Button
-              onClick={() => isLoggedIn ? openWhatsAppConcierge() : navigate('/login')}
+              onClick={() => openWhatsAppConcierge()}
               className="h-14 sm:h-16 px-10 sm:px-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-primary/30 gap-3"
             >
-              {isLoggedIn ? t('mainScreen.talkToConcierge') : t('mainScreen.getStarted')}
+              {t('mainScreen.talkToConcierge')}
               <ArrowRight className="w-5 h-5" />
             </Button>
           </div>

@@ -9,11 +9,8 @@ export function FloatingChatButton() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
     openWhatsAppConcierge();
+  };
   };
 
   return (

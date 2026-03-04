@@ -138,7 +138,7 @@ function AppContent() {
         {/* Legacy route redirects */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="/auth" element={<Navigate to="/login" replace />} />
+        <Route path="/auth" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <FloatingHomeButton />
