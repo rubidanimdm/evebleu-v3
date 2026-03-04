@@ -10,6 +10,7 @@ import { useLanguage } from '@/lib/i18n';
 import { openExternalUrl } from '@/lib/openExternalUrl';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 import yachtVideo from '@/assets/yacht-marina-video.mp4';
@@ -96,6 +97,10 @@ export default function MainScreen() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      {/* ═══════════════════════════════════════════════
+          INFO STRIP — Time, Weather, Exchange Rate
+      ═══════════════════════════════════════════════ */}
+      <DubaiInfoStrip />
 
       {/* ═══════════════════════════════════════════════
           HERO — Full-screen cinematic video
