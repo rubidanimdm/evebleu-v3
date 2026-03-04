@@ -252,7 +252,7 @@ export default function MainScreen() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Dark overlay at 50% + top/bottom fade */}
         <div className="absolute inset-0 bg-background/50" />
@@ -278,7 +278,7 @@ export default function MainScreen() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
@@ -328,7 +328,7 @@ export default function MainScreen() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
