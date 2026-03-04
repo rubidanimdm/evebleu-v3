@@ -43,7 +43,7 @@ const getCategoryIcon = (key: string) => {
     
     airportPickup: <img src={airportIcon} alt="Airport Pickup" className={imgCls} />,
     vipDriver: <img src={vipDriverIcon} alt="VIP Driver" className={imgCls} />,
-    helicopterTour: <img src={helicopterIcon} alt="Helicopter" className={imgCls} />,
+    
   };
   return icons[key];
 };
@@ -58,7 +58,7 @@ const categoryKeys = [
   
   { key: 'airportPickup', route: 'whatsapp:AIRPORT_PICKUP' },
   { key: 'vipDriver', route: 'whatsapp:VIP_DRIVER' },
-  { key: 'helicopterTour', route: 'whatsapp:HELICOPTER' },
+  
 ];
 
 export default function MainScreen() {
