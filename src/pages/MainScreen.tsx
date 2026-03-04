@@ -223,7 +223,7 @@ export default function MainScreen() {
             רוצים חופשה שמשדרגת את החוויה? דברו איתנו ואנחנו נסייע לתכנן משהו שיישאר בזיכרון.
           </p>
         </div>
-        <div className="w-20 h-px bg-primary/30 mx-auto mt-8" />
+        <div className="w-20 h-px shimmer-line mx-auto mt-8" />
       </section>
 
       {/* ═══════════════════════════════════════════════
@@ -236,7 +236,7 @@ export default function MainScreen() {
           <h2 className="text-2xl sm:text-3xl font-semibold text-foreground">
             {t('mainScreen.everythingYouNeed')}
           </h2>
-          <div className="w-16 h-px bg-primary/40 mx-auto mt-4" />
+          <div className="w-16 h-px shimmer-line mx-auto mt-4" />
         </div>
 
         <div ref={gridReveal.ref} className={`grid grid-cols-3 gap-3 sm:gap-4 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
@@ -384,7 +384,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           SECOND CTA
       ═══════════════════════════════════════════════ */}
-      <section className="px-4 sm:px-6 pb-14 max-w-[720px] mx-auto w-full">
+      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 pb-14 max-w-[720px] mx-auto w-full reveal-scale ${ctaReveal.isVisible ? 'revealed' : ''}`}>
         <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center">
           {/* Decorative glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/5 blur-3xl rounded-full" />
@@ -413,7 +413,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           FOOTER
       ═══════════════════════════════════════════════ */}
-      <footer className="mt-auto border-t border-primary/10 bg-card/30 py-10 px-4">
+      <footer ref={footerReveal.ref} className={`mt-auto border-t border-primary/10 bg-card/30 py-10 px-4 reveal-base ${footerReveal.isVisible ? 'revealed' : ''}`}>
         <div className="max-w-[720px] mx-auto flex flex-col items-center space-y-5">
           <img
             src={logo}
