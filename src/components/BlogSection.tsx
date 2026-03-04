@@ -27,6 +27,9 @@ import blogAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
 import blogFivePalm from '@/assets/blog-five-palm.jpg';
 import blogArmaniBurj from '@/assets/blog-armani-burj.jpg';
 import blogMarinaGate from '@/assets/blog-marina-gate.jpg';
+import blogHotAirBalloon from '@/assets/blog-hot-air-balloon.jpg';
+import blogHelicopterDubai from '@/assets/blog-helicopter-dubai.jpg';
+import blogSkydivingDubai from '@/assets/blog-skydiving-dubai.jpg';
 
 export interface BlogArticle {
   id: string;
