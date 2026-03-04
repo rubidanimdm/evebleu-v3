@@ -181,9 +181,36 @@ export default function MainScreen() {
       </section>
 
       {/* ═══════════════════════════════════════════════
+          INTRO TEXT — Elegant welcome copy
+      ═══════════════════════════════════════════════ */}
+      <section className="px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center" dir="rtl">
+        <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
+          יאללה, הגעתם לדובאי — ככה עושים את זה נכון.
+        </h2>
+        <div className="space-y-5 text-sm sm:text-base text-foreground/70 leading-[1.85]">
+          <p>
+            תבחרו מקום ושעה, אנחנו נעזור עם הזמנות: שולחן במסעדה, בקשות כניסה לברים ומועדונים וכרטיסים לאטרקציות. פחות התלבטויות, פחות בזבוז זמן.
+          </p>
+          <p>
+            רק תכתבו מה בא לכם — אוכל, אווירה, סוג מועדונים או אטרקציות — ואנחנו נטפל בבקשות ונשתדל להשיג את האפשרויות הטובות ביותר. אנחנו מכירים את המקומות החמים ומעמידים לרשותכם קשרים וניסיון שיקל על התכנון.
+          </p>
+          <p>
+            אנחנו זמינים 24/7 — שינויים ברגע האחרון? ערב במסעדת שף בדקה ה-90? תגידו ונבדוק אופציות.
+          </p>
+          <p className="text-foreground/50 italic">
+            טיפ קטן: תהיו נחמדים ותחייכו — זה עוזר.
+          </p>
+          <p className="text-foreground/80 font-medium">
+            רוצים חופשה שמשדרגת את החוויה? דברו איתנו ואנחנו נסייע לתכנן משהו שיישאר בזיכרון.
+          </p>
+        </div>
+        <div className="w-20 h-px bg-primary/30 mx-auto mt-8" />
+      </section>
+
+      {/* ═══════════════════════════════════════════════
           SERVICES — Category grid
       ═══════════════════════════════════════════════ */}
-      <section className="px-4 sm:px-6 py-14 sm:py-20 max-w-[720px] mx-auto w-full">
+      <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
         {/* Section header */}
         <div className="text-center mb-10">
           <p className="text-primary text-xs uppercase tracking-[0.3em] mb-3">{t('mainScreen.premiumServices')}</p>
