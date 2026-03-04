@@ -202,26 +202,16 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           INTRO TEXT — Elegant welcome copy
       ═══════════════════════════════════════════════ */}
-      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`} dir="rtl">
+      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`}>
         <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
-          יאללה, הגעתם לדובאי — ככה עושים את זה נכון.
+          {t('mainScreen.introTitle')}
         </h2>
         <div className="space-y-5 text-sm sm:text-base text-foreground/70 leading-[1.85]">
-          <p>
-            תבחרו מקום ושעה, אנחנו נעזור עם הזמנות: שולחן במסעדה, בקשות כניסה לברים ומועדונים וכרטיסים לאטרקציות. פחות התלבטויות, פחות בזבוז זמן.
-          </p>
-          <p>
-            רק תכתבו מה בא לכם — אוכל, אווירה, סוג מועדונים או אטרקציות — ואנחנו נטפל בבקשות ונשתדל להשיג את האפשרויות הטובות ביותר. אנחנו מכירים את המקומות החמים ומעמידים לרשותכם קשרים וניסיון שיקל על התכנון.
-          </p>
-          <p>
-            אנחנו זמינים 24/7 — שינויים ברגע האחרון? ערב במסעדת שף בדקה ה-90? תגידו ונבדוק אופציות.
-          </p>
-          <p className="text-foreground/50 italic">
-            טיפ קטן: תהיו נחמדים ותחייכו — זה עוזר.
-          </p>
-          <p className="text-foreground/80 font-medium">
-            רוצים חופשה שמשדרגת את החוויה? דברו איתנו ואנחנו נסייע לתכנן משהו שיישאר בזיכרון.
-          </p>
+          <p>{t('mainScreen.introP1')}</p>
+          <p>{t('mainScreen.introP2')}</p>
+          <p>{t('mainScreen.introP3')}</p>
+          <p className="text-foreground/50 italic">{t('mainScreen.introTip')}</p>
+          <p className="text-foreground/80 font-medium">{t('mainScreen.introClosing')}</p>
         </div>
         <div className="w-20 h-px shimmer-line mx-auto mt-8" />
       </section>
@@ -432,11 +422,11 @@ export default function MainScreen() {
           </div>
           <div className="w-24 h-px bg-primary/15" />
           <div className="flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/50">
-            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/privacy" className="hover:text-primary transition-colors">{t('mainScreen.footerPrivacy')}</Link>
             <span>·</span>
-            <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link to="/terms" className="hover:text-primary transition-colors">{t('mainScreen.footerTerms')}</Link>
             <span>·</span>
-            <Link to="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
+            <Link to="/cookies" className="hover:text-primary transition-colors">{t('mainScreen.footerCookies')}</Link>
           </div>
           <p className="text-[10px] text-muted-foreground/40 tracking-[0.15em] uppercase">
             © {new Date().getFullYear()} EVE BLUE · Concierge. It. Done.
