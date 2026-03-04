@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { ArrowRight } from 'lucide-react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 import blogAirport from '@/assets/blog-airport.jpg';
 import blogEmirates from '@/assets/blog-emirates.jpg';
