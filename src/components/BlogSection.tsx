@@ -12,6 +12,11 @@ import blogDining from '@/assets/blog-dining.jpg';
 import blogNightlifeClub from '@/assets/blog-nightlife.jpg';
 import blogShopping from '@/assets/blog-shopping.jpg';
 import blogFamily from '@/assets/blog-family.jpg';
+import blogJWMarriott from '@/assets/blog-jw-marriott.jpg';
+import blogShangriLa from '@/assets/blog-shangrila.jpg';
+import blogSofitel from '@/assets/blog-sofitel.jpg';
+import blogParkHyatt from '@/assets/blog-park-hyatt.jpg';
+import blogRixos from '@/assets/blog-rixos.jpg';
 
 export interface BlogArticle {
   id: string;
