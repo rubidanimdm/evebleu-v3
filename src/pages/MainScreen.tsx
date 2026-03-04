@@ -245,9 +245,9 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('YACHT')} role="link" aria-label="Yacht Charters">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
         <video
-          src={nightlifeVideo}
+          src={yachtVideo}
           autoPlay
           loop
           muted
@@ -273,7 +273,7 @@ export default function MainScreen() {
       ═══════════════════════════════════════════════ */}
       <section id="strip-dining" className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
         <video
-          src={attractionsVideo}
+          src={nightlifeVideo}
           autoPlay
           loop
           muted
@@ -296,9 +296,9 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('HELICOPTER')} role="link" aria-label="Helicopter Tour">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions">
         <video
-          src={yachtVideo}
+          src={attractionsVideo}
           autoPlay
           loop
           muted
@@ -346,7 +346,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Desert Action">
+      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions - Desert">
         <video
           src={strip5Video}
           autoPlay
