@@ -19,7 +19,7 @@ import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
 import birthdayIcon from '@/assets/icon-birthday.jpeg';
 import vipDriverIcon from '@/assets/vip-driver-icon-new.jpeg';
-import flightsIcon from '@/assets/icon-flights.jpeg';
+import flightsIcon from '@/assets/flights-icon.jpeg';
 import hotelIcon from '@/assets/icon-hotel.jpeg';
 import desertIcon from '@/assets/icon-desert.jpeg';
 import yachtIcon from '@/assets/yacht-icon-new.jpeg';
