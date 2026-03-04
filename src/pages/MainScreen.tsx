@@ -198,10 +198,10 @@ export default function MainScreen() {
             <button
               key={cat.key}
               onClick={() => handleCategoryClick(cat.route)}
-              className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl border border-[#d4af37]/40 hover:border-[#d4af37] hover:shadow-[0_12px_40px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
+              className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl border border-primary/40 hover:border-primary hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
             >
               {getCategoryIcon(cat.key)}
-              <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-[#d4af37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
+              <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-primary drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
                 {t(`mainScreen.${cat.key}`)}
               </span>
             </button>
