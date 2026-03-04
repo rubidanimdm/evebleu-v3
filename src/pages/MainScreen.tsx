@@ -40,7 +40,7 @@ const getCategoryIcon = (key: string) => {
     yachtCharters: <img src={yachtIcon} alt="Yacht" className={imgCls} />,
     desertAction: <img src={desertIcon} alt="Desert" className={imgCls} />,
     extremeFlights: <img src={flightsIcon} alt="Flights" className={imgCls} />,
-    birthdays: <img src={birthdayIcon} alt="Birthday" className={imgCls} />,
+    
     airportPickup: <img src={airportIcon} alt="Airport Pickup" className={imgCls} />,
     vipDriver: <img src={vipDriverIcon} alt="VIP Driver" className={imgCls} />,
     helicopterTour: <img src={helicopterIcon} alt="Helicopter" className={imgCls} />,
@@ -55,7 +55,7 @@ const categoryKeys = [
   { key: 'attractions', route: '#hotel-booking' },
   { key: 'desertAction', route: 'whatsapp:DESERT' },
   { key: 'luxuryCars', route: 'whatsapp:CAR' },
-  { key: 'birthdays', route: 'whatsapp:BIRTHDAY' },
+  
   { key: 'airportPickup', route: 'whatsapp:AIRPORT_PICKUP' },
   { key: 'vipDriver', route: 'whatsapp:VIP_DRIVER' },
   { key: 'helicopterTour', route: 'whatsapp:HELICOPTER' },
