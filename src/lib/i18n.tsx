@@ -3,11 +3,11 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 export type Language = 'en' | 'he' | 'ar' | 'fr' | 'ru';
 
 export const LANGUAGES: { code: Language; label: string; nativeLabel: string; rtl: boolean }[] = [
+  { code: 'ru', label: 'RU', nativeLabel: 'Русский', rtl: false },
   { code: 'en', label: 'EN', nativeLabel: 'English', rtl: false },
   { code: 'he', label: 'HE', nativeLabel: 'עברית', rtl: true },
   { code: 'ar', label: 'AR', nativeLabel: 'العربية', rtl: true },
   { code: 'fr', label: 'FR', nativeLabel: 'Français', rtl: false },
-  { code: 'ru', label: 'RU', nativeLabel: 'Русский', rtl: false },
 ];
 
 interface LanguageContextType {
