@@ -221,7 +221,7 @@ export default function DiningNightlifePage() {
         {!search && (
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold text-primary uppercase tracking-wider">⭐ Our Top Picks</span>
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">⭐ Our Top 10 Recommended</span>
               <div className="flex-1 h-px bg-primary/15" />
             </div>
             <div className="space-y-2">
