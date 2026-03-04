@@ -22,6 +22,11 @@ import blogDubaiMall from '@/assets/blog-dubai-mall.jpg';
 import blogDesertSafari from '@/assets/blog-desert-safari.jpg';
 import blogPalmAtlantis from '@/assets/blog-palm-atlantis.jpg';
 import blogAinDubai from '@/assets/blog-ain-dubai.jpg';
+import blogAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
+import blogAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
+import blogFivePalm from '@/assets/blog-five-palm.jpg';
+import blogArmaniBurj from '@/assets/blog-armani-burj.jpg';
+import blogMarinaGate from '@/assets/blog-marina-gate.jpg';
 
 export interface BlogArticle {
   id: string;
@@ -1991,6 +1996,470 @@ Contact EVE BLUE and we'll make the experience perfect.`,
       ar: 'عين دبي هي أكبر عجلة مراقبة في العالم، ترتفع إلى ارتفاع مذهل يبلغ 250 مترًا.',
       fr: "Ain Dubai est la plus grande roue d'observation au monde, s'élevant à une hauteur impressionnante de 250 mètres.",
       ru: 'Ain Dubai — самое большое колесо обозрения в мире, возвышающееся на впечатляющие 250 метров.',
+    },
+  },
+  {
+    id: 'atlantis-the-royal',
+    image: blogAtlantisRoyal,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Atlantis The Royal — היהלום החדש של דובאי',
+      en: 'Atlantis The Royal — Dubai\'s Newest Crown Jewel',
+      ar: 'أتلانتس ذا رويال — جوهرة دبي الجديدة',
+      fr: 'Atlantis The Royal — Le nouveau joyau de Dubaï',
+      ru: 'Atlantis The Royal — Новая жемчужина Дубая',
+    },
+    excerpt: {
+      he: 'המלון היוקרתי והמודרני ביותר בדובאי, עם סוויטות עם בריכות פרטיות, מסעדות שף עולמיות ועיצוב ארכיטקטוני מהפכני.',
+      en: 'Dubai\'s most luxurious modern hotel with private pool suites, world-class chef restaurants and revolutionary architecture.',
+      ar: 'أفخم فندق حديث في دبي مع أجنحة بمسابح خاصة ومطاعم شيف عالمية.',
+      fr: 'L\'hôtel moderne le plus luxueux de Dubaï avec des suites à piscine privée.',
+      ru: 'Самый роскошный современный отель Дубая с номерами с частными бассейнами.',
+    },
+    content: {
+      he: `Atlantis The Royal הוא המלון החדש והיוקרתי ביותר בדובאי, שנפתח ב-2023 על חוף Palm Jumeirah. עם עיצוב ארכיטקטוני פורץ דרך שנראה כמו מגדלי לגו ענקיים, המלון הפך מיד לאייקון של העיר.
+
+**מיקום מושלם**
+
+המלון ממוקם בקצה Palm Jumeirah, עם נוף פנורמי לקו החוף של דובאי ולמפרץ הפרסי. הגישה נוחה — 25 דקות משדה התעופה ו-20 דקות מ-Dubai Mall.
+
+**חדרים וסוויטות**
+
+795 חדרים וסוויטות, כולל סוויטות עם בריכות אינפיניטי פרטיות על הגג. העיצוב מודרני ומינימליסטי עם חומרים יוקרתיים — שיש, זהב ועץ טבעי. חלק מהסוויטות מציעות נוף ישיר לים עם מרפסות ענקיות.
+
+**מסעדות עולמיות**
+
+- **Nobu by the Beach** — סניף חוף ייחודי של השף נובו מאצוהיסה
+- **Dinner by Heston Blumenthal** — מסעדת השף הבריטי הזוכה 3 כוכבי מישלן
+- **Ling Ling** — מסעדה אסייתית מבית Hakkasan עם אווירת מסיבה
+- **La Mar by Gastón Acurio** — מטבח פרואני על חוף הים
+- **Jaleo by José Andrés** — מטבח ספרדי מבית השף חוסה אנדרס
+
+**חוויות ייחודיות**
+
+- **Aquaventure** — פארק המים הגדול ביותר בעולם ממש ליד
+- **Cloud 22** — בריכת אינפיניטי על הגג עם DJ ואווירת מסיבה
+- **Skyblaze** — מופע אש ומים מרהיב בכל ערב
+
+**למה אנחנו ב-EVE BLUE אוהבים את Atlantis The Royal?**
+
+- המלון החדש והיוקרתי ביותר בדובאי
+- מסעדות שף שאין כמותן בשום מלון אחר
+- הסוויטות עם הבריכות הפרטיות — חוויה שאין לה מתחרה
+- אווירה צעירה ואנרגטית
+
+רוצים שנזמין לכם חדר ב-Atlantis The Royal? דברו איתנו ונדאג להכל.`,
+      en: `Atlantis The Royal is Dubai's newest and most luxurious hotel, opened in 2023 on the shores of Palm Jumeirah. With groundbreaking architectural design resembling giant Lego-like towers, the hotel instantly became a city icon.
+
+**Perfect Location**
+
+Located at the tip of Palm Jumeirah, offering panoramic views of Dubai's coastline and the Arabian Gulf. Easy access — 25 minutes from the airport and 20 minutes from Dubai Mall.
+
+**Rooms & Suites**
+
+795 rooms and suites, including suites with private rooftop infinity pools. Modern minimalist design with luxurious materials — marble, gold, and natural wood. Some suites offer direct sea views with massive terraces.
+
+**World-Class Restaurants**
+
+- **Nobu by the Beach** — Unique beachside outpost by Chef Nobu Matsuhisa
+- **Dinner by Heston Blumenthal** — 3 Michelin-starred British chef's restaurant
+- **Ling Ling** — Asian restaurant by Hakkasan with party atmosphere
+- **La Mar by Gastón Acurio** — Peruvian cuisine on the beachfront
+- **Jaleo by José Andrés** — Spanish cuisine by Chef José Andrés
+
+**Unique Experiences**
+
+- **Aquaventure** — World's largest waterpark right next door
+- **Cloud 22** — Rooftop infinity pool with DJ and party vibes
+- **Skyblaze** — Spectacular fire and water show every evening
+
+**Why EVE BLUE loves Atlantis The Royal**
+
+- Dubai's newest and most luxurious hotel
+- Chef restaurants unmatched by any other hotel
+- Private pool suites — an unrivaled experience
+- Young and energetic atmosphere
+
+Want us to book a room at Atlantis The Royal? Talk to us and we'll handle everything.`,
+      ar: 'أتلانتس ذا رويال هو أحدث وأفخم فندق في دبي، افتتح في 2023 على شاطئ نخلة جميرا.',
+      fr: "Atlantis The Royal est l'hôtel le plus récent et le plus luxueux de Dubaï, ouvert en 2023.",
+      ru: 'Atlantis The Royal — новейший и самый роскошный отель Дубая, открытый в 2023 году.',
+    },
+  },
+  {
+    id: 'atlantis-the-palm',
+    image: blogAtlantisPalm,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Atlantis The Palm — האייקון של דובאי',
+      en: 'Atlantis The Palm — Dubai\'s Iconic Resort',
+      ar: 'أتلانتس ذا بالم — المنتجع الأيقوني في دبي',
+      fr: 'Atlantis The Palm — Le resort iconique de Dubaï',
+      ru: 'Atlantis The Palm — Культовый курорт Дубая',
+    },
+    excerpt: {
+      he: 'המלון האייקוני ביותר של דובאי על חוף Palm Jumeirah, עם פארק מים, אקווריום ענק וחוויה משפחתית בלתי נשכחת.',
+      en: 'Dubai\'s most iconic resort on Palm Jumeirah with a waterpark, giant aquarium and unforgettable family experience.',
+      ar: 'المنتجع الأكثر شهرة في دبي على نخلة جميرا مع حديقة مائية وحوض أسماك عملاق.',
+      fr: 'Le resort le plus emblématique de Dubaï sur Palm Jumeirah avec un parc aquatique.',
+      ru: 'Самый знаковый курорт Дубая на Палм Джумейра с аквапарком и гигантским аквариумом.',
+    },
+    content: {
+      he: `Atlantis The Palm הוא המלון האייקוני ביותר של דובאי, ממוקם בקצה Palm Jumeirah עם הקשת המפורסמת שלו. מאז פתיחתו ב-2008 הוא הפך לסמל של העיר ושל חוויית הנופש היוקרתית.
+
+**מיקום קסום**
+
+על קצה הפאלם, מוקף בים מכל הכיוונים. נוף מרהיב לקו החוף ולמרינה של דובאי. 30 דקות משדה התעופה.
+
+**חדרים וסוויטות**
+
+1,500+ חדרים וסוויטות, כולל סוויטות תת-ימיות עם חלונות לאקווריום! חדרים עם נוף לים או לפאלם, כולם מרווחים ומעוצבים בסגנון ימי-יוקרתי.
+
+**אטרקציות במלון**
+
+- **Aquaventure Waterpark** — פארק המים הגדול ביותר במזרח התיכון עם מגלשות ענק
+- **The Lost Chambers Aquarium** — אקווריום עם 65,000 יצורי ים
+- **Dolphin Bay** — שחייה עם דולפינים
+- **Sea Lion Point** — מפגש עם אריות ים
+
+**מסעדות**
+
+- **Nobu** — מסעדה יפנית מפורסמת של השף נובו
+- **Ossiano** — מסעדת פירות ים תת-ימית עם נוף לאקווריום
+- **Bread Street Kitchen** — של השף גורדון רמזי
+- **Ronda Locatelli** — מטבח איטלקי אותנטי
+
+**למה אנחנו ב-EVE BLUE אוהבים את Atlantis The Palm?**
+
+- חוויה משפחתית מושלמת
+- פארק מים ואקווריום ברמה עולמית
+- מסעדות שף מגוונות
+- חוף פרטי מהמם
+
+רוצים שנזמין לכם חדר? דברו איתנו ונטפל בהכל.`,
+      en: `Atlantis The Palm is Dubai's most iconic hotel, located at the tip of Palm Jumeirah with its famous arch. Since opening in 2008, it has become a symbol of the city and the ultimate luxury resort experience.
+
+**Magical Location**
+
+At the tip of the Palm, surrounded by sea on all sides. Stunning views of Dubai's coastline and marina. 30 minutes from the airport.
+
+**Rooms & Suites**
+
+1,500+ rooms and suites, including underwater suites with windows into the aquarium! Rooms with sea or Palm views, all spacious and designed in a marine-luxury style.
+
+**Hotel Attractions**
+
+- **Aquaventure Waterpark** — Middle East's largest waterpark with giant slides
+- **The Lost Chambers Aquarium** — Aquarium with 65,000 marine creatures
+- **Dolphin Bay** — Swim with dolphins
+- **Sea Lion Point** — Meet sea lions
+
+**Restaurants**
+
+- **Nobu** — Famous Japanese restaurant by Chef Nobu
+- **Ossiano** — Underwater seafood restaurant with aquarium views
+- **Bread Street Kitchen** — By Chef Gordon Ramsay
+- **Ronda Locatelli** — Authentic Italian cuisine
+
+**Why EVE BLUE loves Atlantis The Palm**
+
+- Perfect family experience
+- World-class waterpark and aquarium
+- Diverse chef restaurants
+- Stunning private beach
+
+Want us to book a room? Talk to us and we'll handle everything.`,
+      ar: 'أتلانتس ذا بالم هو أشهر فندق في دبي، يقع في نهاية نخلة جميرا مع قوسه الشهير.',
+      fr: "Atlantis The Palm est l'hôtel le plus emblématique de Dubaï, situé à la pointe de Palm Jumeirah.",
+      ru: 'Atlantis The Palm — самый знаковый отель Дубая, расположенный на вершине Палм Джумейра.',
+    },
+  },
+  {
+    id: 'five-palm-jumeirah',
+    image: blogFivePalm,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'FIVE Palm Jumeirah — מלון המסיבות של דובאי',
+      en: 'FIVE Palm Jumeirah — Dubai\'s Ultimate Party Hotel',
+      ar: 'فايف نخلة جميرا — فندق الحفلات الأفضل في دبي',
+      fr: 'FIVE Palm Jumeirah — L\'hôtel festif ultime de Dubaï',
+      ru: 'FIVE Palm Jumeirah — Лучший тусовочный отель Дубая',
+    },
+    excerpt: {
+      he: 'מלון בוטיק יוקרתי על חוף הפאלם, עם בריכות אינפיניטי מרהיבות, מסיבות ביץ\' מפורסמות ואווירה צעירה ואנרגטית.',
+      en: 'Luxury boutique hotel on the Palm\'s beach with stunning infinity pools, famous beach parties, and a young energetic vibe.',
+      ar: 'فندق بوتيكي فاخر على شاطئ النخلة مع مسابح لا متناهية ومناخ حيوي.',
+      fr: 'Hôtel boutique de luxe sur la plage du Palm avec des piscines à débordement.',
+      ru: 'Роскошный бутик-отель на пляже Палм с панорамными бассейнами.',
+    },
+    content: {
+      he: `FIVE Palm Jumeirah הוא מלון הבוטיק היוקרתי והאנרגטי ביותר בדובאי, ממוקם ישירות על חוף Palm Jumeirah. המלון ידוע בעיקר בזכות מסיבות הבריכה וביץ' הפארטיז המפורסמים שלו.
+
+**מיקום על חוף הפאלם**
+
+ממוקם על החוף של Palm Jumeirah עם גישה ישירה לים. נוף מרהיב לקו הרקיע של דובאי ולמרינה. 20 דקות משדה התעופה.
+
+**חדרים וסוויטות**
+
+סוויטות מרווחות עם עיצוב מודרני ותוסס. חלקן עם בריכות פרטיות על הגג, אחרות עם נוף ישיר לים. העיצוב משלב יוקרה עם אנרגיה צעירה — צבעים חיים, תאורה דרמטית ופרטים מעוצבים.
+
+**הבריכות**
+
+- **The Penthouse Pool** — בריכת אינפיניטי על הגג עם נוף 360 מעלות
+- **Beach Pool** — בריכת חוף ענקית עם DJ ואווירת מסיבה
+- מסיבות בריכה מפורסמות בימי שישי ושבת
+
+**מסעדות וחיי לילה**
+
+- **Maiden Shanghai** — מסעדה סינית יוקרתית
+- **The Penthouse** — מסעדה על הגג עם נוף מרהיב
+- **Praia** — ביץ' בר על החוף
+- **Secret Room** — בר נסתר עם אווירה אינטימית
+- מסיבות ביץ' ובריכה כל סוף שבוע
+
+**למה אנחנו ב-EVE BLUE אוהבים את FIVE Palm?**
+
+- אווירה צעירה ואנרגטית שאין בשום מלון אחר
+- הבריכות והמסיבות הכי טובות בדובאי
+- חוף פרטי מדהים
+- מושלם לזוגות צעירים וקבוצות חברים
+
+רוצים להזמין חדר ב-FIVE? דברו איתנו!`,
+      en: `FIVE Palm Jumeirah is Dubai's most energetic luxury boutique hotel, located directly on the Palm Jumeirah beach. The hotel is renowned for its famous pool parties and beach events.
+
+**Beachfront on the Palm**
+
+Located on Palm Jumeirah's beach with direct sea access. Stunning views of Dubai's skyline and marina. 20 minutes from the airport.
+
+**Rooms & Suites**
+
+Spacious suites with modern, vibrant design. Some with private rooftop pools, others with direct sea views. The design combines luxury with youthful energy — vivid colors, dramatic lighting, and designer details.
+
+**The Pools**
+
+- **The Penthouse Pool** — Rooftop infinity pool with 360-degree views
+- **Beach Pool** — Massive beach pool with DJ and party vibes
+- Famous pool parties every Friday and Saturday
+
+**Restaurants & Nightlife**
+
+- **Maiden Shanghai** — Luxury Chinese restaurant
+- **The Penthouse** — Rooftop restaurant with stunning views
+- **Praia** — Beach bar on the shore
+- **Secret Room** — Hidden bar with intimate atmosphere
+- Beach and pool parties every weekend
+
+**Why EVE BLUE loves FIVE Palm**
+
+- Young and energetic vibe unlike any other hotel
+- Best pools and parties in Dubai
+- Amazing private beach
+- Perfect for young couples and friend groups
+
+Want to book at FIVE? Talk to us!`,
+      ar: 'فايف نخلة جميرا هو أكثر فنادق البوتيك الفاخرة حيوية في دبي.',
+      fr: "FIVE Palm Jumeirah est l'hôtel boutique de luxe le plus énergique de Dubaï.",
+      ru: 'FIVE Palm Jumeirah — самый энергичный роскошный бутик-отель Дубая.',
+    },
+  },
+  {
+    id: 'armani-hotel-burj-khalifa',
+    image: blogArmaniBurj,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Armani Hotel Dubai — יוקרה בתוך בורג\' ח\'ליפה',
+      en: 'Armani Hotel Dubai — Luxury Inside Burj Khalifa',
+      ar: 'فندق أرماني دبي — فخامة داخل برج خليفة',
+      fr: 'Armani Hotel Dubai — Le luxe au cœur du Burj Khalifa',
+      ru: 'Armani Hotel Dubai — Роскошь внутри Бурдж Халифа',
+    },
+    excerpt: {
+      he: 'המלון היחיד בעולם שממוקם בתוך הבניין הגבוה בעולם, מעוצב כולו על ידי ג\'ורג\'ו ארמאני עצמו.',
+      en: 'The only hotel in the world located inside the tallest building, entirely designed by Giorgio Armani himself.',
+      ar: 'الفندق الوحيد في العالم داخل أطول مبنى، صممه جورجيو أرماني بالكامل.',
+      fr: 'Le seul hôtel au monde situé dans le plus haut bâtiment, entièrement conçu par Giorgio Armani.',
+      ru: 'Единственный в мире отель внутри самого высокого здания, полностью оформленный Джорджо Армани.',
+    },
+    content: {
+      he: `Armani Hotel Dubai הוא מלון יוקרה אקסקלוסיבי הממוקם בקומות הראשונות של בורג' ח'ליפה — הבניין הגבוה ביותר בעולם. המלון עוצב כולו על ידי ג'ורג'ו ארמאני, מהלובי ועד לפינה האחרונה בכל חדר.
+
+**מיקום ייחודי**
+
+בתוך בורג' ח'ליפה, במרכז Downtown Dubai. צעדים מ-Dubai Mall, מזרקות דובאי ו-Dubai Opera. אין מיקום יוקרתי ומרכזי מזה בכל דובאי.
+
+**חדרים וסוויטות**
+
+160 חדרים וסוויטות בלבד — כולם מעוצבים בסגנון Armani מינימליסטי ואלגנטי. חומרים יוקרתיים, קווים נקיים, גוונים של שוקולד, שמנת וזהב עדין. תחושת בית יוקרתית ושקטה.
+
+**מסעדות**
+
+- **Armani/Ristorante** — מטבח איטלקי אלגנטי
+- **Armani/Amal** — מטבח הודי יוקרתי
+- **Armani/Hashi** — מסעדה יפנית אותנטית
+- **Armani/Mediterraneo** — מטבח ים תיכוני
+- **Armani/Privé** — לאונג' בר אקסקלוסיבי עם DJ
+
+**ספא ובריאות**
+
+ספא Armani/SPA מציע טיפולים מפנקים בהשראת ארמאני — שימוש במוצרי טיפוח של Armani עצמו. בריכה פרטית, סאונה ואזורי רגיעה.
+
+**למה אנחנו ב-EVE BLUE אוהבים את Armani Hotel?**
+
+- חוויית יוקרה אינטימית ושקטה
+- עיצוב ברמה שאין לה מתחרה
+- מיקום לא ייאמן — בתוך בורג' ח'ליפה
+- שירות אישי ומושלם
+
+רוצים לחוות לילה בבניין הגבוה ביותר בעולם? דברו איתנו.`,
+      en: `Armani Hotel Dubai is an exclusive luxury hotel located on the first floors of Burj Khalifa — the world's tallest building. The entire hotel was designed by Giorgio Armani, from the lobby to the last corner of every room.
+
+**Unique Location**
+
+Inside Burj Khalifa, in the heart of Downtown Dubai. Steps from Dubai Mall, Dubai Fountains, and Dubai Opera. There's no more luxurious and central location in all of Dubai.
+
+**Rooms & Suites**
+
+Only 160 rooms and suites — all designed in Armani's minimalist, elegant style. Luxurious materials, clean lines, shades of chocolate, cream, and subtle gold. A quiet, luxurious home-like feeling.
+
+**Restaurants**
+
+- **Armani/Ristorante** — Elegant Italian cuisine
+- **Armani/Amal** — Luxury Indian cuisine
+- **Armani/Hashi** — Authentic Japanese restaurant
+- **Armani/Mediterraneo** — Mediterranean cuisine
+- **Armani/Privé** — Exclusive lounge bar with DJ
+
+**Spa & Wellness**
+
+Armani/SPA offers pampering treatments inspired by Armani — using Armani's own skincare products. Private pool, sauna, and relaxation areas.
+
+**Why EVE BLUE loves Armani Hotel**
+
+- Intimate and quiet luxury experience
+- Unrivaled design quality
+- Unbelievable location — inside Burj Khalifa
+- Personal and perfect service
+
+Want to experience a night in the world's tallest building? Talk to us.`,
+      ar: 'فندق أرماني دبي هو فندق فاخر حصري يقع في الطوابق الأولى من برج خليفة.',
+      fr: "L'Armani Hotel Dubai est un hôtel de luxe exclusif situé aux premiers étages du Burj Khalifa.",
+      ru: 'Armani Hotel Dubai — эксклюзивный отель класса люкс в первых этажах Бурдж Халифа.',
+    },
+  },
+  {
+    id: 'address-dubai-marina',
+    image: blogMarinaGate,
+    category: {
+      he: 'מלונות מומלצים',
+      en: 'Recommended Hotels',
+      ar: 'فنادق موصى بها',
+      fr: 'Hôtels recommandés',
+      ru: 'Рекомендуемые отели',
+    },
+    title: {
+      he: 'Address Dubai Marina — יוקרה על המרינה',
+      en: 'Address Dubai Marina — Luxury on the Marina',
+      ar: 'أدرس دبي مارينا — فخامة على المارينا',
+      fr: 'Address Dubai Marina — Le luxe sur la Marina',
+      ru: 'Address Dubai Marina — Роскошь на Марине',
+    },
+    excerpt: {
+      he: 'מלון יוקרתי מרשת Address עם נוף מרהיב למרינה של דובאי, בריכות על הגג ומיקום מושלם לבילויים.',
+      en: 'Luxury Address hotel with stunning Dubai Marina views, rooftop pools, and perfect location for entertainment.',
+      ar: 'فندق فاخر من سلسلة أدرس مع إطلالات خلابة على مارينا دبي.',
+      fr: 'Hôtel de luxe Address avec vue imprenable sur la marina de Dubaï.',
+      ru: 'Роскошный отель Address с потрясающим видом на Дубай Марину.',
+    },
+    content: {
+      he: `Address Dubai Marina הוא מלון יוקרתי מרשת Address Hotels הממוקם בלב מרינה דובאי, עם נוף ישיר ליאכטות, למגדלי המרינה ולים.
+
+**מיקום מרכזי**
+
+במרכז Dubai Marina — האזור הפופולרי ביותר לבילויים בדובאי. צעדים מ-JBR Walk, The Beach, וקרוב ל-Ain Dubai. קל להגיע לכל מקום — טראם, מטרו ומוניות זמינים.
+
+**חדרים וסוויטות**
+
+חדרים מעוצבים בסגנון מודרני ואלגנטי עם נוף למרינה או לים. סוויטות מרווחות עם סלון נפרד ומרפסת. כל החדרים מצוידים בטכנולוגיה מתקדמת ומצעים יוקרתיים.
+
+**בריכות וספא**
+
+- בריכת אינפיניטי על הגג עם נוף פנורמי למרינה
+- ספא מפנק עם טיפולים מגוונים
+- חדר כושר מצויד ברמה גבוהה
+
+**מסעדות**
+
+- **The Restaurant** — מטבח בינלאומי יוקרתי
+- **Asia Asia** — מסעדה אסייתית עם נוף למרינה
+- **Shades** — בר על הבריכה
+- מגוון מסעדות ובארים ב-Marina Walk במרחק הליכה
+
+**למה אנחנו ב-EVE BLUE אוהבים את Address Dubai Marina?**
+
+- מיקום מושלם באזור הבילויים של דובאי
+- נוף מרהיב למרינה ולים
+- קרוב ל-JBR, The Beach ו-Ain Dubai
+- שירות Address ברמה הגבוהה ביותר
+
+רוצים שנזמין לכם חדר ב-Address Marina? דברו איתנו.`,
+      en: `Address Dubai Marina is a luxury hotel from the Address Hotels chain, located in the heart of Dubai Marina with direct views of yachts, marina towers, and the sea.
+
+**Central Location**
+
+In the center of Dubai Marina — Dubai's most popular entertainment district. Steps from JBR Walk, The Beach, and close to Ain Dubai. Easy to get anywhere — tram, metro, and taxis available.
+
+**Rooms & Suites**
+
+Rooms designed in modern elegant style with marina or sea views. Spacious suites with separate living area and balcony. All rooms equipped with advanced technology and luxury linens.
+
+**Pools & Spa**
+
+- Rooftop infinity pool with panoramic marina views
+- Pampering spa with diverse treatments
+- High-end equipped fitness center
+
+**Restaurants**
+
+- **The Restaurant** — Luxury international cuisine
+- **Asia Asia** — Asian restaurant with marina views
+- **Shades** — Poolside bar
+- Various restaurants and bars at Marina Walk within walking distance
+
+**Why EVE BLUE loves Address Dubai Marina**
+
+- Perfect location in Dubai's entertainment district
+- Stunning marina and sea views
+- Close to JBR, The Beach, and Ain Dubai
+- Address service at the highest level
+
+Want us to book a room at Address Marina? Talk to us.`,
+      ar: 'أدرس دبي مارينا هو فندق فاخر من سلسلة فنادق أدرس في قلب مارينا دبي.',
+      fr: "Address Dubai Marina est un hôtel de luxe de la chaîne Address Hotels au cœur de Dubai Marina.",
+      ru: 'Address Dubai Marina — роскошный отель сети Address Hotels в самом сердце Дубай Марины.',
     },
   },
 ];

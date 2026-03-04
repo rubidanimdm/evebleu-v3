@@ -420,7 +420,7 @@ export default function MainScreen() {
       ═══════════════════════════════════════════════ */}
       {(() => {
         const hotelArticles = BLOG_ARTICLES.filter(a => 
-          ['jw-marriott-marquis-dubai', 'shangri-la-dubai', 'sofitel-dubai-jumeirah-beach', 'park-hyatt-dubai', 'rixos-premium-dubai-jbr'].includes(a.id)
+          ['atlantis-the-royal', 'atlantis-the-palm', 'five-palm-jumeirah', 'armani-hotel-burj-khalifa', 'address-dubai-marina'].includes(a.id)
         );
         const hotelStripTitle: Record<string, string> = {
           he: '🏨 המלונות המומלצים שלנו',
