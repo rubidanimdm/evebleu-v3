@@ -1311,6 +1311,688 @@ Want to hear more? Contact us and we'll arrange booking, airport transfers, and 
       ru: 'Rixos Premium Dubai JBR — один из самых популярных отелей Дубая, роскошный отель «всё включено», предлагающий полный спектр услуг.',
     },
   },
+  {
+    id: 'burj-khalifa-guide',
+    image: blogBurjKhalifa,
+    category: {
+      he: 'אטרקציות מומלצות',
+      en: 'Top Attractions',
+      ar: 'معالم موصى بها',
+      fr: 'Attractions incontournables',
+      ru: 'Лучшие достопримечательности',
+    },
+    title: {
+      he: 'ברג\' ח\'ליפה — המבנה הגבוה ביותר בעולם',
+      en: 'Burj Khalifa — The World\'s Tallest Building',
+      ar: 'برج خليفة — أطول مبنى في العالم',
+      fr: 'Burj Khalifa — Le plus haut bâtiment du monde',
+      ru: 'Бурдж-Халифа — Самое высокое здание в мире',
+    },
+    excerpt: {
+      he: 'מתנשא לגובה 828 מטרים עם 163 קומות, ברג\' ח\'ליפה הוא הסמל של דובאי. תצפית מקומה 124 או 148, מזרקות מוזיקליות ומסעדות בשמיים.',
+      en: 'Soaring 828 meters with 163 floors, Burj Khalifa is Dubai\'s ultimate icon. Observation decks, musical fountains, and sky-high dining.',
+      ar: 'يرتفع 828 مترًا مع 163 طابقًا، برج خليفة هو رمز دبي الأبرز.',
+      fr: 'Culminant à 828 mètres avec 163 étages, le Burj Khalifa est l\'icône ultime de Dubaï.',
+      ru: 'Возвышаясь на 828 метров с 163 этажами, Бурдж-Халифа — главный символ Дубая.',
+    },
+    content: {
+      he: `ברג' ח'ליפה (Burj Khalifa) הוא לא רק המבנה הגבוה ביותר בעולם — הוא סמל של שאפתנות, חדשנות וחזון. מתנשא לגובה מדהים של 828 מטרים עם 163 קומות, הוא שולט על קו הרקיע של דובאי ומהווה חובה לכל מי שמבקר בעיר.
+
+**היסטוריה ובנייה**
+
+הבנייה של ברג' ח'ליפה החלה בשנת 2004 והסתיימה בשנת 2010. יותר מ-12,000 פועלים עבדו על הפרויקט בו-זמנית. המגדל תוכנן על ידי חברת האדריכלות האמריקאית Skidmore, Owings & Merrill בהשראת פרח הספיידר לילי (Hymenocallis). המבנה מכיל למעלה מ-330,000 מ"ק של בטון ו-31,400 טון פלדה.
+
+**תצפיות**
+
+- **At The Top (קומה 124-125)** — תצפית פופולרית עם נוף פנורמי 360 מעלות על דובאי. כולל טלסקופים אינטראקטיביים ותצוגות מולטימדיה
+- **At The Top SKY (קומה 148)** — החוויה האקסקלוסיבית. תצפית מהקומה הגבוהה ביותר הפתוחה לציבור בעולם, עם טרקלין פרטי, כיבוד ושירות אישי
+- **הטיפ שלנו**: מומלץ להזמין כרטיסים לשעות השקיעה — הנוף פשוט עוצר נשימה כשהשמש שוקעת מעל המדבר והעיר נדלקת באורות
+
+**מזרקת דובאי (Dubai Fountain)**
+
+ממש למרגלות ברג' ח'ליפה שוכנת מזרקת דובאי — מופע המים הגדול ביותר בעולם. סילוני מים מגיעים לגובה של 150 מטרים, מלווים במוזיקה ותאורה דרמטית. המופעים מתקיימים כל ערב כל 30 דקות (18:00-23:00) וביום בשעות 13:00 ו-13:30. ניתן לצפות בחינם מהטיילת שמסביב, או להזמין סיור בסירת אבנרה על האגם.
+
+**מסעדות בשמיים**
+
+- **At.mosphere** — מסעדה וטרקלין בקומה 122 של ברג' ח'ליפה. ארוחות ברמה גבוהה עם נוף שאין דומה לו. חוויה קולינרית בלתי נשכחת
+- **The Lounge** — טרקלין אלגנטי לתה אחר הצהריים וקוקטיילים בקומות הגבוהות
+
+**מתחם Downtown Dubai**
+
+ברג' ח'ליפה ממוקם בלב Downtown Dubai — האזור התוסס ביותר בעיר. מסביב תמצאו את Dubai Mall (הקניון הגדול ביותר בעולם), Dubai Opera, Souk Al Bahar ומגוון מסעדות ובתי קפה.
+
+**עובדות מעניינות**
+
+- מהירות המעליות: 10 מטרים לשנייה
+- ניתן לראות את המגדל ממרחק של כ-95 ק"מ
+- יש בו 57 מעליות ו-8 מעליות מדרגות
+- הטמפרטורה בפסגה נמוכה בכ-6 מעלות מהרחוב
+- במגדל יש מלון ארמאני, דירות מגורים, משרדים ותצפיות
+
+**איך EVE BLUE עוזרת?**
+
+- הזמנת כרטיסי כניסה לתצפית At The Top ו-SKY
+- ארגון ארוחת ערב ב-At.mosphere
+- שירות נהג VIP להגעה וחזרה
+- שילוב הביקור עם אטרקציות נוספות ב-Downtown
+- סיורים מודרכים פרטיים
+
+פנו אלינו ב-EVE BLUE ונדאג שהחוויה תהיה מושלמת.`,
+      en: `Burj Khalifa is not just the world's tallest building — it's a symbol of ambition, innovation, and vision. Soaring to an incredible 828 meters with 163 floors, it dominates Dubai's skyline and is a must-visit for every traveler.
+
+**History & Construction**
+
+Construction began in 2004 and was completed in 2010. Over 12,000 workers were employed simultaneously. Designed by American firm Skidmore, Owings & Merrill, inspired by the Spider Lily flower. The structure contains over 330,000 cubic meters of concrete and 31,400 tons of steel.
+
+**Observation Decks**
+
+- **At The Top (Floors 124-125)** — Popular observation deck with 360-degree panoramic views. Features interactive telescopes and multimedia displays
+- **At The Top SKY (Floor 148)** — The exclusive experience. World's highest public observation deck with a private lounge, refreshments, and personal service
+- **Our tip**: Book sunset time slots — the view is absolutely breathtaking as the sun sets over the desert and the city lights up
+
+**Dubai Fountain**
+
+At the foot of Burj Khalifa lies the Dubai Fountain — the world's largest choreographed fountain system. Water jets reach 150 meters high, accompanied by music and dramatic lighting. Shows run every evening every 30 minutes (6PM-11PM) and during the day at 1:00PM and 1:30PM. Watch for free from the surrounding promenade, or book an abra boat ride on the lake.
+
+**Sky-High Dining**
+
+- **At.mosphere** — Restaurant and lounge on the 122nd floor with unmatched views and fine dining
+- **The Lounge** — Elegant lounge for afternoon tea and cocktails on the upper floors
+
+**Downtown Dubai District**
+
+Burj Khalifa sits in the heart of Downtown Dubai — the city's most vibrant area. Nearby you'll find Dubai Mall, Dubai Opera, Souk Al Bahar, and numerous restaurants and cafés.
+
+**Fun Facts**
+
+- Elevator speed: 10 meters per second
+- Visible from approximately 95 km away
+- Contains 57 elevators and 8 escalators
+- Temperature at the top is about 6°C cooler than street level
+- Houses Armani Hotel, residential apartments, offices, and observation decks
+
+**How EVE BLUE Helps**
+
+- Booking entry tickets for At The Top and SKY
+- Arranging dinner at At.mosphere
+- VIP driver service for arrival and return
+- Combining the visit with other Downtown attractions
+- Private guided tours
+
+Contact EVE BLUE and we'll make the experience perfect.`,
+      ar: 'برج خليفة ليس فقط أطول مبنى في العالم — إنه رمز للطموح والابتكار والرؤية.',
+      fr: "Le Burj Khalifa n'est pas seulement le plus haut bâtiment du monde — c'est un symbole d'ambition, d'innovation et de vision.",
+      ru: 'Бурдж-Халифа — это не просто самое высокое здание в мире, это символ амбиций, инноваций и видения.',
+    },
+  },
+  {
+    id: 'dubai-mall-guide',
+    image: blogDubaiMall,
+    category: {
+      he: 'אטרקציות מומלצות',
+      en: 'Top Attractions',
+      ar: 'معالم موصى بها',
+      fr: 'Attractions incontournables',
+      ru: 'Лучшие достопримечательности',
+    },
+    title: {
+      he: 'Dubai Mall — הקניון הגדול ביותר בעולם',
+      en: 'Dubai Mall — The World\'s Largest Shopping Destination',
+      ar: 'دبي مول — أكبر وجهة تسوق في العالم',
+      fr: 'Dubai Mall — La plus grande destination shopping au monde',
+      ru: 'Dubai Mall — Крупнейший торговый центр в мире',
+    },
+    excerpt: {
+      he: 'יותר מ-1,200 חנויות, אקווריום ענק, משטח החלקה על קרח, מפל מים ואטרקציות לכל הגילאים — הכל תחת קורת גג אחת.',
+      en: 'Over 1,200 stores, a giant aquarium, ice rink, waterfall, and attractions for all ages — all under one roof.',
+      ar: 'أكثر من 1200 متجر وحوض سمك عملاق وحلبة تزلج ومعالم لجميع الأعمار.',
+      fr: 'Plus de 1 200 boutiques, un aquarium géant, une patinoire et des attractions pour tous les âges.',
+      ru: 'Более 1200 магазинов, гигантский аквариум, каток, водопад и развлечения для всех возрастов.',
+    },
+    content: {
+      he: `Dubai Mall הוא הרבה יותר מקניון — זו עיר שלמה בפני עצמה. עם שטח כולל של למעלה מ-1.1 מיליון מ"ר, הוא הקניון הגדול ביותר בעולם ואחד המקומות המבוקרים ביותר על פני כדור הארץ, עם למעלה מ-80 מיליון מבקרים בשנה.
+
+**קניות ברמה עולמית**
+
+הקניון מכיל למעלה מ-1,200 חנויות, כולל כל מותג יוקרה שאפשר לחשוב עליו:
+- **Fashion Avenue** — האזור היוקרתי ביותר עם מותגים כמו Louis Vuitton, Chanel, Dior, Gucci, Prada, Hermès ורבים אחרים
+- **Gold Souk** — שוק זהב מודרני עם עשרות חנויות תכשיטים
+- **Electronics** — מגוון ענק של חנויות אלקטרוניקה כולל Apple Store ענק
+- **Level Kids** — קומה שלמה המוקדשת לילדים עם מותגי אופנה, צעצועים וחנויות ייחודיות
+
+**אטרקציות ייחודיות**
+
+- **Dubai Aquarium & Underwater Zoo** — אקווריום ענק עם מנהרת זכוכית של 48 מטר. כרישים, קרניים וצבי ים. אפשר גם לצלול עם כרישים או לעשות סיור בסירת תחתית שקופה
+- **Dubai Ice Rink** — משטח החלקה על קרח בגודל אולימפי. מושלם לשעה של כיף, גם כשבחוץ 40 מעלות
+- **VR Park** — פארק מציאות מדומה עם עשרות חוויות אינטראקטיביות
+- **KidZania** — עיר מיניאטורית שבה ילדים יכולים "לעבוד" במקצועות שונים
+- **Dubai Dino** — שלד דינוזאור אמיתי בן 155 מיליון שנה המוצג בכניסה הראשית
+
+**מפל Dubai Mall**
+
+מפל הסלע המרשים בגובה 4 קומות (24 מטר) הוא אחד מנקודות הציון האייקוניות של הקניון. פסלי צוללנים אנושיים נופלים לצד המים — חובה לצלם!
+
+**אוכל ומסעדות**
+
+הקניון מציע מאות מסעדות ובתי קפה:
+- **אזור המסעדות הראשי** — קומה שלמה עם מגוון מטבחים מכל העולם
+- **מסעדות יוקרה** — כולל סניפים של מסעדות מישלן
+- **Souk Al Bahar** — קניון סמוך עם מסעדות ונוף למזרקת דובאי
+- **בתי קפה ומאפיות** — מ-Starbucks Reserve ועד מאפיות בוטיק מקומיות
+
+**מזרקת דובאי**
+
+היציאה מהקניון לטיילת מזרקת דובאי היא חוויה בפני עצמה. כל ערב, מופעי המזרקות המוזיקליות מרהיבים את העין עם סילוני מים, אורות ומוזיקה.
+
+**שעות פתיחה**
+
+הקניון פתוח כל יום, כולל שישי ושבת. בימי חול בדרך כלל 10:00-00:00, ובסופי שבוע עד 01:00.
+
+**טיפים חשובים**
+
+- הקניון ענק — תכננו מראש אילו אזורים אתם רוצים לבקר
+- הורידו את אפליקציית Dubai Mall לניווט
+- בחודשי הקיץ הקניון עמוס יותר (כולם בורחים מהחום!)
+- חניה חינמית לשעות הראשונות
+- השתמשו במפה לאתר חנויות ספציפיות
+
+**איך EVE BLUE עוזרת?**
+
+- ארגון יום קניות VIP עם סטייליסט אישי
+- הזמנת כרטיסים לאטרקציות (אקווריום, VR Park, KidZania)
+- שירות נהג VIP להגעה וחזרה
+- המלצות למסעדות ושריון מקומות
+- שילוב עם ביקור בברג' ח'ליפה ומזרקת דובאי
+
+דברו איתנו ונתכנן לכם יום מושלם ב-Dubai Mall.`,
+      en: `Dubai Mall is far more than a shopping center — it's an entire city unto itself. With a total area exceeding 1.1 million square meters, it's the world's largest mall and one of the most visited places on Earth, attracting over 80 million visitors annually.
+
+**World-Class Shopping**
+
+The mall houses over 1,200 stores, including every luxury brand imaginable:
+- **Fashion Avenue** — The most exclusive area with Louis Vuitton, Chanel, Dior, Gucci, Prada, Hermès, and more
+- **Gold Souk** — A modern gold market with dozens of jewelry stores
+- **Electronics** — Vast selection including a massive Apple Store
+- **Level Kids** — An entire floor dedicated to children's fashion, toys, and unique stores
+
+**Unique Attractions**
+
+- **Dubai Aquarium & Underwater Zoo** — Massive aquarium with a 48-meter glass tunnel. Sharks, rays, and sea turtles. Options for shark diving or glass-bottom boat tours
+- **Dubai Ice Rink** — Olympic-sized ice skating rink. Perfect fun even when it's 40°C outside
+- **VR Park** — Virtual reality park with dozens of interactive experiences
+- **KidZania** — Miniature city where kids can "work" different jobs
+- **Dubai Dino** — A real 155-million-year-old dinosaur skeleton displayed at the main entrance
+
+**The Waterfall**
+
+The impressive 4-story (24-meter) rock waterfall with human diver sculptures is one of the mall's iconic landmarks — a must-photograph!
+
+**Dining**
+
+Hundreds of restaurants and cafés across the mall, from luxury dining to international food courts, Souk Al Bahar with fountain views, and boutique local bakeries.
+
+**Dubai Fountain**
+
+Stepping out to the Dubai Fountain promenade is an experience in itself. Nightly musical fountain shows with water jets, lights, and music.
+
+**Tips**
+
+- The mall is enormous — plan which areas you want to visit
+- Download the Dubai Mall app for navigation
+- Summer months are busier (everyone escapes the heat!)
+- Free parking for first hours
+
+**How EVE BLUE Helps**
+
+- Organizing VIP shopping days with personal stylists
+- Booking attraction tickets (Aquarium, VR Park, KidZania)
+- VIP driver service
+- Restaurant recommendations and reservations
+- Combining with Burj Khalifa and Dubai Fountain visits
+
+Talk to us and we'll plan your perfect Dubai Mall day.`,
+      ar: 'دبي مول هو أكثر بكثير من مجرد مركز تسوق — إنه مدينة كاملة بحد ذاتها.',
+      fr: "Le Dubai Mall est bien plus qu'un centre commercial — c'est une véritable ville à lui seul.",
+      ru: 'Dubai Mall — это гораздо больше, чем торговый центр, это целый город.',
+    },
+  },
+  {
+    id: 'desert-safari-dubai',
+    image: blogDesertSafari,
+    category: {
+      he: 'אטרקציות מומלצות',
+      en: 'Top Attractions',
+      ar: 'معالم موصى بها',
+      fr: 'Attractions incontournables',
+      ru: 'Лучшие достопримечательности',
+    },
+    title: {
+      he: 'ספארי מדבר בדובאי — הרפתקה בין הדיונות',
+      en: 'Desert Safari Dubai — An Adventure Among the Dunes',
+      ar: 'سفاري الصحراء في دبي — مغامرة بين الكثبان',
+      fr: 'Safari dans le désert de Dubaï — Aventure parmi les dunes',
+      ru: 'Сафари в пустыне Дубая — Приключение среди дюн',
+    },
+    excerpt: {
+      he: 'חוויית מדבר אותנטית: נסיעת שטח מרגשת בדיונות, רכיבה על גמלים, סנדבורדינג, ארוחת ערב בדואית ומופעי ריקוד מסורתיים תחת כיפת השמיים.',
+      en: 'An authentic desert experience: thrilling dune bashing, camel riding, sandboarding, Bedouin dinner, and traditional dance performances under the stars.',
+      ar: 'تجربة صحراوية أصيلة: قيادة مثيرة على الكثبان وركوب الجمال وعشاء بدوي.',
+      fr: 'Une expérience désertique authentique : dune bashing, balade en chameau, dîner bédouin.',
+      ru: 'Аутентичный опыт пустыни: захватывающая езда по дюнам, катание на верблюдах, бедуинский ужин.',
+    },
+    content: {
+      he: `ספארי מדבר הוא אחת החוויות הייחודיות ביותר שדובאי מציעה — ואחת הפופולריות ביותר בקרב תיירים מכל העולם. תוך נסיעה קצרה מהעיר, אתם מוצאים את עצמכם בלב המדבר הערבי, עם דיונות חול זהובות משתרעות עד האופק.
+
+**מה כולל ספארי מדבר?**
+
+חוויית ספארי מדבר טיפוסית כוללת מגוון פעילויות מרגשות:
+
+**Dune Bashing (נסיעת שטח בדיונות)**
+
+זוהי ללא ספק ההיילייט של הספארי. נהג מקצועי ומנוסה נוהג ברכב 4x4 (בדרך כלל Toyota Land Cruiser) במהירות על פני הדיונות — עולה ויורד בזוויות מטורפות. זו חוויה אדרנלינית ומרגשת שמתאימה לכל הגילאים (למעט תינוקות ונשים בהריון).
+
+**רכיבה על גמלים**
+
+חוויה מסורתית ואותנטית. הגמלים עדינים ומאולפים, והרכיבה מציעה נקודת מבט ייחודית על המדבר. מושלם לצילומים ולחוויה תרבותית.
+
+**סנדבורדינג**
+
+כמו סנובורד — אבל על חול! גולשים במורד הדיונות על לוח. פעילות כיפית שמתאימה גם למתחילים.
+
+**מחנה בדואי מסורתי**
+
+בסיום הפעילויות, מגיעים למחנה בדואי מסורתי במדבר:
+- **ארוחת ערב** — בופה עשיר עם מנות ערביות מסורתיות: חומוס, פיתות טריות, שווארמה, קבב, סלטים ועוד
+- **שישה (נרגילה)** — עישון נרגילה מסורתי באווירה רגועה
+- **חינה (Henna)** — ציורי חינה מסורתיים על הידיים — בחינם!
+- **תלבושות מסורתיות** — אפשרות ללבוש בגדים ערביים מסורתיים ולהצטלם
+- **צפייה בכוכבים** — המדבר מציע שמיים נקיים מדהימים בלילה
+
+**מופעים**
+
+- **ריקוד בטן** — מופע ריקוד מרהיב
+- **ריקוד טנורה** — ריקוד מסורתי עם חצאיות מסתובבות צבעוניות — מהפנט!
+- **מופע אש** — להטוטנות אש מרשימה
+
+**סוגי ספארי**
+
+- **ספארי אחר הצהריים/ערב** — הפופולרי ביותר. יוצאים בסביבות 15:00-16:00, חוזרים ב-21:00-22:00
+- **ספארי בוקר** — נסיעת שטח בדיונות ללא ארוחת ערב, מתאים למי שרוצה פעילות קצרה
+- **ספארי לילה** — ארוחת ערב ומופעים במדבר ללא Dune Bashing
+- **ספארי VIP/פרטי** — חוויה אקסקלוסיבית עם רכב פרטי, שולחן VIP וכיבוד מיוחד
+
+**טיפים חשובים**
+
+- לבשו בגדים נוחים וסגורים (חול נכנס לכל מקום!)
+- קחו מצלמה — השקיעות במדבר מטורפות
+- מומלץ להימנע מאכילה כבדה לפני ה-Dune Bashing
+- קחו מים — למרות שמספקים, תמיד טוב שיהיה
+- מומלץ בחודשי החורף (נובמבר-מרץ) כשמזג האוויר נעים
+
+**איך EVE BLUE עוזרת?**
+
+- ארגון ספארי VIP פרטי עם איסוף מהמלון
+- בחירת הספארי המתאים לכם (משפחות, זוגות, קבוצות)
+- תוספות מיוחדות: טיסת בלון כדור פורח, רכיבה על סוסים, Quad Biking
+- שילוב עם אטרקציות נוספות ביום הספארי
+
+דברו איתנו ונדאג לחוויה מדברית בלתי נשכחת.`,
+      en: `Desert safari is one of the most unique experiences Dubai offers — and one of the most popular among tourists worldwide. A short drive from the city, you find yourself in the heart of the Arabian desert, with golden sand dunes stretching to the horizon.
+
+**What Does a Desert Safari Include?**
+
+A typical desert safari offers a variety of thrilling activities:
+
+**Dune Bashing**
+
+The undisputed highlight. A professional driver navigates a 4x4 (usually Toyota Land Cruiser) at speed across the dunes — climbing and descending at extreme angles. An adrenaline-pumping experience suitable for all ages (except infants and pregnant women).
+
+**Camel Riding**
+
+A traditional, authentic experience. The camels are gentle and trained, offering a unique perspective of the desert. Perfect for photos and cultural immersion.
+
+**Sandboarding**
+
+Like snowboarding — but on sand! Slide down dunes on a board. Fun activity suitable for beginners too.
+
+**Traditional Bedouin Camp**
+
+After activities, arrive at a traditional Bedouin camp:
+- **Dinner** — Rich buffet with traditional Arabian dishes: hummus, fresh pita, shawarma, kebabs, salads
+- **Shisha** — Traditional hookah smoking in a relaxed atmosphere
+- **Henna** — Traditional henna art on hands — free!
+- **Traditional costumes** — Option to wear traditional Arabian clothing for photos
+- **Stargazing** — The desert offers incredibly clear night skies
+
+**Performances**
+
+- **Belly dance** — Stunning dance performance
+- **Tanoura dance** — Traditional spinning skirt dance — mesmerizing!
+- **Fire show** — Impressive fire juggling
+
+**Types of Safari**
+
+- **Afternoon/Evening** — Most popular. Depart around 3-4PM, return 9-10PM
+- **Morning** — Dune bashing without dinner, for those wanting a shorter activity
+- **Overnight** — Dinner and shows without dune bashing
+- **VIP/Private** — Exclusive experience with private vehicle, VIP seating, special refreshments
+
+**Important Tips**
+
+- Wear comfortable, closed clothing (sand gets everywhere!)
+- Bring a camera — desert sunsets are incredible
+- Avoid heavy eating before dune bashing
+- Bring water — always good to have extra
+- Best during winter months (November-March) when weather is pleasant
+
+**How EVE BLUE Helps**
+
+- Arranging private VIP safari with hotel pickup
+- Choosing the right safari for you (families, couples, groups)
+- Special additions: hot air balloon rides, horseback riding, quad biking
+- Combining with other attractions on safari day
+
+Talk to us and we'll ensure an unforgettable desert experience.`,
+      ar: 'سفاري الصحراء هي واحدة من أكثر التجارب فرادة التي تقدمها دبي.',
+      fr: "Le safari dans le désert est l'une des expériences les plus uniques que Dubaï offre.",
+      ru: 'Сафари в пустыне — одно из самых уникальных впечатлений, которые предлагает Дубай.',
+    },
+  },
+  {
+    id: 'palm-jumeirah-atlantis',
+    image: blogPalmAtlantis,
+    category: {
+      he: 'אטרקציות מומלצות',
+      en: 'Top Attractions',
+      ar: 'معالم موصى بها',
+      fr: 'Attractions incontournables',
+      ru: 'Лучшие достопримечательности',
+    },
+    title: {
+      he: 'Palm Jumeirah & Atlantis — האי המלאכותי המפורסם בעולם',
+      en: 'Palm Jumeirah & Atlantis — The World\'s Most Famous Man-Made Island',
+      ar: 'نخلة جميرا وأتلانتس — أشهر جزيرة اصطناعية في العالم',
+      fr: 'Palm Jumeirah & Atlantis — L\'île artificielle la plus célèbre au monde',
+      ru: 'Палм-Джумейра и Атлантис — Самый знаменитый рукотворный остров в мире',
+    },
+    excerpt: {
+      he: 'האי בצורת דקל שניתן לראות מהחלל, עם מלונות אייקוניים, פארק מים ענק, חופים מרהיבים ומסעדות בינלאומיות ברמה הגבוהה ביותר.',
+      en: 'The palm-shaped island visible from space, with iconic hotels, a massive waterpark, stunning beaches, and world-class international restaurants.',
+      ar: 'الجزيرة على شكل نخلة المرئية من الفضاء مع فنادق أيقونية وحديقة مائية ضخمة.',
+      fr: "L'île en forme de palmier visible depuis l'espace, avec des hôtels emblématiques et un parc aquatique géant.",
+      ru: 'Остров в форме пальмы, видимый из космоса, с культовыми отелями и огромным аквапарком.',
+    },
+    content: {
+      he: `Palm Jumeirah הוא אחד הפרויקטים ההנדסיים המרהיבים ביותר שנבנו אי פעם — אי מלאכותי בצורת דקל שנראה מהחלל. הוא הפך לסמל של דובאי ולאחד היעדים התיירותיים הפופולריים ביותר בעולם.
+
+**על האי**
+
+Palm Jumeirah נבנה באמצעות חול ים שנחפר מתחתית המפרץ הפרסי. הוא כולל "גזע" מרכזי, 16 "עלים" (Fronds) ו"סהר" חיצוני (Crescent). על האי יש מלונות יוקרה, וילות פרטיות, דירות, מסעדות, חופים ומרכזי בילוי.
+
+**Atlantis, The Palm**
+
+מלון הדגל של האי, Atlantis, הוא אייקון בפני עצמו:
+- **Aquaventure Waterpark** — פארק המים הגדול ביותר במזרח התיכון ואחד הגדולים בעולם. מגלשות ענק (כולל Leap of Faith — מגלשה כמעט אנכית!), נהר עצל, חוף פרטי ואזורי ילדים
+- **The Lost Chambers Aquarium** — אקווריום מרהיב בהשראת העיר האבודה אטלנטיס. מנהרות זכוכית, 65,000 יצורי ים וחוויה אינטראקטיבית
+- **Dolphin Bay** — שחייה עם דולפינים בסביבה מבוקרת ובטוחה
+- **Sea Lion Point** — מפגש עם אריות ים
+
+**Atlantis The Royal**
+
+מלון היוקרה החדש שנפתח ב-2023 הוא הדבר הבא:
+- עיצוב ארכיטקטוני עתידני עם בריכות אינפיניטי מרחפות
+- מסעדות של שפים מפורסמים: Nobu, Heston Blumenthal, José Andrés
+- מועדון חוף Cloud 22
+- ספא ESPA מפואר
+
+**חופים**
+
+Palm Jumeirah מציע חופים מהיפים ביותר בדובאי:
+- **חוף Atlantis** — חוף פרטי לאורחי המלון
+- **West Beach** — חוף ציבורי פופולרי עם נוף למגדלי Dubai Marina
+- **חופי מלונות** — רבים מהמלונות מציעים יום חוף (Day Pass) לא-אורחים
+
+**מסעדות**
+
+- **Nobu** — המסעדה היפנית המפורסמת של השף Nobu Matsuhisa
+- **Ossiano** — חוויית אוכל מתחת למים (!) עם נוף לאקווריום
+- **Bread Street Kitchen** — של השף Gordon Ramsay
+- **STAY by Yannick Alléno** — מטבח צרפתי ברמה גבוהה
+
+**המונורייל**
+
+המונורייל של Palm Jumeirah מחבר את שער האי ל-Atlantis. הנסיעה מציעה נוף מרהיב לאי מלמעלה ולמגדלי Dubai Marina. זוהי דרך נוחה ומהנה להגיע ל-Atlantis.
+
+**פעילויות על האי**
+
+- סיור בסירה מהירה סביב האי
+- סקיי דייבינג מעל Palm Jumeirah (Skydive Dubai)
+- שייט על יאכטה עם עצירה ליד האי
+- טיסת הליקופטר לנוף אווירי מדהים
+- ג'ט סקי וספורט ימי
+
+**טיפים**
+
+- מומלץ להקדיש יום שלם ל-Atlantis ופארק המים
+- בסופי שבוע האטרקציות עמוסות יותר
+- הזמינו כרטיסים לאטרקציות מראש
+- שלבו ביקור ב-Palm עם ארוחת ערב באחת המסעדות
+
+**איך EVE BLUE עוזרת?**
+
+- הזמנת כרטיסים ל-Aquaventure ו-Lost Chambers
+- ארגון יום חוף VIP
+- הזמנת מסעדות (Nobu, Ossiano ועוד)
+- שילוב עם שייט יאכטה פרטי סביב Palm
+- שירות נהג VIP
+
+דברו איתנו ונתכנן לכם יום מושלם ב-Palm Jumeirah.`,
+      en: `Palm Jumeirah is one of the most spectacular engineering projects ever built — a man-made island shaped like a palm tree, visible from space. It has become a symbol of Dubai and one of the world's most popular tourist destinations.
+
+**About the Island**
+
+Palm Jumeirah was built using sand dredged from the Persian Gulf seabed. It comprises a central "trunk," 16 "fronds," and an outer "crescent." The island hosts luxury hotels, private villas, apartments, restaurants, beaches, and entertainment centers.
+
+**Atlantis, The Palm**
+
+The island's flagship hotel, Atlantis, is an icon in itself:
+- **Aquaventure Waterpark** — The Middle East's largest waterpark. Giant slides (including the near-vertical Leap of Faith!), lazy river, private beach, and kids' zones
+- **The Lost Chambers Aquarium** — Stunning aquarium inspired by the lost city of Atlantis. Glass tunnels, 65,000 marine creatures, interactive experience
+- **Dolphin Bay** — Swim with dolphins in a controlled, safe environment
+- **Sea Lion Point** — Meet sea lions up close
+
+**Atlantis The Royal**
+
+The new luxury hotel opened in 2023 is next-level:
+- Futuristic architectural design with floating infinity pools
+- Celebrity chef restaurants: Nobu, Heston Blumenthal, José Andrés
+- Cloud 22 beach club
+- Luxurious ESPA spa
+
+**Beaches**
+
+Palm Jumeirah offers some of Dubai's finest beaches:
+- **Atlantis Beach** — Private beach for hotel guests
+- **West Beach** — Popular public beach with Dubai Marina skyline views
+- **Hotel beaches** — Many hotels offer Day Passes for non-guests
+
+**Restaurants**
+
+- **Nobu** — Chef Nobu Matsuhisa's famous Japanese restaurant
+- **Ossiano** — Underwater dining experience (!) with aquarium views
+- **Bread Street Kitchen** — Chef Gordon Ramsay's restaurant
+- **STAY by Yannick Alléno** — High-end French cuisine
+
+**The Monorail**
+
+Palm Jumeirah's monorail connects the island's gateway to Atlantis, offering stunning aerial views of the island and Dubai Marina towers.
+
+**Activities**
+
+- Speed boat tours around the island
+- Skydiving over Palm Jumeirah (Skydive Dubai)
+- Private yacht cruise with Palm stop
+- Helicopter tours for aerial views
+- Jet skiing and water sports
+
+**How EVE BLUE Helps**
+
+- Booking Aquaventure and Lost Chambers tickets
+- Organizing VIP beach days
+- Restaurant reservations (Nobu, Ossiano, and more)
+- Combining with private yacht cruise around Palm
+- VIP driver service
+
+Talk to us and we'll plan your perfect Palm Jumeirah day.`,
+      ar: 'نخلة جميرا هي واحدة من أروع المشاريع الهندسية التي بُنيت على الإطلاق.',
+      fr: "Palm Jumeirah est l'un des projets d'ingénierie les plus spectaculaires jamais construits.",
+      ru: 'Палм-Джумейра — один из самых впечатляющих инженерных проектов, когда-либо построенных.',
+    },
+  },
+  {
+    id: 'ain-dubai-guide',
+    image: blogAinDubai,
+    category: {
+      he: 'אטרקציות מומלצות',
+      en: 'Top Attractions',
+      ar: 'معالم موصى بها',
+      fr: 'Attractions incontournables',
+      ru: 'Лучшие достопримечательности',
+    },
+    title: {
+      he: 'Ain Dubai — גלגל התצפית הגדול ביותר בעולם',
+      en: 'Ain Dubai — The World\'s Largest Observation Wheel',
+      ar: 'عين دبي — أكبر عجلة مراقبة في العالم',
+      fr: 'Ain Dubai — La plus grande roue d\'observation au monde',
+      ru: 'Ain Dubai — Самое большое колесо обозрения в мире',
+    },
+    excerpt: {
+      he: 'מתנשא לגובה 250 מטרים על אי Bluewaters, Ain Dubai מציע נוף פנורמי עוצר נשימה לקו החוף של דובאי, Palm Jumeirah ו-Dubai Marina.',
+      en: 'Rising 250 meters on Bluewaters Island, Ain Dubai offers breathtaking panoramic views of Dubai\'s coastline, Palm Jumeirah, and Dubai Marina.',
+      ar: 'يرتفع 250 مترًا على جزيرة بلووترز، يوفر عين دبي إطلالات بانورامية خلابة.',
+      fr: "S'élevant à 250 mètres sur l'île de Bluewaters, Ain Dubai offre des vues panoramiques à couper le souffle.",
+      ru: 'Возвышаясь на 250 метров на острове Bluewaters, Ain Dubai предлагает захватывающие панорамные виды.',
+    },
+    content: {
+      he: `Ain Dubai (עין דובאי) הוא גלגל התצפית הגדול ביותר בעולם, מתנשא לגובה מרשים של 250 מטרים — כמעט פי שניים מ-London Eye. ממוקם על אי Bluewaters מול חוף JBR, הוא מציע חוויה ויזואלית בלתי נשכחת.
+
+**על הגלגל**
+
+Ain Dubai נבנה על ידי חברת Meraas ונפתח לציבור ב-2021. הגלגל מכיל 48 קפסולות (תאי תצפית) שכל אחת מהן יכולה להכיל עד 40 אנשים. סיבוב מלא אורך כ-38 דקות, במהלכן אתם מקבלים נוף 360 מעלות על דובאי.
+
+**מה רואים מלמעלה?**
+
+הנוף מ-Ain Dubai הוא עוצר נשימה:
+- **Palm Jumeirah** — האי המלאכותי בצורת דקל נראה בשלמותו
+- **Dubai Marina** — מגדלי היוקרה המרהיבים
+- **JBR Beach** — קו החוף הארוך והתוסס
+- **Burj Al Arab** — מלון המפרש האייקוני
+- **קו הרקיע של דובאי** — כולל ברג' ח'ליפה במרחק
+
+**סוגי חוויות**
+
+- **Observation Cabin** — קפסולת תצפית סטנדרטית עם מושבים נוחים ומסכי מידע אינטראקטיביים
+- **Social Cabin** — קפסולה חברתית עם שולחנות ובר — מושלם לחגיגות ואירועים קטנים
+- **Private Cabin** — קפסולה פרטית לחלוטין לאירועים מיוחדים, הצעות נישואין או חגיגות אינטימיות
+
+**אי Bluewaters**
+
+Ain Dubai ממוקם על אי Bluewaters — אי מלאכותי קטן ומקסים עם:
+- מסעדות ובתי קפה מגוונים
+- חנויות ובוטיקים
+- מלון Caesars Palace (הראשון מחוץ ללאס וגאס!)
+- חוף Cove Beach — מועדון חוף פופולרי
+- טיילת עם נוף לים ול-JBR
+
+**תאורה ומופעים**
+
+בלילה, Ain Dubai הופך למופע אורות מרהיב. מאות אלפי נורות LED מאירות את הגלגל בצבעים משתנים, ולעיתים מוצגות אנימציות ומסרים מיוחדים. הנוף מ-JBR Beach על Ain Dubai מואר בלילה הוא אחד המראות היפים ביותר בדובאי.
+
+**מתי כדאי לבוא?**
+
+- **שקיעה** — הזמן הכי מומלץ! רואים את השמש שוקעת מעל הים ואת העיר נדלקת באורות
+- **לילה** — נוף עירוני מואר מרהיב
+- **בוקר** — פחות עמוס ונוף צלול
+- **סופי שבוע** — עמוס יותר, עדיף ימי חול
+
+**גישה**
+
+- ניתן להגיע ברגל מ-JBR דרך גשר להולכי רגל
+- חניה זמינה באי Bluewaters
+- שירות מונית/נסיעה שיתופית
+- קו טרם ייעודי
+
+**טיפים**
+
+- הזמינו כרטיסים מראש, במיוחד לשקיעה
+- קחו מצלמה — הנוף שווה כל רגע
+- שלבו ביקור עם ארוחה באחת המסעדות על האי
+- בחורף מזג האוויר נעים יותר לחוויה על הגלגל
+
+**איך EVE BLUE עוזרת?**
+
+- הזמנת כרטיסים לקפסולה סטנדרטית או פרטית
+- ארגון חגיגה מיוחדת על הגלגל (יום הולדת, הצעת נישואין)
+- שירות נהג VIP לאי Bluewaters
+- שילוב עם ארוחת ערב ומופע מזרקת דובאי
+- תכנון ערב שלם: Ain Dubai + ארוחה + שייט
+
+פנו אלינו ב-EVE BLUE ונדאג שהחוויה תהיה מושלמת.`,
+      en: `Ain Dubai is the world's largest observation wheel, rising an impressive 250 meters — nearly twice the height of the London Eye. Located on Bluewaters Island facing JBR beach, it offers an unforgettable visual experience.
+
+**About the Wheel**
+
+Built by Meraas and opened to the public in 2021, Ain Dubai contains 48 capsules (observation pods), each holding up to 40 people. A full rotation takes approximately 38 minutes, during which you get 360-degree views of Dubai.
+
+**What You See from the Top**
+
+The views from Ain Dubai are breathtaking:
+- **Palm Jumeirah** — The palm-shaped island in its entirety
+- **Dubai Marina** — Stunning luxury towers
+- **JBR Beach** — The long, vibrant coastline
+- **Burj Al Arab** — The iconic sail-shaped hotel
+- **Dubai's skyline** — Including Burj Khalifa in the distance
+
+**Experience Types**
+
+- **Observation Cabin** — Standard pod with comfortable seating and interactive info screens
+- **Social Cabin** — Social pod with tables and bar — perfect for celebrations and small events
+- **Private Cabin** — Fully private pod for special occasions, proposals, or intimate celebrations
+
+**Bluewaters Island**
+
+Ain Dubai sits on Bluewaters Island — a charming small man-made island featuring:
+- Diverse restaurants and cafés
+- Shops and boutiques
+- Caesars Palace hotel (first outside Las Vegas!)
+- Cove Beach — popular beach club
+- Promenade with sea and JBR views
+
+**Night Illumination**
+
+At night, Ain Dubai transforms into a spectacular light show. Hundreds of thousands of LED lights illuminate the wheel in changing colors, sometimes displaying animations and special messages.
+
+**Best Times to Visit**
+
+- **Sunset** — Most recommended! Watch the sun set over the sea as the city lights up
+- **Night** — Stunning illuminated cityscape views
+- **Morning** — Less crowded with clear views
+- **Weekdays** — Less busy than weekends
+
+**How EVE BLUE Helps**
+
+- Booking standard or private cabin tickets
+- Organizing special celebrations on the wheel (birthdays, proposals)
+- VIP driver service to Bluewaters Island
+- Combining with dinner and Dubai Fountain show
+- Planning a full evening: Ain Dubai + dinner + cruise
+
+Contact EVE BLUE and we'll make the experience perfect.`,
+      ar: 'عين دبي هي أكبر عجلة مراقبة في العالم، ترتفع إلى ارتفاع مذهل يبلغ 250 مترًا.',
+      fr: "Ain Dubai est la plus grande roue d'observation au monde, s'élevant à une hauteur impressionnante de 250 mètres.",
+      ru: 'Ain Dubai — самое большое колесо обозрения в мире, возвышающееся на впечатляющие 250 метров.',
+    },
+  },
 ];
 
 const sectionTitle: Record<string, string> = {
