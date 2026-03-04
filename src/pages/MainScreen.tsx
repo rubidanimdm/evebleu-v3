@@ -202,7 +202,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           INTRO TEXT — Elegant welcome copy
       ═══════════════════════════════════════════════ */}
-      <section className="px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center" dir="rtl">
+      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`} dir="rtl">
         <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
           יאללה, הגעתם לדובאי — ככה עושים את זה נכון.
         </h2>
@@ -229,7 +229,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           SERVICES — Category grid
       ═══════════════════════════════════════════════ */}
-      <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
         {/* Section header */}
         <div className="text-center mb-10">
           <p className="text-primary text-xs uppercase tracking-[0.3em] mb-3">{t('mainScreen.premiumServices')}</p>
@@ -239,7 +239,7 @@ export default function MainScreen() {
           <div className="w-16 h-px bg-primary/40 mx-auto mt-4" />
         </div>
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div ref={gridReveal.ref} className={`grid grid-cols-3 gap-3 sm:gap-4 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
           {categoryKeys.map((cat) => (
             <button
               key={cat.key}
@@ -258,7 +258,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
+      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
         <video
           src={yachtVideo}
           autoPlay
@@ -284,7 +284,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section id="strip-dining" className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
+      <section ref={nightlifeStripReveal.ref} id="strip-dining" className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
         <video
           src={nightlifeVideo}
           autoPlay
@@ -309,7 +309,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions">
+      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions">
         <video
           src={attractionsVideo}
           autoPlay
@@ -334,7 +334,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 4 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('CAR')} role="link" aria-label="Luxury Cars">
+      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('CAR')} role="link" aria-label="Luxury Cars">
         <video
           src={strip4Video}
           autoPlay
@@ -359,7 +359,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer" onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions - Desert">
+      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions - Desert">
         <video
           src={strip5Video}
           autoPlay
