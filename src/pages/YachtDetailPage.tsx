@@ -135,11 +135,7 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
       'Towels for swimming & bathing',
     ],
     images: [
-      { url: '/yachts/elite-14-44ft.jpg', alt_text: 'Elite 14 exterior' },
-      { url: '/yachts/elite-14-1.jpg', alt_text: 'Elite 14 interior' },
-      { url: '/yachts/elite-14-2.jpg', alt_text: 'Elite 14 deck' },
-      { url: '/yachts/elite-14-3.jpg', alt_text: 'Elite 14 lounge' },
-      { url: '/yachts/elite-14-4.jpg', alt_text: 'Elite 14 cabin' },
+      { url: '/yachts/elite-14-44ft.jpg', alt_text: 'Elite 14 – 44FT Majesty collage' },
     ],
     description: 'Compact 44ft Majesty yacht for up to 10 guests. Minimum 2 hours reservation.',
   },
