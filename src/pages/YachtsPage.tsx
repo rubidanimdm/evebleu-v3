@@ -301,6 +301,34 @@ function YachtCard({
             </div>
           )}
 
+          {/* Add-on packages */}
+          <div className="border-t border-primary/10 pt-4">
+            <h4 className="text-xs font-medium text-primary/80 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <UtensilsCrossed className="w-3.5 h-3.5" />
+              {t('yachtsPage.addOnsTitle')}
+            </h4>
+            <p className="text-[11px] text-muted-foreground/60 mb-3">{t('yachtsPage.addOnsSubtitle')}</p>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { key: 'packageColdMeze', icon: '🥗' },
+                { key: 'packageHotFood', icon: '🍖' },
+                { key: 'packagePremiumBBQ', icon: '🔥' },
+                { key: 'packageSoftDrinks', icon: '🥤' },
+                { key: 'packageAlcohol', icon: '🍾' },
+                { key: 'packageFruits', icon: '🍓' },
+              ].map(pkg => (
+                <div key={pkg.key} className="bg-primary/5 border border-primary/10 rounded-lg p-2.5">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-sm">{pkg.icon}</span>
+                    <span className="text-[11px] font-semibold text-foreground leading-tight">{t(`yachtsPage.${pkg.key}`)}</span>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground/70 leading-snug">{t(`yachtsPage.${pkg.key}Desc`)}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-[10px] text-primary/50 mt-2 text-center italic">{t('yachtsPage.addOnPriceOnRequest')}</p>
+          </div>
+
           <Button
             onClick={(e) => {
               e.stopPropagation();
