@@ -155,6 +155,12 @@ export default function DiningNightlifePage() {
 
   const [bookingVenue, setBookingVenue] = useState<string | null>(null);
 
+  const FEATURED_NAMES = ['Baoli', 'Amelia', 'Billionaire', 'Cou Cou', 'Amazonico', 'Gigi', 'Raspoutine', 'Verde Beach', 'O Beach'];
+
+  const featured = FEATURED_NAMES
+    .map(name => VENUES.find(v => v.name === name))
+    .filter(Boolean) as Venue[];
+
   const filtered = search
     ? VENUES.filter(v => v.name.toLowerCase().includes(search.toLowerCase()))
     : VENUES;
@@ -210,8 +216,49 @@ export default function DiningNightlifePage() {
         </div>
       </div>
 
-      {/* Venue List */}
       <main className="max-w-2xl mx-auto px-4 pt-4">
+        {/* Featured Section - only when not searching */}
+        {!search && (
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">⭐ Our Top Picks</span>
+              <div className="flex-1 h-px bg-primary/15" />
+            </div>
+            <div className="space-y-2">
+              {featured.map(venue => (
+                <div
+                  key={venue.name}
+                  className="group flex items-center justify-between gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/20 hover:border-primary/40 hover:bg-primary/10 backdrop-blur-sm transition-all duration-200"
+                >
+                  <div className="flex items-center gap-4 min-w-0">
+                    <VenueLogo venue={venue} />
+                    <div className="min-w-0">
+                      <span className="font-medium text-foreground truncate block">
+                        {venue.name}
+                      </span>
+                      <span className="text-[10px] text-primary font-medium">Recommended</span>
+                    </div>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => handleContact(venue.name)}
+                    className="flex-shrink-0 h-9 px-4 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 text-xs"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    {t('diningPage.book')}
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 mt-6 mb-3">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">All Venues</span>
+              <div className="flex-1 h-px bg-border/40" />
+            </div>
+          </div>
+        )}
+
+        {/* Venue List */}
         {filtered.length === 0 ? (
           <div className="text-center py-16 space-y-3">
             <p className="text-muted-foreground">{t('diningPage.noResults')} "{search}"</p>
