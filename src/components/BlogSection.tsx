@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { ArrowRight } from 'lucide-react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 import blogAirport from '@/assets/blog-airport.jpg';
 import blogEmirates from '@/assets/blog-emirates.jpg';
@@ -793,19 +794,21 @@ export function BlogSection() {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const isRTL = language === 'he' || language === 'ar';
+  const headerReveal = useScrollReveal<HTMLDivElement>();
+  const cardsReveal = useScrollReveal<HTMLDivElement>();
 
   return (
     <section className="px-4 sm:px-6 py-14 sm:py-20 max-w-[1100px] mx-auto w-full" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Header */}
-      <div className="text-center mb-10 sm:mb-14">
+      <div ref={headerReveal.ref} className={`text-center mb-10 sm:mb-14 reveal-base ${headerReveal.isVisible ? 'revealed' : ''}`}>
         <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-primary">
           {sectionTitle[language] || sectionTitle.en}
         </h2>
-        <div className="w-20 h-px bg-primary/30 mx-auto mt-4" />
+        <div className="w-20 h-px shimmer-line mx-auto mt-4" />
       </div>
 
       {/* Cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div ref={cardsReveal.ref} className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 reveal-stagger ${cardsReveal.isVisible ? 'revealed' : ''}`}>
         {BLOG_ARTICLES.map((article) => (
           <button
             key={article.id}
