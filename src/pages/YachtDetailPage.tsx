@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Anchor, Users, MapPin, Clock, Ship, DoorOpen, Sparkles } from 'lucide-react';
+import { ArrowLeft, Anchor, Users, MapPin, Clock, Ship, DoorOpen, Sparkles, UtensilsCrossed, Wine } from 'lucide-react';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/BottomNav';
@@ -279,6 +279,7 @@ export default function YachtDetailPage() {
             </span>
             <span className="text-sm text-muted-foreground">{t('yachtsPage.perHour')}</span>
           </div>
+          <p className="text-[11px] text-primary/60 font-medium mt-1">{t('yachtsPage.pricePerHourNote')}</p>
 
           <p className="text-sm text-muted-foreground mt-2">{t(yacht.descriptionKey)}</p>
         </div>
@@ -295,6 +296,34 @@ export default function YachtDetailPage() {
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* Add-on packages */}
+        <div className="px-4 py-5 border-t border-primary/10">
+          <h3 className="text-xs font-medium text-primary/80 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+            <UtensilsCrossed className="w-3.5 h-3.5" />
+            {t('yachtsPage.addOnsTitle')}
+          </h3>
+          <p className="text-[11px] text-muted-foreground/60 mb-4">{t('yachtsPage.addOnsSubtitle')}</p>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { key: 'packageColdMeze', icon: '🥗' },
+              { key: 'packageHotFood', icon: '🍖' },
+              { key: 'packagePremiumBBQ', icon: '🔥' },
+              { key: 'packageSoftDrinks', icon: '🥤' },
+              { key: 'packageAlcohol', icon: '🍾' },
+              { key: 'packageFruits', icon: '🍓' },
+            ].map(pkg => (
+              <div key={pkg.key} className="bg-primary/5 border border-primary/10 rounded-xl p-3">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <span className="text-base">{pkg.icon}</span>
+                  <span className="text-xs font-semibold text-foreground leading-tight">{t(`yachtsPage.${pkg.key}`)}</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground/70 leading-snug">{t(`yachtsPage.${pkg.key}Desc`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-primary/50 mt-3 text-center italic">{t('yachtsPage.addOnPriceOnRequest')}</p>
         </div>
 
         <div className="p-4">
