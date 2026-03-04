@@ -27,6 +27,9 @@ import blogAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
 import blogFivePalm from '@/assets/blog-five-palm.jpg';
 import blogArmaniBurj from '@/assets/blog-armani-burj.jpg';
 import blogMarinaGate from '@/assets/blog-marina-gate.jpg';
+import blogHotAirBalloon from '@/assets/blog-hot-air-balloon.jpg';
+import blogHelicopterDubai from '@/assets/blog-helicopter-dubai.jpg';
+import blogSkydivingDubai from '@/assets/blog-skydiving-dubai.jpg';
 
 export interface BlogArticle {
   id: string;
@@ -2460,6 +2463,300 @@ Want us to book a room at Address Marina? Talk to us.`,
       ar: 'أدرس دبي مارينا هو فندق فاخر من سلسلة فنادق أدرس في قلب مارينا دبي.',
       fr: "Address Dubai Marina est un hôtel de luxe de la chaîne Address Hotels au cœur de Dubai Marina.",
       ru: 'Address Dubai Marina — роскошный отель сети Address Hotels в самом сердце Дубай Марины.',
+    },
+  },
+  {
+    id: 'hot-air-balloon-dubai',
+    image: blogHotAirBalloon,
+    category: {
+      he: 'אטרקציות',
+      en: 'Attractions',
+      ar: 'معالم سياحية',
+      fr: 'Attractions',
+      ru: 'Достопримечательности',
+    },
+    title: {
+      he: 'כדור פורח בדובאי — טיסה מעל המדבר',
+      en: 'Hot Air Balloon Dubai — Flight Over the Desert',
+      ar: 'منطاد الهواء الساخن في دبي — رحلة فوق الصحراء',
+      fr: 'Montgolfière à Dubaï — Vol au-dessus du désert',
+      ru: 'Воздушный шар в Дубае — Полёт над пустыней',
+    },
+    excerpt: {
+      he: 'חוויה בלתי נשכחת של טיסה בכדור פורח מעל דיונות המדבר של דובאי בזריחה, עם נוף מרהיב של 360 מעלות.',
+      en: 'An unforgettable hot air balloon flight over Dubai\'s desert dunes at sunrise with breathtaking 360-degree views.',
+      ar: 'تجربة لا تُنسى في منطاد فوق كثبان صحراء دبي عند شروق الشمس.',
+      fr: 'Une expérience inoubliable en montgolfière au-dessus des dunes du désert de Dubaï au lever du soleil.',
+      ru: 'Незабываемый полёт на воздушном шаре над дюнами пустыни Дубая на рассвете.',
+    },
+    content: {
+      he: `טיסה בכדור פורח מעל המדבר של דובאי היא אחת החוויות הכי מרגשות ומיוחדות שתוכלו לחוות באמירויות. הטיסה מתקיימת בזריחה, כשהשמש צובעת את הדיונות בגוונים של זהב וכתום — רגע קסום שאי אפשר לשכוח.
+
+**מה כולל הטיול?**
+
+- איסוף מהמלון לפנות בוקר (בדרך כלל 4:00-5:00 בבוקר)
+- הגעה לאזור ההמראה במדבר
+- צפייה בניפוח הכדור הפורח — חוויה בפני עצמה
+- טיסה של כ-60 דקות מעל הדיונות
+- נחיתה עם ארוחת בוקר במדבר
+- חזרה למלון
+
+**מה רואים מלמעלה?**
+
+- דיונות חול אינסופיות בגוונים משתנים
+- חיות מדבר — אוריקס, גמלים ועופות טורפים
+- הזריחה המדהימה מעל קו האופק
+- נוף פנורמי של 360 מעלות
+
+**טיפים חשובים**
+
+- הזמינו מראש — המקומות מוגבלים
+- לבשו בגדים נוחים ושכבות (בבוקר קריר במדבר)
+- קחו מצלמה עם סוללה טעונה
+- הטיסה מתאימה לכל הגילאים (מגיל 5)
+- העונה הטובה ביותר: אוקטובר עד אפריל
+
+**למה אנחנו ב-EVE BLUE ממליצים?**
+
+- חוויה רומנטית מושלמת לזוגות
+- צילומים שאי אפשר לקבל בשום מקום אחר
+- מתאים גם למשפחות
+- שילוב מושלם עם סאפרי במדבר
+
+רוצים לטוס בכדור פורח? דברו איתנו ונארגן הכל.`,
+      en: `A hot air balloon flight over Dubai's desert is one of the most thrilling and unique experiences you can have in the Emirates. The flight takes place at sunrise, when the sun paints the dunes in shades of gold and orange — a magical moment you'll never forget.
+
+**What's Included?**
+
+- Hotel pickup in the early morning (usually 4:00-5:00 AM)
+- Arrival at the desert launch site
+- Watching the balloon inflate — an experience in itself
+- Approximately 60-minute flight over the dunes
+- Landing with a desert breakfast
+- Return to hotel
+
+**What You'll See from Above**
+
+- Endless sand dunes in changing shades
+- Desert wildlife — oryx, camels, and birds of prey
+- The stunning sunrise over the horizon
+- 360-degree panoramic views
+
+**Important Tips**
+
+- Book in advance — spots are limited
+- Wear comfortable clothing and layers (mornings are cool in the desert)
+- Bring a camera with a charged battery
+- Suitable for all ages (from age 5)
+- Best season: October to April
+
+**Why EVE BLUE Recommends This**
+
+- Perfect romantic experience for couples
+- Photos you can't get anywhere else
+- Great for families too
+- Perfect combination with a desert safari
+
+Want to fly in a hot air balloon? Talk to us and we'll arrange everything.`,
+      ar: 'رحلة منطاد الهواء الساخن فوق صحراء دبي هي واحدة من أكثر التجارب إثارة في الإمارات.',
+      fr: "Un vol en montgolfière au-dessus du désert de Dubaï est l'une des expériences les plus uniques aux Émirats.",
+      ru: 'Полёт на воздушном шаре над пустыней Дубая — одно из самых захватывающих впечатлений в Эмиратах.',
+    },
+  },
+  {
+    id: 'helicopter-tour-dubai',
+    image: blogHelicopterDubai,
+    category: {
+      he: 'אטרקציות',
+      en: 'Attractions',
+      ar: 'معالم سياحية',
+      fr: 'Attractions',
+      ru: 'Достопримечательности',
+    },
+    title: {
+      he: 'טיסת הליקופטר בדובאי — דובאי מהאוויר',
+      en: 'Helicopter Tour Dubai — See Dubai from Above',
+      ar: 'جولة هليكوبتر في دبي — شاهد دبي من الأعلى',
+      fr: 'Tour en hélicoptère à Dubaï — Voir Dubaï d\'en haut',
+      ru: 'Вертолётная экскурсия по Дубаю — Увидеть Дубай сверху',
+    },
+    excerpt: {
+      he: 'טיסת הליקופטר מרהיבה מעל האייקונים של דובאי — בורג\' ח\'ליפה, הפאלם, מרינה ועוד. חוויה שאי אפשר לפספס.',
+      en: 'A breathtaking helicopter flight over Dubai\'s icons — Burj Khalifa, the Palm, Marina and more.',
+      ar: 'رحلة هليكوبتر مذهلة فوق معالم دبي الشهيرة — برج خليفة والنخلة والمارينا.',
+      fr: 'Un vol en hélicoptère époustouflant au-dessus des icônes de Dubaï.',
+      ru: 'Захватывающий полёт на вертолёте над достопримечательностями Дубая.',
+    },
+    content: {
+      he: `טיסת הליקופטר מעל דובאי היא אחת החוויות הכי מרשימות שתוכלו לחוות בעיר. לראות את כל האייקונים של דובאי מלמעלה — בורג' ח'ליפה, Palm Jumeirah, Dubai Marina, Burj Al Arab ועוד — זה משהו שאי אפשר לתאר במילים.
+
+**מסלולי טיסה**
+
+- **מסלול 12 דקות** — טיסה מעל Atlantis, Palm Jumeirah ו-Burj Al Arab
+- **מסלול 17 דקות** — כולל גם את Dubai Marina ו-Ain Dubai
+- **מסלול 22 דקות** — המסלול המלא כולל בורג' ח'ליפה, Downtown ו-Dubai Frame
+- **מסלול 40 דקות** — חוויה פרטית VIP עם שמפניה
+
+**מה רואים?**
+
+- Palm Jumeirah מהאוויר — הצורה המפורסמת של הדקל
+- בורג' ח'ליפה — הבניין הגבוה ביותר בעולם מזווית ייחודית
+- Burj Al Arab — מלון המפרשית מלמעלה
+- Dubai Marina — מגדלי היוקרה והיאכטות
+- The World Islands — איי העולם
+
+**פרטים חשובים**
+
+- ההמראה מ-Atlantis Helipad על Palm Jumeirah
+- בטוח לחלוטין — טייסים מנוסים וציוד מתקדם
+- מתאים מגיל 2 ומעלה
+- מומלץ להזמין לשעות הזריחה או השקיעה
+
+**למה אנחנו ב-EVE BLUE ממליצים?**
+
+- הדרך הכי מרשימה לראות את דובאי
+- מתנה מושלמת ליום הולדת או הצעת נישואין
+- צילומים ברמה שאי אפשר להשיג אחרת
+- חוויה קצרה אבל בלתי נשכחת
+
+רוצים לטוס מעל דובאי? דברו איתנו ונארגן טיסה פרטית.`,
+      en: `A helicopter tour over Dubai is one of the most impressive experiences you can have in the city. Seeing all of Dubai's icons from above — Burj Khalifa, Palm Jumeirah, Dubai Marina, Burj Al Arab and more — is something words can't describe.
+
+**Flight Routes**
+
+- **12-minute route** — Flight over Atlantis, Palm Jumeirah, and Burj Al Arab
+- **17-minute route** — Also includes Dubai Marina and Ain Dubai
+- **22-minute route** — Full route including Burj Khalifa, Downtown, and Dubai Frame
+- **40-minute route** — Private VIP experience with champagne
+
+**What You'll See**
+
+- Palm Jumeirah from the air — the famous palm shape
+- Burj Khalifa — the world's tallest building from a unique angle
+- Burj Al Arab — the sail-shaped hotel from above
+- Dubai Marina — luxury towers and yachts
+- The World Islands
+
+**Important Details**
+
+- Takeoff from Atlantis Helipad on Palm Jumeirah
+- Completely safe — experienced pilots and advanced equipment
+- Suitable from age 2 and up
+- Recommended for sunrise or sunset hours
+
+**Why EVE BLUE Recommends This**
+
+- The most impressive way to see Dubai
+- Perfect gift for birthdays or proposals
+- Photos at a level impossible to achieve otherwise
+- Short but unforgettable experience
+
+Want to fly over Dubai? Talk to us and we'll arrange a private flight.`,
+      ar: 'جولة الهليكوبتر فوق دبي هي واحدة من أكثر التجارب إثارة في المدينة.',
+      fr: "Un tour en hélicoptère au-dessus de Dubaï est l'une des expériences les plus impressionnantes de la ville.",
+      ru: 'Вертолётная экскурсия над Дубаем — одно из самых впечатляющих впечатлений в городе.',
+    },
+  },
+  {
+    id: 'skydiving-dubai',
+    image: blogSkydivingDubai,
+    category: {
+      he: 'אטרקציות',
+      en: 'Attractions',
+      ar: 'معالم سياحية',
+      fr: 'Attractions',
+      ru: 'Достопримечательности',
+    },
+    title: {
+      he: 'צניחה חופשית בדובאי — אדרנלין מעל הפאלם',
+      en: 'Skydiving Dubai — Adrenaline Over the Palm',
+      ar: 'القفز بالمظلات في دبي — أدرينالين فوق النخلة',
+      fr: 'Parachutisme à Dubaï — Adrénaline au-dessus du Palm',
+      ru: 'Прыжок с парашютом в Дубае — Адреналин над Палмом',
+    },
+    excerpt: {
+      he: 'קפיצה חופשית מגובה 13,000 רגל מעל Palm Jumeirah — חוויית האדרנלין הכי גבוהה בדובאי עם נוף שאין לו תחרות.',
+      en: 'Freefall from 13,000 feet above Palm Jumeirah — Dubai\'s ultimate adrenaline experience with unrivaled views.',
+      ar: 'قفزة حرة من ارتفاع 13,000 قدم فوق نخلة جميرا — أقصى تجربة أدرينالين في دبي.',
+      fr: 'Chute libre depuis 13 000 pieds au-dessus de Palm Jumeirah — l\'expérience ultime d\'adrénaline à Dubaï.',
+      ru: 'Свободное падение с высоты 13 000 футов над Палм Джумейра — максимальный адреналин в Дубае.',
+    },
+    content: {
+      he: `צניחה חופשית מעל דובאי היא חוויית האדרנלין הכי מטורפת שתוכלו לחוות. לקפוץ מגובה 13,000 רגל מעל Palm Jumeirah, לטוס בנפילה חופשית ולראות את כל דובאי מלמעלה — זה משהו שישנה לכם את החיים.
+
+**איפה קופצים?**
+
+- **Skydive Dubai — Palm Drop Zone** — הנחיתה על Palm Jumeirah עם נוף מטורף
+- **Skydive Dubai — Desert Drop Zone** — נחיתה במדבר, חוויה שונה לגמרי
+
+**איך זה עובד?**
+
+- הדרכה קצרה על הקרקע (30 דקות)
+- טיסה במטוס לגובה 13,000 רגל
+- נפילה חופשית למשך 60 שניות במהירות 200 קמ"ש
+- פתיחת מצנח וטיסה שקטה של 5-7 דקות
+- נחיתה רכה על החוף או במדבר
+
+**סוגי קפיצות**
+
+- **Tandem Jump** — קפיצה עם מדריך מקצועי (מתאים למתחילים)
+- **Solo Jump** — לבעלי ניסיון עם רישיון
+- **צילום וידאו** — צלם מקצועי קופץ איתכם ומצלם הכל
+
+**דרישות**
+
+- גיל מינימלי: 18
+- משקל מקסימלי: 100 ק"ג
+- אין צורך בניסיון קודם לקפיצת Tandem
+- מצב בריאות תקין
+
+**למה אנחנו ב-EVE BLUE ממליצים?**
+
+- חוויה שמשנה חיים — פעם בחיים חייבים לנסות
+- הנוף מלמעלה על הפאלם הוא הכי מרשים בעולם
+- צוות מקצועי ובטוח
+- מתנה בלתי נשכחת
+
+רוצים לקפוץ? דברו איתנו ונארגן את הכל!`,
+      en: `Skydiving over Dubai is the most insane adrenaline experience you can have. Jumping from 13,000 feet above Palm Jumeirah, flying in freefall, and seeing all of Dubai from above — it's something that will change your life.
+
+**Where to Jump?**
+
+- **Skydive Dubai — Palm Drop Zone** — Landing on Palm Jumeirah with insane views
+- **Skydive Dubai — Desert Drop Zone** — Landing in the desert, a completely different experience
+
+**How It Works**
+
+- Short ground briefing (30 minutes)
+- Flight in an airplane to 13,000 feet
+- 60 seconds of freefall at 200 km/h
+- Parachute opens for a quiet 5-7 minute flight
+- Soft landing on the beach or in the desert
+
+**Jump Types**
+
+- **Tandem Jump** — Jump with a professional instructor (suitable for beginners)
+- **Solo Jump** — For experienced jumpers with a license
+- **Video Package** — Professional cameraman jumps with you and films everything
+
+**Requirements**
+
+- Minimum age: 18
+- Maximum weight: 100 kg
+- No prior experience needed for Tandem
+- Good health condition
+
+**Why EVE BLUE Recommends This**
+
+- Life-changing experience — everyone should try it once
+- The view from above the Palm is the most impressive in the world
+- Professional and safe crew
+- An unforgettable gift
+
+Want to jump? Talk to us and we'll arrange everything!`,
+      ar: 'القفز بالمظلات فوق دبي هو أكثر تجربة أدرينالين جنونية يمكنك تجربتها.',
+      fr: "Le parachutisme au-dessus de Dubaï est l'expérience d'adrénaline la plus folle que vous puissiez vivre.",
+      ru: 'Прыжок с парашютом над Дубаем — самый сумасшедший адреналин, который вы можете испытать.',
     },
   },
 ];
