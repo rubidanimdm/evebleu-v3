@@ -17,10 +17,9 @@ interface YachtPageData {
   minHours: number;
   price: number;
   currency: string;
-  pricingUnit: string;
-  inclusions: string[];
+  inclusionKeys: string[];
   images: { url: string; alt_text: string | null }[];
-  description: string;
+  descriptionKey: string;
 }
 
 const YACHT_PAGES: Record<string, YachtPageData> = {
@@ -35,16 +34,15 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
     minHours: 2,
     price: 600,
     currency: 'AED',
-    pricingUnit: 'per hour',
-    inclusions: [
-      'Fuel cost within Dubai',
-      'Professional Captain and Crew',
-      'Welcome drink',
-      'Bottle of water',
-      'Surround speaker system (AUX/Bluetooth)',
-      'Safety Equipment',
-      'Amenities (Fridge, Microwave, Utensils)',
-      'Towels for swimming & bathing',
+    inclusionKeys: [
+      'yachtsPage.inclusionFuel',
+      'yachtsPage.inclusionCaptain',
+      'yachtsPage.inclusionWelcomeDrink',
+      'yachtsPage.inclusionWater',
+      'yachtsPage.inclusionSpeakers',
+      'yachtsPage.inclusionSafety',
+      'yachtsPage.inclusionAmenities',
+      'yachtsPage.inclusionTowels',
     ],
     images: [
       { url: '/yachts/elite-4-48ft.jpg', alt_text: 'Elite 4 exterior' },
@@ -53,7 +51,7 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
       { url: '/yachts/elite-4-3.jpg', alt_text: 'Elite 4 lounge' },
       { url: '/yachts/elite-4-4.jpg', alt_text: 'Elite 4 cabin' },
     ],
-    description: 'Classic 48ft Majesty yacht for up to 15 guests. Minimum 2 hours reservation.',
+    descriptionKey: 'yachtsPage.descElite4',
   },
   'elite-5': {
     title: 'Elite 5',
@@ -66,21 +64,20 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
     minHours: 2,
     price: 600,
     currency: 'AED',
-    pricingUnit: 'per hour',
-    inclusions: [
-      'Fuel cost within Dubai',
-      'Professional Captain and Crew',
-      'Welcome drink',
-      'Bottle of water',
-      'Surround speaker system (AUX/Bluetooth)',
-      'Safety Equipment',
-      'Amenities (Fridge, Microwave, Utensils)',
-      'Towels for swimming & bathing',
+    inclusionKeys: [
+      'yachtsPage.inclusionFuel',
+      'yachtsPage.inclusionCaptain',
+      'yachtsPage.inclusionWelcomeDrink',
+      'yachtsPage.inclusionWater',
+      'yachtsPage.inclusionSpeakers',
+      'yachtsPage.inclusionSafety',
+      'yachtsPage.inclusionAmenities',
+      'yachtsPage.inclusionTowels',
     ],
     images: [
       { url: '/yachts/elite-5-main.jpg', alt_text: 'Elite 5 exterior and interior collage' },
     ],
-    description: 'Sporty 36ft Oryx mini sports yacht for up to 10 guests. Minimum 2 hours reservation.',
+    descriptionKey: 'yachtsPage.descElite5',
   },
   'elite-12': {
     title: 'Elite 12',
@@ -93,16 +90,15 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
     minHours: 2,
     price: 1200,
     currency: 'AED',
-    pricingUnit: 'per hour',
-    inclusions: [
-      'Fuel cost within Dubai',
-      'Professional Captain and Crew',
-      'Welcome drink',
-      'Bottle of water',
-      'Surround speaker system (AUX/Bluetooth)',
-      'Safety Equipment',
-      'Amenities (Fridge, Microwave, Utensils)',
-      'Towels for swimming & bathing',
+    inclusionKeys: [
+      'yachtsPage.inclusionFuel',
+      'yachtsPage.inclusionCaptain',
+      'yachtsPage.inclusionWelcomeDrink',
+      'yachtsPage.inclusionWater',
+      'yachtsPage.inclusionSpeakers',
+      'yachtsPage.inclusionSafety',
+      'yachtsPage.inclusionAmenities',
+      'yachtsPage.inclusionTowels',
     ],
     images: [
       { url: '/yachts/elite-12-56ft.jpg', alt_text: 'Elite 12 exterior' },
@@ -111,7 +107,7 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
       { url: '/yachts/elite-12-3.jpg', alt_text: 'Elite 12 lounge' },
       { url: '/yachts/elite-12-4.jpg', alt_text: 'Elite 12 cabin' },
     ],
-    description: 'Spacious 56ft Majesty yacht for up to 25 guests. Minimum 2 hours reservation.',
+    descriptionKey: 'yachtsPage.descElite12',
   },
   'elite-14': {
     title: 'Elite 14',
@@ -124,21 +120,20 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
     minHours: 2,
     price: 700,
     currency: 'AED',
-    pricingUnit: 'per hour',
-    inclusions: [
-      'Fuel cost within Dubai',
-      'Professional Captain and Crew',
-      'Welcome drink',
-      'Bottle of water',
-      'Surround speaker system (AUX/Bluetooth)',
-      'Safety Equipment',
-      'Amenities (Fridge, Microwave, Utensils)',
-      'Towels for swimming & bathing',
+    inclusionKeys: [
+      'yachtsPage.inclusionFuel',
+      'yachtsPage.inclusionCaptain',
+      'yachtsPage.inclusionWelcomeDrink',
+      'yachtsPage.inclusionWater',
+      'yachtsPage.inclusionSpeakers',
+      'yachtsPage.inclusionSafety',
+      'yachtsPage.inclusionAmenities',
+      'yachtsPage.inclusionTowels',
     ],
     images: [
       { url: '/yachts/elite-14-44ft.jpg', alt_text: 'Elite 14 – 44FT Majesty collage' },
     ],
-    description: 'Compact 44ft Majesty yacht for up to 10 guests. Minimum 2 hours reservation.',
+    descriptionKey: 'yachtsPage.descElite14',
   },
   'elite-16': {
     title: 'Elite 16',
@@ -151,16 +146,15 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
     minHours: 2,
     price: 1700,
     currency: 'AED',
-    pricingUnit: 'per hour',
-    inclusions: [
-      'Fuel cost within Dubai',
-      'Professional Captain and Crew',
-      'Welcome drink',
-      'Bottle of water',
-      'Surround speaker system (AUX/Bluetooth)',
-      'Safety Equipment',
-      'Amenities (Fridge, Microwave, Utensils)',
-      'Towels for swimming & bathing',
+    inclusionKeys: [
+      'yachtsPage.inclusionFuel',
+      'yachtsPage.inclusionCaptain',
+      'yachtsPage.inclusionWelcomeDrink',
+      'yachtsPage.inclusionWater',
+      'yachtsPage.inclusionSpeakers',
+      'yachtsPage.inclusionSafety',
+      'yachtsPage.inclusionAmenities',
+      'yachtsPage.inclusionTowels',
     ],
     images: [
       { url: '/yachts/elite-16-70ft.jpg', alt_text: 'Elite 16 exterior' },
@@ -170,7 +164,7 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
       { url: '/yachts/elite-16-4.jpg', alt_text: 'Elite 16 cabin' },
       { url: '/yachts/elite-16-5.jpg', alt_text: 'Elite 16 flybridge' },
     ],
-    description: 'Elegant 70ft Sunseeker yacht for up to 22 guests. Minimum 2 hours reservation.',
+    descriptionKey: 'yachtsPage.descElite16',
   },
   'elite-100': {
     title: 'Elite 100',
@@ -183,16 +177,15 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
     minHours: 2,
     price: 3500,
     currency: 'AED',
-    pricingUnit: 'per hour',
-    inclusions: [
-      'Fuel cost within Dubai',
-      'Professional Captain and Crew',
-      'Welcome drink',
-      'Bottle of water',
-      'Surround speaker system (AUX/Bluetooth)',
-      'Safety Equipment',
-      'Amenities (Fridge, Microwave, Utensils)',
-      'Towels for swimming & bathing',
+    inclusionKeys: [
+      'yachtsPage.inclusionFuel',
+      'yachtsPage.inclusionCaptain',
+      'yachtsPage.inclusionWelcomeDrink',
+      'yachtsPage.inclusionWater',
+      'yachtsPage.inclusionSpeakers',
+      'yachtsPage.inclusionSafety',
+      'yachtsPage.inclusionAmenities',
+      'yachtsPage.inclusionTowels',
     ],
     images: [
       { url: '/yachts/elite-100ft.jpg', alt_text: 'Elite 100 exterior' },
@@ -202,7 +195,7 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
       { url: '/yachts/elite-100-4.jpg', alt_text: 'Elite 100 cabin' },
       { url: '/yachts/elite-100-5.jpg', alt_text: 'Elite 100 flybridge' },
     ],
-    description: 'Premium 100ft modern yacht with full luxury amenities. Minimum 2 hours reservation.',
+    descriptionKey: 'yachtsPage.descElite100',
   },
 };
 
@@ -284,10 +277,10 @@ export default function YachtDetailPage() {
             <span className="text-xl font-bold text-primary">
               {yacht.price.toLocaleString()} {yacht.currency}
             </span>
-            <span className="text-sm text-muted-foreground">{yacht.pricingUnit}</span>
+            <span className="text-sm text-muted-foreground">{t('yachtsPage.perHour')}</span>
           </div>
 
-          <p className="text-sm text-muted-foreground mt-2">{yacht.description}</p>
+          <p className="text-sm text-muted-foreground mt-2">{t(yacht.descriptionKey)}</p>
         </div>
 
         <div className="px-4 py-5">
@@ -295,10 +288,10 @@ export default function YachtDetailPage() {
             {t('yachtsPage.whatsIncluded')}
           </h3>
           <ul className="space-y-2">
-            {yacht.inclusions.map((inc, i) => (
+            {yacht.inclusionKeys.map((key, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <Sparkles className="w-3.5 h-3.5 text-primary/50 mt-0.5 flex-shrink-0" strokeWidth={1.5} />
-                {inc}
+                {t(key)}
               </li>
             ))}
           </ul>
