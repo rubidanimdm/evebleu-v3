@@ -17,6 +17,11 @@ import blogShangriLa from '@/assets/blog-shangrila.jpg';
 import blogSofitel from '@/assets/blog-sofitel.jpg';
 import blogParkHyatt from '@/assets/blog-park-hyatt.jpg';
 import blogRixos from '@/assets/blog-rixos.jpg';
+import blogBurjKhalifa from '@/assets/blog-burj-khalifa.jpg';
+import blogDubaiMall from '@/assets/blog-dubai-mall.jpg';
+import blogDesertSafari from '@/assets/blog-desert-safari.jpg';
+import blogPalmAtlantis from '@/assets/blog-palm-atlantis.jpg';
+import blogAinDubai from '@/assets/blog-ain-dubai.jpg';
 
 export interface BlogArticle {
   id: string;
