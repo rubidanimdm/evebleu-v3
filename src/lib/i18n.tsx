@@ -21,7 +21,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const STORAGE_KEY = 'eveblue_language';
 const LANG_VERSION_KEY = 'eveblue_lang_version';
-const CURRENT_LANG_VERSION = '2'; // bump to reset all users to default
+const CURRENT_LANG_VERSION = '3'; // bump to reset all users to Hebrew
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
@@ -33,11 +33,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
           return stored as Language;
         }
       }
-      // Reset to Russian for users with old/no version
+      // Reset to Hebrew for users with old/no version
       localStorage.setItem(LANG_VERSION_KEY, CURRENT_LANG_VERSION);
-      localStorage.setItem(STORAGE_KEY, 'ru');
+      localStorage.setItem(STORAGE_KEY, 'he');
     }
-    return 'ru';
+    return 'he';
   });
 
   const isRTL = LANGUAGES.find(l => l.code === language)?.rtl ?? false;
