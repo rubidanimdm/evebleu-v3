@@ -109,13 +109,15 @@ function AppContent() {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/cookies" element={<CookiePolicy />} />
         
-        {/* App Screens - protected */}
+        {/* App Screens - public browsing */}
+        <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/dining" element={<DiningNightlifePage />} />
+        <Route path="/item/:id" element={<ItemDetailsPage />} />
+        <Route path="/yachts" element={<YachtsPage />} />
+        <Route path="/yachts/:slug" element={<YachtDetailPage />} />
+        
+        {/* Protected - requires login */}
         <Route path="/concierge" element={<ProtectedRoute><ConciergePage /></ProtectedRoute>} />
-        <Route path="/explore" element={<ProtectedRoute><ExplorePage /></ProtectedRoute>} />
-        <Route path="/dining" element={<ProtectedRoute><DiningNightlifePage /></ProtectedRoute>} />
-        <Route path="/item/:id" element={<ProtectedRoute><ItemDetailsPage /></ProtectedRoute>} />
-        <Route path="/yachts" element={<ProtectedRoute><YachtsPage /></ProtectedRoute>} />
-        <Route path="/yachts/:slug" element={<ProtectedRoute><YachtDetailPage /></ProtectedRoute>} />
         <Route path="/my-plans" element={<ProtectedRoute><MyPlansPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
