@@ -77,11 +77,7 @@ const YACHT_PAGES: Record<string, YachtPageData> = {
       'Towels for swimming & bathing',
     ],
     images: [
-      { url: '/yachts/elite-5-36ft.jpg', alt_text: 'Elite 5 exterior' },
-      { url: '/yachts/elite-5-1.jpg', alt_text: 'Elite 5 interior' },
-      { url: '/yachts/elite-5-2.jpg', alt_text: 'Elite 5 deck' },
-      { url: '/yachts/elite-5-3.jpg', alt_text: 'Elite 5 seating' },
-      { url: '/yachts/elite-5-4.jpg', alt_text: 'Elite 5 cabin' },
+      { url: '/yachts/elite-5-main.jpg', alt_text: 'Elite 5 exterior and interior collage' },
     ],
     description: 'Sporty 36ft Oryx mini sports yacht for up to 10 guests. Minimum 2 hours reservation.',
   },
