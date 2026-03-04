@@ -8,6 +8,9 @@ import blogNightlife from '@/assets/blog-dubai-nightlife.jpg';
 import blogYacht from '@/assets/blog-yacht.jpg';
 import blogDesert from '@/assets/blog-desert.jpg';
 import blogDining from '@/assets/blog-dining.jpg';
+import blogNightlifeClub from '@/assets/blog-nightlife.jpg';
+import blogShopping from '@/assets/blog-shopping.jpg';
+import blogFamily from '@/assets/blog-family.jpg';
 
 export interface BlogArticle {
   id: string;
@@ -484,6 +487,296 @@ At EVE BLUE, we know all the chefs, managers, and best tables. Need a last-minut
       ar: 'مشهد المطاعم في دبي هو واحد من أكثر المشاهد ديناميكية وإثارة في العالم.',
       fr: "La scène culinaire de Dubaï est l'une des plus dynamiques et passionnantes au monde.",
       ru: 'Ресторанная сцена Дубая — одна из самых динамичных и захватывающих в мире.',
+    },
+  },
+  {
+    id: 'dubai-nightlife-clubs',
+    image: blogNightlifeClub,
+    category: {
+      he: 'מסעדות וחיי לילה',
+      en: 'Dining & Nightlife',
+      ar: 'مطاعم وحياة ليلية',
+      fr: 'Restaurants et vie nocturne',
+      ru: 'Рестораны и ночная жизнь',
+    },
+    title: {
+      he: 'חיי הלילה בדובאי — המדריך המלא למועדונים, ברים וערבי VIP',
+      en: 'Dubai Nightlife — The Complete Guide to Clubs, Bars & VIP Nights',
+      ar: 'الحياة الليلية في دبي — الدليل الكامل للنوادي والبارات',
+      fr: 'Vie nocturne à Dubaï — Le guide complet des clubs et bars',
+      ru: 'Ночная жизнь Дубая — Полный гид по клубам и барам',
+    },
+    excerpt: {
+      he: 'דובאי היא אחת מערי חיי הלילה המובילות בעולם. מועדונים ברמה בינלאומית, ברים על גגות עם נוף מטורף, ומסיבות שלא תשכחו. הנה איך עושים את זה נכון — עם EVE BLUE.',
+      en: 'Dubai is one of the world\'s top nightlife cities. International-level clubs, rooftop bars with insane views, and unforgettable parties. Here\'s how to do it right — with EVE BLUE.',
+      ar: 'دبي هي واحدة من أفضل مدن الحياة الليلية في العالم.',
+      fr: 'Dubaï est l\'une des meilleures villes au monde pour la vie nocturne.',
+      ru: 'Дубай — один из лучших городов мира для ночной жизни.',
+    },
+    content: {
+      he: `חיי הלילה בדובאי הם עולם בפני עצמו. העיר מציעה מגוון מטורף של מועדונים, ברים, טרקלינים ומסיבות — כולם ברמה שמתחרה בלונדון, איביזה ומיאמי. ומה שהופך את דובאי למיוחדת? השילוב של מוזיקה עולמית, נוף עירוני מרהיב ושירות שלא תמצאו במקום אחר.
+
+**המועדונים החמים**
+
+- **WHITE Dubai** — מועדון על הגג עם DJ-ים בינלאומיים, אווירה אנרגטית ומסיבות שנמשכות עד השעות הקטנות
+- **Billionaire Mansion** — מופע חי, אוכל יוקרתי ומסיבה — הכל במקום אחד. חוויה שלמה
+- **Cavalli Club** — עיצוב מפואר בסגנון רוברטו קאוואלי, מוזיקה מעולה ואווירת גלאם
+- **BASE Dubai** — מועדון חוצות ענק ב-Design District עם הופעות חיות ומסיבות ענק
+
+**ברים על גגות**
+
+- **Ce La Vi** — על גג Address Sky View, עם נוף ישיר ל-Burj Khalifa. קוקטיילים מעולים ואווירת שקיעה מושלמת
+- **Zeta** — בר אלגנטי עם DJ ושירות ברמה גבוהה
+- **Skybar** — נוף פנורמי ל-Palm Jumeirah ו-Dubai Marina
+
+**איך EVE BLUE עוזרת?**
+
+חיי הלילה בדובאי דורשים תכנון — ובדיוק בשביל זה אנחנו כאן:
+
+- **בקשות כניסה למועדונים** — אנחנו שולחים בקשות כניסה (Guest List) למועדונים הפופולריים ומשתדלים להבטיח כניסה חלקה
+- **הזמנת שולחנות VIP** — שולחן עם שירות בקבוקים, מיקום מועדף ויחס אישי
+- **תכנון ערב שלם** — מסעדה → בר → מועדון, עם הסעה בין המקומות
+- **שירות נהג VIP** — נהג פרטי שמחכה לכם כל הערב, לוקח ומביא בין המקומות
+- **הזמנות ברגע האחרון** — שינוי תוכניות? אנחנו זמינים 24/7 ונשתדל למצוא פתרון
+
+**Dress Code — מה לובשים?**
+
+- רוב המועדונים דורשים Smart Casual לפחות
+- לגברים: מכנסיים ארוכים, נעליים סגורות (לא סניקרס), חולצה מכופתרת
+- לנשים: שמלה או חצאית, עקבים
+- טיפ: כשאתם מגיעים עם EVE BLUE, אנחנו מוודאים שאתם מוכנים לכל מקום
+
+**טיפים מאיתנו**
+
+- חיי הלילה מתחילים מאוחר — מועדונים מתחילים להתמלא אחרי 23:00
+- ברנץ' של יום שישי (Friday Brunch) הוא דרך מעולה להתחיל את הסופ"ש — הרבה ברנצ'ים מובילים ישירות למסיבה
+- חודשי החורף (נובמבר-מרץ) הם עונת השיא למסיבות ואירועים
+
+רוצים ערב בלתי נשכח? שלחו לנו הודעה ואנחנו נארגן הכל.`,
+      en: `Dubai nightlife is a world of its own. The city offers an incredible variety of clubs, bars, lounges, and parties — all at a level that competes with London, Ibiza, and Miami.
+
+**Hot Clubs**
+
+- **WHITE Dubai** — Rooftop club with international DJs
+- **Billionaire Mansion** — Live shows, luxury dining, and party in one
+- **Cavalli Club** — Roberto Cavalli-styled glamour
+- **BASE Dubai** — Massive outdoor club in Design District
+
+**Rooftop Bars**
+
+- **Ce La Vi** — Atop Address Sky View, direct Burj Khalifa views
+- **Zeta** — Elegant bar with DJ service
+- **Skybar** — Panoramic Palm Jumeirah and Marina views
+
+**How EVE BLUE Helps**
+
+- **Club guest list requests** — We submit entry requests to popular clubs
+- **VIP table bookings** — Bottle service, premium location
+- **Full evening planning** — Restaurant → Bar → Club with transfers
+- **VIP driver service** — Private driver waiting all evening
+- **Last-minute bookings** — We're available 24/7
+
+Want an unforgettable night? Message us and we'll arrange everything.`,
+      ar: 'الحياة الليلية في دبي هي عالم قائم بذاته. تقدم المدينة تشكيلة مذهلة من النوادي والبارات.',
+      fr: "La vie nocturne de Dubaï est un monde à part entière avec une variété incroyable de clubs et bars.",
+      ru: 'Ночная жизнь Дубая — это целый мир. Город предлагает невероятное разнообразие клубов и баров.',
+    },
+  },
+  {
+    id: 'luxury-shopping-guide',
+    image: blogShopping,
+    category: {
+      he: 'קניות יוקרה',
+      en: 'Luxury Shopping',
+      ar: 'تسوق فاخر',
+      fr: 'Shopping de luxe',
+      ru: 'Люксовый шопинг',
+    },
+    title: {
+      he: 'קניות יוקרה בדובאי — המדריך שלנו לקניונים, מותגים וחוויות שופינג',
+      en: 'Luxury Shopping in Dubai — Our Guide to Malls, Brands & Shopping Experiences',
+      ar: 'التسوق الفاخر في دبي — دليلنا للمولات والعلامات التجارية',
+      fr: 'Shopping de luxe à Dubaï — Notre guide des centres commerciaux et marques',
+      ru: 'Люксовый шопинг в Дубае — Наш гид по моллам и брендам',
+    },
+    excerpt: {
+      he: 'דובאי היא גן עדן לחובבי קניות. מקניון הגדול בעולם ועד בוטיקים אקסקלוסיביים — הנה המדריך שלנו לחוויית שופינג יוקרתית בדובאי, כולל איך EVE BLUE יכולה לשדרג את החוויה.',
+      en: 'Dubai is a shopping paradise. From the world\'s largest mall to exclusive boutiques — here\'s our guide to luxury shopping, plus how EVE BLUE can elevate the experience.',
+      ar: 'دبي هي جنة التسوق. من أكبر مول في العالم إلى البوتيكات الحصرية.',
+      fr: "Dubaï est un paradis du shopping. Du plus grand centre commercial au monde aux boutiques exclusives.",
+      ru: 'Дубай — рай для шопинга. От крупнейшего в мире торгового центра до эксклюзивных бутиков.',
+    },
+    content: {
+      he: `דובאי ושופינג הולכים יד ביד. העיר מציעה חוויית קניות שאין לה מקבילה בעולם — קניונים ענקיים, מותגי יוקרה בכל פינה, ומחירים שלפעמים טובים יותר מאירופה בזכות העדר מס (Tax Free).
+
+**הקניונים המובילים**
+
+- **The Dubai Mall** — הקניון הגדול בעולם. מעל 1,200 חנויות, אקווריום ענק, מגרש החלקה על הקרח, מפל מים מקורה, ואינספור מסעדות. אפשר לבלות כאן יום שלם
+- **Mall of the Emirates** — ביתו של Ski Dubai (מגלשת סקי מקורית!), עם כל מותגי היוקרה ואפשרויות בידור
+- **City Walk** — אזור קניות חוצות מעוצב ומודרני עם בוטיקים, בתי קפה וגלריות
+- **Dubai Marina Mall** — קניון קומפקטי ונוח ליד המרינה עם מותגים מובילים
+
+**מותגי יוקרה שחייבים לבקר**
+
+- **Fashion Avenue** (Dubai Mall) — אגף שלם של מותגי העילית: Louis Vuitton, Gucci, Chanel, Dior, Hermès
+- **Gold Souk** (שוק הזהב) — שוק מסורתי עם מאות חנויות זהב ותכשיטים במחירים תחרותיים
+- **Perfume Souk** — שוק הבשמים המסורתי ב-Deira, עם בשמים מזרחיים ייחודיים
+- **Dubai Design District (d3)** — בוטיקים של מעצבים מקומיים ובינלאומיים
+
+**טיפים לשופינג חכם**
+
+- **Tax Refund**: תיירים זכאים להחזר מס (VAT Refund) על קניות מעל 250 AED. שמרו את הקבלות!
+- **Dubai Shopping Festival**: פסטיבל הקניות השנתי (ינואר-פברואר) עם הנחות משמעותיות ואירועים
+- **Summer Surprises**: מבצעי קיץ עם הנחות של עד 75%
+- **Gold & Jewelry**: דובאי ידועה כעיר הזהב — המחירים תחרותיים מאוד
+
+**איך EVE BLUE עוזרת?**
+
+- **השכרת רכב יוקרתי** — הגיעו לקניון בסטייל עם אחד מרכבי הפרימיום שלנו
+- **שירות נהג VIP** — נהג פרטי שמחכה לכם מחוץ לקניון, עוזר עם שקיות ומסיע בין המקומות
+- **המלצות מותאמות** — ספרו לנו מה אתם מחפשים ואנחנו נכוון אתכם למקומות הנכונים
+- **שילוב קניות עם חוויות** — קניות בבוקר, ארוחה במסעדת שף, שייט על יאכטה בערב
+
+דברו איתנו ונבנה לכם יום שופינג שלא תשכחו.`,
+      en: `Dubai and shopping go hand in hand. The city offers an unparalleled shopping experience — massive malls, luxury brands everywhere, and prices sometimes better than Europe thanks to tax-free shopping.
+
+**Top Malls**
+
+- **The Dubai Mall** — World's largest mall. 1,200+ stores, aquarium, ice rink, waterfall
+- **Mall of the Emirates** — Home of Ski Dubai, all luxury brands
+- **City Walk** — Modern outdoor shopping district
+- **Dubai Marina Mall** — Compact and convenient near the Marina
+
+**Must-Visit Luxury Brands**
+
+- **Fashion Avenue** (Dubai Mall) — Louis Vuitton, Gucci, Chanel, Dior, Hermès
+- **Gold Souk** — Traditional market with hundreds of gold and jewelry shops
+- **Perfume Souk** — Traditional perfume market with unique oriental fragrances
+
+**Smart Shopping Tips**
+
+- **Tax Refund**: Tourists can claim VAT refund on purchases over 250 AED
+- **Dubai Shopping Festival**: Annual festival (Jan-Feb) with major discounts
+- **Gold & Jewelry**: Dubai is the City of Gold — very competitive prices
+
+**How EVE BLUE Helps**
+
+- **Luxury car rental** — Arrive at the mall in style
+- **VIP driver service** — Private driver waiting, helps with bags
+- **Personalized recommendations** — Tell us what you're looking for
+- **Combined experiences** — Shopping + chef restaurant + yacht cruise
+
+Talk to us and we'll build you an unforgettable shopping day.`,
+      ar: 'دبي والتسوق يسيران جنبًا إلى جنب. تقدم المدينة تجربة تسوق لا مثيل لها.',
+      fr: "Dubaï et le shopping vont de pair. La ville offre une expérience shopping incomparable.",
+      ru: 'Дубай и шопинг идут рука об руку. Город предлагает непревзойдённый опыт покупок.',
+    },
+  },
+  {
+    id: 'family-attractions-guide',
+    image: blogFamily,
+    category: {
+      he: 'אטרקציות למשפחות',
+      en: 'Family Attractions',
+      ar: 'معالم عائلية',
+      fr: 'Attractions familiales',
+      ru: 'Семейные развлечения',
+    },
+    title: {
+      he: 'דובאי עם ילדים — האטרקציות הכי שוות למשפחות (2026)',
+      en: 'Dubai with Kids — The Best Family Attractions (2026)',
+      ar: 'دبي مع الأطفال — أفضل المعالم العائلية (2026)',
+      fr: 'Dubaï avec des enfants — Les meilleures attractions familiales (2026)',
+      ru: 'Дубай с детьми — Лучшие семейные достопримечательности (2026)',
+    },
+    excerpt: {
+      he: 'חושבים שדובאי היא רק למבוגרים? תחשבו שוב. העיר מציעה כמות מטורפת של אטרקציות למשפחות — פארקי מים, אקווריומים, פארקי שעשועים וחוויות שהילדים (וגם אתם) לא ישכחו.',
+      en: 'Think Dubai is just for adults? Think again. The city offers an incredible array of family attractions — water parks, aquariums, theme parks, and experiences kids (and you) won\'t forget.',
+      ar: 'هل تعتقد أن دبي للكبار فقط؟ فكر مرة أخرى. المدينة تقدم مجموعة مذهلة من المعالم العائلية.',
+      fr: 'Vous pensez que Dubaï est réservé aux adultes ? Détrompez-vous. La ville offre une multitude d\'attractions familiales.',
+      ru: 'Думаете, Дубай только для взрослых? Подумайте ещё раз. Город предлагает невероятное количество семейных развлечений.',
+    },
+    content: {
+      he: `דובאי היא יעד מושלם למשפחות. העיר הבינה מזמן שמשפחות מחפשות חוויות ייחודיות, והשקיעה מיליארדים באטרקציות ברמה עולמית שמתאימות לכל הגילאים.
+
+**פארקי מים**
+
+- **Aquaventure Waterpark** (Atlantis The Palm) — פארק המים הגדול ביותר במזרח התיכון. מגלשות ענק, נהר עצל, חוף פרטי, ואפילו שחייה עם דולפינים. חובה מוחלטת!
+- **Wild Wadi** — פארק מים ליד Burj Al Arab עם מגלשות לכל הגילאים ונוף מדהים
+- **Laguna Waterpark** — פארק קומפקטי ומשפחתי ב-La Mer עם אווירה נינוחה
+
+**אטרקציות מקורות**
+
+- **IMG Worlds of Adventure** — פארק שעשועים מקורה (הגדול בעולם!) עם אזורי Marvel, Cartoon Network ודינוזאורים
+- **Dubai Aquarium & Underwater Zoo** — אקווריום ענק ב-Dubai Mall עם מנהרת זכוכית מרהיבה, כרישים, ואפילו חוויית צלילה
+- **KidZania** — עיר מיניאטורית שבה ילדים יכולים "לעבוד" במקצועות שונים — מכבי אש, רופאים, שפים ועוד
+- **VR Park** — פארק מציאות מדומה ב-Dubai Mall עם חוויות אינטראקטיביות
+
+**חוויות חוצות**
+
+- **Dubai Miracle Garden** — גן הפרחים הגדול בעולם עם מיליוני פרחים בצורות מדהימות
+- **Dubai Safari Park** — גן חיות מודרני עם אלפי חיות מרחבי העולם
+- **Global Village** — שוק בינלאומי ענק עם ביתנים מ-90 מדינות, אטרקציות ואוכל
+- **The Green Planet** — יער גשם טרופי מקורה עם בעלי חיים אקזוטיים
+
+**חוויות מיוחדות לכל המשפחה**
+
+- **טיסת הליקופטר** — סיור על דובאי מלמעלה. הילדים ישתגעו! (אנחנו ב-EVE BLUE מארגנים טיסות פרטיות)
+- **שייט על יאכטה** — יאכטה משפחתית עם עצירה לשחייה וציוד שנירקול
+- **ספארי מדבר** — רכיבה על גמלים, סנדבורדינג וארוחת ערב בדואית
+- **Ski Dubai** — סקי ושלג ב-35 מעלות בחוץ! כולל פינגווינים אמיתיים
+
+**איך EVE BLUE עוזרת משפחות?**
+
+- **כרטיסים לאטרקציות** — אנחנו מארגנים כרטיסי כניסה ומשתדלים להשיג מחירים טובים ואפשרויות VIP
+- **תכנון ימי טיול** — מסלול מותאם למשפחה עם ילדים, כולל הפסקות, ארוחות ואטרקציות
+- **שירות נהג VIP** — נהג פרטי עם רכב מרווח למשפחה, כולל מושבי בטיחות לילדים
+- **השכרת רכב** — רכבי SUV מרווחים למשפחות גדולות
+- **המלצות למסעדות ידידותיות למשפחות** — מקומות עם תפריט ילדים, מתחמי משחק ואווירה מתאימה
+- **הזמנת מלונות** — נעזור לכם למצוא מלון עם בריכה, מועדון ילדים ונוחות למשפחה
+
+**טיפים למשפחות**
+
+- בחודשי הקיץ (יוני-ספטמבר) העדיפו אטרקציות מקורות — החום יכול להיות אינטנסיבי
+- הרבה אטרקציות מציעות כרטיסים משולבים (Combo Tickets) — שווה לבדוק
+- ילדים מתחת לגיל 3 נכנסים חינם לרוב האטרקציות
+- קחו הפסקות — הימים בדובאי ארוכים ומלאים
+
+רוצים שנתכנן לכם חופשה משפחתית מושלמת? דברו איתנו ואנחנו נדאג לכל הפרטים.`,
+      en: `Dubai is a perfect family destination. The city invested billions in world-class attractions suitable for all ages.
+
+**Water Parks**
+
+- **Aquaventure Waterpark** (Atlantis) — Largest in the Middle East. Giant slides, lazy river, private beach, swim with dolphins
+- **Wild Wadi** — Near Burj Al Arab with slides for all ages
+- **Laguna Waterpark** — Compact family-friendly park at La Mer
+
+**Indoor Attractions**
+
+- **IMG Worlds of Adventure** — World's largest indoor theme park with Marvel, Cartoon Network zones
+- **Dubai Aquarium & Underwater Zoo** — Giant aquarium in Dubai Mall
+- **KidZania** — Miniature city where kids can "work" different jobs
+- **VR Park** — Virtual reality park in Dubai Mall
+
+**Special Family Experiences**
+
+- **Helicopter tour** — See Dubai from above (EVE BLUE arranges private flights)
+- **Family yacht cruise** — Swimming stop and snorkeling gear included
+- **Desert safari** — Camel rides, sandboarding, Bedouin dinner
+- **Ski Dubai** — Skiing in 35°C heat! Real penguins included
+
+**How EVE BLUE Helps Families**
+
+- **Attraction tickets** — We arrange entry tickets and try to get VIP options
+- **Day trip planning** — Custom family itineraries with breaks and meals
+- **VIP driver service** — Private driver with spacious family vehicle, child seats
+- **Family restaurant recommendations** — Places with kids' menus and play areas
+- **Hotel booking assistance** — Hotels with pools, kids clubs, family-friendly amenities
+
+Want us to plan your perfect family vacation? Talk to us and we'll handle all the details.`,
+      ar: 'دبي هي وجهة مثالية للعائلات. استثمرت المدينة المليارات في معالم سياحية عالمية المستوى.',
+      fr: "Dubaï est une destination parfaite pour les familles avec des attractions de classe mondiale.",
+      ru: 'Дубай — идеальное семейное направление. Город инвестировал миллиарды в достопримечательности мирового уровня.',
     },
   },
 ];
