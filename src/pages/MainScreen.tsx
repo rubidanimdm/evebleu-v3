@@ -11,7 +11,7 @@ import { openExternalUrl } from '@/lib/openExternalUrl';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
-import { BlogSection } from '@/components/BlogSection';
+import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 import yachtVideo from '@/assets/yacht-marina-video.mp4';
