@@ -17,16 +17,14 @@ import nightlifeVideo from '@/assets/nightlife-video.mp4';
 import attractionsVideo from '@/assets/attractions-video.mp4';
 import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
-import birthdayIcon from '@/assets/icon-birthday.jpeg';
-import vipDriverIcon from '@/assets/icon-vip-driver.jpeg';
-import flightsIcon from '@/assets/icon-flights.jpeg';
+import vipDriverIcon from '@/assets/vip-driver-icon-new.jpeg';
+import flightsIcon from '@/assets/flights-icon.jpeg';
 import hotelIcon from '@/assets/icon-hotel.jpeg';
 import desertIcon from '@/assets/icon-desert.jpeg';
-import yachtIcon from '@/assets/icon-yacht.jpeg';
+import yachtIcon from '@/assets/yacht-icon-new.jpeg';
 import luxuryCarIcon from '@/assets/icon-luxury-car.jpeg';
-import helicopterIcon from '@/assets/icon-helicopter.jpeg';
 import diningIcon from '@/assets/dining-icon-new.jpeg';
-import airportIcon from '@/assets/airport-icon-new.jpeg';
+import airportIcon from '@/assets/airport-pickup-icon.jpeg';
 import attractionsIcon from '@/assets/icon-attractions.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 import { AccountButton } from '@/components/AccountButton';
@@ -41,10 +39,8 @@ const getCategoryIcon = (key: string) => {
     yachtCharters: <img src={yachtIcon} alt="Yacht" className={imgCls} />,
     desertAction: <img src={desertIcon} alt="Desert" className={imgCls} />,
     extremeFlights: <img src={flightsIcon} alt="Flights" className={imgCls} />,
-    birthdays: <img src={birthdayIcon} alt="Birthday" className={imgCls} />,
     airportPickup: <img src={airportIcon} alt="Airport Pickup" className={imgCls} />,
     vipDriver: <img src={vipDriverIcon} alt="VIP Driver" className={imgCls} />,
-    helicopterTour: <img src={helicopterIcon} alt="Helicopter" className={imgCls} />,
   };
   return icons[key];
 };
@@ -56,10 +52,8 @@ const categoryKeys = [
   { key: 'attractions', route: '#hotel-booking' },
   { key: 'desertAction', route: 'whatsapp:DESERT' },
   { key: 'luxuryCars', route: 'whatsapp:CAR' },
-  { key: 'birthdays', route: 'whatsapp:BIRTHDAY' },
   { key: 'airportPickup', route: 'whatsapp:AIRPORT_PICKUP' },
   { key: 'vipDriver', route: 'whatsapp:VIP_DRIVER' },
-  { key: 'helicopterTour', route: 'whatsapp:HELICOPTER' },
 ];
 
 export default function MainScreen() {

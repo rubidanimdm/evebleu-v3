@@ -33,11 +33,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
           return stored as Language;
         }
       }
-      // Reset to Russian for users with old/no version
+      // Reset to Hebrew for users with old/no version
       localStorage.setItem(LANG_VERSION_KEY, CURRENT_LANG_VERSION);
-      localStorage.setItem(STORAGE_KEY, 'ru');
+      localStorage.setItem(STORAGE_KEY, 'he');
     }
-    return 'ru';
+    return 'he';
   });
 
   const isRTL = LANGUAGES.find(l => l.code === language)?.rtl ?? false;

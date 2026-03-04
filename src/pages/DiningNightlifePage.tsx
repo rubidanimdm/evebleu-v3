@@ -124,6 +124,12 @@ export default function DiningNightlifePage() {
     fetchVenues();
   }, []);
 
+  const FEATURED_NAMES = ['Baoli', 'Amelia', 'Billionaire', 'Cou Cou', 'Amazonico', 'Gigi', 'Raspoutine', 'Verde Beach', 'O Beach', 'Opa'];
+
+  const featured = FEATURED_NAMES
+    .map(name => venues.find(v => v.title === name))
+    .filter(Boolean) as Venue[];
+
   const filtered = venues
     .filter(v => categoryFilter === 'ALL' || v.category === categoryFilter)
     .filter(v => !search || v.title.toLowerCase().includes(search.toLowerCase()));
@@ -202,6 +208,47 @@ export default function DiningNightlifePage() {
 
       {/* Venue List */}
       <main className="max-w-2xl mx-auto px-4 pt-4">
+        {/* Featured Section - only when not searching */}
+        {!search && !loading && featured.length > 0 && categoryFilter === 'ALL' && (
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">⭐ {t('diningPage.topRecommended') || 'Our Top 10 Recommended'}</span>
+              <div className="flex-1 h-px bg-primary/15" />
+            </div>
+            <div className="space-y-2">
+              {featured.map(venue => (
+                <div
+                  key={venue.id}
+                  className="group flex items-center justify-between gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/20 hover:border-primary/40 hover:bg-primary/10 backdrop-blur-sm transition-all duration-200"
+                >
+                  <div className="flex items-center gap-4 min-w-0">
+                    <VenueLogo venue={venue} />
+                    <div className="min-w-0">
+                      <span className="font-medium text-foreground truncate block">
+                        {venue.title}
+                      </span>
+                      <span className="text-[10px] text-primary font-medium">{t('diningPage.recommended') || 'Recommended'}</span>
+                    </div>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => handleContact(venue.title)}
+                    className="flex-shrink-0 h-9 px-4 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 text-xs"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    {t('diningPage.book')}
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 mt-6 mb-3">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('diningPage.allVenues') || 'All Venues'}</span>
+              <div className="flex-1 h-px bg-border/40" />
+            </div>
+          </div>
+        )}
+
         {loading ? (
           <VenueSkeleton />
         ) : filtered.length === 0 ? (
