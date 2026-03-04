@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
-import { User, LogOut, ArrowRight, Phone, Mail } from 'lucide-react';
+import { User, ArrowRight, Phone, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
@@ -69,10 +69,6 @@ export default function MainScreen() {
   const isLoggedIn = !!user;
   const [flightFormOpen, setFlightFormOpen] = useState(false);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast({ title: t('common.signedOut') });
-  };
 
   const handleCategoryClick = (route: string) => {
     if (!isLoggedIn) {
@@ -142,26 +138,15 @@ export default function MainScreen() {
           <LanguageSwitcher variant="full" className="[&_button]:bg-black/40 [&_button]:backdrop-blur-md [&_button]:border-white/10 [&_button]:text-foreground [&_button]:hover:bg-black/50" />
         </div>
 
-        {/* Auth buttons — top right */}
-        <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-          {isLoggedIn ? (
-            <>
-              <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}
-                className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
-                <User className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="icon" onClick={handleLogout}
-                className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
-                <LogOut className="w-4 h-4" />
-              </Button>
-            </>
-          ) : (
-            <Button onClick={() => navigate('/login')}
-              className="h-10 px-6 rounded-full bg-primary/90 text-primary-foreground hover:bg-primary text-xs font-semibold backdrop-blur-md shadow-lg border border-primary/30">
-              {t('auth.signIn')}
+        {/* Profile button — top right (only if logged in) */}
+        {isLoggedIn && (
+          <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}
+              className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
+              <User className="w-4 h-4" />
             </Button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Hero content — centered */}
         <div className="relative z-20 h-full flex flex-col items-center justify-center px-6 text-center">
@@ -369,10 +354,10 @@ export default function MainScreen() {
             {t('mainScreen.conciergeAvailable')}
           </p>
           <Button
-            onClick={() => isLoggedIn ? openWhatsAppConcierge() : navigate('/login')}
+            onClick={() => openWhatsAppConcierge()}
             className="relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
           >
-            {isLoggedIn ? t('mainScreen.chatNow') : t('mainScreen.joinUs')}
+            {t('mainScreen.chatNow')}
             <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
