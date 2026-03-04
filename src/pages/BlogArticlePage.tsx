@@ -4,6 +4,7 @@ import { BLOG_ARTICLES } from '@/components/BlogSection';
 import { ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function BlogArticlePage() {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +13,9 @@ export default function BlogArticlePage() {
   const isRTL = language === 'he' || language === 'ar';
 
   const article = BLOG_ARTICLES.find((a) => a.id === id);
+
+  const contentReveal = useScrollReveal<HTMLDivElement>();
+  const ctaReveal = useScrollReveal<HTMLDivElement>();
 
   if (!article) {
     return (
@@ -87,8 +91,8 @@ export default function BlogArticlePage() {
 
   return (
     <div className="min-h-screen bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
-      {/* Hero image */}
-      <div className="relative w-full h-[260px] sm:h-[360px] md:h-[420px] overflow-hidden">
+      {/* Hero image with fade-in */}
+      <div className="relative w-full h-[260px] sm:h-[360px] md:h-[420px] overflow-hidden animate-[fadeIn_0.8s_ease-out]">
         <img
           src={article.image}
           alt={article.title[language] || article.title.en}
@@ -99,7 +103,7 @@ export default function BlogArticlePage() {
         {/* Back button */}
         <button
           onClick={() => navigate(-1)}
-          className="absolute top-6 left-6 right-auto rtl:left-auto rtl:right-6 flex items-center gap-2 text-foreground/80 hover:text-foreground bg-background/50 backdrop-blur-md rounded-full px-4 py-2 text-sm transition-colors border border-primary/10"
+          className="absolute top-6 left-6 right-auto rtl:left-auto rtl:right-6 flex items-center gap-2 text-foreground/80 hover:text-foreground bg-background/50 backdrop-blur-md rounded-full px-4 py-2 text-sm transition-colors border border-primary/10 animate-[fadeIn_1s_ease-out]"
         >
           <BackArrow className="w-4 h-4" />
           {backLabel[language] || backLabel.en}
@@ -109,30 +113,30 @@ export default function BlogArticlePage() {
       {/* Article content */}
       <article className="max-w-[720px] mx-auto px-5 sm:px-8 pb-20 -mt-16 relative z-10">
         {/* Category */}
-        <span className="text-xs text-primary/70 uppercase tracking-[0.2em] font-medium">
+        <span className="text-xs text-primary/70 uppercase tracking-[0.2em] font-medium animate-[fadeIn_0.6s_ease-out]">
           {article.category[language] || article.category.en}
         </span>
 
         {/* Title */}
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mt-3 mb-4 leading-snug">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mt-3 mb-4 leading-snug animate-[fadeIn_0.8s_ease-out]">
           {article.title[language] || article.title.en}
         </h1>
 
         {/* Reading time estimate */}
-        <div className="flex items-center gap-2 text-foreground/40 text-xs mb-8">
+        <div className="flex items-center gap-2 text-foreground/40 text-xs mb-8 animate-[fadeIn_1s_ease-out]">
           <Clock className="w-3.5 h-3.5" />
           <span>{Math.max(3, Math.round(content.length / 800))} {language === 'he' ? 'דקות קריאה' : language === 'ar' ? 'دقائق للقراءة' : 'min read'}</span>
         </div>
 
-        <div className="w-full h-px bg-primary/15 mb-8" />
+        <div className="w-full h-px shimmer-line mb-8" />
 
         {/* Content */}
-        <div className="prose-custom">
+        <div ref={contentReveal.ref} className={`prose-custom reveal-base ${contentReveal.isVisible ? 'revealed' : ''}`}>
           {renderContent(content)}
         </div>
 
         {/* CTA */}
-        <div className="mt-12 pt-8 border-t border-primary/15 text-center">
+        <div ref={ctaReveal.ref} className={`mt-12 pt-8 border-t border-primary/15 text-center reveal-scale ${ctaReveal.isVisible ? 'revealed' : ''}`}>
           <Button
             onClick={() => openWhatsAppConcierge()}
             className="h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2"
@@ -142,6 +146,14 @@ export default function BlogArticlePage() {
           </Button>
         </div>
       </article>
+
+      {/* Fade-in keyframe */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryE
 import { YachtImageCarousel } from '@/components/YachtImageCarousel';
 import { CODE_TO_SLUG } from '@/pages/YachtDetailPage';
 import { useLanguage } from '@/lib/i18n';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 import type { Json } from '@/integrations/supabase/types';
 
 interface YachtDetails {
@@ -56,6 +57,10 @@ export default function YachtsPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const navigate = useNavigate();
   const { t } = useLanguage();
+
+  const yachtSectionReveal = useScrollReveal<HTMLElement>();
+  const fishingSectionReveal = useScrollReveal<HTMLElement>();
+  const ctaReveal = useScrollReveal<HTMLDivElement>();
 
   useEffect(() => {
     async function fetchYachts() {
@@ -120,53 +125,55 @@ export default function YachtsPage() {
         ) : (
           <>
             {yachts.length > 0 && (
-              <section>
+              <section ref={yachtSectionReveal.ref} className={`reveal-base ${yachtSectionReveal.isVisible ? 'revealed' : ''}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <Anchor className="w-5 h-5 text-primary" strokeWidth={1.5} />
                   <h2 className="text-lg font-semibold text-foreground tracking-wide">{t('yachtsPage.luxuryYachts')}</h2>
                 </div>
                 <div className="grid gap-4">
-                  {yachts.map(yacht => (
-                    <YachtCard
-                      key={yacht.id}
-                      item={yacht}
-                      expanded={expandedId === yacht.id}
-                      onToggle={() => setExpandedId(expandedId === yacht.id ? null : yacht.id)}
-                      onBook={() => openWhatsAppConcierge('YACHT', `Yacht: ${yacht.title}`)}
-                      onNavigateDetail={
-                        CODE_TO_SLUG[yacht.details.code]
-                          ? () => navigate(`/yachts/${CODE_TO_SLUG[yacht.details.code]}`)
-                          : undefined
-                      }
-                      t={t}
-                    />
+                  {yachts.map((yacht, index) => (
+                    <div key={yacht.id} className="animate-[fadeIn_0.5s_ease-out]" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}>
+                      <YachtCard
+                        item={yacht}
+                        expanded={expandedId === yacht.id}
+                        onToggle={() => setExpandedId(expandedId === yacht.id ? null : yacht.id)}
+                        onBook={() => openWhatsAppConcierge('YACHT', `Yacht: ${yacht.title}`)}
+                        onNavigateDetail={
+                          CODE_TO_SLUG[yacht.details.code]
+                            ? () => navigate(`/yachts/${CODE_TO_SLUG[yacht.details.code]}`)
+                            : undefined
+                        }
+                        t={t}
+                      />
+                    </div>
                   ))}
                 </div>
               </section>
             )}
 
             {fishingBoats.length > 0 && (
-              <section>
+              <section ref={fishingSectionReveal.ref} className={`reveal-base ${fishingSectionReveal.isVisible ? 'revealed' : ''}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <Fish className="w-5 h-5 text-primary" strokeWidth={1.5} />
                   <h2 className="text-lg font-semibold text-foreground tracking-wide">{t('yachtsPage.fishingBoats')}</h2>
                 </div>
                 <div className="grid gap-4">
-                  {fishingBoats.map(boat => (
-                    <YachtCard
-                      key={boat.id}
-                      item={boat}
-                      expanded={expandedId === boat.id}
-                      onToggle={() => setExpandedId(expandedId === boat.id ? null : boat.id)}
-                      onBook={() => openWhatsAppConcierge('YACHT', `Boat: ${boat.title}`)}
-                      t={t}
-                    />
+                  {fishingBoats.map((boat, index) => (
+                    <div key={boat.id} className="animate-[fadeIn_0.5s_ease-out]" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}>
+                      <YachtCard
+                        item={boat}
+                        expanded={expandedId === boat.id}
+                        onToggle={() => setExpandedId(expandedId === boat.id ? null : boat.id)}
+                        onBook={() => openWhatsAppConcierge('YACHT', `Boat: ${boat.title}`)}
+                        t={t}
+                      />
+                    </div>
                   ))}
                 </div>
               </section>
             )}
 
-            <div className="text-center pt-4">
+            <div ref={ctaReveal.ref} className={`text-center pt-4 reveal-scale ${ctaReveal.isVisible ? 'revealed' : ''}`}>
               <p className="text-sm text-muted-foreground mb-3">{t('yachtsPage.customArrangement')}</p>
               <Button
                 onClick={() => openWhatsAppConcierge('YACHT')}
@@ -180,6 +187,13 @@ export default function YachtsPage() {
       </main>
 
       <BottomNav />
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
