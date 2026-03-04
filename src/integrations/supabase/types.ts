@@ -579,6 +579,60 @@ export type Database = {
           },
         ]
       }
+      pages: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          content_blocks: Json
+          meta_title: string | null
+          meta_description: string | null
+          featured_image_url: string | null
+          is_published: boolean
+          category: string | null
+          tags: string[] | null
+          layout_template: string
+          created_by: string | null
+          created_at: string
+          updated_at: string
+          published_at: string | null
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          content_blocks?: Json
+          meta_title?: string | null
+          meta_description?: string | null
+          featured_image_url?: string | null
+          is_published?: boolean
+          category?: string | null
+          tags?: string[] | null
+          layout_template?: string
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+          published_at?: string | null
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          content_blocks?: Json
+          meta_title?: string | null
+          meta_description?: string | null
+          featured_image_url?: string | null
+          is_published?: boolean
+          category?: string | null
+          tags?: string[] | null
+          layout_template?: string
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+          published_at?: string | null
+        }
+        Relationships: []
+      }
       pricing_rules: {
         Row: {
           catalog_item_id: string

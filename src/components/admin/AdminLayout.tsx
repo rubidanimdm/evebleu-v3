@@ -18,6 +18,7 @@ import {
   Users,
   Settings,
   Shield,
+  FileText,
   Menu,
   X,
   Search,
@@ -37,6 +38,7 @@ const navItems = [
   { name: 'Customers', path: '/admin/customers', icon: Users },
   { name: 'Settings', path: '/admin/settings', icon: Settings },
   { name: 'Roles & Permissions', path: '/admin/roles', icon: Shield },
+  { name: 'Pages', path: '/admin/pages', icon: FileText },
 ];
 
 export function AdminLayout() {

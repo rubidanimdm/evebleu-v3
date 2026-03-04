@@ -44,6 +44,9 @@ import AdminCustomersPage from "./pages/admin/AdminCustomersPage";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminRoles from "./pages/admin/AdminRoles";
 import AdminVenues from "./pages/admin/AdminVenues";
+import AdminPages from "./pages/admin/AdminPages";
+import PageEditor from "./pages/admin/PageEditor";
+import DynamicPage from "./pages/DynamicPage";
 
 const queryClient = new QueryClient();
 
@@ -139,8 +142,14 @@ function AppContent() {
           <Route path="customers/:id" element={<CustomerDetailPage />} />
           <Route path="settings" element={<AdminSettings />} />
           <Route path="roles" element={<AdminRoles />} />
+          <Route path="pages" element={<AdminPages />} />
+          <Route path="pages/new" element={<PageEditor />} />
+          <Route path="pages/:id/edit" element={<PageEditor />} />
         </Route>
         
+        {/* Dynamic CMS pages */}
+        <Route path="/p/:slug" element={<DynamicPage />} />
+
         {/* Legacy route redirects */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
