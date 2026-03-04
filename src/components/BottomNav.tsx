@@ -3,26 +3,28 @@ import { useAuth } from '@/lib/supabase';
 import { useAdminRole } from '@/hooks/useAdminRole';
 import { Home, MessageSquare, Compass, Calendar, User, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/lib/i18n';
 
-const navItems = [
-  { icon: Home, label: 'Home', path: '/' },
-  { icon: MessageSquare, label: 'Concierge', path: '/concierge' },
-  { icon: Compass, label: 'Explore', path: '/explore' },
-  { icon: Calendar, label: 'Plans', path: '/my-plans' },
-  { icon: User, label: 'Profile', path: '/profile' },
+const navKeys = [
+  { icon: Home, labelKey: 'nav.home', path: '/' },
+  { icon: MessageSquare, labelKey: 'nav.concierge', path: '/concierge' },
+  { icon: Compass, labelKey: 'nav.explore', path: '/explore' },
+  { icon: Calendar, labelKey: 'nav.plans', path: '/my-plans' },
+  { icon: User, labelKey: 'nav.profile', path: '/profile' },
 ];
 
 const adminItems = [
-  { icon: Settings, label: 'Admin', path: '/admin' },
+  { icon: Settings, labelKey: 'nav.admin', path: '/admin' },
 ];
 
 export function BottomNav() {
   const { profile } = useAuth();
   const { isAdmin } = useAdminRole();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const allItems = isAdmin ? [...navItems, ...adminItems] : navItems;
+  const allItems = isAdmin ? [...navKeys, ...adminItems] : navKeys;
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-card/98 backdrop-blur-xl border-t border-primary/10 z-50 safe-area-pb">
@@ -56,7 +58,7 @@ export function BottomNav() {
                 "text-[11px] font-medium",
                 isActive && "text-primary"
               )}>
-                {item.label}
+                {t(item.labelKey)}
               </span>
             </button>
           );

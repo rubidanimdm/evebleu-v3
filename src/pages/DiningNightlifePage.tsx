@@ -174,14 +174,14 @@ export default function DiningNightlifePage() {
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-2">
             <UtensilsCrossed className="w-3 h-3 text-primary" />
             <span className="text-[10px] font-medium text-primary tracking-wide uppercase">
-              Our Partners
+              {t('diningPage.ourPartners')}
             </span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mb-1 font-display">
             {t('mainScreen.diningNightlife')}
           </h1>
           <p className="text-muted-foreground text-xs max-w-md mx-auto">
-            {VENUES.length} exclusive venues · Tables & VIP bookings through your concierge
+            {VENUES.length} {t('diningPage.subtitle')}
           </p>
           <div className="w-12 h-px bg-primary/30 mx-auto mt-3" />
         </div>
@@ -193,7 +193,7 @@ export default function DiningNightlifePage() {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search venues..."
+              placeholder={t('diningPage.searchPlaceholder')}
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 pr-10 h-11 rounded-xl bg-card/60 border-primary/15 focus:border-primary/40"
@@ -214,14 +214,14 @@ export default function DiningNightlifePage() {
       <main className="max-w-2xl mx-auto px-4 pt-4">
         {filtered.length === 0 ? (
           <div className="text-center py-16 space-y-3">
-            <p className="text-muted-foreground">No venues found for "{search}"</p>
+            <p className="text-muted-foreground">{t('diningPage.noResults')} "{search}"</p>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setSearch('')}
               className="border-primary/20 text-primary"
             >
-              Clear search
+              {t('diningPage.clearSearch')}
             </Button>
           </div>
         ) : (
@@ -246,7 +246,7 @@ export default function DiningNightlifePage() {
                   className="flex-shrink-0 h-9 px-4 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 text-xs"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
-                  Book
+                  {t('diningPage.book')}
                 </Button>
               </div>
             ))}
@@ -254,12 +254,12 @@ export default function DiningNightlifePage() {
         )}
 
         <p className="text-center text-xs text-muted-foreground mt-8 mb-4">
-          Can't find what you're looking for?{' '}
+          {t('diningPage.cantFind')}{' '}
           <button
             onClick={() => navigate('/concierge?intent=TABLE')}
             className="text-primary underline underline-offset-2 hover:text-primary/80"
           >
-            Ask your concierge
+            {t('diningPage.askConcierge')}
           </button>
         </p>
       </main>
