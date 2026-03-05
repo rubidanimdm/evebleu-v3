@@ -30,6 +30,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
 import BlogArticlePage from "./pages/BlogArticlePage";
+import HotelSearchPage from "./pages/HotelSearchPage";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AdminLayout } from "@/components/admin/AdminLayout";
