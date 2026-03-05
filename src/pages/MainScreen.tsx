@@ -209,7 +209,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           INTRO TEXT — Elegant welcome copy
       ═══════════════════════════════════════════════ */}
-      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`}>
+      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] lg:max-w-[800px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`}>
         <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
           {t('mainScreen.introTitle')}
         </h2>
@@ -226,7 +226,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           SERVICES — Category grid
       ═══════════════════════════════════════════════ */}
-      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
+      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] lg:max-w-[960px] xl:max-w-[1100px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
         {/* Section header */}
         <div className="text-center mb-10">
           <p className="text-primary text-xs uppercase tracking-[0.3em] mb-3">{t('mainScreen.premiumServices')}</p>
@@ -236,7 +236,7 @@ export default function MainScreen() {
           <div className="w-16 h-px shimmer-line mx-auto mt-4" />
         </div>
 
-        <div ref={gridReveal.ref} className={`grid grid-cols-3 gap-3 sm:gap-4 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
+        <div ref={gridReveal.ref} className={`grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
           {categoryKeys.map((cat) => (
             <button
               key={cat.key}
@@ -306,7 +306,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           CTA — READY FOR SOMETHING SPECIAL
       ═══════════════════════════════════════════════ */}
-      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-14 max-w-[720px] mx-auto w-full transition-all duration-1000 ease-out ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
+      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-14 max-w-[720px] lg:max-w-[960px] mx-auto w-full transition-all duration-1000 ease-out ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
         <div className={`relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center transition-all duration-700 delay-300 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {/* Animated decorative glows */}
           <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/8 blur-3xl rounded-full transition-all duration-1000 delay-500 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
@@ -429,19 +429,19 @@ export default function MainScreen() {
           ru: '🏨 Наши рекомендуемые отели',
         };
         return (
-          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] lg:max-w-[1100px] xl:max-w-[1300px] mx-auto w-full">
             <div className="text-center mb-8">
-              <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-primary">
                 {hotelStripTitle[language] || hotelStripTitle.en}
               </h2>
               <div className="w-16 h-px shimmer-line mx-auto mt-4" />
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+            <div className="flex gap-4 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
               {hotelArticles.map((hotel) => (
                 <button
                   key={hotel.id}
                   onClick={() => navigate(`/blog/${hotel.id}`)}
-                  className="group flex-shrink-0 w-[200px] sm:w-[220px] rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.15)] text-start snap-start"
+                  className="group flex-shrink-0 w-[200px] sm:w-[220px] lg:w-[280px] xl:w-[320px] rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.15)] text-start snap-start"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
@@ -483,19 +483,19 @@ export default function MainScreen() {
           ru: '🌟 Наши лучшие достопримечательности',
         };
         return (
-          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] lg:max-w-[1100px] xl:max-w-[1300px] mx-auto w-full">
             <div className="text-center mb-8">
-              <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-primary">
                 {attractionStripTitle[language] || attractionStripTitle.en}
               </h2>
               <div className="w-16 h-px shimmer-line mx-auto mt-4" />
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+            <div className="flex gap-4 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
               {attractionArticles.map((attraction) => (
                 <button
                   key={attraction.id}
                   onClick={() => navigate(`/blog/${attraction.id}`)}
-                  className="group flex-shrink-0 w-[200px] sm:w-[220px] rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.15)] text-start snap-start"
+                  className="group flex-shrink-0 w-[200px] sm:w-[220px] lg:w-[280px] xl:w-[320px] rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_hsl(var(--primary)/0.15)] text-start snap-start"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
@@ -531,7 +531,7 @@ export default function MainScreen() {
           FOOTER
       ═══════════════════════════════════════════════ */}
       <footer ref={footerReveal.ref} className={`mt-auto border-t border-primary/10 bg-card/30 py-10 px-4 reveal-base ${footerReveal.isVisible ? 'revealed' : ''}`}>
-        <div className="max-w-[720px] mx-auto flex flex-col items-center space-y-5">
+        <div className="max-w-[720px] lg:max-w-[960px] mx-auto flex flex-col items-center space-y-5">
           <img
             src={logo}
             alt="EVE BLUE"

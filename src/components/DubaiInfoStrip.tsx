@@ -134,15 +134,15 @@ export function DubaiInfoStrip() {
       className="w-full bg-card/80 backdrop-blur-md border-b border-primary/10 py-2.5 px-4 z-50 relative"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      <div className="max-w-[960px] mx-auto flex items-center justify-between gap-4 text-xs sm:text-sm">
+      <div className="max-w-[960px] lg:max-w-[1200px] xl:max-w-[1400px] mx-auto flex items-center justify-between gap-4 sm:gap-6 lg:gap-10 text-xs sm:text-sm lg:text-base">
 
         {/* ── Time & Date ── */}
         <div className="flex items-center gap-2 min-w-0">
           <Clock className="w-4 h-4 text-primary shrink-0" />
           <div className="flex flex-col leading-tight">
-            <span className="text-foreground font-bold text-sm sm:text-base tabular-nums">{time}</span>
-            <span className="text-foreground/50 text-[10px] sm:text-xs truncate">{date}</span>
-            <span className="text-foreground/40 text-[9px] sm:text-[10px]">{timeLabel[language] || timeLabel.en}</span>
+            <span className="text-foreground font-bold text-sm sm:text-base lg:text-lg tabular-nums">{time}</span>
+            <span className="text-foreground/50 text-[10px] sm:text-xs lg:text-sm truncate">{date}</span>
+            <span className="text-foreground/40 text-[9px] sm:text-[10px] lg:text-xs">{timeLabel[language] || timeLabel.en}</span>
           </div>
         </div>
 
@@ -151,11 +151,11 @@ export function DubaiInfoStrip() {
           <div className="flex items-center gap-2 min-w-0">
             <WeatherIcon code={weather.code} />
             <div className="flex flex-col items-center leading-tight">
-              <span className="text-foreground font-bold text-sm sm:text-lg">{weather.temp}°C</span>
-              <span className="text-foreground/50 text-[10px] sm:text-xs truncate max-w-[100px] sm:max-w-none">
+              <span className="text-foreground font-bold text-sm sm:text-lg lg:text-xl">{weather.temp}°C</span>
+              <span className="text-foreground/50 text-[10px] sm:text-xs lg:text-sm truncate max-w-[100px] sm:max-w-none">
                 {getWeatherDesc(weather.code, language)}
               </span>
-              <span className="text-foreground/40 text-[9px] sm:text-[10px] hidden sm:block">
+              <span className="text-foreground/40 text-[9px] sm:text-[10px] lg:text-xs hidden sm:block">
                 {weatherLabel[language] || weatherLabel.en}
               </span>
             </div>
@@ -165,15 +165,15 @@ export function DubaiInfoStrip() {
         {/* ── Exchange Rate ── */}
         {rate !== null && (
           <div className="flex items-center gap-2 min-w-0">
-            <span className="text-primary font-bold text-base sm:text-lg shrink-0">{currency.symbol}</span>
+            <span className="text-primary font-bold text-base sm:text-lg lg:text-xl shrink-0">{currency.symbol}</span>
             <div className="flex flex-col leading-tight">
-              <span className="text-foreground font-bold text-sm sm:text-base tabular-nums">
+              <span className="text-foreground font-bold text-sm sm:text-base lg:text-lg tabular-nums">
                 {rate.toFixed(2)}
               </span>
-              <span className="text-foreground/50 text-[10px] sm:text-xs">
+              <span className="text-foreground/50 text-[10px] sm:text-xs lg:text-sm">
                 1 AED {rateLabel[language] || rateLabel.en}
               </span>
-              <span className="text-foreground/40 text-[9px] sm:text-[10px]">{currency.label}</span>
+              <span className="text-foreground/40 text-[9px] sm:text-[10px] lg:text-xs">{currency.label}</span>
             </div>
           </div>
         )}

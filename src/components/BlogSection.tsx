@@ -2823,7 +2823,7 @@ export function BlogSection() {
             <button
               key={article.id}
               onClick={() => navigate(`/blog/${article.id}`)}
-              className="group flex-shrink-0 w-[280px] sm:w-[300px] text-start rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15),0_8px_24px_rgba(0,0,0,0.2)]"
+              className="group flex-shrink-0 w-[280px] sm:w-[300px] lg:w-[340px] xl:w-[380px] text-start rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15),0_8px_24px_rgba(0,0,0,0.2)]"
             >
               {/* Image */}
               <div className="relative aspect-[3/2] overflow-hidden">
