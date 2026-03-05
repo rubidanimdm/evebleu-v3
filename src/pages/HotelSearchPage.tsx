@@ -1,13 +1,14 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
   Search, MapPin, Calendar, Users, Star, Wifi, Car, Utensils, 
-  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart
+  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2
 } from 'lucide-react';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
+import { supabase } from '@/integrations/supabase/client';
 import logo from '@/assets/eve-blue-logo-white.gif';
 
 import imgAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
@@ -235,7 +236,10 @@ export default function HotelSearchPage() {
   const [bookingStep, setBookingStep] = useState<'search' | 'details' | 'confirm' | 'done'>('search');
   const [sortBy, setSortBy] = useState<'recommended' | 'price-low' | 'price-high' | 'rating'>('recommended');
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
-  const [hasSearched, setHasSearched] = useState(true); // Show results by default
+  const [hasSearched, setHasSearched] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
+  const [liveHotels, setLiveHotels] = useState<Hotel[]>([]);
+  const [useApi, setUseApi] = useState(false);
   
   // Booking form
   const [guestName, setGuestName] = useState('');
@@ -243,9 +247,42 @@ export default function HotelSearchPage() {
   const [guestPhone, setGuestPhone] = useState('');
   const [specialRequests, setSpecialRequests] = useState('');
 
+  const searchHotelsApi = useCallback(async () => {
+    setIsSearching(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('search-hotels', {
+        body: {
+          destination: searchQuery || 'Dubai',
+          checkIn,
+          checkOut,
+          guests,
+          rooms,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.hotels && data.hotels.length > 0) {
+        setLiveHotels(data.hotels);
+        setUseApi(true);
+      } else {
+        // Fallback to static data
+        setUseApi(false);
+      }
+    } catch (err) {
+      console.error('Hotel search API error, using static data:', err);
+      setUseApi(false);
+    } finally {
+      setIsSearching(false);
+      setHasSearched(true);
+    }
+  }, [searchQuery, checkIn, checkOut, guests, rooms]);
+
+  const hotelsSource = useApi ? liveHotels : HOTELS;
+
   const filteredHotels = useMemo(() => {
-    let result = [...HOTELS];
-    if (searchQuery && searchQuery.toLowerCase() !== 'dubai') {
+    let result = [...hotelsSource];
+    if (!useApi && searchQuery && searchQuery.toLowerCase() !== 'dubai') {
       result = result.filter(h => 
         h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         h.location.toLowerCase().includes(searchQuery.toLowerCase())
@@ -257,7 +294,7 @@ export default function HotelSearchPage() {
       case 'rating': result.sort((a, b) => b.rating - a.rating); break;
     }
     return result;
-  }, [searchQuery, sortBy]);
+  }, [hotelsSource, searchQuery, sortBy, useApi]);
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => {
@@ -541,16 +578,25 @@ export default function HotelSearchPage() {
           {/* Search button */}
           <Button 
             onClick={() => {
-              setHasSearched(true);
-              // Scroll to results
+              searchHotelsApi();
               setTimeout(() => {
                 document.getElementById('hotel-results')?.scrollIntoView({ behavior: 'smooth' });
               }, 100);
             }}
+            disabled={isSearching}
             className="w-full h-12 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-bold text-base"
           >
-            <Search className="w-5 h-5 mr-2" />
-            Search
+            {isSearching ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Searching...
+              </>
+            ) : (
+              <>
+                <Search className="w-5 h-5 mr-2" />
+                Search
+              </>
+            )}
           </Button>
         </div>
       </div>
@@ -574,7 +620,17 @@ export default function HotelSearchPage() {
 
       {/* Hotel listings */}
       <div id="hotel-results" className="flex-1 px-4 py-4 space-y-4 max-w-lg mx-auto w-full">
-        {filteredHotels.map(hotel => (
+        {isSearching ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">Searching live prices...</p>
+          </div>
+        ) : filteredHotels.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <Search className="w-8 h-8 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">No hotels found. Try a different search.</p>
+          </div>
+        ) : filteredHotels.map(hotel => (
           <div key={hotel.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-colors">
             {/* Image */}
             <div className="relative h-48 sm:h-56">
