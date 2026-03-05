@@ -236,7 +236,10 @@ export default function HotelSearchPage() {
   const [bookingStep, setBookingStep] = useState<'search' | 'details' | 'confirm' | 'done'>('search');
   const [sortBy, setSortBy] = useState<'recommended' | 'price-low' | 'price-high' | 'rating'>('recommended');
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
-  const [hasSearched, setHasSearched] = useState(true); // Show results by default
+  const [hasSearched, setHasSearched] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
+  const [liveHotels, setLiveHotels] = useState<Hotel[]>([]);
+  const [useApi, setUseApi] = useState(false);
   
   // Booking form
   const [guestName, setGuestName] = useState('');
@@ -244,9 +247,42 @@ export default function HotelSearchPage() {
   const [guestPhone, setGuestPhone] = useState('');
   const [specialRequests, setSpecialRequests] = useState('');
 
+  const searchHotelsApi = useCallback(async () => {
+    setIsSearching(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('search-hotels', {
+        body: {
+          destination: searchQuery || 'Dubai',
+          checkIn,
+          checkOut,
+          guests,
+          rooms,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.hotels && data.hotels.length > 0) {
+        setLiveHotels(data.hotels);
+        setUseApi(true);
+      } else {
+        // Fallback to static data
+        setUseApi(false);
+      }
+    } catch (err) {
+      console.error('Hotel search API error, using static data:', err);
+      setUseApi(false);
+    } finally {
+      setIsSearching(false);
+      setHasSearched(true);
+    }
+  }, [searchQuery, checkIn, checkOut, guests, rooms]);
+
+  const hotelsSource = useApi ? liveHotels : HOTELS;
+
   const filteredHotels = useMemo(() => {
-    let result = [...HOTELS];
-    if (searchQuery && searchQuery.toLowerCase() !== 'dubai') {
+    let result = [...hotelsSource];
+    if (!useApi && searchQuery && searchQuery.toLowerCase() !== 'dubai') {
       result = result.filter(h => 
         h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         h.location.toLowerCase().includes(searchQuery.toLowerCase())
@@ -258,7 +294,7 @@ export default function HotelSearchPage() {
       case 'rating': result.sort((a, b) => b.rating - a.rating); break;
     }
     return result;
-  }, [searchQuery, sortBy]);
+  }, [hotelsSource, searchQuery, sortBy, useApi]);
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => {
