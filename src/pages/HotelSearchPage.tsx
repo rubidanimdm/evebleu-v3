@@ -531,7 +531,16 @@ export default function HotelSearchPage() {
           </div>
 
           {/* Search button */}
-          <Button className="w-full h-12 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-bold text-base">
+          <Button 
+            onClick={() => {
+              setHasSearched(true);
+              // Scroll to results
+              setTimeout(() => {
+                document.getElementById('hotel-results')?.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }}
+            className="w-full h-12 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-bold text-base"
+          >
             <Search className="w-5 h-5 mr-2" />
             Search
           </Button>
