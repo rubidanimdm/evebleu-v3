@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
-import { Search, ClipboardList, Eye } from 'lucide-react';
+import { Search, ClipboardList, Eye, Download, CalendarDays, DollarSign, CheckCircle2, BarChart3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Booking {
@@ -31,6 +31,8 @@ export default function AdminBookings() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -57,8 +59,38 @@ export default function AdminBookings() {
     const matchesSearch = booking.booking_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
       booking.user?.full_name?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || booking.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const matchesDateFrom = !dateFrom || booking.booking_date >= dateFrom;
+    const matchesDateTo = !dateTo || booking.booking_date <= dateTo;
+    return matchesSearch && matchesStatus && matchesDateFrom && matchesDateTo;
   });
+
+  const summary = useMemo(() => {
+    const totalBookings = filteredBookings.length;
+    const totalRevenue = filteredBookings.reduce((sum, b) => sum + (b.financial?.total_amount || 0), 0);
+    const avgValue = totalBookings > 0 ? totalRevenue / totalBookings : 0;
+    const confirmedCount = filteredBookings.filter((b) => b.status === 'confirmed').length;
+    return { totalBookings, totalRevenue, avgValue, confirmedCount };
+  }, [filteredBookings]);
+
+  function exportCSV() {
+    const headers = ['Booking #', 'Customer', 'Service', 'Date', 'Amount', 'Status'];
+    const rows = filteredBookings.map((b) => [
+      b.booking_number,
+      b.user?.full_name || '',
+      b.supplier?.name || '',
+      b.booking_date,
+      b.financial?.total_amount?.toString() || '0',
+      b.status,
+    ]);
+    const csv = [headers, ...rows].map((row) => row.map((c) => `"${c}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `bookings-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   async function updateStatus(id: string, status: string) {
     try {
@@ -73,11 +105,18 @@ export default function AdminBookings() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Bookings</h1>
-        <p className="text-muted-foreground">Manage all bookings</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Bookings</h1>
+          <p className="text-muted-foreground">Manage all bookings</p>
+        </div>
+        <Button variant="outline" className="gap-2" onClick={exportCSV}>
+          <Download className="h-4 w-4" />
+          Export CSV
+        </Button>
       </div>
 
+      {/* Filters */}
       <Card className="border-border/50">
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row gap-4">
@@ -92,9 +131,67 @@ export default function AdminBookings() {
                 {statuses.map(s => <SelectItem key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</SelectItem>)}
               </SelectContent>
             </Select>
+            <Input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="w-full sm:w-[160px]" placeholder="From" />
+            <Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="w-full sm:w-[160px]" placeholder="To" />
           </div>
         </CardContent>
       </Card>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                <CalendarDays className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{summary.totalBookings}</p>
+                <p className="text-xs text-muted-foreground">Total Bookings</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                <DollarSign className="h-5 w-5 text-green-500" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">${summary.totalRevenue.toLocaleString()}</p>
+                <p className="text-xs text-muted-foreground">Total Revenue</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                <BarChart3 className="h-5 w-5 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">${summary.avgValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+                <p className="text-xs text-muted-foreground">Average Value</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{summary.confirmedCount}</p>
+                <p className="text-xs text-muted-foreground">Confirmed</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Card className="border-border/50">
         <CardContent className="p-0">

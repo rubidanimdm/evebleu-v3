@@ -633,6 +633,69 @@ export type Database = {
         }
         Relationships: []
       }
+      categories: {
+        Row: {
+          id: string
+          slug: string
+          name: Json
+          icon: string | null
+          sort_order: number
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          name?: Json
+          icon?: string | null
+          sort_order?: number
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          name?: Json
+          icon?: string | null
+          sort_order?: number
+          is_active?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      site_menus: {
+        Row: {
+          id: string
+          menu_location: string
+          label: Json
+          url: string
+          sort_order: number
+          is_external: boolean
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          menu_location: string
+          label?: Json
+          url: string
+          sort_order?: number
+          is_external?: boolean
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          menu_location?: string
+          label?: Json
+          url?: string
+          sort_order?: number
+          is_external?: boolean
+          is_active?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
       pricing_rules: {
         Row: {
           catalog_item_id: string

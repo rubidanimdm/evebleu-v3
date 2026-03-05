@@ -1,15 +1,13 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/lib/supabase';
 import { BottomNav } from '@/components/BottomNav';
+import { TopNavBar } from '@/components/TopNavBar';
+import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { User, ArrowRight, Phone, Mail, Hotel, Plane, CalendarDays, Users, Search } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
-import { openExternalUrl } from '@/lib/openExternalUrl';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
 import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
@@ -19,7 +17,6 @@ import nightlifeVideo from '@/assets/nightlife-video.mp4';
 import attractionsVideo from '@/assets/attractions-video.mp4';
 import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
-import birthdayIcon from '@/assets/icon-birthday.jpeg';
 import vipDriverIcon from '@/assets/vip-driver-icon-new.jpeg';
 import flightsIcon from '@/assets/flights-icon.jpeg';
 import hotelIcon from '@/assets/icon-hotel.jpeg';
@@ -28,12 +25,11 @@ import yachtIcon from '@/assets/yacht-icon-new.jpeg';
 import luxuryCarIcon from '@/assets/icon-luxury-car.jpeg';
 import diningIcon from '@/assets/dining-icon-new.jpeg';
 import airportIcon from '@/assets/airport-pickup-icon.jpeg';
-import attractionsIcon from '@/assets/icon-attractions.jpeg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
 
-/* ── 6 category tiles — luxury outlined icons ── */
+/* ── 8 category tiles — luxury outlined icons ── */
 const getCategoryIcon = (key: string) => {
   const imgCls = "w-full h-full object-cover absolute inset-0 rounded-xl sm:rounded-2xl";
   const icons: Record<string, JSX.Element> = {
@@ -61,16 +57,13 @@ const categoryKeys = [
 ];
 
 export default function MainScreen() {
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { t, language } = useLanguage();
   const isLoggedIn = !!user;
   const [flightFormOpen, setFlightFormOpen] = useState(false);
 
   // Scroll-reveal refs
-  const introReveal = useScrollReveal<HTMLElement>();
-  const servicesReveal = useScrollReveal<HTMLElement>();
   const gridReveal = useScrollReveal<HTMLDivElement>();
   const yachtStripReveal = useScrollReveal<HTMLElement>();
   const nightlifeStripReveal = useScrollReveal<HTMLElement>();
@@ -78,7 +71,6 @@ export default function MainScreen() {
   const carsStripReveal = useScrollReveal<HTMLElement>();
   const desertStripReveal = useScrollReveal<HTMLElement>();
   const ctaReveal = useScrollReveal<HTMLElement>();
-  const footerReveal = useScrollReveal<HTMLElement>();
 
   // Parallax refs for video strips
   useParallax(yachtStripReveal.ref);
@@ -112,16 +104,18 @@ export default function MainScreen() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background pt-[60px]">
+      <TopNavBar />
+
       {/* ═══════════════════════════════════════════════
           INFO STRIP — Time, Weather, Exchange Rate
       ═══════════════════════════════════════════════ */}
       <DubaiInfoStrip />
 
       {/* ═══════════════════════════════════════════════
-          HERO — Full-screen cinematic video
+          HERO — Full-screen cinematic video + category tiles
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-screen min-h-[500px] max-h-[750px] overflow-hidden">
+      <section className="relative w-full min-h-[500px] overflow-hidden">
         {/* Video background */}
         <video
           src={heroVideo}
@@ -150,23 +144,8 @@ export default function MainScreen() {
           background: 'radial-gradient(ellipse at center, transparent 50%, rgba(7,20,35,0.5) 100%)',
         }} />
 
-        {/* Language switcher — top left */}
-        <div className="absolute top-4 left-4 z-30">
-          <LanguageSwitcher variant="full" className="[&_button]:bg-black/40 [&_button]:backdrop-blur-md [&_button]:border-white/10 [&_button]:text-foreground [&_button]:hover:bg-black/50" />
-        </div>
-
-        {/* Profile button — top right (only if logged in) */}
-        {isLoggedIn && (
-          <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}
-              className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
-              <User className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
-
         {/* Hero content — centered */}
-        <div className="relative z-20 h-full flex flex-col items-center justify-center px-6 text-center">
+        <div className="relative z-20 flex flex-col items-center px-6 text-center pt-16 pb-10">
           {/* Logo */}
           <div className="mb-8 animate-[fadeIn_1.2s_ease-out]">
             <img
@@ -182,7 +161,7 @@ export default function MainScreen() {
           </p>
 
           {/* CTA */}
-          <div className="animate-[fadeIn_2.2s_ease-out]">
+          <div className="animate-[fadeIn_2.2s_ease-out] mb-12">
             <Button
               onClick={() => openWhatsAppConcierge()}
               className="h-14 sm:h-16 px-10 sm:px-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-primary/30 gap-3"
@@ -192,65 +171,28 @@ export default function MainScreen() {
             </Button>
           </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <div className="w-6 h-10 rounded-full border-2 border-primary/30 flex justify-center pt-2">
-              <div className="w-1 h-2.5 rounded-full bg-primary/50 animate-pulse" />
-            </div>
+          {/* Category tiles — merged into hero */}
+          <div ref={gridReveal.ref} className={`grid grid-cols-3 gap-3 sm:gap-4 max-w-[520px] w-full reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
+            {categoryKeys.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => handleCategoryClick(cat.route)}
+                className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl bg-black/30 backdrop-blur border border-white/10 hover:border-primary hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
+              >
+                {getCategoryIcon(cat.key)}
+                <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-primary drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
+                  {t(`mainScreen.${cat.key}`)}
+                </span>
+              </button>
+            ))}
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          INTRO TEXT — Elegant welcome copy
-      ═══════════════════════════════════════════════ */}
-      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`}>
-        <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
-          {t('mainScreen.introTitle')}
-        </h2>
-        <div className="space-y-5 text-sm sm:text-base text-foreground/70 leading-[1.85]">
-          <p>{t('mainScreen.introP1')}</p>
-          <p>{t('mainScreen.introP2')}</p>
-          <p>{t('mainScreen.introP3')}</p>
-          <p className="text-foreground/50 italic">{t('mainScreen.introTip')}</p>
-          <p className="text-foreground/80 font-medium">{t('mainScreen.introClosing')}</p>
-        </div>
-        <div className="w-20 h-px shimmer-line mx-auto mt-8" />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          SERVICES — Category grid
-      ═══════════════════════════════════════════════ */}
-      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
-        {/* Section header */}
-        <div className="text-center mb-10">
-          <p className="text-primary text-xs uppercase tracking-[0.3em] mb-3">{t('mainScreen.premiumServices')}</p>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-foreground">
-            {t('mainScreen.everythingYouNeed')}
-          </h2>
-          <div className="w-16 h-px shimmer-line mx-auto mt-4" />
-        </div>
-
-        <div ref={gridReveal.ref} className={`grid grid-cols-3 gap-3 sm:gap-4 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
-          {categoryKeys.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => handleCategoryClick(cat.route)}
-              className="group relative overflow-hidden flex flex-col items-center justify-center aspect-square rounded-xl sm:rounded-2xl border border-primary/40 hover:border-primary hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] transition-all duration-300 hover:-translate-y-1 p-0"
-            >
-              {getCategoryIcon(cat.key)}
-              <span className="absolute bottom-2 left-0 right-0 text-[10px] sm:text-xs font-semibold text-center leading-tight tracking-wide text-primary drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] z-10">
-                {t(`mainScreen.${cat.key}`)}
-              </span>
-            </button>
-          ))}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=TRANSPORT')} role="link" aria-label="Luxury Cars">
+      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=TRANSPORT')} role="link" aria-label="Luxury Cars">
         <video
           src={yachtVideo}
           autoPlay
@@ -259,7 +201,6 @@ export default function MainScreen() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Dark overlay at 50% + top/bottom fade */}
         <div className="absolute inset-0 bg-background/50" />
         <div className="absolute inset-0" style={{
           background: `
@@ -276,7 +217,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section ref={nightlifeStripReveal.ref} id="strip-dining" className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
+      <section ref={nightlifeStripReveal.ref} id="strip-dining" className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
         <video
           src={nightlifeVideo}
           autoPlay
@@ -307,7 +248,7 @@ export default function MainScreen() {
           <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/8 blur-3xl rounded-full transition-all duration-1000 delay-500 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
           <div className={`absolute -bottom-8 -right-8 w-48 h-48 bg-primary/5 blur-3xl rounded-full transition-all duration-1200 delay-700 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
           <div className={`absolute -bottom-8 -left-8 w-40 h-40 bg-accent/5 blur-3xl rounded-full transition-all duration-1200 delay-800 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
-          
+
           {/* Shimmer border effect */}
           <div className={`absolute inset-0 rounded-2xl transition-opacity duration-1000 delay-600 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`} style={{
             background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, transparent 40%, transparent 60%, hsl(var(--primary) / 0.1) 100%)',
@@ -317,7 +258,7 @@ export default function MainScreen() {
             WebkitMaskComposite: 'xor',
             padding: '1px',
           }} />
-          
+
           <h3 className={`relative text-xl sm:text-2xl font-semibold text-foreground mb-3 transition-all duration-700 delay-400 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
             {t('mainScreen.readyForSomethingSpecial')}
           </h3>
@@ -337,7 +278,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
+      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
         <video
           src={attractionsVideo}
           autoPlay
@@ -362,7 +303,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 4 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
+      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
         <video
           src={strip4Video}
           autoPlay
@@ -387,7 +328,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
+      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
         <video
           src={strip5Video}
           autoPlay
@@ -408,7 +349,6 @@ export default function MainScreen() {
           `,
         }} />
       </section>
-
 
       {/* ═══════════════════════════════════════════════
           RECOMMENDED HOTELS STRIP
@@ -467,7 +407,7 @@ export default function MainScreen() {
           TOP ATTRACTIONS STRIP
       ═══════════════════════════════════════════════ */}
       {(() => {
-        const attractionArticles = BLOG_ARTICLES.filter(a => 
+        const attractionArticles = BLOG_ARTICLES.filter(a =>
           ['hot-air-balloon-dubai', 'helicopter-tour-dubai', 'skydiving-dubai', 'desert-safari-dubai', 'ain-dubai-guide'].includes(a.id)
         );
         const attractionStripTitle: Record<string, string> = {
@@ -523,149 +463,9 @@ export default function MainScreen() {
       <BlogSection />
 
       {/* ═══════════════════════════════════════════════
-          SEARCH HOTELS & FLIGHTS — hidden until API access
-      ═══════════════════════════════════════════════ */}
-      {false && <section className="px-4 sm:px-6 pb-14 max-w-[720px] mx-auto w-full space-y-6">
-        {/* Hotels Search */}
-        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-6">
-          <div className="flex items-center gap-2 mb-5">
-            <Hotel className="w-5 h-5 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">Search Hotels</h3>
-          </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const fd = new FormData(e.currentTarget);
-              const checkin = fd.get('checkin') as string;
-              const checkout = fd.get('checkout') as string;
-              const adults = fd.get('adults') as string;
-              const rooms = fd.get('rooms') as string;
-              const url = `https://www.booking.com/searchresults.html?aid=304142&dest_id=-782831&dest_type=city&checkin=${checkin}&checkout=${checkout}&group_adults=${adults}&no_rooms=${rooms}&selected_currency=AED&label=evebleu-homepage`;
-              openExternalUrl(url);
-            }}
-            className="space-y-4"
-          >
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
-                  <CalendarDays className="w-3.5 h-3.5 text-primary/60" />
-                  Check-in
-                </label>
-                <input
-                  type="date"
-                  name="checkin"
-                  required
-                  min={new Date().toISOString().split('T')[0]}
-                  defaultValue=""
-                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
-                  <CalendarDays className="w-3.5 h-3.5 text-primary/60" />
-                  Check-out
-                </label>
-                <input
-                  type="date"
-                  name="checkout"
-                  required
-                  min={new Date().toISOString().split('T')[0]}
-                  defaultValue=""
-                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-primary/60" />
-                  Guests
-                </label>
-                <select
-                  name="adults"
-                  defaultValue="2"
-                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
-                >
-                  {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>)}
-                </select>
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs text-muted-foreground flex items-center gap-1.5">
-                  <Hotel className="w-3.5 h-3.5 text-primary/60" />
-                  Rooms
-                </label>
-                <select
-                  name="rooms"
-                  defaultValue="1"
-                  className="w-full h-11 rounded-lg bg-background/50 border border-primary/20 px-3 text-sm text-foreground focus:border-primary/50 focus:outline-none"
-                >
-                  {[1,2,3,4].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Room' : 'Rooms'}</option>)}
-                </select>
-              </div>
-            </div>
-            <Button type="submit" className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl text-base font-medium gap-2">
-              <Search className="w-4 h-4" />
-              Search Hotels in Dubai
-            </Button>
-          </form>
-          <p className="text-[10px] text-muted-foreground/50 text-center mt-3">Powered by Booking.com</p>
-        </div>
-
-        {/* Flights Search */}
-        <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-6">
-          <div className="flex items-center gap-2 mb-5">
-            <Plane className="w-5 h-5 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">Search Flights</h3>
-          </div>
-          <p className="text-sm text-muted-foreground mb-4">
-            Our concierge team will find you the best flights and handle everything.
-          </p>
-          <Button
-            onClick={() => {
-              if (!isLoggedIn) { navigate('/login'); return; }
-              setFlightFormOpen(true);
-            }}
-            className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl text-base font-medium gap-2"
-          >
-            <Plane className="w-4 h-4" />
-            Request Flight Search
-          </Button>
-        </div>
-      </section>}
-
-      {/* ═══════════════════════════════════════════════
           FOOTER
       ═══════════════════════════════════════════════ */}
-      <footer ref={footerReveal.ref} className={`mt-auto border-t border-primary/10 bg-card/30 py-10 px-4 reveal-base ${footerReveal.isVisible ? 'revealed' : ''}`}>
-        <div className="max-w-[720px] mx-auto flex flex-col items-center space-y-5">
-          <img
-            src={logo}
-            alt="EVE BLUE"
-            className="w-32 h-auto rounded-lg opacity-90"
-          />
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            <a href="tel:+971551523121" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-              <Phone className="w-4 h-4 text-primary/60" />
-              +971 55 152 3121
-            </a>
-            <a href="mailto:dekel@evebleu.vip" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-              <Mail className="w-4 h-4 text-primary/60" />
-              dekel@evebleu.vip
-            </a>
-          </div>
-          <div className="w-24 h-px bg-primary/15" />
-          <div className="flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/50">
-            <Link to="/privacy" className="hover:text-primary transition-colors">{t('mainScreen.footerPrivacy')}</Link>
-            <span>·</span>
-            <Link to="/terms" className="hover:text-primary transition-colors">{t('mainScreen.footerTerms')}</Link>
-            <span>·</span>
-            <Link to="/cookies" className="hover:text-primary transition-colors">{t('mainScreen.footerCookies')}</Link>
-          </div>
-          <p className="text-[10px] text-muted-foreground/40 tracking-[0.15em] uppercase">
-            © {new Date().getFullYear()} EVE BLUE · Concierge. It. Done.
-          </p>
-        </div>
-      </footer>
+      <Footer />
 
       {isLoggedIn && <BottomNav />}
 

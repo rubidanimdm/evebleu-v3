@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
+import { TopNavBar } from '@/components/TopNavBar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { GoldParticles } from '@/components/LuxuryElements';
@@ -148,7 +149,8 @@ export default function DiningNightlifePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-24 relative">
+    <div className="min-h-screen bg-background pb-24 relative pt-[60px]">
+      <TopNavBar />
       <GoldParticles count={8} />
 
       {/* Hero */}

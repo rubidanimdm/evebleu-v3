@@ -24,6 +24,8 @@ import {
   Search,
   LogOut,
   ChevronLeft,
+  Tag,
+  AlignJustify,
 } from 'lucide-react';
 
 const navItems = [
@@ -39,6 +41,8 @@ const navItems = [
   { name: 'Settings', path: '/admin/settings', icon: Settings },
   { name: 'Roles & Permissions', path: '/admin/roles', icon: Shield },
   { name: 'Pages', path: '/admin/pages', icon: FileText },
+  { name: 'Categories', path: '/admin/categories', icon: Tag },
+  { name: 'Menus', path: '/admin/menus', icon: AlignJustify },
 ];
 
 export function AdminLayout() {

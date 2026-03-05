@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,6 +23,12 @@ import CTABlock from '@/components/admin/blocks/CTABlock';
 import DividerBlock from '@/components/admin/blocks/DividerBlock';
 import VenueGridBlock from '@/components/admin/blocks/VenueGridBlock';
 import YachtCarouselBlock from '@/components/admin/blocks/YachtCarouselBlock';
+
+interface CategoryOption {
+  id: string;
+  name: Record<string, string>;
+  slug: string;
+}
 
 interface PageBlock {
   id: string;
@@ -65,6 +72,7 @@ export default function PageEditor() {
   const isNew = !id || id === 'new';
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { language } = useLanguage();
 
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
@@ -81,10 +89,25 @@ export default function PageEditor() {
   const [createdAt, setCreatedAt] = useState('');
   const [updatedAt, setUpdatedAt] = useState('');
   const [blocks, setBlocks] = useState<PageBlock[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
 
   useEffect(() => {
     if (!isNew) fetchPage();
+    fetchCategories();
   }, [id]);
+
+  async function fetchCategories() {
+    try {
+      const { data, error } = await (supabase as any)
+        .from('categories')
+        .select('id, name, slug')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
+      if (!error && data) setCategoryOptions(data);
+    } catch {
+      // Categories table may not exist yet — ignore
+    }
+  }
 
   async function fetchPage() {
     try {
@@ -425,11 +448,27 @@ export default function PageEditor() {
           <div className="bg-card/50 border border-border/40 rounded-xl p-6 space-y-4">
             <div className="space-y-2">
               <Label>Category</Label>
-              <Input
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                placeholder="e.g. Guide, News, About"
-              />
+              {categoryOptions.length > 0 ? (
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">None</SelectItem>
+                    {categoryOptions.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.slug}>
+                        {cat.name?.[language] || cat.name?.en || cat.slug}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <Input
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  placeholder="e.g. Guide, News, About"
+                />
+              )}
             </div>
             <div className="space-y-2">
               <Label>Tags (comma-separated)</Label>

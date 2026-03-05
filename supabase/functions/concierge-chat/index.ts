@@ -100,7 +100,7 @@ function geminiToOpenAIStream(geminiStream: ReadableStream<Uint8Array>): Readabl
 
 // --- Main handler ---
 
-const MODEL = "gemini-3-flash-preview";
+const MODEL = "gemini-2.5-flash";
 
 serve(async (req) => {
   // Strict CORS - production origins only

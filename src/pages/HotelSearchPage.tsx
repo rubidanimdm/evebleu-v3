@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
+import { TopNavBar } from '@/components/TopNavBar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -611,7 +612,8 @@ export default function HotelSearchPage() {
 
   // ═══ MAIN SEARCH VIEW ═══
   return (
-    <div className="min-h-screen bg-background flex flex-col" dir="rtl">
+    <div className="min-h-screen bg-background flex flex-col pt-[60px]" dir="rtl">
+      <TopNavBar />
       {/* Hero search header */}
       <div className="relative bg-card pt-4 pb-6 px-4 border-b border-border">
         {/* Top bar */}

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { BLOG_ARTICLES } from '@/components/BlogSection';
+import { TopNavBar } from '@/components/TopNavBar';
 import { ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
@@ -107,7 +108,8 @@ export default function BlogArticlePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-background pt-[60px]" dir={isRTL ? 'rtl' : 'ltr'}>
+      <TopNavBar />
       {/* Hero image with fade-in */}
       <div className="relative w-full h-[260px] sm:h-[360px] md:h-[420px] overflow-hidden animate-[fadeIn_0.8s_ease-out]">
         <img

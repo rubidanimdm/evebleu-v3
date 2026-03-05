@@ -47,6 +47,8 @@ import AdminRoles from "./pages/admin/AdminRoles";
 import AdminVenues from "./pages/admin/AdminVenues";
 import AdminPages from "./pages/admin/AdminPages";
 import PageEditor from "./pages/admin/PageEditor";
+import AdminCategories from "./pages/admin/AdminCategories";
+import AdminMenus from "./pages/admin/AdminMenus";
 import DynamicPage from "./pages/DynamicPage";
 
 const queryClient = new QueryClient();
@@ -123,7 +125,8 @@ function AppContent() {
         <Route path="/yachts/:slug" element={<YachtDetailPage />} />
         <Route path="/hotels" element={<HotelSearchPage />} />
         <Route path="/blog/:id" element={<BlogArticlePage />} />
-        
+        <Route path="/about" element={<Navigate to="/p/about-us" replace />} />
+
         {/* All pages open - contact via WhatsApp */}
         <Route path="/concierge" element={<ConciergePage />} />
         <Route path="/my-plans" element={<MyPlansPage />} />
@@ -147,6 +150,8 @@ function AppContent() {
           <Route path="pages" element={<AdminPages />} />
           <Route path="pages/new" element={<PageEditor />} />
           <Route path="pages/:id/edit" element={<PageEditor />} />
+          <Route path="categories" element={<AdminCategories />} />
+          <Route path="menus" element={<AdminMenus />} />
         </Route>
         
         {/* Dynamic CMS pages */}

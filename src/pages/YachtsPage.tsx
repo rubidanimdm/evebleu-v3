@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { BottomNav } from '@/components/BottomNav';
+import { TopNavBar } from '@/components/TopNavBar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
@@ -161,7 +162,8 @@ export default function YachtsPage() {
   const fishingBoats = items.filter(i => i.details.type === 'fishing').sort((a, b) => a.price - b.price);
 
   return (
-    <div className="min-h-screen bg-background pb-24 relative">
+    <div className="min-h-screen bg-background pb-24 relative pt-[60px]">
+      <TopNavBar />
       <GoldParticles count={12} />
 
       <LargePageHeader
