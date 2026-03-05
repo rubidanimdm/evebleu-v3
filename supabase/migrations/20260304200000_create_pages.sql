@@ -23,10 +23,12 @@ ALTER TABLE pages ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public can read published pages" ON pages
   FOR SELECT USING (is_published = true);
 
--- Admins full CRUD (uses profiles.role = 'admin')
-CREATE POLICY "Admins can manage pages" ON pages
-  FOR ALL USING (
-    EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin')
+-- Managers/staff full CRUD
+CREATE POLICY "Managers can manage pages" ON pages
+  FOR ALL
+  TO authenticated
+  USING (
+    EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role IN ('manager', 'staff'))
   );
 
 -- Updated_at trigger
