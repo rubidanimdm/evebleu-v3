@@ -235,6 +235,7 @@ export default function HotelSearchPage() {
   const [bookingStep, setBookingStep] = useState<'search' | 'details' | 'confirm' | 'done'>('search');
   const [sortBy, setSortBy] = useState<'recommended' | 'price-low' | 'price-high' | 'rating'>('recommended');
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [hasSearched, setHasSearched] = useState(true); // Show results by default
   
   // Booking form
   const [guestName, setGuestName] = useState('');
