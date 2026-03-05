@@ -367,7 +367,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 4 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('CAR')} role="link" aria-label="Luxury Cars">
+      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
         <video
           src={strip4Video}
           autoPlay
