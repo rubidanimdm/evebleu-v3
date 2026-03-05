@@ -80,7 +80,6 @@ export default function YachtsPage() {
 
         const data = catalogResult.data;
         const mediaData = mediaResult.data;
-        console.log('Yacht catalog data:', data?.length, 'items', catalogResult.error);
 
         const mediaMap = new Map<string, MediaItem[]>();
         (mediaData || []).forEach(m => {
