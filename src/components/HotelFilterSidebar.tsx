@@ -1,7 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { MapPin, ChevronDown, ChevronUp, SlidersHorizontal } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Fix Leaflet default marker icon
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+});
 
 export interface HotelFilters {
   priceRange: [number, number];
@@ -122,13 +133,20 @@ export default function HotelFilterSidebar({ filters, onFiltersChange, resultCou
 
   return (
     <div className="space-y-0">
-      {/* Map placeholder */}
-      <div className="rounded-xl overflow-hidden border border-border mb-4 bg-secondary/30 h-40 flex items-center justify-center relative cursor-pointer hover:opacity-90 transition-opacity">
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 to-secondary/60" />
-        <div className="relative z-10 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-          <MapPin className="w-4 h-4" />
-          לראות על המפה
-        </div>
+      {/* Interactive Map */}
+      <div className="rounded-xl overflow-hidden border border-border mb-4 h-48">
+        <MapContainer
+          center={[25.2048, 55.2708]}
+          zoom={11}
+          style={{ height: '100%', width: '100%' }}
+          scrollWheelZoom={false}
+          attributionControl={false}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={[25.2048, 55.2708]}>
+            <Popup>Dubai</Popup>
+          </Marker>
+        </MapContainer>
       </div>
 
       {/* Filter title */}
