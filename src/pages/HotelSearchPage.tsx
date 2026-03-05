@@ -299,13 +299,30 @@ export default function HotelSearchPage() {
         h.location.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
+    // Apply sidebar filters
+    if (hotelFilters.priceRange[1] < 5000) {
+      result = result.filter(h => h.pricePerNight >= hotelFilters.priceRange[0] && h.pricePerNight <= hotelFilters.priceRange[1]);
+    }
+    if (hotelFilters.starRatings.length > 0) {
+      result = result.filter(h => hotelFilters.starRatings.includes(h.stars));
+    }
+    if (hotelFilters.reviewScores.length > 0) {
+      const minScore = Math.min(...hotelFilters.reviewScores);
+      result = result.filter(h => h.rating >= minScore);
+    }
+    if (hotelFilters.mealPlans.includes('breakfast')) {
+      result = result.filter(h => h.breakfastIncluded);
+    }
+    if (hotelFilters.freeCancellation) {
+      result = result.filter(h => h.freeCancel);
+    }
     switch (sortBy) {
       case 'price-low': result.sort((a, b) => a.pricePerNight - b.pricePerNight); break;
       case 'price-high': result.sort((a, b) => b.pricePerNight - a.pricePerNight); break;
       case 'rating': result.sort((a, b) => b.rating - a.rating); break;
     }
     return result;
-  }, [hotelsSource, searchQuery, sortBy, useApi]);
+  }, [hotelsSource, searchQuery, sortBy, useApi, hotelFilters]);
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => {
