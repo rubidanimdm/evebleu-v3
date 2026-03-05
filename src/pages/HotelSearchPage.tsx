@@ -490,7 +490,14 @@ export default function HotelSearchPage() {
               <input 
                 type="date" 
                 value={checkIn} 
-                onChange={e => setCheckIn(e.target.value)}
+                min={new Date().toISOString().split('T')[0]}
+                onChange={e => {
+                  setCheckIn(e.target.value);
+                  // If checkout is before new check-in, reset it
+                  if (checkOut && e.target.value && checkOut <= e.target.value) {
+                    setCheckOut('');
+                  }
+                }}
                 placeholder="Check-in"
                 className="flex-1 bg-transparent text-sm text-foreground outline-none [color-scheme:dark]"
               />
@@ -500,6 +507,7 @@ export default function HotelSearchPage() {
               <input 
                 type="date" 
                 value={checkOut} 
+                min={checkIn || new Date().toISOString().split('T')[0]}
                 onChange={e => setCheckOut(e.target.value)}
                 placeholder="Check-out"
                 className="flex-1 bg-transparent text-sm text-foreground outline-none [color-scheme:dark]"
