@@ -241,6 +241,16 @@ export default function HotelSearchPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [liveHotels, setLiveHotels] = useState<Hotel[]>([]);
   const [useApi, setUseApi] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [hotelFilters, setHotelFilters] = useState<HotelFilters>({
+    priceRange: [0, 5000],
+    starRatings: [],
+    reviewScores: [],
+    propertyTypes: [],
+    amenities: [],
+    mealPlans: [],
+    freeCancellation: false,
+  });
   
   // Booking form
   const [guestName, setGuestName] = useState('');
