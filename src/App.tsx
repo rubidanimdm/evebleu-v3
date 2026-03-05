@@ -31,6 +31,8 @@ import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
 import BlogArticlePage from "./pages/BlogArticlePage";
 import HotelSearchPage from "./pages/HotelSearchPage";
+import AttractionsPage from "./pages/AttractionsPage";
+import AttractionDetailPage from "./pages/AttractionDetailPage";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -118,6 +120,8 @@ function AppContent() {
         <Route path="/yachts" element={<YachtsPage />} />
         <Route path="/yachts/:slug" element={<YachtDetailPage />} />
         <Route path="/hotels" element={<HotelSearchPage />} />
+        <Route path="/attractions" element={<AttractionsPage />} />
+        <Route path="/attractions/:id" element={<AttractionDetailPage />} />
         <Route path="/blog/:id" element={<BlogArticlePage />} />
         
         {/* All pages open - contact via WhatsApp */}
