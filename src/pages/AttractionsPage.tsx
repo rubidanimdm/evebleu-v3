@@ -13,11 +13,13 @@ export default function AttractionsPage() {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
-  const isHe = language === 'he';
+  const { t, language, isRTL } = useLanguage();
 
   const heroReveal = useScrollReveal<HTMLElement>();
   const gridReveal = useScrollReveal<HTMLDivElement>();
+
+  // Language-aware field picker: Hebrew gets He variant, others get English
+  const lf = (en: string, he: string) => language === 'he' ? he : en;
 
   const filtered = ATTRACTIONS.filter(a => {
     const matchesSearch = !search || 
@@ -28,7 +30,7 @@ export default function AttractionsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background pb-24 relative" dir={isHe ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-background pb-24 relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <GoldParticles count={8} />
 
       {/* Hero */}
@@ -41,17 +43,14 @@ export default function AttractionsPage() {
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-2">
             <Sparkles className="w-3 h-3 text-primary" />
             <span className="text-[10px] font-medium text-primary tracking-wide uppercase">
-              {isHe ? 'אטרקציות בדובאי' : 'Dubai Attractions'}
+              {t('attractionsPage.title')}
             </span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mb-1 font-display">
-            {isHe ? 'אטרקציות בדובאי' : 'Dubai Attractions'}
+            {t('attractionsPage.title')}
           </h1>
           <p className="text-muted-foreground text-xs max-w-md mx-auto">
-            {isHe 
-              ? `${ATTRACTIONS.length} אטרקציות מובילות · חוויות בלתי נשכחות בדובאי`
-              : `${ATTRACTIONS.length} top attractions · Unforgettable experiences in Dubai`
-            }
+            {ATTRACTIONS.length} {t('attractionsPage.subtitle')}
           </p>
           <div className="w-12 h-px shimmer-line mx-auto mt-3" />
         </div>
@@ -63,7 +62,7 @@ export default function AttractionsPage() {
           <div className="relative">
             <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder={isHe ? 'חפש אטרקציות...' : 'Search attractions...'}
+              placeholder={t('attractionsPage.searchPlaceholder')}
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 rtl:pl-3 rtl:pr-10 pr-10 h-11 rounded-xl bg-card/60 border-primary/15 focus:border-primary/40"
@@ -90,7 +89,7 @@ export default function AttractionsPage() {
                     : 'bg-card/60 text-muted-foreground hover:bg-card/80 border border-border/40'
                 }`}
               >
-                {isHe ? cat.he : cat.en}
+                {lf(cat.en, cat.he)}
               </button>
             ))}
           </div>
@@ -101,10 +100,10 @@ export default function AttractionsPage() {
         {filtered.length === 0 ? (
           <div className="text-center py-16 space-y-3">
             <p className="text-muted-foreground">
-              {isHe ? `לא נמצאו אטרקציות עבור "${search}"` : `No attractions found for "${search}"`}
+              {t('attractionsPage.noResults')} "{search}"
             </p>
             <Button variant="outline" size="sm" onClick={() => { setSearch(''); setActiveCategory('All'); }} className="border-primary/20 text-primary">
-              {isHe ? 'נקה חיפוש' : 'Clear search'}
+              {t('attractionsPage.clearSearch')}
             </Button>
           </div>
         ) : (
@@ -119,37 +118,37 @@ export default function AttractionsPage() {
                 <div className="relative h-48 overflow-hidden">
                   <img
                     src={attraction.image}
-                    alt={isHe ? attraction.nameHe : attraction.name}
+                    alt={lf(attraction.name, attraction.nameHe)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 rtl:left-3 rtl:right-3">
                     <span className="inline-block px-2 py-0.5 rounded-full bg-primary/20 backdrop-blur-sm text-primary text-[10px] font-medium mb-1">
-                      {isHe ? attraction.categoryHe : attraction.category}
+                      {lf(attraction.category, attraction.categoryHe)}
                     </span>
                     <h3 className="text-lg font-bold text-white leading-tight">
-                      {isHe ? attraction.nameHe : attraction.name}
+                      {lf(attraction.name, attraction.nameHe)}
                     </h3>
                   </div>
                 </div>
 
                 <div className="p-4 space-y-3">
                   <p className="text-muted-foreground text-xs leading-relaxed line-clamp-2">
-                    {isHe ? attraction.shortDescHe : attraction.shortDesc}
+                    {lf(attraction.shortDesc, attraction.shortDescHe)}
                   </p>
                   <div className="flex items-center gap-4 text-[10px] text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <MapPin className="w-3 h-3" />
-                      {isHe ? attraction.locationHe.split(',')[0] : attraction.location.split(',')[0]}
+                      {lf(attraction.location, attraction.locationHe).split(',')[0]}
                     </span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
-                      {isHe ? attraction.durationHe : attraction.duration}
+                      {lf(attraction.duration, attraction.durationHe)}
                     </span>
                   </div>
                   <Button size="sm" className="w-full h-9 rounded-xl text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90">
-                    {isHe ? 'פרטים נוספים' : 'View Details'}
+                    {t('attractionsPage.viewDetails')}
                   </Button>
                 </div>
               </div>
@@ -158,12 +157,12 @@ export default function AttractionsPage() {
         )}
 
         <p className="text-center text-xs text-muted-foreground mt-8 mb-4">
-          {isHe ? 'לא מוצא את מה שאתה מחפש?' : "Can't find what you're looking for?"}{' '}
+          {t('attractionsPage.cantFind')}{' '}
           <button
             onClick={() => navigate('/concierge')}
             className="text-primary underline underline-offset-2 hover:text-primary/80"
           >
-            {isHe ? 'שאל את הקונסיירז׳' : 'Ask your concierge'}
+            {t('attractionsPage.askConcierge')}
           </button>
         </p>
       </main>

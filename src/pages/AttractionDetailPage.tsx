@@ -10,34 +10,37 @@ import { ATTRACTIONS } from '@/lib/attractionsData';
 export default function AttractionDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { language } = useLanguage();
-  const isHe = language === 'he';
+  const { t, language, isRTL } = useLanguage();
   const [bookingOpen, setBookingOpen] = useState(false);
 
   const attraction = ATTRACTIONS.find(a => a.id === id);
 
+  // Language-aware field picker: Hebrew gets He variant, others get English
+  const lf = (en: string, he: string) => language === 'he' ? he : en;
+  const lfArr = (en: string[], he: string[]) => language === 'he' ? he : en;
+
   if (!attraction) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center" dir={isHe ? 'rtl' : 'ltr'}>
+      <div className="min-h-screen bg-background flex items-center justify-center" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="text-center space-y-4">
-          <p className="text-muted-foreground">{isHe ? 'אטרקציה לא נמצאה' : 'Attraction not found'}</p>
-          <Button onClick={() => navigate('/attractions')}>{isHe ? 'חזור לאטרקציות' : 'Back to Attractions'}</Button>
+          <p className="text-muted-foreground">{t('attractionsPage.noResults')}</p>
+          <Button onClick={() => navigate('/attractions')}>{t('nav.home')}</Button>
         </div>
       </div>
     );
   }
 
-  const name = isHe ? attraction.nameHe : attraction.name;
-  const category = isHe ? attraction.categoryHe : attraction.category;
-  const fullDesc = isHe ? attraction.fullDescHe : attraction.fullDesc;
-  const location = isHe ? attraction.locationHe : attraction.location;
-  const duration = isHe ? attraction.durationHe : attraction.duration;
-  const highlights = isHe ? attraction.highlightsHe : attraction.highlights;
-  const tips = isHe ? attraction.tipsHe : attraction.tips;
-  const bestTime = isHe ? attraction.bestTimeHe : attraction.bestTime;
+  const name = lf(attraction.name, attraction.nameHe);
+  const category = lf(attraction.category, attraction.categoryHe);
+  const fullDesc = lf(attraction.fullDesc, attraction.fullDescHe);
+  const location = lf(attraction.location, attraction.locationHe);
+  const duration = lf(attraction.duration, attraction.durationHe);
+  const highlights = lfArr(attraction.highlights, attraction.highlightsHe);
+  const tips = lfArr(attraction.tips, attraction.tipsHe);
+  const bestTime = lf(attraction.bestTime, attraction.bestTimeHe);
 
   return (
-    <div className="min-h-screen bg-background pb-24" dir={isHe ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-background pb-24" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Hero Image */}
       <div className="relative h-72 md:h-96 overflow-hidden">
         <img
@@ -77,14 +80,14 @@ export default function AttractionDetailPage() {
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/60 border border-border/40 text-xs text-muted-foreground">
             <CalendarCheck className="w-3.5 h-3.5 text-primary" />
-            {isHe ? 'זמן מומלץ: ' : 'Best time: '}{bestTime}
+            {t('attractionsPage.bestTime')}{bestTime}
           </div>
         </div>
 
         {/* Description */}
         <div className="space-y-2">
           <h2 className="text-sm font-semibold text-foreground">
-            {isHe ? 'אודות' : 'About'}
+            {t('attractionsPage.about')}
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
             {fullDesc}
@@ -95,7 +98,7 @@ export default function AttractionDetailPage() {
         <div className="space-y-3">
           <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
             <Star className="w-4 h-4 text-primary" />
-            {isHe ? 'היילייטים' : 'Highlights'}
+            {t('attractionsPage.highlights')}
           </h2>
           <div className="grid gap-2">
             {highlights.map((h, i) => (
@@ -111,7 +114,7 @@ export default function AttractionDetailPage() {
         <div className="space-y-3">
           <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
             <Lightbulb className="w-4 h-4 text-primary" />
-            {isHe ? 'טיפים' : 'Tips'}
+            {t('attractionsPage.tips')}
           </h2>
           <div className="rounded-2xl border border-primary/15 bg-primary/5 p-4 space-y-2">
             {tips.map((tip, i) => (
@@ -130,10 +133,10 @@ export default function AttractionDetailPage() {
             className="w-full h-14 rounded-2xl text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 gap-2"
           >
             <CalendarCheck className="w-5 h-5" />
-            {isHe ? `הזמן ${name}` : `Book ${name}`}
+            {t('attractionsPage.book')} {name}
           </Button>
           <p className="text-center text-[10px] text-muted-foreground mt-2">
-            {isHe ? 'הבקשה תישלח לצוות הקונסיירז׳ שלנו' : 'Your request will be sent to our concierge team'}
+            {t('attractionsPage.bookingNote')}
           </p>
         </div>
       </main>
