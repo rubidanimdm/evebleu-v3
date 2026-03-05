@@ -620,7 +620,17 @@ export default function HotelSearchPage() {
 
       {/* Hotel listings */}
       <div id="hotel-results" className="flex-1 px-4 py-4 space-y-4 max-w-lg mx-auto w-full">
-        {filteredHotels.map(hotel => (
+        {isSearching ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">Searching live prices...</p>
+          </div>
+        ) : filteredHotels.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <Search className="w-8 h-8 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">No hotels found. Try a different search.</p>
+          </div>
+        ) : filteredHotels.map(hotel => (
           <div key={hotel.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-colors">
             {/* Image */}
             <div className="relative h-48 sm:h-56">
