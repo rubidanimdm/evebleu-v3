@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, type RefCallback, type MutableRefObject } from 'react';
 
 interface UseScrollRevealOptions {
   threshold?: number;
@@ -10,22 +10,28 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   options: UseScrollRevealOptions = {}
 ) {
   const { threshold = 0.15, rootMargin = '0px 0px -40px 0px', once = true } = options;
+  const elementRef = useRef<T | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [element, setElement] = useState<T | null>(null);
+  const [, setMounted] = useState(0); // Force re-run when element mounts
 
-  // Use callback ref to detect when element mounts/unmounts
+  // Callback ref that updates the ref object AND triggers re-render
   const ref = useCallback((node: T | null) => {
-    setElement(node);
+    elementRef.current = node;
+    if (node) setMounted(c => c + 1);
   }, []);
 
+  // Expose .current for compatibility with useParallax
+  (ref as unknown as MutableRefObject<T | null>).current = elementRef.current;
+
   useEffect(() => {
-    if (!element) return;
+    const el = elementRef.current;
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          if (once) observer.unobserve(element);
+          if (once) observer.unobserve(el);
         } else if (!once) {
           setIsVisible(false);
         }
@@ -33,9 +39,9 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
       { threshold, rootMargin }
     );
 
-    observer.observe(element);
+    observer.observe(el);
     return () => observer.disconnect();
-  }, [element, threshold, rootMargin, once]);
+  }, [elementRef.current, threshold, rootMargin, once]);
 
-  return { ref, isVisible };
+  return { ref: ref as RefCallback<T> & MutableRefObject<T | null>, isVisible };
 }
