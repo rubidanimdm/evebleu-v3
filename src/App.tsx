@@ -117,6 +117,7 @@ function AppContent() {
         <Route path="/item/:id" element={<ItemDetailsPage />} />
         <Route path="/yachts" element={<YachtsPage />} />
         <Route path="/yachts/:slug" element={<YachtDetailPage />} />
+        <Route path="/hotels" element={<HotelSearchPage />} />
         <Route path="/blog/:id" element={<BlogArticlePage />} />
         
         {/* All pages open - contact via WhatsApp */}
