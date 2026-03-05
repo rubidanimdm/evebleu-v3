@@ -64,39 +64,47 @@ export default function YachtsPage() {
 
   useEffect(() => {
     async function fetchYachts() {
-      const [{ data }, { data: mediaData }] = await Promise.all([
-        supabase
-          .from('catalog_items')
-          .select('id, title, price, currency, pricing_unit, short_description, location, max_people, duration_minutes, image_url, details')
-          .eq('is_active', true)
-          .eq('category', 'EXPERIENCE')
-          .order('sort_order'),
-        supabase
-          .from('service_media')
-          .select('catalog_item_id, url, alt_text, sort_order')
-          .order('sort_order'),
-      ]);
+      try {
+        const [catalogResult, mediaResult] = await Promise.all([
+          supabase
+            .from('catalog_items')
+            .select('id, title, price, currency, pricing_unit, short_description, location, max_people, duration_minutes, image_url, details')
+            .eq('is_active', true)
+            .eq('category', 'EXPERIENCE')
+            .order('sort_order'),
+          supabase
+            .from('service_media')
+            .select('catalog_item_id, url, alt_text, sort_order')
+            .order('sort_order'),
+        ]);
 
-      const mediaMap = new Map<string, MediaItem[]>();
-      (mediaData || []).forEach(m => {
-        const list = mediaMap.get(m.catalog_item_id) || [];
-        list.push({ url: m.url, alt_text: m.alt_text, sort_order: m.sort_order });
-        mediaMap.set(m.catalog_item_id, list);
-      });
+        const data = catalogResult.data;
+        const mediaData = mediaResult.data;
 
-      const yachtItems = (data || [])
-        .filter(item => {
-          const d = parseDetails(item.details);
-          return d.type === 'yacht' || d.type === 'fishing';
-        })
-        .map(item => ({
-          ...item,
-          details: parseDetails(item.details),
-          gallery: mediaMap.get(item.id) || (item.image_url ? [{ url: item.image_url, alt_text: item.title, sort_order: 0 }] : []),
-        }));
+        const mediaMap = new Map<string, MediaItem[]>();
+        (mediaData || []).forEach(m => {
+          const list = mediaMap.get(m.catalog_item_id) || [];
+          list.push({ url: m.url, alt_text: m.alt_text, sort_order: m.sort_order });
+          mediaMap.set(m.catalog_item_id, list);
+        });
 
-      setItems(yachtItems);
-      setLoading(false);
+        const yachtItems = (data || [])
+          .filter(item => {
+            const d = parseDetails(item.details);
+            return d.type === 'yacht' || d.type === 'fishing';
+          })
+          .map(item => ({
+            ...item,
+            details: parseDetails(item.details),
+            gallery: mediaMap.get(item.id) || (item.image_url ? [{ url: item.image_url, alt_text: item.title, sort_order: 0 }] : []),
+          }));
+
+        setItems(yachtItems);
+      } catch (err) {
+        console.error('Failed to fetch yachts:', err);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchYachts();
   }, []);
