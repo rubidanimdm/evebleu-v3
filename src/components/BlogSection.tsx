@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { ArrowRight } from 'lucide-react';
