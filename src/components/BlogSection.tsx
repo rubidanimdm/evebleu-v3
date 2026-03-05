@@ -2774,7 +2774,7 @@ export function BlogSection() {
   const { language } = useLanguage();
   const isRTL = language === 'he' || language === 'ar';
   const headerReveal = useScrollReveal<HTMLDivElement>();
-  const cardsReveal = useScrollReveal<HTMLDivElement>();
+  const cardsReveal = useScrollReveal<HTMLDivElement>({ threshold: 0.01 });
 
   return (
     <section className="px-4 sm:px-6 py-14 sm:py-20 max-w-[1100px] mx-auto w-full" dir={isRTL ? 'rtl' : 'ltr'}>

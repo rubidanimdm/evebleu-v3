@@ -93,7 +93,7 @@ export default function MainScreen() {
       return;
     }
     if (route === '#hotel-booking') {
-      openExternalUrl('https://www.booking.com/?aid=304142');
+      navigate('/hotels');
       return;
     }
     if (route.startsWith('whatsapp:')) {
@@ -250,7 +250,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
+      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=TRANSPORT')} role="link" aria-label="Luxury Cars">
         <video
           src={yachtVideo}
           autoPlay
@@ -276,7 +276,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section ref={nightlifeStripReveal.ref} id="strip-dining" className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
+      <section ref={nightlifeStripReveal.ref} id="strip-dining" className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
         <video
           src={nightlifeVideo}
           autoPlay
@@ -337,7 +337,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions">
+      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
         <video
           src={attractionsVideo}
           autoPlay
@@ -362,7 +362,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 4 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('CAR')} role="link" aria-label="Luxury Cars">
+      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
         <video
           src={strip4Video}
           autoPlay
@@ -387,7 +387,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
       ═══════════════════════════════════════════════ */}
-      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => openWhatsAppConcierge('DESERT')} role="link" aria-label="Attractions - Desert">
+      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
         <video
           src={strip5Video}
           autoPlay
@@ -414,9 +414,8 @@ export default function MainScreen() {
           RECOMMENDED HOTELS STRIP
       ═══════════════════════════════════════════════ */}
       {(() => {
-        const hotelArticles = BLOG_ARTICLES.filter(a => 
-          ['atlantis-the-royal', 'atlantis-the-palm', 'five-palm-jumeirah', 'armani-hotel-burj-khalifa', 'address-dubai-marina'].includes(a.id)
-        );
+        const hotelOrder = ['atlantis-the-royal', 'five-palm-jumeirah', 'atlantis-the-palm', 'armani-hotel-burj-khalifa', 'address-dubai-marina'];
+        const hotelArticles = hotelOrder.map(id => BLOG_ARTICLES.find(a => a.id === id)).filter(Boolean) as typeof BLOG_ARTICLES;
         const hotelStripTitle: Record<string, string> = {
           he: '🏨 המלונות המומלצים שלנו',
           en: '🏨 Our Recommended Hotels',
