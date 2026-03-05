@@ -1,13 +1,14 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
   Search, MapPin, Calendar, Users, Star, Wifi, Car, Utensils, 
-  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart
+  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2
 } from 'lucide-react';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
+import { supabase } from '@/integrations/supabase/client';
 import logo from '@/assets/eve-blue-logo-white.gif';
 
 import imgAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
