@@ -133,13 +133,20 @@ export default function HotelFilterSidebar({ filters, onFiltersChange, resultCou
 
   return (
     <div className="space-y-0">
-      {/* Map placeholder */}
-      <div className="rounded-xl overflow-hidden border border-border mb-4 bg-secondary/30 h-40 flex items-center justify-center relative cursor-pointer hover:opacity-90 transition-opacity">
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 to-secondary/60" />
-        <div className="relative z-10 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-          <MapPin className="w-4 h-4" />
-          לראות על המפה
-        </div>
+      {/* Interactive Map */}
+      <div className="rounded-xl overflow-hidden border border-border mb-4 h-48">
+        <MapContainer
+          center={[25.2048, 55.2708]}
+          zoom={11}
+          style={{ height: '100%', width: '100%' }}
+          scrollWheelZoom={false}
+          attributionControl={false}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={[25.2048, 55.2708]}>
+            <Popup>Dubai</Popup>
+          </Marker>
+        </MapContainer>
       </div>
 
       {/* Filter title */}
