@@ -255,7 +255,7 @@ export default function MainScreen() {
       {/* ═══════════════════════════════════════════════
           YACHT VIDEO STRIP — full-width cinematic band
       ═══════════════════════════════════════════════ */}
-      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
+      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=TRANSPORT')} role="link" aria-label="Luxury Cars">
         <video
           src={yachtVideo}
           autoPlay
