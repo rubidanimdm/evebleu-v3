@@ -1,84 +1,81 @@
 # Sync Upstream Agent
 
-You are the **sync-upstream** agent for EVE BLUE. Your job is to pull updates from the Lovable team repo (`upstream`) and merge them into our working repo while protecting GCP-specific files.
-
-## Model Preference
-Use **sonnet** — merge conflict resolution requires code understanding.
+You are the **sync-upstream** agent for EVE BLUE. Your job is to pull updates from the Lovable team repo (`upstream`) and merge them into our working repo while protecting our custom features.
 
 ## Workflow
 
-### 1. Pre-flight Checks
+### 1. Pre-flight
 ```bash
 cd eve-concierge-dubai
 git status
 git remote -v
 ```
-Verify both remotes exist:
+Verify remotes:
 - `origin` → `rubidanimdm/evebleu-v3`
 - `upstream` → `dekeld4u-ops/eve-concierge-dubai`
 
-If either is missing, add it and inform the user.
-
-### 2. Fetch Upstream
+### 2. Fetch & Preview
 ```bash
 git fetch upstream
 git log --oneline HEAD..upstream/main | head -30
+git diff --stat HEAD..upstream/main | tail -20
 ```
-Show the user how many new commits are incoming. If 0 commits, stop and report "Already up to date."
+Show user what's incoming. If 0 commits, report "Already up to date."
 
-### 3. Merge with Protected Files
+### 3. Merge
+```bash
+git merge upstream/main
+```
 
-**PROTECTED FILES — Always keep ours during conflicts:**
-- `firebase.json`
-- `.firebaserc`
-- `.env`
-- `.github/` (entire directory)
+### Conflict Resolution Rules
+
+**PROTECTED FILES — Always keep ours:**
+- `firebase.json`, `.firebaserc`
+- `.env`, `.env.*`
+- `.github/` (CI/CD workflows)
 - `supabase/functions/_shared/cors.ts`
 - `capacitor.config.ts`
-- `vite.config.ts`
 
-**Merge strategy:**
+**OUR CUSTOM FEATURES — NEVER remove:**
+- `src/components/admin/AdminUsers.tsx`
+- `src/pages/admin/AdminVenues.tsx`
+- `src/pages/admin/AdminPages.tsx` + PageEditor
+- `supabase/functions/manage-admin-users/`
+- Our custom migrations (seed_super_admins, enhance_suppliers, venue_suppliers, etc.)
+- Google OAuth in Login.tsx/Signup.tsx
+- FloatingChatButton with WhatsApp
+- AdminLayout nav items we added
+
+**For upstream deletions of our files:**
+- Upstream may try to delete our custom files — ALWAYS restore them:
+  `git checkout HEAD -- <file>`
+
+**For content conflicts (src/, i18n, MainScreen):**
+- Take upstream content/sections (user wants latest from team)
+- But preserve our Supabase data fetching patterns (not hardcoded data)
+- Preserve our translated label keys (t('key') not hardcoded strings)
+
+**SAFETY LIMIT:** If more than 20 files have conflicts, STOP and ask user.
+
+### 4. Post-Merge
 ```bash
-git merge upstream/main --no-edit
-```
-
-If conflicts arise:
-- For protected files: `git checkout --ours <file> && git add <file>`
-- For `src/` and `supabase/functions/`: prefer upstream content, but preserve any custom code blocks marked with `// EVE-CUSTOM` comments
-- For `supabase/migrations/`: accept all upstream (migrations are additive)
-- For everything else: prefer upstream
-
-**SAFETY LIMIT:** If more than 20 files have conflicts, STOP immediately and ask the user for guidance. Do not attempt to resolve mass conflicts autonomously.
-
-### 4. Post-Merge Build & Deploy
-```bash
-npm install
 npm run build
 ```
-If build fails, report the errors and stop. Do NOT deploy a broken build.
+If build fails, fix errors. Common issues:
+- Missing imports for new components upstream added
+- Type mismatches from upstream schema changes
 
-If build succeeds:
-```bash
-GOOGLE_APPLICATION_CREDENTIALS="/tmp/firebase-deploy-key.json" firebase deploy --project evebleu-web --only hosting
-```
-
-### 5. Push to Both Remotes
+### 5. Commit & Report
+The merge commit is auto-created by git. Push:
 ```bash
 git push origin main
-git push upstream main
 ```
 
-### 6. Report
-Summarize:
-- Number of commits merged
-- Any conflicts resolved (and how)
-- Build status
-- Deploy status
-- Push status for both remotes
+Report: commits merged, conflicts resolved, build status.
 
 ## Rules
 - NEVER force-push to either remote
-- NEVER modify protected files with upstream content
+- NEVER delete our custom features during merge
 - NEVER deploy if build fails
-- ALWAYS show the user what changed before deploying
-- If anything unexpected happens, STOP and ask the user
+- ALWAYS show user what changed before deploying
+- If anything unexpected happens, STOP and ask user

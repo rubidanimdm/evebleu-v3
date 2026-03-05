@@ -2,14 +2,42 @@
 
 You are the **backend-dev** agent for EVE BLUE. You build and modify Supabase edge functions, database migrations, and server-side logic.
 
-## Model Preference
-Use **sonnet** — Deno/TypeScript and SQL require code comprehension.
-
 ## Tech Stack
 - **Supabase** (project ref: `rjwrjpvoksvyigfzrfcj`)
 - **Deno** runtime for edge functions
 - **PostgreSQL** with Row Level Security (RLS)
 - **Supabase Auth** for user management
+
+## CRITICAL: Database Enum Values
+
+### user_role enum
+Values: `'resident'`, `'manager'`, `'staff'`
+**There is NO `'admin'` value.** Use `role IN ('manager', 'staff')` for admin/manager RLS policies.
+
+### RLS Policy Patterns
+```sql
+-- User can read own data
+CREATE POLICY "Users can view own data"
+  ON table_name FOR SELECT
+  TO authenticated
+  USING (auth.uid() = user_id);
+
+-- Managers/staff can manage all data (CORRECT admin pattern)
+CREATE POLICY "Managers can manage data"
+  ON table_name FOR ALL
+  TO authenticated
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE id = auth.uid() AND role IN ('manager', 'staff')
+    )
+  );
+
+-- Public read (no auth required)
+CREATE POLICY "Public can read data"
+  ON table_name FOR SELECT
+  USING (is_published = true);
+```
 
 ## Environment Variables (available in edge functions)
 - `SUPABASE_URL` — Supabase project URL
@@ -18,8 +46,6 @@ Use **sonnet** — Deno/TypeScript and SQL require code comprehension.
 - `GEMINI_API_KEY` — for AI features (concierge chat)
 
 ## Edge Function Boilerplate
-
-Every edge function follows this exact pattern:
 
 ```typescript
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -31,13 +57,11 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // 1. CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // 2. Auth check (get user from JWT)
     const authHeader = req.headers.get("Authorization");
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
@@ -52,16 +76,13 @@ serve(async (req) => {
       });
     }
 
-    // 3. Service role client (bypasses RLS for admin operations)
     const supabaseAdmin = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    // 4. Your logic here
     const body = await req.json();
 
-    // 5. Response
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
@@ -88,6 +109,18 @@ serve(async (req) => {
 | `get-user-profile` | User: get own profile |
 | `send-invoice` | Send invoice to user |
 | `update-user-profile` | User: update own profile |
+| `manage-admin-users` | Admin: manage admin users |
+
+## Database Tables (key ones)
+
+| Table | Purpose |
+|-------|---------|
+| `profiles` | User profiles (role is `user_role` enum) |
+| `catalog_items` | Venues, yachts, experiences (category: DINING, CLUB, YACHT, etc.) |
+| `bookings` | Customer bookings |
+| `pages` | CMS pages (content_blocks JSONB, slug, is_published) |
+| `suppliers` | Venue/service suppliers |
+| `venue_suppliers` | Venue-supplier booking path relationships |
 
 ## Database Migrations
 
@@ -95,68 +128,24 @@ serve(async (req) => {
 ```
 YYYYMMDDHHMMSS_descriptive_name.sql
 ```
-Example: `20260303120000_add_favorites_table.sql`
 
 ### Migration Rules
 - **Always additive** — never drop columns or tables in production
-- **Always enable RLS** on new tables:
-```sql
-ALTER TABLE new_table ENABLE ROW LEVEL SECURITY;
-```
-- **Always add RLS policies** for the table
-- Place migration files in `supabase/migrations/`
+- **Always enable RLS** on new tables
+- **Always add RLS policies** using correct enum values
+- Place files in `supabase/migrations/`
+- **Always add updated_at trigger** for tables that have updated_at column
 
-### Common Patterns
-```sql
--- User can read own data
-CREATE POLICY "Users can view own data"
-  ON table_name FOR SELECT
-  USING (auth.uid() = user_id);
-
--- Admin can read all data
-CREATE POLICY "Admins can view all data"
-  ON table_name FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM profiles
-      WHERE id = auth.uid() AND role = 'admin'
-    )
-  );
-```
-
-## CORS Configuration
-
-The shared CORS config lives at `supabase/functions/_shared/cors.ts`. This is a **protected file** — do not modify it during upstream syncs.
-
-## After Making Changes
-
-### Deploy Edge Functions
+### Supabase CLI Auth
 ```bash
-cd eve-concierge-dubai
-npx supabase functions deploy --project-ref rjwrjpvoksvyigfzrfcj
-```
-Or a single function:
-```bash
-npx supabase functions deploy <function-name> --project-ref rjwrjpvoksvyigfzrfcj
-```
-
-### Push Database Migrations
-```bash
-npx supabase db push --project-ref rjwrjpvoksvyigfzrfcj
-```
-
-### Commit & Push
-```bash
-git add <changed-files>
-git commit -m "FEAT: description
-
-Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>"
-git push origin main
-git push upstream main
+export SUPABASE_ACCESS_TOKEN="<token>"
+npx supabase link --project-ref rjwrjpvoksvyigfzrfcj
+npx supabase db push --linked
 ```
 
 ## Rules
-- NEVER drop tables or columns — migrations are always additive
+- NEVER use `role = 'admin'` — the enum has NO admin value. Use `role IN ('manager', 'staff')`
+- NEVER drop tables or columns
 - NEVER disable RLS on any table
 - NEVER expose service role key to the client
 - NEVER modify `cors.ts` during upstream syncs
@@ -164,4 +153,4 @@ git push upstream main
 - ALWAYS handle OPTIONS preflight requests
 - ALWAYS validate auth before processing requests
 - ALWAYS use service role client for admin operations
-- ALWAYS test functions locally before deploying when possible
+- ALWAYS update `src/integrations/supabase/types.ts` when adding new tables
