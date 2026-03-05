@@ -98,7 +98,7 @@ export default function MainScreen() {
       return;
     }
     if (route === '#hotel-booking') {
-      openExternalUrl('https://www.booking.com/?aid=304142');
+      navigate('/hotels');
       return;
     }
     if (route.startsWith('whatsapp:')) {
