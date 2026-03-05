@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/lib/i18n';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import HotelFilterSidebar, { type HotelFilters, type MapHotel } from '@/components/HotelFilterSidebar';
 
@@ -311,16 +312,55 @@ function getRatingColor(rating: number) {
   return 'bg-[hsl(215,40%,40%)]';
 }
 
-function getRatingLabelHe(rating: number) {
-  if (rating >= 9) return 'יוצא מן הכלל';
-  if (rating >= 8) return 'טוב מאוד';
-  if (rating >= 7) return 'טוב';
-  return 'נחמד';
+function getRatingLabel(rating: number, language: string) {
+  if (language === 'he') {
+    if (rating >= 9) return 'יוצא מן הכלל';
+    if (rating >= 8) return 'טוב מאוד';
+    if (rating >= 7) return 'טוב';
+    return 'נחמד';
+  }
+  if (language === 'ar') {
+    if (rating >= 9) return 'استثنائي';
+    if (rating >= 8) return 'ممتاز';
+    if (rating >= 7) return 'جيد جداً';
+    return 'جيد';
+  }
+  if (language === 'fr') {
+    if (rating >= 9) return 'Exceptionnel';
+    if (rating >= 8) return 'Très bien';
+    if (rating >= 7) return 'Bien';
+    return 'Correct';
+  }
+  if (language === 'ru') {
+    if (rating >= 9) return 'Превосходно';
+    if (rating >= 8) return 'Отлично';
+    if (rating >= 7) return 'Хорошо';
+    return 'Неплохо';
+  }
+  // en
+  if (rating >= 9) return 'Superb';
+  if (rating >= 8) return 'Excellent';
+  if (rating >= 7) return 'Very Good';
+  return 'Good';
+}
+
+/** Pick hotel field based on language: Hebrew gets He variant, others get English */
+function hotelField(hotel: Hotel, field: 'location' | 'description' | 'distance' | 'amenities' | 'tags' | 'reviewLabel', language: string) {
+  const isHe = language === 'he';
+  switch (field) {
+    case 'location': return isHe ? (hotel.locationHe || hotel.location) : hotel.location;
+    case 'description': return isHe ? (hotel.descriptionHe || hotel.description) : hotel.description;
+    case 'distance': return isHe ? (hotel.distanceHe || hotel.distanceFromCenter) : hotel.distanceFromCenter;
+    case 'amenities': return isHe ? (hotel.amenitiesHe || hotel.amenities) : hotel.amenities;
+    case 'tags': return isHe ? (hotel.tagsHe || hotel.tags || []) : (hotel.tags || []);
+    case 'reviewLabel': return getRatingLabel(hotel.rating, language);
+  }
 }
 
 export default function HotelSearchPage() {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('דובאי');
+  const { t, language, isRTL } = useLanguage();
+  const [searchQuery, setSearchQuery] = useState(language === 'he' ? 'דובאי' : 'Dubai');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [guests, setGuests] = useState(2);
@@ -344,7 +384,6 @@ export default function HotelSearchPage() {
     freeCancellation: false,
   });
   
-  // Booking form
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
@@ -362,9 +401,7 @@ export default function HotelSearchPage() {
           rooms,
         },
       });
-
       if (error) throw error;
-
       if (data?.hotels && data.hotels.length > 0) {
         setLiveHotels(data.hotels);
         setUseApi(true);
@@ -414,7 +451,6 @@ export default function HotelSearchPage() {
     return result;
   }, [hotelsSource, searchQuery, sortBy, useApi, hotelFilters]);
 
-  // Map hotels for sidebar
   const mapHotels: MapHotel[] = useMemo(() => 
     filteredHotels
       .filter(h => h.lat && h.lng)
@@ -467,27 +503,29 @@ export default function HotelSearchPage() {
     setBookingStep('done');
   };
 
+  const pluralize = (count: number, singular: string, plural: string) => count > 1 ? plural : singular;
+
   // ═══ CONFIRMATION SCREEN ═══
   if (bookingStep === 'done') {
     return (
-      <div className="min-h-screen bg-background flex flex-col" dir="rtl">
+      <div className="min-h-screen bg-background flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
           <div className="w-20 h-20 rounded-full bg-[hsl(var(--success))] flex items-center justify-center mb-6 animate-[fadeIn_0.5s_ease-out]">
             <Check className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-3">בקשת ההזמנה התקבלה!</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-3">{t('hotelPage.bookingReceived')}</h1>
           <p className="text-muted-foreground max-w-sm mb-2">
-            תודה, {guestName}! בקשת ההזמנה שלך ב-<span className="text-foreground font-semibold">{selectedHotel?.name}</span> התקבלה.
+            {t('hotelPage.thankYou')}, {guestName}! {t('hotelPage.bookingReceivedDesc')}<span className="text-foreground font-semibold">{selectedHotel?.name}</span> {t('hotelPage.receivedSuffix')}
           </p>
           <p className="text-muted-foreground max-w-sm mb-8">
-            צוות הקונסיירז' שלנו ייצור איתך קשר בהקדם כדי לאשר זמינות ולהשלים את ההזמנה.
+            {t('hotelPage.conciergeWillContact')}
           </p>
           <div className="space-y-3 w-full max-w-xs">
             <Button onClick={() => { setBookingStep('search'); setSelectedHotel(null); }} className="w-full h-12 rounded-full bg-primary text-primary-foreground">
-              חפש עוד מלונות
+              {t('hotelPage.searchMoreHotels')}
             </Button>
             <Button variant="outline" onClick={() => navigate('/')} className="w-full h-12 rounded-full">
-              חזרה לדף הבית
+              {t('hotelPage.backToHome')}
             </Button>
           </div>
         </div>
@@ -504,17 +542,15 @@ export default function HotelSearchPage() {
     const total = selectedHotel.pricePerNight * nights;
 
     return (
-      <div className="min-h-screen bg-background flex flex-col" dir="rtl">
-        {/* Header */}
+      <div className="min-h-screen bg-background flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border px-4 py-3 flex items-center gap-3">
           <button onClick={() => setBookingStep('search')} className="p-1">
-            <ArrowLeft className="w-5 h-5 text-foreground rotate-180" />
+            <ArrowLeft className={`w-5 h-5 text-foreground ${isRTL ? 'rotate-180' : ''}`} />
           </button>
-          <h1 className="text-lg font-semibold text-foreground">השלם את ההזמנה</h1>
+          <h1 className="text-lg font-semibold text-foreground">{t('hotelPage.completeBooking')}</h1>
         </div>
 
         <div className="flex-1 px-4 py-6 max-w-lg mx-auto w-full space-y-6">
-          {/* Hotel summary card */}
           <div className="bg-card rounded-xl border border-border overflow-hidden">
             <div className="flex gap-3 p-3">
               <img src={selectedHotel.image} alt={selectedHotel.name} className="w-24 h-24 rounded-lg object-cover" />
@@ -526,83 +562,79 @@ export default function HotelSearchPage() {
                 </div>
                 <h3 className="font-semibold text-foreground text-sm truncate">{selectedHotel.name}</h3>
                 <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                  <MapPin className="w-3 h-3" />{selectedHotel.locationHe || selectedHotel.location}
+                  <MapPin className="w-3 h-3" />{hotelField(selectedHotel, 'location', language)}
                 </p>
                 <div className="flex items-center gap-1.5 mt-2">
                   <span className={`${getRatingColor(selectedHotel.rating)} text-white text-xs font-bold px-1.5 py-0.5 rounded`}>
                     {selectedHotel.rating}
                   </span>
-                  <span className="text-xs text-muted-foreground">{selectedHotel.reviewLabelHe || selectedHotel.reviewLabel}</span>
+                  <span className="text-xs text-muted-foreground">{hotelField(selectedHotel, 'reviewLabel', language)}</span>
                 </div>
               </div>
             </div>
             <div className="border-t border-border px-3 py-2 bg-secondary/30 flex justify-between items-center">
               <div>
-                <p className="text-xs text-muted-foreground">{nights} {nights > 1 ? 'לילות' : 'לילה'} · {guests} {guests > 1 ? 'אורחים' : 'אורח'}</p>
-                <p className="text-xs text-muted-foreground">{checkIn || 'תאריכים גמישים'} → {checkOut || ''}</p>
+                <p className="text-xs text-muted-foreground">{nights} {pluralize(nights, t('hotelPage.night'), t('hotelPage.nights'))} · {guests} {pluralize(guests, t('hotelPage.guest'), t('hotelPage.guests'))}</p>
+                <p className="text-xs text-muted-foreground">{checkIn || t('hotelPage.flexibleDates')} → {checkOut || ''}</p>
               </div>
-              <div className="text-left">
+              <div className={isRTL ? 'text-right' : 'text-left'}>
                 <p className="text-lg font-bold text-foreground">AED {total.toLocaleString()}</p>
-                <p className="text-[10px] text-muted-foreground">כולל מיסים ועמלות</p>
+                <p className="text-[10px] text-muted-foreground">{t('hotelPage.inclTaxes')}</p>
               </div>
             </div>
           </div>
 
-          {/* Guest details form */}
           <div className="space-y-4">
-            <h2 className="text-base font-semibold text-foreground">הפרטים שלך</h2>
-            
+            <h2 className="text-base font-semibold text-foreground">{t('hotelPage.yourDetails')}</h2>
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1 block">שם מלא *</label>
-                <Input value={guestName} onChange={e => setGuestName(e.target.value)} placeholder="הזן את שמך המלא" className="h-11 bg-secondary/50 border-border" />
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">{t('hotelPage.fullName')}</label>
+                <Input value={guestName} onChange={e => setGuestName(e.target.value)} placeholder={t('hotelPage.enterFullName')} className="h-11 bg-secondary/50 border-border" />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1 block">מספר טלפון *</label>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">{t('hotelPage.phoneNumber')}</label>
                 <Input value={guestPhone} onChange={e => setGuestPhone(e.target.value)} placeholder="+971 XX XXX XXXX" className="h-11 bg-secondary/50 border-border" dir="ltr" />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1 block">כתובת אימייל</label>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">{t('hotelPage.emailAddress')}</label>
                 <Input type="email" value={guestEmail} onChange={e => setGuestEmail(e.target.value)} placeholder="your@email.com" className="h-11 bg-secondary/50 border-border" dir="ltr" />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1 block">בקשות מיוחדות</label>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">{t('hotelPage.specialRequests')}</label>
                 <textarea 
                   value={specialRequests} 
                   onChange={e => setSpecialRequests(e.target.value)} 
-                  placeholder="צ'ק-אין מאוחר, קומה גבוהה וכו'..."
+                  placeholder={t('hotelPage.specialRequestsPlaceholder')}
                   className="w-full h-20 rounded-md border border-border bg-secondary/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none"
                 />
               </div>
             </div>
           </div>
 
-          {/* Price breakdown */}
           <div className="bg-card rounded-xl border border-border p-4 space-y-2">
-            <h3 className="text-sm font-semibold text-foreground mb-3">סיכום מחיר</h3>
+            <h3 className="text-sm font-semibold text-foreground mb-3">{t('hotelPage.priceSummary')}</h3>
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">AED {selectedHotel.pricePerNight.toLocaleString()} × {nights} {nights > 1 ? 'לילות' : 'לילה'}</span>
+              <span className="text-muted-foreground">AED {selectedHotel.pricePerNight.toLocaleString()} × {nights} {pluralize(nights, t('hotelPage.night'), t('hotelPage.nights'))}</span>
               <span className="text-foreground">AED {(selectedHotel.pricePerNight * nights).toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">מיסים ועמלות</span>
-              <span className="text-foreground">כלול</span>
+              <span className="text-muted-foreground">{t('hotelPage.taxesFees')}</span>
+              <span className="text-foreground">{t('hotelPage.included')}</span>
             </div>
             <div className="border-t border-border pt-2 mt-2 flex justify-between font-semibold">
-              <span className="text-foreground">סה"כ</span>
+              <span className="text-foreground">{t('hotelPage.total')}</span>
               <span className="text-foreground text-lg">AED {total.toLocaleString()}</span>
             </div>
           </div>
 
-          {/* Submit */}
           <Button 
             onClick={handleBookingSubmit} 
             disabled={!guestName || !guestPhone}
             className="w-full h-14 rounded-xl bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white text-base font-bold shadow-lg"
           >
-            השלם הזמנה
+            {t('hotelPage.completeBookingBtn')}
           </Button>
-          <p className="text-[10px] text-center text-muted-foreground">בהשלמת הזמנה זו, אתה מסכים לתנאי השירות שלנו.</p>
+          <p className="text-[10px] text-center text-muted-foreground">{t('hotelPage.byCompleting')}</p>
         </div>
         <BottomNav />
       </div>
@@ -611,30 +643,25 @@ export default function HotelSearchPage() {
 
   // ═══ MAIN SEARCH VIEW ═══
   return (
-    <div className="min-h-screen bg-background flex flex-col" dir="rtl">
-      {/* Hero search header */}
+    <div className="min-h-screen bg-background flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="relative bg-card pt-4 pb-6 px-4 border-b border-border">
-        {/* Top bar */}
         <div className="flex items-center justify-between mb-6">
           <img src={logo} alt="EVE BLUE" className="h-8 rounded" />
           <button onClick={() => navigate('/')} className="p-1">
-            <ArrowLeft className="w-5 h-5 text-foreground rotate-180" />
+            <ArrowLeft className={`w-5 h-5 text-foreground ${isRTL ? 'rotate-180' : ''}`} />
           </button>
         </div>
 
-        {/* Search title */}
-        <h1 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-1">מצאו את המלון המושלם</h1>
-        <p className="text-sm text-muted-foreground text-center mb-5">שהייה יוקרתית בדובאי, שנבחרה במיוחד עבורכם</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-1">{t('hotelPage.findPerfectHotel')}</h1>
+        <p className="text-sm text-muted-foreground text-center mb-5">{t('hotelPage.luxuryStay')}</p>
 
-        {/* Search form — Booking.com style */}
         <div className="bg-[hsl(var(--warning))] p-1 rounded-xl space-y-1">
-          {/* Destination */}
           <div className="bg-background rounded-lg flex items-center gap-2 px-3 h-12">
             <MapPin className="w-5 h-5 text-muted-foreground shrink-0" />
             <input 
               value={searchQuery} 
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="לאן אתם נוסעים?"
+              placeholder={t('hotelPage.whereGoing')}
               className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
             />
             {searchQuery && (
@@ -642,7 +669,6 @@ export default function HotelSearchPage() {
             )}
           </div>
           
-          {/* Dates row */}
           <div className="flex gap-1">
             <div className="flex-1 bg-background rounded-lg flex items-center gap-2 px-3 h-12">
               <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
@@ -656,7 +682,6 @@ export default function HotelSearchPage() {
                     setCheckOut('');
                   }
                 }}
-                placeholder="צ'ק-אין"
                 className="flex-1 bg-transparent text-sm text-foreground outline-none [color-scheme:dark]"
                 dir="ltr"
               />
@@ -668,14 +693,12 @@ export default function HotelSearchPage() {
                 value={checkOut} 
                 min={checkIn || new Date().toISOString().split('T')[0]}
                 onChange={e => setCheckOut(e.target.value)}
-                placeholder="צ'ק-אאוט"
                 className="flex-1 bg-transparent text-sm text-foreground outline-none [color-scheme:dark]"
                 dir="ltr"
               />
             </div>
           </div>
 
-          {/* Guests row */}
           <div className="flex gap-1">
             <div className="flex-1 bg-background rounded-lg flex items-center gap-2 px-3 h-12">
               <Users className="w-4 h-4 text-muted-foreground shrink-0" />
@@ -684,7 +707,7 @@ export default function HotelSearchPage() {
                 onChange={e => setGuests(Number(e.target.value))}
                 className="flex-1 bg-transparent text-sm text-foreground outline-none"
               >
-                {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n > 1 ? 'אורחים' : 'אורח'}</option>)}
+                {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {pluralize(n, t('hotelPage.guest'), t('hotelPage.guests'))}</option>)}
               </select>
             </div>
             <div className="flex-1 bg-background rounded-lg flex items-center gap-2 px-3 h-12">
@@ -693,12 +716,11 @@ export default function HotelSearchPage() {
                 onChange={e => setRooms(Number(e.target.value))}
                 className="flex-1 bg-transparent text-sm text-foreground outline-none"
               >
-                {[1,2,3,4].map(n => <option key={n} value={n}>{n} {n > 1 ? 'חדרים' : 'חדר'}</option>)}
+                {[1,2,3,4].map(n => <option key={n} value={n}>{n} {pluralize(n, t('hotelPage.room'), t('hotelPage.rooms'))}</option>)}
               </select>
             </div>
           </div>
 
-          {/* Search button */}
           <Button 
             onClick={() => {
               searchHotelsApi();
@@ -711,47 +733,44 @@ export default function HotelSearchPage() {
           >
             {isSearching ? (
               <>
-                <Loader2 className="w-5 h-5 ml-2 animate-spin" />
-                מחפש...
+                <Loader2 className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} animate-spin`} />
+                {t('hotelPage.searching')}
               </>
             ) : (
               <>
-                <Search className="w-5 h-5 ml-2" />
-                חפש
+                <Search className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                {t('hotelPage.search')}
               </>
             )}
           </Button>
         </div>
       </div>
 
-      {/* Sort bar */}
       <div className="px-4 py-3 flex items-center justify-between border-b border-border bg-card/50">
         <p className="text-sm text-muted-foreground">
-          נמצאו <span className="text-foreground font-semibold">{filteredHotels.length}</span> מקומות אירוח
+          {t('hotelPage.found')} <span className="text-foreground font-semibold">{filteredHotels.length}</span> {t('hotelPage.accommodations')}
         </p>
         <div className="flex items-center gap-2">
-          {/* Mobile filter toggle */}
           <button
             onClick={() => setShowMobileFilters(!showMobileFilters)}
             className="lg:hidden flex items-center gap-1.5 text-xs bg-secondary/50 border border-border text-foreground rounded-md px-2.5 py-1.5"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            סינון
+            {t('hotelPage.filter')}
           </button>
           <select 
             value={sortBy} 
             onChange={e => setSortBy(e.target.value as typeof sortBy)}
             className="text-xs bg-secondary/50 border border-border text-foreground rounded-md px-2 py-1.5 outline-none"
           >
-            <option value="recommended">מומלצים</option>
-            <option value="price-low">מחיר: מהנמוך לגבוה</option>
-            <option value="price-high">מחיר: מהגבוה לנמוך</option>
-            <option value="rating">דירוג</option>
+            <option value="recommended">{t('hotelPage.recommended')}</option>
+            <option value="price-low">{t('hotelPage.priceLowHigh')}</option>
+            <option value="price-high">{t('hotelPage.priceHighLow')}</option>
+            <option value="rating">{t('hotelPage.rating')}</option>
           </select>
         </div>
       </div>
 
-      {/* Mobile filters (collapsible) */}
       {showMobileFilters && (
         <div className="lg:hidden px-4 py-4 border-b border-border bg-card/80 backdrop-blur-sm">
           <HotelFilterSidebar
@@ -763,10 +782,8 @@ export default function HotelSearchPage() {
         </div>
       )}
 
-      {/* Content area: sidebar + hotel list */}
       <div className="flex-1 flex max-w-7xl mx-auto w-full">
-        {/* Desktop sidebar */}
-        <aside className="hidden lg:block w-72 xl:w-80 shrink-0 border-l border-border bg-card/50 p-4 overflow-y-auto max-h-[calc(100vh-300px)] sticky top-[200px]">
+        <aside className={`hidden lg:block w-72 xl:w-80 shrink-0 ${isRTL ? 'border-l' : 'border-r'} border-border bg-card/50 p-4 overflow-y-auto max-h-[calc(100vh-300px)] sticky top-[200px]`}>
           <HotelFilterSidebar
             filters={hotelFilters}
             onFiltersChange={setHotelFilters}
@@ -775,32 +792,30 @@ export default function HotelSearchPage() {
           />
         </aside>
 
-        {/* Hotel listings */}
         <div id="hotel-results" className="flex-1 px-4 py-4 space-y-4 max-w-2xl mx-auto w-full">
           {isSearching ? (
             <div className="flex flex-col items-center justify-center py-16 gap-3">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <p className="text-sm text-muted-foreground">מחפש מחירים בזמן אמת...</p>
+              <p className="text-sm text-muted-foreground">{t('hotelPage.searchingRealTime')}</p>
             </div>
           ) : filteredHotels.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 gap-3">
               <Search className="w-8 h-8 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">לא נמצאו מלונות. נסו לשנות את הסינון.</p>
+              <p className="text-sm text-muted-foreground">{t('hotelPage.noHotelsFound')}</p>
             </div>
           ) : filteredHotels.map(hotel => (
             <div key={hotel.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-colors">
-              {/* Image */}
               <div className="relative h-48 sm:h-56">
                 <img src={hotel.image} alt={hotel.name} className="w-full h-full object-cover" />
                 <button 
                   onClick={(e) => { e.stopPropagation(); toggleFavorite(hotel.id); }}
-                  className="absolute top-3 left-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center"
+                  className={`absolute top-3 ${isRTL ? 'right-3' : 'left-3'} w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center`}
                 >
                   <Heart className={`w-4 h-4 ${favorites.has(hotel.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
                 </button>
-                {(hotel.tagsHe || hotel.tags) && (
-                  <div className="absolute top-3 right-3 flex gap-1">
-                    {(hotel.tagsHe || hotel.tags || []).map(tag => (
+                {(hotelField(hotel, 'tags', language) as string[]).length > 0 && (
+                  <div className={`absolute top-3 ${isRTL ? 'left-3' : 'right-3'} flex gap-1`}>
+                    {(hotelField(hotel, 'tags', language) as string[]).map(tag => (
                       <span key={tag} className="bg-[hsl(var(--info))] text-white text-[10px] font-bold px-2 py-0.5 rounded">
                         {tag}
                       </span>
@@ -809,7 +824,6 @@ export default function HotelSearchPage() {
                 )}
               </div>
 
-              {/* Content */}
               <div className="p-3 sm:p-4">
                 <div className="flex items-center gap-1 mb-0.5">
                   {Array.from({ length: hotel.stars }).map((_, i) => (
@@ -818,53 +832,53 @@ export default function HotelSearchPage() {
                 </div>
                 <h3 className="font-bold text-foreground text-base mb-0.5">{hotel.name}</h3>
                 <p className="text-xs text-[hsl(var(--info))] flex items-center gap-1 mb-2">
-                  <MapPin className="w-3 h-3" />{hotel.locationHe || hotel.location} · {hotel.distanceHe || hotel.distanceFromCenter}
+                  <MapPin className="w-3 h-3" />{hotelField(hotel, 'location', language)} · {hotelField(hotel, 'distance', language)}
                 </p>
 
                 <div className="flex items-center gap-2 mb-3">
                   <span className={`${getRatingColor(hotel.rating)} text-white text-xs font-bold px-2 py-1 rounded`}>
                     {hotel.rating}
                   </span>
-                  <span className="text-sm font-medium text-foreground">{hotel.reviewLabelHe || getRatingLabelHe(hotel.rating)}</span>
-                  <span className="text-xs text-muted-foreground">· {hotel.reviewCount.toLocaleString()} חוות דעת</span>
+                  <span className="text-sm font-medium text-foreground">{hotelField(hotel, 'reviewLabel', language)}</span>
+                  <span className="text-xs text-muted-foreground">· {hotel.reviewCount.toLocaleString()} {t('hotelPage.reviews')}</span>
                 </div>
 
-                <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{hotel.descriptionHe || hotel.description}</p>
+                <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{hotelField(hotel, 'description', language)}</p>
 
                 <div className="flex flex-wrap gap-1.5 mb-3">
-                  {(hotel.amenitiesHe || hotel.amenities).slice(0, 5).map(a => (
+                  {(hotelField(hotel, 'amenities', language) as string[]).slice(0, 5).map(a => (
                     <span key={a} className="text-[10px] bg-secondary/60 text-muted-foreground px-2 py-0.5 rounded-full border border-border">
                       {a}
                     </span>
                   ))}
                   {hotel.amenities.length > 5 && (
-                    <span className="text-[10px] text-muted-foreground">+{hotel.amenities.length - 5} עוד</span>
+                    <span className="text-[10px] text-muted-foreground">+{hotel.amenities.length - 5} {t('hotelPage.more')}</span>
                   )}
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-3">
                   {hotel.freeCancel && (
-                    <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ ביטול חינם</span>
+                    <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ {t('hotelPage.freeCancel')}</span>
                   )}
                   {hotel.breakfastIncluded && (
-                    <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ ארוחת בוקר כלולה</span>
+                    <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ {t('hotelPage.breakfastIncluded')}</span>
                   )}
                 </div>
 
                 <div className="flex items-end justify-between border-t border-border pt-3">
                   <div>
-                    <p className="text-[10px] text-muted-foreground">ללילה</p>
+                    <p className="text-[10px] text-muted-foreground">{t('hotelPage.perNight')}</p>
                     {hotel.originalPrice && (
                       <p className="text-xs text-muted-foreground line-through">AED {hotel.originalPrice.toLocaleString()}</p>
                     )}
                     <p className="text-xl font-bold text-foreground">AED {hotel.pricePerNight.toLocaleString()}</p>
-                    <p className="text-[10px] text-muted-foreground">כולל מיסים ועמלות</p>
+                    <p className="text-[10px] text-muted-foreground">{t('hotelPage.inclTaxes')}</p>
                   </div>
                   <Button 
                     onClick={() => handleSelectHotel(hotel)}
                     className="h-10 px-5 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-semibold text-sm"
                   >
-                    בדוק זמינות
+                    {t('hotelPage.checkAvailability')}
                   </Button>
                 </div>
               </div>
