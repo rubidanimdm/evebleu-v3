@@ -565,7 +565,7 @@ export default function HotelSearchPage() {
       </div>
 
       {/* Hotel listings */}
-      <div className="flex-1 px-4 py-4 space-y-4 max-w-lg mx-auto w-full">
+      <div id="hotel-results" className="flex-1 px-4 py-4 space-y-4 max-w-lg mx-auto w-full">
         {filteredHotels.map(hotel => (
           <div key={hotel.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-colors">
             {/* Image */}
