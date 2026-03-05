@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { MapPin, ChevronDown, ChevronUp, SlidersHorizontal } from 'lucide-react';
@@ -24,10 +24,19 @@ export interface HotelFilters {
   freeCancellation: boolean;
 }
 
+export interface MapHotel {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  pricePerNight: number;
+}
+
 interface FilterSidebarProps {
   filters: HotelFilters;
   onFiltersChange: (filters: HotelFilters) => void;
   resultCount: number;
+  hotels?: MapHotel[];
 }
 
 const POPULAR_FILTERS = [
@@ -102,7 +111,17 @@ function FilterCheckbox({ label, checked, onChange, count }: { label: string; ch
   );
 }
 
-export default function HotelFilterSidebar({ filters, onFiltersChange, resultCount }: FilterSidebarProps) {
+// Custom price marker icon
+const createPriceIcon = (price: number) => {
+  return L.divIcon({
+    className: 'custom-price-marker',
+    html: `<div style="background:hsl(215,55%,30%);color:white;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;white-space:nowrap;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);">AED ${price.toLocaleString()}</div>`,
+    iconSize: [80, 28],
+    iconAnchor: [40, 28],
+  });
+};
+
+export default function HotelFilterSidebar({ filters, onFiltersChange, resultCount, hotels = [] }: FilterSidebarProps) {
   const update = (partial: Partial<HotelFilters>) => {
     onFiltersChange({ ...filters, ...partial });
   };
@@ -131,9 +150,12 @@ export default function HotelFilterSidebar({ filters, onFiltersChange, resultCou
     return false;
   };
 
+  // Filter hotels with valid coordinates
+  const mappableHotels = hotels.filter(h => h.lat && h.lng && h.lat !== 0 && h.lng !== 0);
+
   return (
-    <div className="space-y-0">
-      {/* Interactive Map */}
+    <div className="space-y-0" dir="rtl">
+      {/* Interactive Map with hotel markers */}
       <div className="rounded-xl overflow-hidden border border-border mb-4 h-48">
         <MapContainer
           center={[25.2048, 55.2708]}
@@ -143,9 +165,24 @@ export default function HotelFilterSidebar({ filters, onFiltersChange, resultCou
           attributionControl={false}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker position={[25.2048, 55.2708]}>
-            <Popup>Dubai</Popup>
-          </Marker>
+          {mappableHotels.length > 0 ? (
+            mappableHotels.map(hotel => (
+              <Marker
+                key={hotel.id}
+                position={[hotel.lat, hotel.lng]}
+                icon={createPriceIcon(hotel.pricePerNight)}
+              >
+                <Popup>
+                  <div className="text-xs font-semibold">{hotel.name}</div>
+                  <div className="text-xs">AED {hotel.pricePerNight.toLocaleString()} / לילה</div>
+                </Popup>
+              </Marker>
+            ))
+          ) : (
+            <Marker position={[25.2048, 55.2708]}>
+              <Popup>דובאי</Popup>
+            </Marker>
+          )}
         </MapContainer>
       </div>
 
@@ -158,7 +195,7 @@ export default function HotelFilterSidebar({ filters, onFiltersChange, resultCou
       {/* Budget slider */}
       <FilterSection title="התקציב שלכם (ללילה)">
         <div className="px-1">
-          <div className="text-sm text-muted-foreground text-center mb-3 dir-ltr">
+          <div className="text-sm text-muted-foreground text-center mb-3" dir="ltr">
             AED {filters.priceRange[0].toLocaleString()} - AED {filters.priceRange[1].toLocaleString()}+
           </div>
           <Slider
@@ -169,7 +206,7 @@ export default function HotelFilterSidebar({ filters, onFiltersChange, resultCou
             onValueChange={(v) => update({ priceRange: v as [number, number] })}
             className="mb-2"
           />
-          <div className="flex justify-between text-[10px] text-muted-foreground">
+          <div className="flex justify-between text-[10px] text-muted-foreground" dir="ltr">
             <span>AED 0</span>
             <span>AED 5,000+</span>
           </div>
