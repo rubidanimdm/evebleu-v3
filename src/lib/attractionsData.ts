@@ -1,3 +1,19 @@
+import blogBurjKhalifa from '@/assets/blog-burj-khalifa.jpg';
+import blogDubaiMall from '@/assets/blog-dubai-mall.jpg';
+import blogPalmAtlantis from '@/assets/blog-palm-atlantis.jpg';
+import blogDesertSafari from '@/assets/blog-desert-safari.jpg';
+import blogMarinaGate from '@/assets/blog-marina-gate.jpg';
+import blogEmirates from '@/assets/blog-emirates.jpg';
+import blogAinDubai from '@/assets/blog-ain-dubai.jpg';
+import blogAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
+import blogAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
+import blogFamily from '@/assets/blog-family.jpg';
+import blogSkydiving from '@/assets/blog-skydiving-dubai.jpg';
+import blogHotAirBalloon from '@/assets/blog-hot-air-balloon.jpg';
+import blogHelicopter from '@/assets/blog-helicopter-dubai.jpg';
+import blogDesert from '@/assets/blog-desert.jpg';
+import blogShopping from '@/assets/blog-shopping.jpg';
+
 export interface Attraction {
   id: string;
   name: string;
