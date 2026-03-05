@@ -235,6 +235,7 @@ export default function HotelSearchPage() {
   const [bookingStep, setBookingStep] = useState<'search' | 'details' | 'confirm' | 'done'>('search');
   const [sortBy, setSortBy] = useState<'recommended' | 'price-low' | 'price-high' | 'rating'>('recommended');
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [hasSearched, setHasSearched] = useState(true); // Show results by default
   
   // Booking form
   const [guestName, setGuestName] = useState('');
@@ -530,7 +531,16 @@ export default function HotelSearchPage() {
           </div>
 
           {/* Search button */}
-          <Button className="w-full h-12 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-bold text-base">
+          <Button 
+            onClick={() => {
+              setHasSearched(true);
+              // Scroll to results
+              setTimeout(() => {
+                document.getElementById('hotel-results')?.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }}
+            className="w-full h-12 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-bold text-base"
+          >
             <Search className="w-5 h-5 mr-2" />
             Search
           </Button>
@@ -555,7 +565,7 @@ export default function HotelSearchPage() {
       </div>
 
       {/* Hotel listings */}
-      <div className="flex-1 px-4 py-4 space-y-4 max-w-lg mx-auto w-full">
+      <div id="hotel-results" className="flex-1 px-4 py-4 space-y-4 max-w-lg mx-auto w-full">
         {filteredHotels.map(hotel => (
           <div key={hotel.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-colors">
             {/* Image */}
