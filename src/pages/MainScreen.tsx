@@ -57,7 +57,7 @@ const categoryKeys = [
   { key: 'extremeFlights', route: '#flights' },
   { key: 'diningNightlife', route: '/dining' },
   { key: 'attractions', route: '#hotel-booking' },
-  { key: 'desertAction', route: 'whatsapp:DESERT' },
+  { key: 'desertAction', route: '/attractions' },
   { key: 'luxuryCars', route: 'whatsapp:CAR' },
   
   { key: 'airportPickup', route: 'whatsapp:AIRPORT_PICKUP' },
