@@ -149,7 +149,7 @@ function VenueLogo({ venue }: { venue: Venue }) {
 export default function DiningNightlifePage() {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const [bookingVenue, setBookingVenue] = useState<string | null>(null);
 
   const heroReveal = useScrollReveal<HTMLElement>();
@@ -171,7 +171,7 @@ export default function DiningNightlifePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24 relative">
+    <div className="min-h-screen bg-background pb-24 relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <GoldParticles count={8} />
 
       {/* Hero */}
@@ -222,7 +222,7 @@ export default function DiningNightlifePage() {
         {!search && (
           <div ref={featuredReveal.ref} className={`mb-6 reveal-base ${featuredReveal.isVisible ? 'revealed' : ''}`}>
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold text-primary uppercase tracking-wider">⭐ Our Top 10 Recommended</span>
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">{t('diningExtra.topRecommended')}</span>
               <div className="flex-1 h-px bg-primary/15" />
             </div>
             <div className="space-y-2">
@@ -238,7 +238,7 @@ export default function DiningNightlifePage() {
                       <span className="font-medium text-foreground truncate block">
                         {venue.name}
                       </span>
-                      <span className="text-[10px] text-primary font-medium">Recommended</span>
+                      <span className="text-[10px] text-primary font-medium">{t('diningExtra.recommended')}</span>
                     </div>
                   </div>
                   <Button
@@ -254,7 +254,7 @@ export default function DiningNightlifePage() {
             </div>
 
             <div className="flex items-center gap-2 mt-6 mb-3">
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">All Venues</span>
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('diningExtra.allVenues')}</span>
               <div className="flex-1 h-px bg-border/40" />
             </div>
           </div>
