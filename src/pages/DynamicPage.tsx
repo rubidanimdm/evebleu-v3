@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { PageBlockRenderer } from '@/components/PageBlockRenderer';
 import { useLanguage } from '@/lib/i18n';
+import { updateSEO, resetSEO } from '@/lib/seo';
 
 interface PageData {
   id: string;
@@ -46,12 +47,19 @@ export default function DynamicPage() {
         setNotFound(true);
       } else {
         setPage(data as PageData);
-        document.title = data.meta_title || data.title || 'EVE BLUE';
+        updateSEO({
+          title: data.meta_title || data.title,
+          description: data.meta_description || undefined,
+          canonicalPath: `/p/${data.slug}`,
+          ogImage: data.featured_image_url || undefined,
+          ogType: 'article',
+        });
       }
       setLoading(false);
     }
 
     fetchPage();
+    return () => resetSEO();
   }, [slug]);
 
   if (loading) {

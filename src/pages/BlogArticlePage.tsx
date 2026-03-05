@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { BLOG_ARTICLES } from '@/components/BlogSection';
@@ -5,6 +6,7 @@ import { ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { updateSEO, resetSEO } from '@/lib/seo';
 
 export default function BlogArticlePage() {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +18,21 @@ export default function BlogArticlePage() {
 
   const contentReveal = useScrollReveal<HTMLDivElement>();
   const ctaReveal = useScrollReveal<HTMLDivElement>();
+
+  useEffect(() => {
+    if (article) {
+      const title = article.title[language] || article.title.en;
+      const description = article.excerpt[language] || article.excerpt.en;
+      updateSEO({
+        title,
+        description,
+        canonicalPath: `/blog/${article.id}`,
+        ogImage: article.image,
+        ogType: 'article',
+      });
+    }
+    return () => resetSEO();
+  }, [article, language]);
 
   if (!article) {
     return (

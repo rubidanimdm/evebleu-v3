@@ -10,6 +10,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Pencil, Trash2, FileText, Search } from 'lucide-react';
+import { BLOG_ARTICLES } from '@/components/BlogSection';
+import { useLanguage } from '@/lib/i18n';
 
 interface Page {
   id: string;
@@ -28,6 +30,7 @@ export default function AdminPages() {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   useEffect(() => {
     fetchPages();
@@ -219,6 +222,58 @@ export default function AdminPages() {
           )}
         </CardContent>
       </Card>
+
+      {/* Blog Articles Section */}
+      <div className="mt-10">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">Blog Articles</h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              {BLOG_ARTICLES.length} articles · Managed in code
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-border/40 overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border/40 bg-muted/30">
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground">Image</th>
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground">Title</th>
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground">Category</th>
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground">URL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {BLOG_ARTICLES.map((article) => (
+                <tr key={article.id} className="border-b border-border/20 hover:bg-muted/10">
+                  <td className="p-3">
+                    <img src={article.image} alt="" className="w-12 h-8 rounded object-cover" />
+                  </td>
+                  <td className="p-3 text-sm text-foreground">
+                    {article.title[language] || article.title.en}
+                  </td>
+                  <td className="p-3">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">
+                      {article.category[language] || article.category.en}
+                    </span>
+                  </td>
+                  <td className="p-3">
+                    <a
+                      href={`/blog/${article.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline"
+                    >
+                      /blog/{article.id}
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
