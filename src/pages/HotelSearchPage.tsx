@@ -5,11 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
   Search, MapPin, Calendar, Users, Star, Wifi, Car, Utensils, 
-  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2
+  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2, SlidersHorizontal
 } from 'lucide-react';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { supabase } from '@/integrations/supabase/client';
 import logo from '@/assets/eve-blue-logo-white.gif';
+import HotelFilterSidebar, { type HotelFilters } from '@/components/HotelFilterSidebar';
 
 import imgAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
 import imgAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
@@ -240,6 +241,16 @@ export default function HotelSearchPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [liveHotels, setLiveHotels] = useState<Hotel[]>([]);
   const [useApi, setUseApi] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [hotelFilters, setHotelFilters] = useState<HotelFilters>({
+    priceRange: [0, 5000],
+    starRatings: [],
+    reviewScores: [],
+    propertyTypes: [],
+    amenities: [],
+    mealPlans: [],
+    freeCancellation: false,
+  });
   
   // Booking form
   const [guestName, setGuestName] = useState('');
@@ -288,13 +299,30 @@ export default function HotelSearchPage() {
         h.location.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
+    // Apply sidebar filters
+    if (hotelFilters.priceRange[1] < 5000) {
+      result = result.filter(h => h.pricePerNight >= hotelFilters.priceRange[0] && h.pricePerNight <= hotelFilters.priceRange[1]);
+    }
+    if (hotelFilters.starRatings.length > 0) {
+      result = result.filter(h => hotelFilters.starRatings.includes(h.stars));
+    }
+    if (hotelFilters.reviewScores.length > 0) {
+      const minScore = Math.min(...hotelFilters.reviewScores);
+      result = result.filter(h => h.rating >= minScore);
+    }
+    if (hotelFilters.mealPlans.includes('breakfast')) {
+      result = result.filter(h => h.breakfastIncluded);
+    }
+    if (hotelFilters.freeCancellation) {
+      result = result.filter(h => h.freeCancel);
+    }
     switch (sortBy) {
       case 'price-low': result.sort((a, b) => a.pricePerNight - b.pricePerNight); break;
       case 'price-high': result.sort((a, b) => b.pricePerNight - a.pricePerNight); break;
       case 'rating': result.sort((a, b) => b.rating - a.rating); break;
     }
     return result;
-  }, [hotelsSource, searchQuery, sortBy, useApi]);
+  }, [hotelsSource, searchQuery, sortBy, useApi, hotelFilters]);
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => {
@@ -606,121 +634,146 @@ export default function HotelSearchPage() {
         <p className="text-sm text-muted-foreground">
           <span className="text-foreground font-semibold">{filteredHotels.length}</span> properties found
         </p>
-        <select 
-          value={sortBy} 
-          onChange={e => setSortBy(e.target.value as typeof sortBy)}
-          className="text-xs bg-secondary/50 border border-border text-foreground rounded-md px-2 py-1.5 outline-none"
-        >
-          <option value="recommended">Recommended</option>
-          <option value="price-low">Price: Low to High</option>
-          <option value="price-high">Price: High to Low</option>
-          <option value="rating">Rating</option>
-        </select>
+        <div className="flex items-center gap-2">
+          {/* Mobile filter toggle */}
+          <button
+            onClick={() => setShowMobileFilters(!showMobileFilters)}
+            className="lg:hidden flex items-center gap-1.5 text-xs bg-secondary/50 border border-border text-foreground rounded-md px-2.5 py-1.5"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            סינון
+          </button>
+          <select 
+            value={sortBy} 
+            onChange={e => setSortBy(e.target.value as typeof sortBy)}
+            className="text-xs bg-secondary/50 border border-border text-foreground rounded-md px-2 py-1.5 outline-none"
+          >
+            <option value="recommended">Recommended</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
       </div>
 
-      {/* Hotel listings */}
-      <div id="hotel-results" className="flex-1 px-4 py-4 space-y-4 max-w-lg mx-auto w-full">
-        {isSearching ? (
-          <div className="flex flex-col items-center justify-center py-16 gap-3">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">Searching live prices...</p>
-          </div>
-        ) : filteredHotels.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 gap-3">
-            <Search className="w-8 h-8 text-muted-foreground" />
-            <p className="text-sm text-muted-foreground">No hotels found. Try a different search.</p>
-          </div>
-        ) : filteredHotels.map(hotel => (
-          <div key={hotel.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-colors">
-            {/* Image */}
-            <div className="relative h-48 sm:h-56">
-              <img src={hotel.image} alt={hotel.name} className="w-full h-full object-cover" />
-              {/* Favorite button */}
-              <button 
-                onClick={(e) => { e.stopPropagation(); toggleFavorite(hotel.id); }}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center"
-              >
-                <Heart className={`w-4 h-4 ${favorites.has(hotel.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
-              </button>
-              {/* Tags */}
-              {hotel.tags && (
-                <div className="absolute top-3 left-3 flex gap-1">
-                  {hotel.tags.map(tag => (
-                    <span key={tag} className="bg-[hsl(var(--info))] text-white text-[10px] font-bold px-2 py-0.5 rounded">
-                      {tag}
-                    </span>
+      {/* Mobile filters (collapsible) */}
+      {showMobileFilters && (
+        <div className="lg:hidden px-4 py-4 border-b border-border bg-card/80 backdrop-blur-sm">
+          <HotelFilterSidebar
+            filters={hotelFilters}
+            onFiltersChange={setHotelFilters}
+            resultCount={filteredHotels.length}
+          />
+        </div>
+      )}
+
+      {/* Content area: sidebar + hotel list */}
+      <div className="flex-1 flex max-w-7xl mx-auto w-full">
+        {/* Desktop sidebar (right side, RTL style) */}
+        <aside className="hidden lg:block w-72 xl:w-80 shrink-0 border-l border-border bg-card/50 p-4 overflow-y-auto max-h-[calc(100vh-300px)] sticky top-[200px] order-2">
+          <HotelFilterSidebar
+            filters={hotelFilters}
+            onFiltersChange={setHotelFilters}
+            resultCount={filteredHotels.length}
+          />
+        </aside>
+
+        {/* Hotel listings */}
+        <div id="hotel-results" className="flex-1 px-4 py-4 space-y-4 max-w-2xl mx-auto w-full order-1">
+          {isSearching ? (
+            <div className="flex flex-col items-center justify-center py-16 gap-3">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <p className="text-sm text-muted-foreground">Searching live prices...</p>
+            </div>
+          ) : filteredHotels.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 gap-3">
+              <Search className="w-8 h-8 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">No hotels found. Try adjusting your filters.</p>
+            </div>
+          ) : filteredHotels.map(hotel => (
+            <div key={hotel.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-colors">
+              {/* Image */}
+              <div className="relative h-48 sm:h-56">
+                <img src={hotel.image} alt={hotel.name} className="w-full h-full object-cover" />
+                <button 
+                  onClick={(e) => { e.stopPropagation(); toggleFavorite(hotel.id); }}
+                  className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center"
+                >
+                  <Heart className={`w-4 h-4 ${favorites.has(hotel.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
+                </button>
+                {hotel.tags && (
+                  <div className="absolute top-3 left-3 flex gap-1">
+                    {hotel.tags.map(tag => (
+                      <span key={tag} className="bg-[hsl(var(--info))] text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Content */}
+              <div className="p-3 sm:p-4">
+                <div className="flex items-center gap-1 mb-0.5">
+                  {Array.from({ length: hotel.stars }).map((_, i) => (
+                    <Star key={i} className="w-3 h-3 fill-[hsl(var(--warning))] text-[hsl(var(--warning))]" />
                   ))}
                 </div>
-              )}
-            </div>
+                <h3 className="font-bold text-foreground text-base mb-0.5">{hotel.name}</h3>
+                <p className="text-xs text-[hsl(var(--info))] flex items-center gap-1 mb-2">
+                  <MapPin className="w-3 h-3" />{hotel.location} · {hotel.distanceFromCenter}
+                </p>
 
-            {/* Content */}
-            <div className="p-3 sm:p-4">
-              {/* Stars + Name */}
-              <div className="flex items-center gap-1 mb-0.5">
-                {Array.from({ length: hotel.stars }).map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-[hsl(var(--warning))] text-[hsl(var(--warning))]" />
-                ))}
-              </div>
-              <h3 className="font-bold text-foreground text-base mb-0.5">{hotel.name}</h3>
-              <p className="text-xs text-[hsl(var(--info))] flex items-center gap-1 mb-2">
-                <MapPin className="w-3 h-3" />{hotel.location} · {hotel.distanceFromCenter}
-              </p>
-
-              {/* Rating */}
-              <div className="flex items-center gap-2 mb-3">
-                <span className={`${getRatingColor(hotel.rating)} text-white text-xs font-bold px-2 py-1 rounded`}>
-                  {hotel.rating}
-                </span>
-                <span className="text-sm font-medium text-foreground">{hotel.reviewLabel}</span>
-                <span className="text-xs text-muted-foreground">· {hotel.reviewCount.toLocaleString()} reviews</span>
-              </div>
-
-              {/* Description */}
-              <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{hotel.description}</p>
-
-              {/* Amenities */}
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {hotel.amenities.slice(0, 5).map(a => (
-                  <span key={a} className="text-[10px] bg-secondary/60 text-muted-foreground px-2 py-0.5 rounded-full border border-border">
-                    {a}
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`${getRatingColor(hotel.rating)} text-white text-xs font-bold px-2 py-1 rounded`}>
+                    {hotel.rating}
                   </span>
-                ))}
-                {hotel.amenities.length > 5 && (
-                  <span className="text-[10px] text-muted-foreground">+{hotel.amenities.length - 5} more</span>
-                )}
-              </div>
-
-              {/* Badges */}
-              <div className="flex flex-wrap gap-2 mb-3">
-                {hotel.freeCancel && (
-                  <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ Free cancellation</span>
-                )}
-                {hotel.breakfastIncluded && (
-                  <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ Breakfast included</span>
-                )}
-              </div>
-
-              {/* Price + Book button */}
-              <div className="flex items-end justify-between border-t border-border pt-3">
-                <div>
-                  <p className="text-[10px] text-muted-foreground">Per night</p>
-                  {hotel.originalPrice && (
-                    <p className="text-xs text-muted-foreground line-through">AED {hotel.originalPrice.toLocaleString()}</p>
-                  )}
-                  <p className="text-xl font-bold text-foreground">AED {hotel.pricePerNight.toLocaleString()}</p>
-                  <p className="text-[10px] text-muted-foreground">incl. taxes & fees</p>
+                  <span className="text-sm font-medium text-foreground">{hotel.reviewLabel}</span>
+                  <span className="text-xs text-muted-foreground">· {hotel.reviewCount.toLocaleString()} reviews</span>
                 </div>
-                <Button 
-                  onClick={() => handleSelectHotel(hotel)}
-                  className="h-10 px-5 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-semibold text-sm"
-                >
-                  See availability
-                </Button>
+
+                <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{hotel.description}</p>
+
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {hotel.amenities.slice(0, 5).map(a => (
+                    <span key={a} className="text-[10px] bg-secondary/60 text-muted-foreground px-2 py-0.5 rounded-full border border-border">
+                      {a}
+                    </span>
+                  ))}
+                  {hotel.amenities.length > 5 && (
+                    <span className="text-[10px] text-muted-foreground">+{hotel.amenities.length - 5} more</span>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {hotel.freeCancel && (
+                    <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ Free cancellation</span>
+                  )}
+                  {hotel.breakfastIncluded && (
+                    <span className="text-[10px] text-[hsl(var(--success))] font-medium">✓ Breakfast included</span>
+                  )}
+                </div>
+
+                <div className="flex items-end justify-between border-t border-border pt-3">
+                  <div>
+                    <p className="text-[10px] text-muted-foreground">Per night</p>
+                    {hotel.originalPrice && (
+                      <p className="text-xs text-muted-foreground line-through">AED {hotel.originalPrice.toLocaleString()}</p>
+                    )}
+                    <p className="text-xl font-bold text-foreground">AED {hotel.pricePerNight.toLocaleString()}</p>
+                    <p className="text-[10px] text-muted-foreground">incl. taxes & fees</p>
+                  </div>
+                  <Button 
+                    onClick={() => handleSelectHotel(hotel)}
+                    className="h-10 px-5 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-semibold text-sm"
+                  >
+                    See availability
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <BottomNav />
