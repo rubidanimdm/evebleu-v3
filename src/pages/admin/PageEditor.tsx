@@ -88,8 +88,8 @@ export default function PageEditor() {
 
   async function fetchPage() {
     try {
-      const { data, error } = await (supabase
-        .from('pages') as any)
+      const { data, error } = await supabase
+        .from('pages')
         .select('*')
         .eq('id', id)
         .single();
@@ -191,9 +191,9 @@ export default function PageEditor() {
 
       let result;
       if (isNew) {
-        result = await (supabase.from('pages') as any).insert(pageData).select().single();
+        result = await supabase.from('pages').insert(pageData).select().single();
       } else {
-        result = await (supabase.from('pages') as any).update(pageData).eq('id', id).select().single();
+        result = await supabase.from('pages').update(pageData).eq('id', id).select().single();
       }
 
       if (result.error) throw result.error;
