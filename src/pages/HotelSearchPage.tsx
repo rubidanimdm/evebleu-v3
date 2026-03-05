@@ -578,16 +578,25 @@ export default function HotelSearchPage() {
           {/* Search button */}
           <Button 
             onClick={() => {
-              setHasSearched(true);
-              // Scroll to results
+              searchHotelsApi();
               setTimeout(() => {
                 document.getElementById('hotel-results')?.scrollIntoView({ behavior: 'smooth' });
               }, 100);
             }}
+            disabled={isSearching}
             className="w-full h-12 rounded-lg bg-[hsl(var(--info))] hover:bg-[hsl(199,85%,45%)] text-white font-bold text-base"
           >
-            <Search className="w-5 h-5 mr-2" />
-            Search
+            {isSearching ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Searching...
+              </>
+            ) : (
+              <>
+                <Search className="w-5 h-5 mr-2" />
+                Search
+              </>
+            )}
           </Button>
         </div>
       </div>
