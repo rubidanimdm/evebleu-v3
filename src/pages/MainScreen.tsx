@@ -419,9 +419,8 @@ export default function MainScreen() {
           RECOMMENDED HOTELS STRIP
       ═══════════════════════════════════════════════ */}
       {(() => {
-        const hotelArticles = BLOG_ARTICLES.filter(a => 
-          ['atlantis-the-royal', 'atlantis-the-palm', 'five-palm-jumeirah', 'armani-hotel-burj-khalifa', 'address-dubai-marina'].includes(a.id)
-        );
+        const hotelOrder = ['atlantis-the-royal', 'five-palm-jumeirah', 'atlantis-the-palm', 'armani-hotel-burj-khalifa', 'address-dubai-marina'];
+        const hotelArticles = hotelOrder.map(id => BLOG_ARTICLES.find(a => a.id === id)).filter(Boolean) as typeof BLOG_ARTICLES;
         const hotelStripTitle: Record<string, string> = {
           he: '🏨 המלונות המומלצים שלנו',
           en: '🏨 Our Recommended Hotels',
