@@ -9,7 +9,7 @@ export function FloatingHomeButton() {
   const isHome = location.pathname === '/';
 
   return (
-    <div className="fixed top-20 left-4 z-50 flex items-center gap-2">
+    <div className="fixed top-[52px] left-4 z-50 flex items-center gap-2">
       {/* Home button — hidden on home page */}
       {!isHome && (
         <button
