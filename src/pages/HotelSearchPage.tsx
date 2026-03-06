@@ -376,6 +376,7 @@ export default function HotelSearchPage() {
   const [liveHotels, setLiveHotels] = useState<Hotel[]>([]);
   const [useApi, setUseApi] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [showMapView, setShowMapView] = useState(false);
   const [hotelFilters, setHotelFilters] = useState<HotelFilters>({
     priceRange: [0, 5000],
     starRatings: [],
