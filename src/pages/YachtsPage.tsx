@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { BottomNav } from '@/components/BottomNav';
 import { FloatingHomeButton } from '@/components/FloatingHomeButton';
-import { GlobalLanguageSwitcher } from '@/components/GlobalLanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
@@ -116,8 +115,6 @@ export default function YachtsPage() {
 
   return (
     <div className="min-h-screen bg-background pb-24 relative">
-      <GlobalLanguageSwitcher />
-      <FloatingHomeButton />
       <GoldParticles count={12} />
 
       <LargePageHeader
