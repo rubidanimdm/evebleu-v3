@@ -9,7 +9,6 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
 import { openExternalUrl } from '@/lib/openExternalUrl';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
-import { GlobalLanguageSwitcher } from '@/components/GlobalLanguageSwitcher';
 import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
 import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
@@ -118,9 +117,6 @@ export default function MainScreen() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      {/* Global language switcher */}
-      <GlobalLanguageSwitcher />
-
       {/* ═══════════════════════════════════════════════
           INFO STRIP — Time, Weather, Exchange Rate
       ═══════════════════════════════════════════════ */}
