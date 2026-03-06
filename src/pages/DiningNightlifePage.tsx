@@ -173,6 +173,7 @@ export default function DiningNightlifePage() {
 
   return (
     <div className="min-h-screen bg-background pb-24 relative" dir={isRTL ? 'rtl' : 'ltr'}>
+      <FloatingHomeButton />
       <GoldParticles count={8} />
 
       {/* Hero */}
