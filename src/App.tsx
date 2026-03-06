@@ -8,7 +8,7 @@ import { AuthProvider, useAuth } from "@/lib/supabase";
 import { LanguageProvider } from "@/lib/i18n";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
 import { FloatingHomeButton } from "@/components/FloatingHomeButton";
-import { GlobalLanguageSwitcher } from "@/components/GlobalLanguageSwitcher";
+
 import { useAdminRole } from "@/hooks/useAdminRole";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
@@ -152,7 +152,6 @@ function AppContent() {
         <Route path="/auth" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <GlobalLanguageSwitcher />
       <FloatingHomeButton />
       <FloatingChatButton />
       <CookieConsent />
