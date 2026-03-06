@@ -761,6 +761,13 @@ export default function HotelSearchPage() {
             <SlidersHorizontal className="w-3.5 h-3.5" />
             {t('hotelPage.filter')}
           </button>
+          <button
+            onClick={() => setShowMapView(true)}
+            className="flex items-center gap-1.5 text-xs bg-[hsl(var(--info))]/10 border border-[hsl(var(--info))]/30 text-[hsl(var(--info))] rounded-md px-2.5 py-1.5 hover:bg-[hsl(var(--info))]/20 transition-colors"
+          >
+            <Map className="w-3.5 h-3.5" />
+            {isRTL ? 'מפה' : 'Map'}
+          </button>
           <select 
             value={sortBy} 
             onChange={e => setSortBy(e.target.value as typeof sortBy)}
