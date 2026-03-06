@@ -2,7 +2,6 @@ import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
 import { FloatingHomeButton } from '@/components/FloatingHomeButton';
-import { GlobalLanguageSwitcher } from '@/components/GlobalLanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -649,8 +648,6 @@ export default function HotelSearchPage() {
   // ═══ MAIN SEARCH VIEW ═══
   return (
     <div className="min-h-screen bg-background flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
-      <GlobalLanguageSwitcher />
-      <FloatingHomeButton />
       <div className="relative bg-card pt-4 pb-6 px-4 border-b border-border">
         <div className="flex items-center justify-between mb-6">
           <img src={logo} alt="EVE BLUE" className="h-8 rounded" />
