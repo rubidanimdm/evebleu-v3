@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { BottomNav } from '@/components/BottomNav';
+import { FloatingHomeButton } from '@/components/FloatingHomeButton';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
