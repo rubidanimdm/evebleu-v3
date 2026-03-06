@@ -648,6 +648,7 @@ export default function HotelSearchPage() {
   // ═══ MAIN SEARCH VIEW ═══
   return (
     <div className="min-h-screen bg-background flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
+      <GlobalLanguageSwitcher />
       <FloatingHomeButton />
       <div className="relative bg-card pt-4 pb-6 px-4 border-b border-border">
         <div className="flex items-center justify-between mb-6">
