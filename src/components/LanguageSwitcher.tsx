@@ -38,9 +38,9 @@ export function LanguageSwitcher({ variant = 'minimal', className }: LanguageSwi
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           "w-10 h-10 rounded-full flex items-center justify-center",
-          "bg-card/90 backdrop-blur-xl border border-primary/20",
-          "text-muted-foreground hover:text-primary hover:border-primary/40",
-          "shadow-lg transition-all duration-300 hover:scale-105"
+          "bg-transparent backdrop-blur-sm border border-white/20",
+          "text-white/80 hover:text-white hover:border-white/40",
+          "transition-all duration-300 hover:scale-105"
         )}
         aria-label="Select language"
       >
