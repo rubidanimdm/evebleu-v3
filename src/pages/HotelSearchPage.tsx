@@ -901,6 +901,22 @@ export default function HotelSearchPage() {
         </div>
       </div>
 
+      {/* Full-screen map view */}
+      {showMapView && (
+        <HotelMapView
+          hotels={filteredHotels}
+          onClose={() => setShowMapView(false)}
+          onSelectHotel={(hotel) => {
+            setShowMapView(false);
+            handleSelectHotel(hotel as any);
+          }}
+          favorites={favorites}
+          onToggleFavorite={toggleFavorite}
+          isRTL={isRTL}
+          t={t}
+        />
+      )}
+
       <BottomNav />
     </div>
   );
