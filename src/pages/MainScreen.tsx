@@ -155,10 +155,7 @@ export default function MainScreen() {
           background: 'radial-gradient(ellipse at center, transparent 50%, rgba(7,20,35,0.5) 100%)',
         }} />
 
-        {/* Language switcher — top left */}
-        <div className="absolute top-4 left-4 z-30">
-          <LanguageSwitcher variant="full" className="[&_button]:bg-black/40 [&_button]:backdrop-blur-md [&_button]:border-white/10 [&_button]:text-foreground [&_button]:hover:bg-black/50" />
-        </div>
+        {/* Language switcher is now global via FloatingHomeButton */}
 
         {/* Profile button — top right (only if logged in) */}
         {isLoggedIn && (
