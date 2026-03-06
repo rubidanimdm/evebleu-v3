@@ -13,6 +13,7 @@ import { useLanguage } from '@/lib/i18n';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import HotelFilterSidebar, { type HotelFilters, type MapHotel } from '@/components/HotelFilterSidebar';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import HotelMapView from '@/components/HotelMapView';
 
 import imgAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
 import imgAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
