@@ -16,7 +16,6 @@ export default function AttractionsPage() {
   const { t, language, isRTL } = useLanguage();
 
   const heroReveal = useScrollReveal<HTMLElement>();
-  const gridReveal = useScrollReveal<HTMLDivElement>();
 
   // Language-aware field picker: Hebrew gets He variant, others get English
   const lf = (en: string, he: string) => language === 'he' ? he : en;
