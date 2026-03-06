@@ -115,6 +115,7 @@ export default function YachtsPage() {
 
   return (
     <div className="min-h-screen bg-background pb-24 relative">
+      <FloatingHomeButton />
       <GoldParticles count={12} />
 
       <LargePageHeader
