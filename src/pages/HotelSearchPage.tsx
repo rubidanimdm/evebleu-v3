@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/lib/i18n';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import HotelFilterSidebar, { type HotelFilters, type MapHotel } from '@/components/HotelFilterSidebar';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 import imgAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
 import imgAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
@@ -771,16 +772,20 @@ export default function HotelSearchPage() {
         </div>
       </div>
 
-      {showMobileFilters && (
-        <div className="lg:hidden px-4 py-4 border-b border-border bg-card/80 backdrop-blur-sm">
+      {/* Mobile filter sheet */}
+      <Sheet open={showMobileFilters} onOpenChange={setShowMobileFilters}>
+        <SheetContent side={isRTL ? 'right' : 'left'} className="w-[85vw] sm:w-[380px] overflow-y-auto p-4 pt-8">
+          <SheetHeader className="mb-4">
+            <SheetTitle className="text-foreground">{t('hotelPage.filter')}</SheetTitle>
+          </SheetHeader>
           <HotelFilterSidebar
             filters={hotelFilters}
             onFiltersChange={setHotelFilters}
             resultCount={filteredHotels.length}
             hotels={mapHotels}
           />
-        </div>
-      )}
+        </SheetContent>
+      </Sheet>
 
       <div className="flex-1 flex max-w-7xl mx-auto w-full">
         <aside className={`hidden lg:block w-72 xl:w-80 shrink-0 ${isRTL ? 'border-l' : 'border-r'} border-border bg-card/50 p-4 overflow-y-auto max-h-[calc(100vh-300px)] sticky top-[200px]`}>
