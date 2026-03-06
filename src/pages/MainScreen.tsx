@@ -140,9 +140,9 @@ export default function MainScreen() {
         <div className="absolute inset-0" style={{
           background: `
             linear-gradient(180deg,
-              rgba(7,20,35,0.70) 0%,
-              rgba(7,20,35,0.30) 30%,
-              rgba(7,20,35,0.25) 50%,
+              rgba(7,20,35,0.30) 0%,
+              rgba(7,20,35,0.15) 25%,
+              rgba(7,20,35,0.20) 50%,
               rgba(7,20,35,0.60) 75%,
               rgba(7,20,35,0.98) 100%
             )
