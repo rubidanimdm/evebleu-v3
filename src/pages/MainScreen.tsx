@@ -118,6 +118,9 @@ export default function MainScreen() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      {/* Language switcher — global, always visible */}
+      <FloatingHomeButton />
+
       {/* ═══════════════════════════════════════════════
           INFO STRIP — Time, Weather, Exchange Rate
       ═══════════════════════════════════════════════ */}
