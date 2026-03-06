@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
   Search, MapPin, Calendar, Users, Star, Wifi, Car, Utensils, 
-  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2, SlidersHorizontal
+  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2, SlidersHorizontal, Map
 } from 'lucide-react';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { supabase } from '@/integrations/supabase/client';
@@ -13,6 +13,7 @@ import { useLanguage } from '@/lib/i18n';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import HotelFilterSidebar, { type HotelFilters, type MapHotel } from '@/components/HotelFilterSidebar';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import HotelMapView from '@/components/HotelMapView';
 
 import imgAtlantisRoyal from '@/assets/blog-atlantis-royal.jpg';
 import imgAtlantisPalm from '@/assets/blog-atlantis-palm.jpg';
@@ -375,6 +376,7 @@ export default function HotelSearchPage() {
   const [liveHotels, setLiveHotels] = useState<Hotel[]>([]);
   const [useApi, setUseApi] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [showMapView, setShowMapView] = useState(false);
   const [hotelFilters, setHotelFilters] = useState<HotelFilters>({
     priceRange: [0, 5000],
     starRatings: [],
@@ -759,6 +761,13 @@ export default function HotelSearchPage() {
             <SlidersHorizontal className="w-3.5 h-3.5" />
             {t('hotelPage.filter')}
           </button>
+          <button
+            onClick={() => setShowMapView(true)}
+            className="flex items-center gap-1.5 text-xs bg-[hsl(var(--info))]/10 border border-[hsl(var(--info))]/30 text-[hsl(var(--info))] rounded-md px-2.5 py-1.5 hover:bg-[hsl(var(--info))]/20 transition-colors"
+          >
+            <Map className="w-3.5 h-3.5" />
+            {isRTL ? 'מפה' : 'Map'}
+          </button>
           <select 
             value={sortBy} 
             onChange={e => setSortBy(e.target.value as typeof sortBy)}
@@ -891,6 +900,22 @@ export default function HotelSearchPage() {
           ))}
         </div>
       </div>
+
+      {/* Full-screen map view */}
+      {showMapView && (
+        <HotelMapView
+          hotels={filteredHotels}
+          onClose={() => setShowMapView(false)}
+          onSelectHotel={(hotel) => {
+            setShowMapView(false);
+            handleSelectHotel(hotel as any);
+          }}
+          favorites={favorites}
+          onToggleFavorite={toggleFavorite}
+          isRTL={isRTL}
+          t={t}
+        />
+      )}
 
       <BottomNav />
     </div>
