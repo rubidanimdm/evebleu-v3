@@ -131,7 +131,7 @@ export function DubaiInfoStrip() {
 
   return (
     <div
-      className="w-full bg-card/80 backdrop-blur-md border-b border-primary/10 py-2.5 px-4 z-50 relative mb-0"
+      className="w-full bg-card/80 backdrop-blur-md border-b border-primary/10 py-2.5 px-4 z-50 relative"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="max-w-[960px] lg:max-w-[1200px] xl:max-w-[1400px] mx-auto flex items-center justify-between gap-4 sm:gap-6 lg:gap-10 text-xs sm:text-sm lg:text-base">
