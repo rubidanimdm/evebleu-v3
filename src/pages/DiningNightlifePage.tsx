@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
 import { FloatingHomeButton } from '@/components/FloatingHomeButton';
-import { GlobalLanguageSwitcher } from '@/components/GlobalLanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { GoldParticles } from '@/components/LuxuryElements';
@@ -174,8 +173,6 @@ export default function DiningNightlifePage() {
 
   return (
     <div className="min-h-screen bg-background pb-24 relative" dir={isRTL ? 'rtl' : 'ltr'}>
-      <GlobalLanguageSwitcher />
-      <FloatingHomeButton />
       <GoldParticles count={8} />
 
       {/* Hero */}
