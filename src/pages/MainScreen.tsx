@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/i18n';
 import { openExternalUrl } from '@/lib/openExternalUrl';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { FloatingHomeButton } from '@/components/FloatingHomeButton';
 import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
 import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
