@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
   Search, MapPin, Calendar, Users, Star, Wifi, Car, Utensils, 
-  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2, SlidersHorizontal
+  Waves, Dumbbell, ArrowLeft, ChevronDown, X, Check, Heart, Loader2, SlidersHorizontal, Map
 } from 'lucide-react';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { supabase } from '@/integrations/supabase/client';
