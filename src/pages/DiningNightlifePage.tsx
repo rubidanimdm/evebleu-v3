@@ -155,7 +155,6 @@ export default function DiningNightlifePage() {
 
   const heroReveal = useScrollReveal<HTMLElement>();
   const featuredReveal = useScrollReveal<HTMLDivElement>();
-  const venuesReveal = useScrollReveal<HTMLDivElement>();
 
   const FEATURED_NAMES = ['Baoli', 'Amelia', 'Billionaire', 'Cou Cou', 'Amazonico', 'Gigi', 'Raspoutine', 'Verde Beach', 'O Beach', 'Opa'];
 
