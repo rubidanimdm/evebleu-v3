@@ -155,7 +155,6 @@ export default function DiningNightlifePage() {
 
   const heroReveal = useScrollReveal<HTMLElement>();
   const featuredReveal = useScrollReveal<HTMLDivElement>();
-  const venuesReveal = useScrollReveal<HTMLDivElement>();
 
   const FEATURED_NAMES = ['Baoli', 'Amelia', 'Billionaire', 'Cou Cou', 'Amazonico', 'Gigi', 'Raspoutine', 'Verde Beach', 'O Beach', 'Opa'];
 
@@ -275,7 +274,7 @@ export default function DiningNightlifePage() {
             </Button>
           </div>
         ) : (
-          <div ref={venuesReveal.ref} className={`space-y-2 reveal-base ${venuesReveal.isVisible ? 'revealed' : ''}`}>
+          <div className="space-y-2">
             {filtered.map(venue => (
               <div
                 key={venue.name}
