@@ -274,7 +274,7 @@ export default function DiningNightlifePage() {
             </Button>
           </div>
         ) : (
-          <div ref={venuesReveal.ref} className={`space-y-2 reveal-base ${venuesReveal.isVisible ? 'revealed' : ''}`}>
+          <div className="space-y-2">
             {filtered.map(venue => (
               <div
                 key={venue.name}
