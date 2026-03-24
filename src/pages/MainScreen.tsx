@@ -335,26 +335,6 @@ export default function MainScreen() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          IBIZA 2026 BANNER
-      ═══════════════════════════════════════════════ */}
-      <section className="px-4 sm:px-6 py-6 max-w-[720px] lg:max-w-[960px] mx-auto w-full">
-        <button
-          onClick={() => openWhatsAppConcierge('IBIZA_2026')}
-          className="w-full relative rounded-2xl overflow-hidden border border-primary/20 hover:border-primary/40 bg-gradient-to-r from-[hsl(200,80%,20%)] via-[hsl(30,90%,50%)] to-[hsl(340,70%,45%)] p-6 sm:p-8 text-center transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.3)] hover:-translate-y-1 group"
-        >
-          <div className="absolute inset-0 bg-background/20 group-hover:bg-background/10 transition-colors" />
-          <div className="relative z-10">
-            <span className="text-3xl sm:text-4xl mb-2 block">🏝️</span>
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-1 tracking-tight">
-              Concierge in Ibiza 2026
-            </h3>
-            <p className="text-white/80 text-xs sm:text-sm">
-              Clubs · Villas · Yachts · VIP Tables · Private Events
-            </p>
-          </div>
-        </button>
-      </section>
 
       {/* ═══════════════════════════════════════════════
           ATTRACTIONS VIDEO STRIP
