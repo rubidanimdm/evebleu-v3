@@ -235,23 +235,25 @@ export default function MainScreen() {
         {/* Ibiza 2026 Banner */}
         <button
           onClick={() => openWhatsAppConcierge('IBIZA_2026')}
-          className="w-full relative rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 bg-card/80 backdrop-blur p-5 sm:p-6 mb-8 flex items-center gap-4 sm:gap-5 text-left transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.15)] hover:-translate-y-0.5 group"
+          className="w-full relative rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 h-[120px] sm:h-[140px] mb-8 flex items-center text-left transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.2)] hover:-translate-y-0.5 group"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 group-hover:from-primary/10 group-hover:to-primary/10 transition-colors rounded-2xl" />
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          {/* Background image */}
+          <img src={ibizaBanner} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-background/60 group-hover:bg-background/50 transition-colors" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
           
-          <div className="relative z-10 w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <span className="text-2xl sm:text-3xl">🏝️</span>
+          <div className="relative z-10 flex items-center gap-4 sm:gap-5 px-5 sm:px-6 w-full">
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-primary/80 mb-1">Coming Soon</p>
+              <h3 className="text-base sm:text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                Concierge in Ibiza 2026
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                Clubs · Villas · Yachts · VIP Tables · Private Events
+              </p>
+            </div>
+            <ArrowRight className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors flex-shrink-0" />
           </div>
-          <div className="relative z-10 flex-1 min-w-0">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-              Concierge in Ibiza 2026
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Clubs · Villas · Yachts · VIP Tables · Private Events
-            </p>
-          </div>
-          <ArrowRight className="relative z-10 w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
         </button>
 
         <div ref={gridReveal.ref} className={`grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
