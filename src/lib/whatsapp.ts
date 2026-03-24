@@ -1,5 +1,3 @@
-import { openExternalUrl } from '@/lib/openExternalUrl';
-
 const WHATSAPP_NUMBER = '971551523121';
 
 const INTENT_MESSAGES: Record<string, string> = {
@@ -26,12 +24,18 @@ export function openWhatsAppConcierge(intent?: string, extra?: string) {
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   
-  // Use anchor click for reliable cross-environment navigation
-  const a = document.createElement('a');
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  // Try window.open first, fallback to location change
+  const win = window.open(url, '_blank', 'noopener,noreferrer');
+  if (!win) {
+    // If blocked (iframe/sandbox), try top-level navigation
+    try {
+      if (window.top && window.top !== window) {
+        window.top.location.href = url;
+        return;
+      }
+    } catch {
+      // cross-origin restriction — fall through
+    }
+    window.location.href = url;
+  }
 }
