@@ -23,19 +23,5 @@ export function openWhatsAppConcierge(intent?: string, extra?: string) {
   }
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  
-  // Try window.open first, fallback to location change
-  const win = window.open(url, '_blank', 'noopener,noreferrer');
-  if (!win) {
-    // If blocked (iframe/sandbox), try top-level navigation
-    try {
-      if (window.top && window.top !== window) {
-        window.top.location.href = url;
-        return;
-      }
-    } catch {
-      // cross-origin restriction — fall through
-    }
-    window.location.href = url;
-  }
+  window.open(url, '_blank', 'noopener,noreferrer');
 }

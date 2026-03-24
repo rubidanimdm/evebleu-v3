@@ -236,16 +236,22 @@ export default function MainScreen() {
         {/* Ibiza 2026 Banner */}
         <button
           onClick={() => openWhatsAppConcierge('IBIZA_2026')}
-          className="w-full relative rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 h-[120px] sm:h-[140px] mb-8 flex items-center text-left transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.2)] hover:-translate-y-0.5 group"
+          className="w-full relative rounded-2xl overflow-hidden border border-primary/20 hover:border-primary/40 h-[120px] sm:h-[140px] mb-8 flex items-center text-left transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.25)] hover:-translate-y-1 group ibiza-banner-glow"
         >
           {/* Background image */}
           <img src={ibizaBanner} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-          <div className="absolute inset-0 bg-background/60 group-hover:bg-background/50 transition-colors" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
+          <div className="absolute inset-0 bg-background/55 group-hover:bg-background/45 transition-colors" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/30 to-transparent" />
+          
+          {/* Shimmer sweep overlay */}
+          <div className="absolute inset-0 ibiza-shimmer-sweep" />
+          
+          {/* Pulsing border glow */}
+          <div className="absolute inset-0 rounded-2xl border border-primary/20 ibiza-pulse-border" />
           
           <div className="relative z-10 flex items-center gap-4 sm:gap-5 px-5 sm:px-6 w-full">
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-primary/80 mb-1">Coming Soon</p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-primary/90 mb-1 font-medium ibiza-pulse-text">Coming Soon</p>
               <h3 className="text-base sm:text-lg font-bold text-foreground group-hover:text-primary transition-colors">
                 Concierge in Ibiza 2026
               </h3>
@@ -253,7 +259,7 @@ export default function MainScreen() {
                 Clubs · Villas · Yachts · VIP Tables · Private Events
               </p>
             </div>
-            <ArrowRight className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors flex-shrink-0" />
+            <ArrowRight className="w-5 h-5 text-primary/60 group-hover:text-primary transition-all group-hover:translate-x-1 flex-shrink-0" />
           </div>
         </button>
 
