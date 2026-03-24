@@ -25,5 +25,13 @@ export function openWhatsAppConcierge(intent?: string, extra?: string) {
   }
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  openExternalUrl(url);
+  
+  // Use anchor click for reliable cross-environment navigation
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
