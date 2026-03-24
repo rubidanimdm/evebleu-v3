@@ -29,6 +29,7 @@ import helicopterIcon from '@/assets/icon-helicopter.jpeg';
 import diningIcon from '@/assets/dining-icon-new.jpeg';
 import airportIcon from '@/assets/airport-pickup-icon.jpeg';
 import attractionsIcon from '@/assets/icon-attractions.jpeg';
+import ibizaBanner from '@/assets/ibiza-banner.jpg';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
