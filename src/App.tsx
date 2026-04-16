@@ -133,6 +133,7 @@ function AppContent() {
         <Route path="/my-plans" element={<MyPlansPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/support" element={<SupportPage />} />
+        <Route path="/contacts" element={<Contacts />} />
 
         {/* Admin routes with layout */}
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
