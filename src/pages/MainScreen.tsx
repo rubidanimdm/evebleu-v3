@@ -131,6 +131,13 @@ export default function MainScreen() {
             {t('mainScreen.everythingYouNeed')}
           </h2>
           <div className="w-16 h-px shimmer-line mx-auto mt-3" />
+          <div className="mt-4 mb-2 flex justify-center">
+            <img
+              src={logo}
+              alt="EVE BLUE"
+              className="w-[min(200px,50vw)] h-auto rounded-lg"
+            />
+          </div>
         </div>
 
         <div ref={gridReveal.ref} className={`grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
