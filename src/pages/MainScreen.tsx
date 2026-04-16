@@ -16,7 +16,7 @@ import heroVideo from '@/assets/hero-video.mp4';
 
 import nightlifeVideo from '@/assets/nightlife-video.mp4';
 
-import strip4Video from '@/assets/strip4-video.mp4';
+
 import strip5Video from '@/assets/strip5-video.mp4';
 import birthdayIcon from '@/assets/icon-birthday.jpeg';
 import vipDriverIcon from '@/assets/vip-driver-icon-new.jpeg';
@@ -79,7 +79,7 @@ export default function MainScreen() {
   const gridReveal = useScrollReveal<HTMLDivElement>();
   
   const nightlifeStripReveal = useScrollReveal<HTMLElement>();
-  const carsStripReveal = useScrollReveal<HTMLElement>();
+  
   const desertStripReveal = useScrollReveal<HTMLElement>();
   const ctaReveal = useScrollReveal<HTMLElement>();
   const footerReveal = useScrollReveal<HTMLElement>();
@@ -87,7 +87,7 @@ export default function MainScreen() {
   // Parallax refs for video strips
   
   useParallax(nightlifeStripReveal.ref);
-  useParallax(carsStripReveal.ref);
+  
   useParallax(desertStripReveal.ref);
 
   const handleCategoryClick = (route: string) => {
@@ -341,30 +341,6 @@ export default function MainScreen() {
         }} />
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          STRIP 4 VIDEO
-      ═══════════════════════════════════════════════ */}
-      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
-        <video
-          src={strip4Video}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
-      </section>
 
       {/* ═══════════════════════════════════════════════
           STRIP 5 VIDEO
