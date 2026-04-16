@@ -9,7 +9,7 @@ import { VenueBookingForm } from '@/components/VenueBookingForm';
 import { useLanguage } from '@/lib/i18n';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { MessageCircle, Search, UtensilsCrossed, X } from 'lucide-react';
-import nightlifeVideo from '@/assets/nightlife-video.mp4';
+import attractionsVideo from '@/assets/attractions-video.mp4';
 
 type Venue = {
   name: string;
@@ -178,7 +178,7 @@ export default function DiningNightlifePage() {
       {/* Nightlife Video Strip */}
       <section className="relative w-full h-[220px] sm:h-[280px] md:h-[340px] overflow-hidden">
         <video
-          src={nightlifeVideo}
+          src={attractionsVideo}
           autoPlay
           loop
           muted

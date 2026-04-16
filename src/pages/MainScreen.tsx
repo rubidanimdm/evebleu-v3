@@ -14,8 +14,8 @@ import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 import yachtVideo from '@/assets/yacht-marina-video.mp4';
+import nightlifeVideo from '@/assets/nightlife-video.mp4';
 
-import attractionsVideo from '@/assets/attractions-video.mp4';
 import strip4Video from '@/assets/strip4-video.mp4';
 import strip5Video from '@/assets/strip5-video.mp4';
 import birthdayIcon from '@/assets/icon-birthday.jpeg';
@@ -78,8 +78,7 @@ export default function MainScreen() {
   const servicesReveal = useScrollReveal<HTMLElement>();
   const gridReveal = useScrollReveal<HTMLDivElement>();
   const yachtStripReveal = useScrollReveal<HTMLElement>();
-  
-  const attractionsStripReveal = useScrollReveal<HTMLElement>();
+  const nightlifeStripReveal = useScrollReveal<HTMLElement>();
   const carsStripReveal = useScrollReveal<HTMLElement>();
   const desertStripReveal = useScrollReveal<HTMLElement>();
   const ctaReveal = useScrollReveal<HTMLElement>();
@@ -87,8 +86,7 @@ export default function MainScreen() {
 
   // Parallax refs for video strips
   useParallax(yachtStripReveal.ref);
-  
-  useParallax(attractionsStripReveal.ref);
+  useParallax(nightlifeStripReveal.ref);
   useParallax(carsStripReveal.ref);
   useParallax(desertStripReveal.ref);
 
@@ -344,11 +342,11 @@ export default function MainScreen() {
 
 
       {/* ═══════════════════════════════════════════════
-          ATTRACTIONS VIDEO STRIP
+          NIGHTLIFE VIDEO STRIP
       ═══════════════════════════════════════════════ */}
-      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
+      <section ref={nightlifeStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
         <video
-          src={attractionsVideo}
+          src={nightlifeVideo}
           autoPlay
           loop
           muted
