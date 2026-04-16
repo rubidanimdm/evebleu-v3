@@ -122,97 +122,16 @@ export default function MainScreen() {
       <DubaiInfoStrip />
 
       {/* ═══════════════════════════════════════════════
-          HERO — Full-screen cinematic video
+          SERVICES — Category grid (above hero video)
       ═══════════════════════════════════════════════ */}
-      <section className="relative w-full h-screen min-h-[500px] max-h-[750px] overflow-hidden">
-        {/* Video background */}
-        <video
-          src={heroVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-
-        {/* Cinematic gradient overlay */}
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              rgba(7,20,35,0.30) 0%,
-              rgba(7,20,35,0.15) 25%,
-              rgba(7,20,35,0.20) 50%,
-              rgba(7,20,35,0.60) 75%,
-              rgba(7,20,35,0.98) 100%
-            )
-          `,
-        }} />
-
-        {/* Subtle vignette */}
-        <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse at center, transparent 50%, rgba(7,20,35,0.5) 100%)',
-        }} />
-
-        {/* Language switcher is now global via FloatingHomeButton */}
-
-        {/* Profile button — top right (only if logged in) */}
-        {isLoggedIn && (
-          <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}
-              className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
-              <User className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
-
-        {/* Hero content — centered */}
-        <div className="relative z-20 h-full flex flex-col items-center justify-center px-6 text-center">
-          {/* Logo */}
-          <div className="mb-8 animate-[fadeIn_1.2s_ease-out]">
-            <img
-              src={logo}
-              alt="EVE BLUE — Concierge. It. Done."
-              className="w-[min(320px,70vw)] h-auto rounded-lg shadow-2xl shadow-black/40"
-            />
-          </div>
-
-          {/* Tagline */}
-          <p className="text-foreground/60 text-sm sm:text-base tracking-[0.25em] uppercase mb-10 animate-[fadeIn_1.8s_ease-out]">
-            {t('mainScreen.tagline')}
-          </p>
-
-          {/* CTA */}
-          <div className="animate-[fadeIn_2.2s_ease-out]">
-            <Button
-              onClick={() => openWhatsAppConcierge()}
-              className="h-14 sm:h-16 px-10 sm:px-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-primary/30 gap-3"
-            >
-              {t('mainScreen.talkToConcierge')}
-              <ArrowRight className="w-5 h-5" />
-            </Button>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <div className="w-6 h-10 rounded-full border-2 border-primary/30 flex justify-center pt-2">
-              <div className="w-1 h-2.5 rounded-full bg-primary/50 animate-pulse" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          SERVICES — Category grid (right after hero)
-      ═══════════════════════════════════════════════ */}
-      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 pt-8 pb-6 max-w-[720px] lg:max-w-[960px] xl:max-w-[1100px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
-        <div className="text-center mb-8">
+      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 pt-6 pb-4 max-w-[720px] lg:max-w-[960px] xl:max-w-[1100px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
+        <div className="text-center mb-6">
           <p className="text-primary text-xs uppercase tracking-[0.3em] mb-2">{t('mainScreen.premiumServices')}</p>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-foreground">
+          <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
             {t('mainScreen.everythingYouNeed')}
           </h2>
-          <div className="w-16 h-px shimmer-line mx-auto mt-4" />
+          <div className="w-16 h-px shimmer-line mx-auto mt-3" />
         </div>
-
 
         <div ref={gridReveal.ref} className={`grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
           {categoryKeys.map((cat) => (
@@ -227,6 +146,65 @@ export default function MainScreen() {
               </span>
             </button>
           ))}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          HERO — Full-screen cinematic video
+      ═══════════════════════════════════════════════ */}
+      <section className="relative w-full h-[60vh] min-h-[350px] max-h-[550px] overflow-hidden">
+        <video
+          src={heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0" style={{
+          background: `
+            linear-gradient(180deg,
+              rgba(7,20,35,0.30) 0%,
+              rgba(7,20,35,0.15) 25%,
+              rgba(7,20,35,0.20) 50%,
+              rgba(7,20,35,0.60) 75%,
+              rgba(7,20,35,0.98) 100%
+            )
+          `,
+        }} />
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at center, transparent 50%, rgba(7,20,35,0.5) 100%)',
+        }} />
+
+        {isLoggedIn && (
+          <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}
+              className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-foreground hover:bg-black/50 border border-white/10">
+              <User className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
+
+        <div className="relative z-20 h-full flex flex-col items-center justify-center px-6 text-center">
+          <div className="mb-6 animate-[fadeIn_1.2s_ease-out]">
+            <img
+              src={logo}
+              alt="EVE BLUE — Concierge. It. Done."
+              className="w-[min(280px,60vw)] h-auto rounded-lg shadow-2xl shadow-black/40"
+            />
+          </div>
+          <p className="text-foreground/60 text-sm tracking-[0.25em] uppercase mb-8 animate-[fadeIn_1.8s_ease-out]">
+            {t('mainScreen.tagline')}
+          </p>
+          <div className="animate-[fadeIn_2.2s_ease-out]">
+            <Button
+              onClick={() => openWhatsAppConcierge()}
+              className="h-13 sm:h-14 px-8 sm:px-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-xl shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-primary/30 gap-3"
+            >
+              {t('mainScreen.talkToConcierge')}
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
       </section>
 
