@@ -423,7 +423,7 @@ export default function MainScreen() {
             className="w-32 h-auto rounded-lg opacity-90"
           />
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            <a href="tel:+971551523121" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+            <a href="tel:+971551523121" dir="ltr" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
               <Phone className="w-4 h-4 text-primary/60" />
               +971 55 152 3121
             </a>
