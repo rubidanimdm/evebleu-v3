@@ -29,7 +29,7 @@ import helicopterIcon from '@/assets/icon-helicopter.jpeg';
 import diningIcon from '@/assets/dining-icon-new.jpeg';
 import airportIcon from '@/assets/airport-pickup-icon.jpeg';
 import attractionsIcon from '@/assets/icon-attractions.jpeg';
-import ibizaBanner from '@/assets/ibiza-banner.jpg';
+
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
@@ -213,29 +213,6 @@ export default function MainScreen() {
           <div className="w-16 h-px shimmer-line mx-auto mt-4" />
         </div>
 
-        {/* Ibiza 2026 Banner */}
-        <button
-          onClick={() => openWhatsAppConcierge('IBIZA_2026')}
-          className="w-full relative rounded-2xl overflow-hidden border border-primary/20 hover:border-primary/40 h-[120px] sm:h-[140px] mb-6 flex items-center text-left transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.25)] hover:-translate-y-1 group ibiza-banner-glow"
-        >
-          <img src={ibizaBanner} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-          <div className="absolute inset-0 bg-background/55 group-hover:bg-background/45 transition-colors" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/30 to-transparent" />
-          <div className="absolute inset-0 ibiza-shimmer-sweep" />
-          <div className="absolute inset-0 rounded-2xl border border-primary/20 ibiza-pulse-border" />
-          <div className="relative z-10 flex items-center gap-4 sm:gap-5 px-5 sm:px-6 w-full">
-            <div className="flex-1 min-w-0">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-primary/90 mb-1 font-medium ibiza-pulse-text">Coming Soon</p>
-              <h3 className="text-base sm:text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                Concierge in Ibiza 2026
-              </h3>
-              <p className="text-xs text-muted-foreground mt-1">
-                Clubs · Villas · Yachts · VIP Tables · Private Events
-              </p>
-            </div>
-            <ArrowRight className="w-5 h-5 text-primary/60 group-hover:text-primary transition-all group-hover:translate-x-1 flex-shrink-0" />
-          </div>
-        </button>
 
         <div ref={gridReveal.ref} className={`grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
           {categoryKeys.map((cat) => (
