@@ -13,7 +13,7 @@ import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
 import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
-import yachtVideo from '@/assets/yacht-marina-video.mp4';
+
 import nightlifeVideo from '@/assets/nightlife-video.mp4';
 
 import strip4Video from '@/assets/strip4-video.mp4';
@@ -77,7 +77,7 @@ export default function MainScreen() {
   const introReveal = useScrollReveal<HTMLElement>();
   const servicesReveal = useScrollReveal<HTMLElement>();
   const gridReveal = useScrollReveal<HTMLDivElement>();
-  const yachtStripReveal = useScrollReveal<HTMLElement>();
+  
   const nightlifeStripReveal = useScrollReveal<HTMLElement>();
   const carsStripReveal = useScrollReveal<HTMLElement>();
   const desertStripReveal = useScrollReveal<HTMLElement>();
@@ -85,7 +85,7 @@ export default function MainScreen() {
   const footerReveal = useScrollReveal<HTMLElement>();
 
   // Parallax refs for video strips
-  useParallax(yachtStripReveal.ref);
+  
   useParallax(nightlifeStripReveal.ref);
   useParallax(carsStripReveal.ref);
   useParallax(desertStripReveal.ref);
@@ -277,31 +277,6 @@ export default function MainScreen() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          YACHT VIDEO STRIP — full-width cinematic band
-      ═══════════════════════════════════════════════ */}
-      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=TRANSPORT')} role="link" aria-label="Luxury Cars">
-        <video
-          src={yachtVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        {/* Dark overlay at 50% + top/bottom fade */}
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
-      </section>
 
 
       {/* ═══════════════════════════════════════════════
