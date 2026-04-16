@@ -35,6 +35,7 @@ import HotelSearchPage from "./pages/HotelSearchPage";
 import AttractionsPage from "./pages/AttractionsPage";
 import AttractionDetailPage from "./pages/AttractionDetailPage";
 import LuxuryCarsPage from "./pages/LuxuryCarsPage";
+import Contacts from "./pages/Contacts";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AdminLayout } from "@/components/admin/AdminLayout";
