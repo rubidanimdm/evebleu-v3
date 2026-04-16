@@ -9,6 +9,7 @@ import { useLanguage } from '@/lib/i18n';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Search, X, MapPin, Clock, ChevronLeft, Sparkles } from 'lucide-react';
 import { ATTRACTIONS, ATTRACTION_CATEGORIES } from '@/lib/attractionsData';
+import strip4Video from '@/assets/strip4-video.mp4';
 
 export default function AttractionsPage() {
   const [search, setSearch] = useState('');
@@ -32,6 +33,22 @@ export default function AttractionsPage() {
   return (
     <div className="min-h-screen bg-background pb-24 relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <GoldParticles count={8} />
+
+      {/* Video Strip */}
+      <section className="relative w-full h-[220px] sm:h-[280px] overflow-hidden">
+        <video
+          src={strip4Video}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/40" />
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(180deg, transparent 0%, transparent 50%, hsl(var(--background)) 100%)`
+        }} />
+      </section>
 
       {/* Hero */}
       <header ref={heroReveal.ref} className={`relative overflow-hidden reveal-base ${heroReveal.isVisible ? 'revealed' : ''}`}>
