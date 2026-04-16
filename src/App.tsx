@@ -35,6 +35,7 @@ import HotelSearchPage from "./pages/HotelSearchPage";
 import AttractionsPage from "./pages/AttractionsPage";
 import AttractionDetailPage from "./pages/AttractionDetailPage";
 import LuxuryCarsPage from "./pages/LuxuryCarsPage";
+import Contacts from "./pages/Contacts";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -132,6 +133,7 @@ function AppContent() {
         <Route path="/my-plans" element={<MyPlansPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/support" element={<SupportPage />} />
+        <Route path="/contacts" element={<Contacts />} />
 
         {/* Admin routes with layout */}
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>

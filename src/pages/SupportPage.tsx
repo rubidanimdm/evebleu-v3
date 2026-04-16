@@ -21,7 +21,7 @@ export default function SupportPage() {
     {
       icon: Phone,
       title: 'Call',
-      description: '+971 55 152 3121',
+      description: '\u202A+971 55 152 3121\u202C',
       action: () => openExternalUrl('tel:+971551523121', '_self'),
       buttonText: 'Call',
     },
