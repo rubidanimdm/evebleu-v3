@@ -8,7 +8,7 @@ const INTENT_MESSAGES: Record<string, string> = {
   VIP_DRIVER: 'Hi! I\'d like to book a VIP driver 🚘',
   HELICOPTER: 'Hi! I\'m interested in a helicopter tour over Dubai 🚁',
   YACHT: 'Hi! I\'m interested in a yacht charter ⛵',
-  IBIZA_2026: 'Hi! I\'m interested in Concierge services in Ibiza 2026 🏝️🎉',
+  
 };
 
 export function openWhatsAppConcierge(intent?: string, extra?: string) {
