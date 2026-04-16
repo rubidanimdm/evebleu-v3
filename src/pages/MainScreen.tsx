@@ -202,29 +202,11 @@ export default function MainScreen() {
       </section>
 
       {/* ═══════════════════════════════════════════════
-          INTRO TEXT — Elegant welcome copy
+          SERVICES — Category grid (right after hero)
       ═══════════════════════════════════════════════ */}
-      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-14 sm:pt-20 pb-6 max-w-[680px] lg:max-w-[800px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`}>
-        <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
-          {t('mainScreen.introTitle')}
-        </h2>
-        <div className="space-y-5 text-sm sm:text-base text-foreground/70 leading-[1.85]">
-          <p>{t('mainScreen.introP1')}</p>
-          <p>{t('mainScreen.introP2')}</p>
-          <p>{t('mainScreen.introP3')}</p>
-          <p className="text-foreground/50 italic">{t('mainScreen.introTip')}</p>
-          <p className="text-foreground/80 font-medium">{t('mainScreen.introClosing')}</p>
-        </div>
-        <div className="w-20 h-px shimmer-line mx-auto mt-8" />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          SERVICES — Category grid
-      ═══════════════════════════════════════════════ */}
-      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] lg:max-w-[960px] xl:max-w-[1100px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
-        {/* Section header */}
-        <div className="text-center mb-10">
-          <p className="text-primary text-xs uppercase tracking-[0.3em] mb-3">{t('mainScreen.premiumServices')}</p>
+      <section ref={servicesReveal.ref} className={`px-4 sm:px-6 pt-8 pb-6 max-w-[720px] lg:max-w-[960px] xl:max-w-[1100px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
+        <div className="text-center mb-8">
+          <p className="text-primary text-xs uppercase tracking-[0.3em] mb-2">{t('mainScreen.premiumServices')}</p>
           <h2 className="text-2xl sm:text-3xl font-semibold text-foreground">
             {t('mainScreen.everythingYouNeed')}
           </h2>
@@ -234,19 +216,13 @@ export default function MainScreen() {
         {/* Ibiza 2026 Banner */}
         <button
           onClick={() => openWhatsAppConcierge('IBIZA_2026')}
-          className="w-full relative rounded-2xl overflow-hidden border border-primary/20 hover:border-primary/40 h-[120px] sm:h-[140px] mb-8 flex items-center text-left transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.25)] hover:-translate-y-1 group ibiza-banner-glow"
+          className="w-full relative rounded-2xl overflow-hidden border border-primary/20 hover:border-primary/40 h-[120px] sm:h-[140px] mb-6 flex items-center text-left transition-all duration-300 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.25)] hover:-translate-y-1 group ibiza-banner-glow"
         >
-          {/* Background image */}
           <img src={ibizaBanner} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
           <div className="absolute inset-0 bg-background/55 group-hover:bg-background/45 transition-colors" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/30 to-transparent" />
-          
-          {/* Shimmer sweep overlay */}
           <div className="absolute inset-0 ibiza-shimmer-sweep" />
-          
-          {/* Pulsing border glow */}
           <div className="absolute inset-0 rounded-2xl border border-primary/20 ibiza-pulse-border" />
-          
           <div className="relative z-10 flex items-center gap-4 sm:gap-5 px-5 sm:px-6 w-full">
             <div className="flex-1 min-w-0">
               <p className="text-[10px] uppercase tracking-[0.25em] text-primary/90 mb-1 font-medium ibiza-pulse-text">Coming Soon</p>
@@ -275,6 +251,23 @@ export default function MainScreen() {
             </button>
           ))}
         </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          INTRO TEXT — Elegant welcome copy
+      ═══════════════════════════════════════════════ */}
+      <section ref={introReveal.ref} className={`px-6 sm:px-8 pt-10 sm:pt-14 pb-6 max-w-[680px] lg:max-w-[800px] mx-auto w-full text-center reveal-base ${introReveal.isVisible ? 'revealed' : ''}`}>
+        <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 leading-relaxed">
+          {t('mainScreen.introTitle')}
+        </h2>
+        <div className="space-y-5 text-sm sm:text-base text-foreground/70 leading-[1.85]">
+          <p>{t('mainScreen.introP1')}</p>
+          <p>{t('mainScreen.introP2')}</p>
+          <p>{t('mainScreen.introP3')}</p>
+          <p className="text-foreground/50 italic">{t('mainScreen.introTip')}</p>
+          <p className="text-foreground/80 font-medium">{t('mainScreen.introClosing')}</p>
+        </div>
+        <div className="w-20 h-px shimmer-line mx-auto mt-8" />
       </section>
 
 
