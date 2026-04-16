@@ -126,18 +126,18 @@ export default function MainScreen() {
       ═══════════════════════════════════════════════ */}
       <section ref={servicesReveal.ref} className={`px-4 sm:px-6 pt-6 pb-4 max-w-[720px] lg:max-w-[960px] xl:max-w-[1100px] mx-auto w-full reveal-base ${servicesReveal.isVisible ? 'revealed' : ''}`}>
         <div className="text-center mb-6">
-          <p className="text-primary text-xs uppercase tracking-[0.3em] mb-2">{t('mainScreen.premiumServices')}</p>
-          <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
-            {t('mainScreen.everythingYouNeed')}
-          </h2>
-          <div className="w-16 h-px shimmer-line mx-auto mt-3" />
-          <div className="mt-4 mb-2 flex justify-center">
+          <div className="mb-3 flex justify-center">
             <img
               src={logo}
               alt="EVE BLUE"
               className="w-[min(200px,50vw)] h-auto rounded-lg"
             />
           </div>
+          <p className="text-primary text-xs uppercase tracking-[0.3em] mb-2">{t('mainScreen.premiumServices')}</p>
+          <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+            {t('mainScreen.everythingYouNeed')}
+          </h2>
+          <div className="w-16 h-px shimmer-line mx-auto mt-3" />
         </div>
 
         <div ref={gridReveal.ref} className={`grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 reveal-stagger ${gridReveal.isVisible ? 'revealed' : ''}`}>
