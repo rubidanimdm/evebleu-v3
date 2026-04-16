@@ -34,6 +34,7 @@ import BlogArticlePage from "./pages/BlogArticlePage";
 import HotelSearchPage from "./pages/HotelSearchPage";
 import AttractionsPage from "./pages/AttractionsPage";
 import AttractionDetailPage from "./pages/AttractionDetailPage";
+import LuxuryCarsPage from "./pages/LuxuryCarsPage";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -124,6 +125,7 @@ function AppContent() {
         <Route path="/attractions" element={<AttractionsPage />} />
         <Route path="/attractions/:id" element={<AttractionDetailPage />} />
         <Route path="/blog/:id" element={<BlogArticlePage />} />
+        <Route path="/luxury-cars" element={<LuxuryCarsPage />} />
         
         {/* All pages open - contact via WhatsApp */}
         <Route path="/concierge" element={<ConciergePage />} />

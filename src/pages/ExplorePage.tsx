@@ -7,7 +7,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { UtensilsCrossed, Plane, Car, Hotel, Music, Sparkles } from 'lucide-react';
 import { LargePageHeader, LuxuryCard, GoldParticles } from '@/components/LuxuryElements';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
-import yachtVideo from '@/assets/yacht-marina-video.mp4';
 
 const categoryIcons: Record<string, React.ElementType> = {
   DINING: UtensilsCrossed,
@@ -78,28 +77,8 @@ export default function ExplorePage() {
       <GoldParticles count={10} />
 
       {/* Car Video Strip */}
-      {selectedCategory === 'TRANSPORT' || !selectedCategory ? (
-        <section className="relative w-full h-[220px] sm:h-[280px] md:h-[340px] overflow-hidden">
-          <video
-            src={yachtVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-background/40" />
-          <div className="absolute inset-0" style={{
-            background: `
-              linear-gradient(180deg,
-                transparent 0%,
-                transparent 50%,
-                hsl(var(--background)) 100%
-              )
-            `,
-          }} />
-        </section>
-      ) : null}
+
+
       
       <LargePageHeader 
         title="Explore"
