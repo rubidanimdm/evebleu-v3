@@ -130,7 +130,7 @@ export default function MainScreen() {
             <img
               src={logo}
               alt="EVE BLUE"
-              className="w-[min(200px,50vw)] h-auto rounded-lg"
+              className="w-[min(200px,50vw)] h-auto rounded-lg animate-logo-entrance"
             />
           </div>
           <p className="text-primary text-xs uppercase tracking-[0.3em] mb-2">{t('mainScreen.premiumServices')}</p>
