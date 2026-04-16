@@ -14,7 +14,7 @@ import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
 import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 
-import nightlifeVideo from '@/assets/nightlife-video.mp4';
+
 
 
 import strip5Video from '@/assets/strip5-video.mp4';
@@ -78,7 +78,7 @@ export default function MainScreen() {
   const servicesReveal = useScrollReveal<HTMLElement>();
   const gridReveal = useScrollReveal<HTMLDivElement>();
   
-  const nightlifeStripReveal = useScrollReveal<HTMLElement>();
+  
   
   const desertStripReveal = useScrollReveal<HTMLElement>();
   const ctaReveal = useScrollReveal<HTMLElement>();
@@ -86,7 +86,7 @@ export default function MainScreen() {
 
   // Parallax refs for video strips
   
-  useParallax(nightlifeStripReveal.ref);
+  
   
   useParallax(desertStripReveal.ref);
 
@@ -316,30 +316,6 @@ export default function MainScreen() {
       </section>
 
 
-      {/* ═══════════════════════════════════════════════
-          NIGHTLIFE VIDEO STRIP
-      ═══════════════════════════════════════════════ */}
-      <section ref={nightlifeStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-8 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
-        <video
-          src={nightlifeVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
-      </section>
 
 
       {/* ═══════════════════════════════════════════════
