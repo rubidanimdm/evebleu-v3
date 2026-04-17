@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { ArrowRight } from 'lucide-react';
@@ -2776,62 +2777,84 @@ export function BlogSection() {
   const headerReveal = useScrollReveal<HTMLDivElement>();
   const cardsReveal = useScrollReveal<HTMLDivElement>({ threshold: 0.01 });
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    const scrollAmount = 320;
+    const actualDir = isRTL
+      ? (direction === 'left' ? scrollAmount : -scrollAmount)
+      : (direction === 'left' ? -scrollAmount : scrollAmount);
+    scrollRef.current.scrollBy({ left: actualDir, behavior: 'smooth' });
+  };
+
   return (
-    <section className="px-4 sm:px-6 py-14 sm:py-20 max-w-[1100px] mx-auto w-full" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section className="py-14 sm:py-20 w-full" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Header */}
-      <div ref={headerReveal.ref} className={`text-center mb-10 sm:mb-14 reveal-base ${headerReveal.isVisible ? 'revealed' : ''}`}>
+      <div ref={headerReveal.ref} className={`text-center mb-8 sm:mb-12 px-4 reveal-base ${headerReveal.isVisible ? 'revealed' : ''}`}>
         <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-primary">
           {sectionTitle[language] || sectionTitle.en}
         </h2>
         <div className="w-20 h-px shimmer-line mx-auto mt-4" />
       </div>
 
-      {/* Cards grid */}
-      <div ref={cardsReveal.ref} className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 reveal-stagger ${cardsReveal.isVisible ? 'revealed' : ''}`}>
-        {BLOG_ARTICLES.map((article) => (
-          <button
-            key={article.id}
-            onClick={() => navigate(`/blog/${article.id}`)}
-            className="group text-start rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15),0_8px_24px_rgba(0,0,0,0.2)]"
-          >
-            {/* Image with parallax-like hover shift */}
-            <div className="relative aspect-[3/2] overflow-hidden">
-              <img
-                src={article.image}
-                alt={article.title[language] || article.title.en}
-                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent transition-opacity duration-500 group-hover:from-background/80" />
-              {/* Hover glow overlay */}
-              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
-            </div>
+      {/* Horizontal scroll strip */}
+      <div className="relative group/strip">
+        {/* Scroll arrows */}
+        <button
+          onClick={() => scroll('left')}
+          className="absolute top-1/2 -translate-y-1/2 left-2 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-primary/20 flex items-center justify-center text-primary opacity-0 group-hover/strip:opacity-100 transition-opacity duration-300 hover:bg-primary hover:text-primary-foreground"
+        >
+          <ArrowRight className={`w-5 h-5 ${isRTL ? '' : 'rotate-180'}`} />
+        </button>
+        <button
+          onClick={() => scroll('right')}
+          className="absolute top-1/2 -translate-y-1/2 right-2 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-primary/20 flex items-center justify-center text-primary opacity-0 group-hover/strip:opacity-100 transition-opacity duration-300 hover:bg-primary hover:text-primary-foreground"
+        >
+          <ArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180' : ''}`} />
+        </button>
 
-            {/* Content */}
-            <div className="p-4 sm:p-5 space-y-2.5">
-              {/* Category tag */}
-              <span className="text-[10px] sm:text-xs text-primary/70 uppercase tracking-[0.2em] font-medium transition-colors duration-300 group-hover:text-primary">
-                {article.category[language] || article.category.en}
-              </span>
-
-              {/* Title */}
-              <h3 className="text-sm sm:text-base font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-300">
-                {article.title[language] || article.title.en}
-              </h3>
-
-              {/* Excerpt */}
-              <p className="text-xs sm:text-sm text-foreground/50 leading-relaxed line-clamp-3">
-                {article.excerpt[language] || article.excerpt.en}
-              </p>
-
-              {/* Read more */}
-              <div className="flex items-center gap-1.5 text-primary text-xs font-medium pt-1">
-                <span>{language === 'he' ? 'קרא עוד' : language === 'ar' ? 'اقرأ المزيد' : language === 'fr' ? 'Lire la suite' : language === 'ru' ? 'Читать далее' : 'Read more'}</span>
-                <ArrowRight className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5 ${isRTL ? 'rotate-180 group-hover:-translate-x-1.5' : ''}`} />
+        <div
+          ref={scrollRef}
+          className="flex gap-5 overflow-x-auto scroll-smooth px-4 sm:px-6 pb-4 no-scrollbar"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {BLOG_ARTICLES.map((article) => (
+            <button
+              key={article.id}
+              onClick={() => navigate(`/blog/${article.id}`)}
+              className="group flex-shrink-0 w-[280px] sm:w-[300px] lg:w-[340px] xl:w-[380px] text-start rounded-xl overflow-hidden bg-card/40 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15),0_8px_24px_rgba(0,0,0,0.2)]"
+            >
+              {/* Image */}
+              <div className="relative aspect-[3/2] overflow-hidden">
+                <img
+                  src={article.image}
+                  alt={article.title[language] || article.title.en}
+                  className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
               </div>
-            </div>
-          </button>
-        ))}
+
+              {/* Content */}
+              <div className="p-4 space-y-2">
+                <span className="text-[10px] text-primary/70 uppercase tracking-[0.2em] font-medium">
+                  {article.category[language] || article.category.en}
+                </span>
+                <h3 className="text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-300">
+                  {article.title[language] || article.title.en}
+                </h3>
+                <p className="text-xs text-foreground/50 leading-relaxed line-clamp-2">
+                  {article.excerpt[language] || article.excerpt.en}
+                </p>
+                <div className="flex items-center gap-1.5 text-primary text-xs font-medium pt-1">
+                  <span>{language === 'he' ? 'קרא עוד' : language === 'ar' ? 'اقرأ المزيد' : language === 'fr' ? 'Lire la suite' : language === 'ru' ? 'Читать далее' : 'Read more'}</span>
+                  <ArrowRight className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5 ${isRTL ? 'rotate-180 group-hover:-translate-x-1.5' : ''}`} />
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,3 @@
-import { openExternalUrl } from '@/lib/openExternalUrl';
-
 const WHATSAPP_NUMBER = '971551523121';
 
 const INTENT_MESSAGES: Record<string, string> = {
@@ -10,6 +8,7 @@ const INTENT_MESSAGES: Record<string, string> = {
   VIP_DRIVER: 'Hi! I\'d like to book a VIP driver 🚘',
   HELICOPTER: 'Hi! I\'m interested in a helicopter tour over Dubai 🚁',
   YACHT: 'Hi! I\'m interested in a yacht charter ⛵',
+  
 };
 
 export function openWhatsAppConcierge(intent?: string, extra?: string) {
@@ -24,5 +23,5 @@ export function openWhatsAppConcierge(intent?: string, extra?: string) {
   }
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  openExternalUrl(url);
+  window.open(url, '_blank', 'noopener,noreferrer');
 }

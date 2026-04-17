@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import nightlifeVideo from '@/assets/nightlife-video.mp4';
 import { useNavigate } from 'react-router-dom';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { BottomNav } from '@/components/BottomNav';
+import { FloatingHomeButton } from '@/components/FloatingHomeButton';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
@@ -163,6 +165,22 @@ export default function YachtsPage() {
   return (
     <div className="min-h-screen bg-background pb-24 relative">
       <GoldParticles count={12} />
+
+      {/* Video Strip */}
+      <section className="relative w-full h-[220px] sm:h-[280px] overflow-hidden">
+        <video
+          src={nightlifeVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/40" />
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(180deg, transparent 0%, transparent 50%, hsl(var(--background)) 100%)`
+        }} />
+      </section>
 
       <LargePageHeader
         title={t('yachtsPage.title')}

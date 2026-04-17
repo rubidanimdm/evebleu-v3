@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
+import { FloatingHomeButton } from '@/components/FloatingHomeButton';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { GoldParticles } from '@/components/LuxuryElements';
@@ -9,6 +10,7 @@ import { useLanguage } from '@/lib/i18n';
 import { supabase } from '@/integrations/supabase/client';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { MessageCircle, Search, UtensilsCrossed, X } from 'lucide-react';
+import attractionsVideo from '@/assets/attractions-video.mp4';
 
 type Venue = {
   id: string;
@@ -102,12 +104,11 @@ export default function DiningNightlifePage() {
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const [bookingVenue, setBookingVenue] = useState<string | null>(null);
 
   const heroReveal = useScrollReveal<HTMLElement>();
   const featuredReveal = useScrollReveal<HTMLDivElement>();
-  const venuesReveal = useScrollReveal<HTMLDivElement>();
 
   useEffect(() => {
     const fetchVenues = async () => {
@@ -148,8 +149,30 @@ export default function DiningNightlifePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-24 relative">
+    <div className="min-h-screen bg-background pb-24 relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <GoldParticles count={8} />
+
+      {/* Nightlife Video Strip */}
+      <section className="relative w-full h-[220px] sm:h-[280px] md:h-[340px] overflow-hidden">
+        <video
+          src={attractionsVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/40" />
+        <div className="absolute inset-0" style={{
+          background: `
+            linear-gradient(180deg,
+              transparent 0%,
+              transparent 50%,
+              hsl(var(--background)) 100%
+            )
+          `,
+        }} />
+      </section>
 
       {/* Hero */}
       <header ref={heroReveal.ref} className={`relative overflow-hidden reveal-base ${heroReveal.isVisible ? 'revealed' : ''}`}>
@@ -214,7 +237,7 @@ export default function DiningNightlifePage() {
         {!search && !loading && featured.length > 0 && categoryFilter === 'ALL' && (
           <div ref={featuredReveal.ref} className={`mb-6 reveal-base ${featuredReveal.isVisible ? 'revealed' : ''}`}>
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold text-primary uppercase tracking-wider">⭐ {t('diningPage.topRecommended') || 'Our Top 10 Recommended'}</span>
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">{t('diningExtra.topRecommended')}</span>
               <div className="flex-1 h-px bg-primary/15" />
             </div>
             <div className="space-y-2">
@@ -230,7 +253,7 @@ export default function DiningNightlifePage() {
                       <span className="font-medium text-foreground truncate block">
                         {venue.title}
                       </span>
-                      <span className="text-[10px] text-primary font-medium">{t('diningPage.recommended') || 'Recommended'}</span>
+                      <span className="text-[10px] text-primary font-medium">{t('diningExtra.recommended')}</span>
                     </div>
                   </div>
                   <Button
@@ -246,7 +269,7 @@ export default function DiningNightlifePage() {
             </div>
 
             <div className="flex items-center gap-2 mt-6 mb-3">
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('diningPage.allVenues') || 'All Venues'}</span>
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('diningExtra.allVenues')}</span>
               <div className="flex-1 h-px bg-border/40" />
             </div>
           </div>
@@ -268,7 +291,7 @@ export default function DiningNightlifePage() {
             </Button>
           </div>
         ) : (
-          <div ref={venuesReveal.ref} className={`space-y-2 reveal-base ${venuesReveal.isVisible ? 'revealed' : ''}`}>
+          <div className="space-y-2">
             {filtered.map(venue => (
               <div
                 key={venue.id}

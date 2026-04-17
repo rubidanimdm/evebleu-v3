@@ -8,6 +8,7 @@ import { AuthProvider, useAuth } from "@/lib/supabase";
 import { LanguageProvider } from "@/lib/i18n";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
 import { FloatingHomeButton } from "@/components/FloatingHomeButton";
+
 import { useAdminRole } from "@/hooks/useAdminRole";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
@@ -31,6 +32,10 @@ import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
 import BlogArticlePage from "./pages/BlogArticlePage";
 import HotelSearchPage from "./pages/HotelSearchPage";
+import AttractionsPage from "./pages/AttractionsPage";
+import AttractionDetailPage from "./pages/AttractionDetailPage";
+import LuxuryCarsPage from "./pages/LuxuryCarsPage";
+import Contacts from "./pages/Contacts";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -149,12 +154,16 @@ function AppContent() {
           <Route path="/yachts" element={<YachtsPage />} />
           <Route path="/yachts/:slug" element={<YachtDetailPage />} />
           <Route path="/hotels" element={<HotelSearchPage />} />
+          <Route path="/attractions" element={<AttractionsPage />} />
+          <Route path="/attractions/:id" element={<AttractionDetailPage />} />
+          <Route path="/luxury-cars" element={<LuxuryCarsPage />} />
           <Route path="/blog/:id" element={<BlogArticlePage />} />
           <Route path="/about" element={<Navigate to="/p/about-us" replace />} />
           <Route path="/concierge" element={<ConciergePage />} />
           <Route path="/my-plans" element={<MyPlansPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/support" element={<SupportPage />} />
+          <Route path="/contacts" element={<Contacts />} />
           <Route path="/p/:slug" element={<DynamicPage />} />
         </Route>
 
