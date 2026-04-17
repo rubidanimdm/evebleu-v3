@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVE BLUE — Typography Samples (Multi-Language)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Noto+Serif+Hebrew:wght@300;400;500;600;700&family=Heebo:wght@300;400;500;600;700&family=Assistant:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Serif+Arabic:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=El+Messiri:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #071423;
+      color: #E8E8E8;
+      font-family: 'Inter', sans-serif;
+      padding: 2rem 1rem;
+    }
+    .page-title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #E6B800;
+      font-family: 'Inter', sans-serif;
+    }
+    .page-subtitle {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      color: #8899aa;
+      font-family: 'Inter', sans-serif;
+    }
+    .decision {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 10px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0.85rem;
+      color: #10B981;
+      font-family: 'Inter', sans-serif;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.15em 0.5em;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      vertical-align: middle;
+      margin-left: 0.4rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .badge-chosen { background: rgba(16,185,129,0.15); color: #10B981; }
+    .badge-rec { background: rgba(230,184,0,0.15); color: #E6B800; }
+    .badge-opt { background: rgba(99,102,241,0.15); color: #818CF8; }
+
+    /* ── Section headers ── */
+    .section-header {
+      max-width: 1300px;
+      margin: 2.5rem auto 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #1a2a3a;
+    }
+    .section-header h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #E6B800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .section-header p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: #667;
+      margin-top: 0.3rem;
+    }
+
+    /* ── Sample Cards ── */
+    .samples {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    @media (min-width: 900px) {
+      .samples { grid-template-columns: 1fr 1fr; }
+    }
+    .card {
+      background: #0c1a2a;
+      border: 1px solid #1a2a3a;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .card:hover { border-color: #E6B800; }
+    .card-head {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #152030;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .card-head h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #ccc;
+    }
+    .card-head .meta {
+      font-size: 0.68rem;
+      color: #556;
+      font-family: 'Inter', sans-serif;
+    }
+    .card-body { padding: 1.5rem 1.75rem; }
+
+    .nav-demo {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #152030;
+    }
+    .nav-demo span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #667;
+      letter-spacing: 0.05em;
+    }
+    .nav-demo span.active { color: #E6B800; }
+
+    .hero-demo { margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid #152030; }
+    .hero-demo h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+    .hero-demo .tagline {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #8899aa;
+    }
+
+    .content-demo h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #E6B800;
+      line-height: 1.3;
+    }
+    .content-demo p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #8899aa;
+      margin-bottom: 0.75rem;
+    }
+    .content-demo .price-label { font-size: 0.8rem; color: #556; }
+    .content-demo .price { font-size: 1.6rem; font-weight: 700; color: #E6B800; }
+    .cta-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      background: #E6B800;
+      color: #071423;
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* RTL support */
+    .rtl { direction: rtl; text-align: right; }
+    .rtl .nav-demo { flex-direction: row-reverse; }
+
+    /* ══════════════════════════════════════
+       ENGLISH — Chosen: Cormorant + Inter
+    ══════════════════════════════════════ */
+    .en-chosen h1, .en-chosen h2 { font-family: 'Cormorant Garamond', serif; }
+    .en-chosen p, .en-chosen .tagline, .en-chosen .nav-demo span, .en-chosen .cta-btn, .en-chosen .price-label, .en-chosen .price { font-family: 'Inter', sans-serif; }
+
+    /* ══════════════════════════════════════
+       HEBREW OPTIONS
+    ══════════════════════════════════════ */
+    /* H1: Frank Ruhl Libre (serif) */
+    .he1 h1, .he1 h2 { font-family: 'Frank Ruhl Libre', 'Noto Serif Hebrew', serif; }
+    .he1 p, .he1 .tagline, .he1 .nav-demo span, .he1 .cta-btn, .he1 .price-label, .he1 .price { font-family: 'Heebo', 'Noto Sans Hebrew', sans-serif; }
+
+    /* H2: Noto Serif Hebrew */
+    .he2 h1, .he2 h2 { font-family: 'Noto Serif Hebrew', serif; }
+    .he2 p, .he2 .tagline, .he2 .nav-demo span, .he2 .cta-btn, .he2 .price-label, .he2 .price { font-family: 'Assistant', 'Noto Sans Hebrew', sans-serif; }
+
+    /* H3: Frank Ruhl Libre + Rubik */
+    .he3 h1, .he3 h2 { font-family: 'Frank Ruhl Libre', serif; }
+    .he3 p, .he3 .tagline, .he3 .nav-demo span, .he3 .cta-btn, .he3 .price-label, .he3 .price { font-family: 'Rubik', sans-serif; }
+
+    /* H4: Noto Serif Hebrew + Noto Sans Hebrew */
+    .he4 h1, .he4 h2 { font-family: 'Noto Serif Hebrew', serif; }
+    .he4 p, .he4 .tagline, .he4 .nav-demo span, .he4 .cta-btn, .he4 .price-label, .he4 .price { font-family: 'Noto Sans Hebrew', sans-serif; }
+
+    /* ══════════════════════════════════════
+       ARABIC OPTIONS
+    ══════════════════════════════════════ */
+    /* A1: Amiri (serif) + Cairo */
+    .ar1 h1, .ar1 h2 { font-family: 'Amiri', serif; }
+    .ar1 p, .ar1 .tagline, .ar1 .nav-demo span, .ar1 .cta-btn, .ar1 .price-label, .ar1 .price { font-family: 'Cairo', sans-serif; }
+
+    /* A2: Noto Serif Arabic + Noto Sans Arabic */
+    .ar2 h1, .ar2 h2 { font-family: 'Noto Serif Arabic', serif; }
+    .ar2 p, .ar2 .tagline, .ar2 .nav-demo span, .ar2 .cta-btn, .ar2 .price-label, .ar2 .price { font-family: 'Noto Sans Arabic', sans-serif; }
+
+    /* A3: El Messiri + Tajawal */
+    .ar3 h1, .ar3 h2 { font-family: 'El Messiri', sans-serif; font-weight: 600; }
+    .ar3 p, .ar3 .tagline, .ar3 .nav-demo span, .ar3 .cta-btn, .ar3 .price-label, .ar3 .price { font-family: 'Tajawal', sans-serif; }
+
+    /* A4: Amiri + Tajawal */
+    .ar4 h1, .ar4 h2 { font-family: 'Amiri', serif; }
+    .ar4 p, .ar4 .tagline, .ar4 .nav-demo span, .ar4 .cta-btn, .ar4 .price-label, .ar4 .price { font-family: 'Tajawal', sans-serif; }
+
+    /* ══════════════════════════════════════
+       FRENCH / RUSSIAN — use English fonts (Cormorant + Inter work natively)
+    ══════════════════════════════════════ */
+    .fr h1, .fr h2 { font-family: 'Cormorant Garamond', serif; }
+    .fr p, .fr .tagline, .fr .nav-demo span, .fr .cta-btn, .fr .price-label, .fr .price { font-family: 'Inter', sans-serif; }
+
+    .ru h1, .ru h2 { font-family: 'Cormorant Garamond', serif; }
+    .ru p, .ru .tagline, .ru .nav-demo span, .ru .cta-btn, .ru .price-label, .ru .price { font-family: 'Inter', sans-serif; }
+
+    /* ── Notes ── */
+    .notes {
+      max-width: 1300px;
+      margin: 3rem auto;
+      padding: 1.5rem 2rem;
+      background: rgba(230,184,0,0.04);
+      border: 1px solid rgba(230,184,0,0.15);
+      border-radius: 12px;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #8899aa;
+      font-family: 'Inter', sans-serif;
+    }
+    .notes strong { color: #E6B800; }
+    .notes ul { padding-left: 1.5rem; margin-top: 0.5rem; }
+    .notes li { margin-bottom: 0.3rem; }
+    .notes h3 { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #ccc; margin: 1rem 0 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <p class="page-title">EVE BLUE — Multi-Language Typography</p>
+  <p class="page-subtitle">English decided. Now pick Hebrew, Arabic fonts. French & Russian use the English fonts natively.</p>
+  <div class="decision">English chosen: Cormorant Garamond (headings) + Inter (body)</div>
+
+  <!-- ═══════════════════════════════════════════
+       ENGLISH — CHOSEN
+  ═══════════════════════════════════════════ -->
+  <div class="section-header">
+    <h2>English — Chosen: Cormorant Garamond + Inter</h2>
+    <p>This is your final English typography. Shown for reference.</p>
+  </div>
+  <div class="samples">
+    <div class="card en-chosen">
+      <div class="card-head">
+        <h3>Cormorant Garamond + Inter <span class="badge badge-chosen">Chosen</span></h3>
+        <span class="meta">Elegant Serif + Clean UI Sans</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">Dining</span><span>Yachts</span><span>Hotels</span><span>Experiences</span></div>
+        <div class="hero-demo">
+          <h1>Your Personal Concierge in Dubai</h1>
+          <p class="tagline">Premium experiences, effortless booking, complete privacy.</p>
+        </div>
+        <div class="content-demo">
+          <h2>Desert Safari Under the Stars</h2>
+          <p>Experience the magic of the Arabian desert with a private guided safari, gourmet dining beneath the stars, and falconry displays that connect you to centuries of Emirati heritage.</p>
+          <p class="price-label">Starting from</p>
+          <div class="price">AED 2,500</div>
+          <a href="#" class="cta-btn">Book This Experience</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       HEBREW — 4 OPTIONS
+  ═══════════════════════════════════════════ -->
+  <div class="section-header">
+    <h2>Hebrew — 4 Options</h2>
+    <p>Pick the Hebrew serif/sans pairing that best matches the English Cormorant + Inter feel.</p>
+  </div>
+  <div class="samples">
+    <!-- HE1: Frank Ruhl Libre + Heebo -->
+    <div class="card he1 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">HE-1: Frank Ruhl Libre + Heebo <span class="badge badge-rec">Recommended</span></h3>
+        <span class="meta" style="direction:ltr">Elegant Hebrew Serif + Clean Sans</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">אוכל</span><span>יאכטות</span><span>מלונות</span><span>חוויות</span></div>
+        <div class="hero-demo">
+          <h1>הקונסיירז' האישי שלך בדובאי</h1>
+          <p class="tagline">חוויות פרימיום, הזמנה ללא מאמץ, פרטיות מוחלטת.</p>
+        </div>
+        <div class="content-demo">
+          <h2>ספארי מדברי מתחת לכוכבים</h2>
+          <p>חוו את הקסם של המדבר הערבי עם ספארי פרטי מודרך, ארוחת גורמה מתחת לכוכבים, ותצוגות בזנאות המחברות אתכם למאות שנים של מורשת אמירתית.</p>
+          <p class="price-label">החל מ-</p>
+          <div class="price">2,500 AED</div>
+          <a href="#" class="cta-btn">הזמן חוויה זו</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HE2: Noto Serif Hebrew + Assistant -->
+    <div class="card he2 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">HE-2: Noto Serif Hebrew + Assistant <span class="badge badge-opt">Option</span></h3>
+        <span class="meta" style="direction:ltr">Google Noto Serif + Light Sans</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">אוכל</span><span>יאכטות</span><span>מלונות</span><span>חוויות</span></div>
+        <div class="hero-demo">
+          <h1>הקונסיירז' האישי שלך בדובאי</h1>
+          <p class="tagline">חוויות פרימיום, הזמנה ללא מאמץ, פרטיות מוחלטת.</p>
+        </div>
+        <div class="content-demo">
+          <h2>ספארי מדברי מתחת לכוכבים</h2>
+          <p>חוו את הקסם של המדבר הערבי עם ספארי פרטי מודרך, ארוחת גורמה מתחת לכוכבים, ותצוגות בזנאות המחברות אתכם למאות שנים של מורשת אמירתית.</p>
+          <p class="price-label">החל מ-</p>
+          <div class="price">2,500 AED</div>
+          <a href="#" class="cta-btn">הזמן חוויה זו</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HE3: Frank Ruhl Libre + Rubik -->
+    <div class="card he3 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">HE-3: Frank Ruhl Libre + Rubik <span class="badge badge-opt">Option</span></h3>
+        <span class="meta" style="direction:ltr">Elegant Serif + Geometric Sans</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">אוכל</span><span>יאכטות</span><span>מלונות</span><span>חוויות</span></div>
+        <div class="hero-demo">
+          <h1>הקונסיירז' האישי שלך בדובאי</h1>
+          <p class="tagline">חוויות פרימיום, הזמנה ללא מאמץ, פרטיות מוחלטת.</p>
+        </div>
+        <div class="content-demo">
+          <h2>ספארי מדברי מתחת לכוכבים</h2>
+          <p>חוו את הקסם של המדבר הערבי עם ספארי פרטי מודרך, ארוחת גורמה מתחת לכוכבים, ותצוגות בזנאות המחברות אתכם למאות שנים של מורשת אמירתית.</p>
+          <p class="price-label">החל מ-</p>
+          <div class="price">2,500 AED</div>
+          <a href="#" class="cta-btn">הזמן חוויה זו</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HE4: Noto Serif Hebrew + Noto Sans Hebrew -->
+    <div class="card he4 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">HE-4: Noto Serif Hebrew + Noto Sans Hebrew <span class="badge badge-opt">Option</span></h3>
+        <span class="meta" style="direction:ltr">Matched Noto Pair — Consistent</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">אוכל</span><span>יאכטות</span><span>מלונות</span><span>חוויות</span></div>
+        <div class="hero-demo">
+          <h1>הקונסיירז' האישי שלך בדובאי</h1>
+          <p class="tagline">חוויות פרימיום, הזמנה ללא מאמץ, פרטיות מוחלטת.</p>
+        </div>
+        <div class="content-demo">
+          <h2>ספארי מדברי מתחת לכוכבים</h2>
+          <p>חוו את הקסם של המדבר הערבי עם ספארי פרטי מודרך, ארוחת גורמה מתחת לכוכבים, ותצוגות בזנאות המחברות אתכם למאות שנים של מורשת אמירתית.</p>
+          <p class="price-label">החל מ-</p>
+          <div class="price">2,500 AED</div>
+          <a href="#" class="cta-btn">הזמן חוויה זו</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       ARABIC — 4 OPTIONS
+  ═══════════════════════════════════════════ -->
+  <div class="section-header">
+    <h2>Arabic — 4 Options</h2>
+    <p>Pick the Arabic serif/sans pairing for luxury concierge feel.</p>
+  </div>
+  <div class="samples">
+    <!-- AR1: Amiri + Cairo -->
+    <div class="card ar1 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">AR-1: Amiri + Cairo <span class="badge badge-rec">Recommended</span></h3>
+        <span class="meta" style="direction:ltr">Classic Arabic Serif + Modern Sans</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">مطاعم</span><span>يخوت</span><span>فنادق</span><span>تجارب</span></div>
+        <div class="hero-demo">
+          <h1>مساعدك الشخصي في دبي</h1>
+          <p class="tagline">تجارب فاخرة، حجز بلا عناء، خصوصية تامة.</p>
+        </div>
+        <div class="content-demo">
+          <h2>سفاري صحراوية تحت النجوم</h2>
+          <p>استمتع بسحر الصحراء العربية مع رحلة سفاري خاصة بمرشد، وعشاء فاخر تحت النجوم، وعروض الصقارة التي تربطك بقرون من التراث الإماراتي.</p>
+          <p class="price-label">ابتداءً من</p>
+          <div class="price">٢,٥٠٠ درهم</div>
+          <a href="#" class="cta-btn">احجز هذه التجربة</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AR2: Noto Serif Arabic + Noto Sans Arabic -->
+    <div class="card ar2 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">AR-2: Noto Serif Arabic + Noto Sans Arabic <span class="badge badge-opt">Option</span></h3>
+        <span class="meta" style="direction:ltr">Matched Noto Pair — Consistent</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">مطاعم</span><span>يخوت</span><span>فنادق</span><span>تجارب</span></div>
+        <div class="hero-demo">
+          <h1>مساعدك الشخصي في دبي</h1>
+          <p class="tagline">تجارب فاخرة، حجز بلا عناء، خصوصية تامة.</p>
+        </div>
+        <div class="content-demo">
+          <h2>سفاري صحراوية تحت النجوم</h2>
+          <p>استمتع بسحر الصحراء العربية مع رحلة سفاري خاصة بمرشد، وعشاء فاخر تحت النجوم، وعروض الصقارة التي تربطك بقرون من التراث الإماراتي.</p>
+          <p class="price-label">ابتداءً من</p>
+          <div class="price">٢,٥٠٠ درهم</div>
+          <a href="#" class="cta-btn">احجز هذه التجربة</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AR3: El Messiri + Tajawal -->
+    <div class="card ar3 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">AR-3: El Messiri + Tajawal <span class="badge badge-opt">Option</span></h3>
+        <span class="meta" style="direction:ltr">Bold Modern + Light Sans</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">مطاعم</span><span>يخوت</span><span>فنادق</span><span>تجارب</span></div>
+        <div class="hero-demo">
+          <h1>مساعدك الشخصي في دبي</h1>
+          <p class="tagline">تجارب فاخرة، حجز بلا عناء، خصوصية تامة.</p>
+        </div>
+        <div class="content-demo">
+          <h2>سفاري صحراوية تحت النجوم</h2>
+          <p>استمتع بسحر الصحراء العربية مع رحلة سفاري خاصة بمرشد، وعشاء فاخر تحت النجوم، وعروض الصقارة التي تربطك بقرون من التراث الإماراتي.</p>
+          <p class="price-label">ابتداءً من</p>
+          <div class="price">٢,٥٠٠ درهم</div>
+          <a href="#" class="cta-btn">احجز هذه التجربة</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AR4: Amiri + Tajawal -->
+    <div class="card ar4 rtl">
+      <div class="card-head">
+        <h3 style="direction:ltr">AR-4: Amiri + Tajawal <span class="badge badge-opt">Option</span></h3>
+        <span class="meta" style="direction:ltr">Classic Serif + Light Modern</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">مطاعم</span><span>يخوت</span><span>فنادق</span><span>تجارب</span></div>
+        <div class="hero-demo">
+          <h1>مساعدك الشخصي في دبي</h1>
+          <p class="tagline">تجارب فاخرة، حجز بلا عناء، خصوصية تامة.</p>
+        </div>
+        <div class="content-demo">
+          <h2>سفاري صحراوية تحت النجوم</h2>
+          <p>استمتع بسحر الصحراء العربية مع رحلة سفاري خاصة بمرشد، وعشاء فاخر تحت النجوم، وعروض الصقارة التي تربطك بقرون من التراث الإماراتي.</p>
+          <p class="price-label">ابتداءً من</p>
+          <div class="price">٢,٥٠٠ درهم</div>
+          <a href="#" class="cta-btn">احجز هذه التجربة</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FRENCH — Uses Cormorant + Inter (native support)
+  ═══════════════════════════════════════════ -->
+  <div class="section-header">
+    <h2>French — Cormorant + Inter (same as English)</h2>
+    <p>French uses Latin characters — Cormorant Garamond and Inter support them natively. No separate font needed.</p>
+  </div>
+  <div class="samples">
+    <div class="card fr">
+      <div class="card-head">
+        <h3>Cormorant Garamond + Inter <span class="badge badge-chosen">Same as EN</span></h3>
+        <span class="meta">Native Latin Support</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">Restaurants</span><span>Yachts</span><span>H&ocirc;tels</span><span>Exp&eacute;riences</span></div>
+        <div class="hero-demo">
+          <h1>Votre Concierge Personnel &agrave; Duba&iuml;</h1>
+          <p class="tagline">Exp&eacute;riences premium, r&eacute;servation sans effort, confidentialit&eacute; totale.</p>
+        </div>
+        <div class="content-demo">
+          <h2>Safari dans le D&eacute;sert sous les &Eacute;toiles</h2>
+          <p>D&eacute;couvrez la magie du d&eacute;sert arabique avec un safari priv&eacute; guid&eacute;, un d&icirc;ner gastronomique sous les &eacute;toiles et des d&eacute;monstrations de fauconnerie qui vous relient &agrave; des si&egrave;cles de patrimoine &eacute;mirati.</p>
+          <p class="price-label">&Agrave; partir de</p>
+          <div class="price">2 500 AED</div>
+          <a href="#" class="cta-btn">R&eacute;server cette exp&eacute;rience</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       RUSSIAN — Uses Cormorant + Inter (native Cyrillic support)
+  ═══════════════════════════════════════════ -->
+  <div class="section-header">
+    <h2>Russian — Cormorant + Inter (same as English)</h2>
+    <p>Both Cormorant Garamond and Inter include full Cyrillic character sets. No separate font needed.</p>
+  </div>
+  <div class="samples">
+    <div class="card ru">
+      <div class="card-head">
+        <h3>Cormorant Garamond + Inter <span class="badge badge-chosen">Same as EN</span></h3>
+        <span class="meta">Native Cyrillic Support</span>
+      </div>
+      <div class="card-body">
+        <div class="nav-demo"><span class="active">Рестораны</span><span>Яхты</span><span>Отели</span><span>Впечатления</span></div>
+        <div class="hero-demo">
+          <h1>Ваш Личный Консьерж в Дубае</h1>
+          <p class="tagline">Премиальные впечатления, бронирование без усилий, полная конфиденциальность.</p>
+        </div>
+        <div class="content-demo">
+          <h2>Сафари в Пустыне под Звёздами</h2>
+          <p>Ощутите магию аравийской пустыни с частным сафари под руководством гида, ужином для гурманов под звёздами и показами соколиной охоты, которые свяжут вас с многовековым наследием Эмиратов.</p>
+          <p class="price-label">Начиная от</p>
+          <div class="price">2 500 AED</div>
+          <a href="#" class="cta-btn">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       NOTES
+  ═══════════════════════════════════════════ -->
+  <div class="notes">
+    <strong>Decisions Made:</strong>
+    <ul>
+      <li><strong>English:</strong> Cormorant Garamond (headings) + Inter (body) — DECIDED</li>
+      <li><strong>French:</strong> Same as English (native Latin support) — NO CHANGE NEEDED</li>
+      <li><strong>Russian:</strong> Same as English (native Cyrillic support) — NO CHANGE NEEDED</li>
+    </ul>
+
+    <h3>Still Need Your Pick:</h3>
+    <ul>
+      <li><strong>Hebrew:</strong> HE-1, HE-2, HE-3, or HE-4?</li>
+      <li><strong>Arabic:</strong> AR-1, AR-2, AR-3, or AR-4?</li>
+    </ul>
+
+    <h3>Hebrew Font Notes</h3>
+    <ul>
+      <li><strong>HE-1 Frank Ruhl Libre + Heebo</strong> (Recommended) — Frank Ruhl is the closest Hebrew equivalent to Cormorant/Garamond: elegant, high-contrast serif. Heebo is Israel's most popular web sans-serif — excellent readability.</li>
+      <li><strong>HE-2 Noto Serif Hebrew + Assistant</strong> — Noto is Google's universal serif. Assistant is very light and airy — good for minimalist luxury.</li>
+      <li><strong>HE-3 Frank Ruhl Libre + Rubik</strong> — Same elegant serif, but Rubik is more geometric (like Inter) for a modern tech feel.</li>
+      <li><strong>HE-4 Noto Serif Hebrew + Noto Sans Hebrew</strong> — Matched pair from Google. Most consistent, but less distinctive.</li>
+    </ul>
+
+    <h3>Arabic Font Notes</h3>
+    <ul>
+      <li><strong>AR-1 Amiri + Cairo</strong> (Recommended) — Amiri is the gold standard Arabic serif — inspired by classic Naskh calligraphy. Cairo is Egypt's most popular modern sans-serif. Best luxury Arabic pairing.</li>
+      <li><strong>AR-2 Noto Serif Arabic + Noto Sans Arabic</strong> — Google's universal pair. Very consistent but less character.</li>
+      <li><strong>AR-3 El Messiri + Tajawal</strong> — El Messiri has a bold, distinctive display feel. Tajawal is light and clean. More modern/contemporary.</li>
+      <li><strong>AR-4 Amiri + Tajawal</strong> — Classic serif + light modern. Hybrid of AR-1 warmth with AR-3 lightness.</li>
+    </ul>
+  </div>
+
+</body>
+</html>

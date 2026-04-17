@@ -26,6 +26,8 @@ import {
   ChevronLeft,
   Tag,
   AlignJustify,
+  Handshake,
+  CalendarDays,
 } from 'lucide-react';
 
 const navItems = [
@@ -37,12 +39,14 @@ const navItems = [
   { name: 'Pricing Rules', path: '/admin/pricing', icon: DollarSign },
   { name: 'Media Library', path: '/admin/media', icon: Image },
   { name: 'Bookings', path: '/admin/bookings', icon: ClipboardList },
+  { name: 'Schedule', path: '/admin/schedule', icon: CalendarDays },
   { name: 'Customers', path: '/admin/customers', icon: Users },
   { name: 'Settings', path: '/admin/settings', icon: Settings },
   { name: 'Roles & Permissions', path: '/admin/roles', icon: Shield },
   { name: 'Pages', path: '/admin/pages', icon: FileText },
   { name: 'Categories', path: '/admin/categories', icon: Tag },
   { name: 'Menus', path: '/admin/menus', icon: AlignJustify },
+  { name: 'Affiliates', path: '/admin/affiliates', icon: Handshake },
 ];
 
 export function AdminLayout() {

@@ -1,7 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
-import { TopNavBar } from '@/components/TopNavBar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -437,13 +436,49 @@ export default function HotelSearchPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleBookingSubmit = () => {
+  const handleBookingSubmit = async () => {
     if (!selectedHotel || !guestName || !guestPhone) return;
-    
-    const nights = checkIn && checkOut 
+
+    const nights = checkIn && checkOut
       ? Math.max(1, Math.ceil((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000))
       : 1;
     const total = selectedHotel.pricePerNight * nights;
+
+    // Save to database
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      const { data: bookingRow } = await supabase.from('bookings_public').insert({
+        booking_type: 'hotel',
+        guest_name: guestName,
+        guest_phone: guestPhone,
+        guest_email: guestEmail || null,
+        user_id: user?.id || null,
+        booking_date: checkIn || new Date().toISOString().split('T')[0],
+        party_size: guests,
+        details: {
+          hotel_name: selectedHotel.name,
+          hotel_id: selectedHotel.id,
+          location: selectedHotel.location,
+          check_in: checkIn,
+          check_out: checkOut,
+          nights,
+          guests,
+          rooms,
+          price_per_night: selectedHotel.pricePerNight,
+        },
+        special_requests: specialRequests || null,
+      } as any).select('id').single();
+
+      // Save financial data separately
+      if (bookingRow?.id) {
+        await supabase.from('bookings_financial').insert({
+          booking_id: bookingRow.id,
+          total_amount: total,
+        } as any);
+      }
+    } catch (err) {
+      console.error('Failed to save booking:', err);
+    }
 
     const message = `🏨 Hotel Booking Request\n\n` +
       `Hotel: ${selectedHotel.name}\n` +
@@ -612,8 +647,7 @@ export default function HotelSearchPage() {
 
   // ═══ MAIN SEARCH VIEW ═══
   return (
-    <div className="min-h-screen bg-background flex flex-col pt-[60px]" dir="rtl">
-      <TopNavBar />
+    <div className="min-h-screen bg-background flex flex-col" dir="rtl">
       {/* Hero search header */}
       <div className="relative bg-card pt-4 pb-6 px-4 border-b border-border">
         {/* Top bar */}

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { PageBlockRenderer } from '@/components/PageBlockRenderer';
-import { TopNavBar } from '@/components/TopNavBar';
 import { useLanguage } from '@/lib/i18n';
 import { updateSEO, resetSEO } from '@/lib/seo';
 
@@ -88,8 +87,7 @@ export default function DynamicPage() {
   const blocks = [...(page.content_blocks || [])].sort((a, b) => a.order - b.order);
 
   return (
-    <div className="min-h-screen bg-background pt-[60px]">
-      <TopNavBar />
+    <div className="bg-background">
       <div className="max-w-4xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold text-foreground mb-8">{page.title}</h1>
         <div className="space-y-6">

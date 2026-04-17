@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { BLOG_ARTICLES } from '@/components/BlogSection';
-import { TopNavBar } from '@/components/TopNavBar';
 import { ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { updateSEO, resetSEO } from '@/lib/seo';
+import { supabase } from '@/integrations/supabase/client';
 
 export default function BlogArticlePage() {
   const { id } = useParams<{ id: string }>();
@@ -15,13 +15,36 @@ export default function BlogArticlePage() {
   const { language } = useLanguage();
   const isRTL = language === 'he' || language === 'ar';
 
+  const [dbArticle, setDbArticle] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchFromDB() {
+      const { data } = await (supabase as any)
+        .from('pages')
+        .select('*')
+        .eq('slug', id)
+        .eq('is_published', true)
+        .single();
+      if (data) setDbArticle(data);
+    }
+    fetchFromDB();
+  }, [id]);
+
   const article = BLOG_ARTICLES.find((a) => a.id === id);
 
   const contentReveal = useScrollReveal<HTMLDivElement>();
   const ctaReveal = useScrollReveal<HTMLDivElement>();
 
   useEffect(() => {
-    if (article) {
+    if (dbArticle) {
+      updateSEO({
+        title: dbArticle.title,
+        description: dbArticle.meta_description || dbArticle.title,
+        canonicalPath: `/blog/${dbArticle.slug}`,
+        ogImage: dbArticle.featured_image_url,
+        ogType: 'article',
+      });
+    } else if (article) {
       const title = article.title[language] || article.title.en;
       const description = article.excerpt[language] || article.excerpt.en;
       updateSEO({
@@ -33,8 +56,35 @@ export default function BlogArticlePage() {
       });
     }
     return () => resetSEO();
-  }, [article, language]);
+  }, [dbArticle, article, language]);
 
+  // DB article takes priority
+  if (dbArticle) {
+    const BackArrow = isRTL ? ArrowRight : ArrowLeft;
+    return (
+      <div className="flex flex-col bg-background">
+        <article className="max-w-3xl mx-auto px-4 py-8 w-full">
+          {dbArticle.featured_image_url && (
+            <img src={dbArticle.featured_image_url} alt={dbArticle.title} className="w-full rounded-xl mb-6 max-h-[400px] object-cover" />
+          )}
+          <h1 className="text-2xl sm:text-3xl font-bold mb-6">{dbArticle.title}</h1>
+          <div className="prose prose-invert max-w-none">
+            {dbArticle.content_blocks?.map((block: any, i: number) => (
+              <div key={i} dangerouslySetInnerHTML={{ __html: block.content }} />
+            ))}
+          </div>
+          <div className="mt-8">
+            <Button onClick={() => navigate(-1)} variant="outline" className="gap-2">
+              <BackArrow className="w-4 h-4" />
+              Back
+            </Button>
+          </div>
+        </article>
+      </div>
+    );
+  }
+
+  // Fallback to hardcoded BLOG_ARTICLES
   if (!article) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -108,8 +158,7 @@ export default function BlogArticlePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-[60px]" dir={isRTL ? 'rtl' : 'ltr'}>
-      <TopNavBar />
+    <div className="bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Hero image with fade-in */}
       <div className="relative w-full h-[260px] sm:h-[360px] md:h-[420px] overflow-hidden animate-[fadeIn_0.8s_ease-out]">
         <img

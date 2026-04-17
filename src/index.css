@@ -111,7 +111,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-family: 'Inter', 'Heebo', 'Cairo', system-ui, sans-serif;
     font-size: 17px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -121,7 +121,7 @@
 
   /* Premium typography hierarchy */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Cormorant Garamond', 'Frank Ruhl Libre', 'Amiri', Georgia, serif;
     font-weight: 600;
     letter-spacing: -0.02em;
   }

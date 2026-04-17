@@ -19,6 +19,14 @@ interface Booking {
   party_size: number;
   status: string;
   created_at: string;
+  booking_type?: string | null;
+  guest_name?: string | null;
+  guest_email?: string | null;
+  guest_phone?: string | null;
+  details?: Record<string, any> | null;
+  total_amount?: number | null;
+  commission_amount?: number | null;
+  admin_notes?: string | null;
   user?: { full_name: string; email: string } | null;
   supplier?: { name: string } | null;
   financial?: { total_amount: number | null } | null;
@@ -56,8 +64,11 @@ export default function AdminBookings() {
   }
 
   const filteredBookings = bookings.filter((booking) => {
-    const matchesSearch = booking.booking_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      booking.user?.full_name?.toLowerCase().includes(searchQuery.toLowerCase());
+    const q = searchQuery.toLowerCase();
+    const matchesSearch = booking.booking_number.toLowerCase().includes(q) ||
+      booking.user?.full_name?.toLowerCase().includes(q) ||
+      booking.guest_name?.toLowerCase().includes(q) ||
+      booking.booking_type?.toLowerCase().includes(q);
     const matchesStatus = statusFilter === 'all' || booking.status === statusFilter;
     const matchesDateFrom = !dateFrom || booking.booking_date >= dateFrom;
     const matchesDateTo = !dateTo || booking.booking_date <= dateTo;
@@ -73,13 +84,14 @@ export default function AdminBookings() {
   }, [filteredBookings]);
 
   function exportCSV() {
-    const headers = ['Booking #', 'Customer', 'Service', 'Date', 'Amount', 'Status'];
+    const headers = ['Booking #', 'Type', 'Customer', 'Service', 'Date', 'Amount', 'Status'];
     const rows = filteredBookings.map((b) => [
       b.booking_number,
-      b.user?.full_name || '',
-      b.supplier?.name || '',
+      b.booking_type || 'general',
+      b.user?.full_name || b.guest_name || '',
+      b.supplier?.name || b.details?.hotel_name || b.details?.destination || '',
       b.booking_date,
-      b.financial?.total_amount?.toString() || '0',
+      b.financial?.total_amount?.toString() || b.total_amount?.toString() || '0',
       b.status,
     ]);
     const csv = [headers, ...rows].map((row) => row.map((c) => `"${c}"`).join(',')).join('\n');
@@ -204,6 +216,7 @@ export default function AdminBookings() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Booking #</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Customer</TableHead>
                   <TableHead>Service</TableHead>
                   <TableHead>Date</TableHead>
@@ -213,24 +226,42 @@ export default function AdminBookings() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredBookings.map((booking) => (
-                  <TableRow key={booking.id}>
-                    <TableCell className="font-medium">{booking.booking_number}</TableCell>
-                    <TableCell>{booking.user?.full_name || '-'}</TableCell>
-                    <TableCell>{booking.supplier?.name || '-'}</TableCell>
-                    <TableCell>{format(new Date(booking.booking_date), 'MMM d, yyyy')}</TableCell>
-                    <TableCell>${booking.financial?.total_amount?.toLocaleString() || '0'}</TableCell>
-                    <TableCell>
-                      <Select value={booking.status} onValueChange={(v) => updateStatus(booking.id, v)}>
-                        <SelectTrigger className="w-28 h-8"><SelectValue /></SelectTrigger>
-                        <SelectContent>{statuses.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Link to={`/admin/customers/${booking.user?.full_name}`}><Button variant="ghost" size="icon"><Eye className="h-4 w-4" /></Button></Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {filteredBookings.map((booking) => {
+                  const customerName = booking.user?.full_name || booking.guest_name || '-';
+                  const serviceName = booking.supplier?.name || booking.details?.hotel_name || booking.details?.destination || '-';
+                  const typeColors: Record<string, string> = {
+                    hotel: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+                    flight: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
+                    dining: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+                    experience: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+                    general: 'bg-gray-500/15 text-gray-400 border-gray-500/30',
+                  };
+                  const bookingType = booking.booking_type || 'general';
+                  const badgeClass = typeColors[bookingType] || typeColors.general;
+                  return (
+                    <TableRow key={booking.id}>
+                      <TableCell className="font-medium">{booking.booking_number}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className={`text-[10px] capitalize ${badgeClass}`}>
+                          {bookingType}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{customerName}</TableCell>
+                      <TableCell>{serviceName}</TableCell>
+                      <TableCell>{format(new Date(booking.booking_date), 'MMM d, yyyy')}</TableCell>
+                      <TableCell>${booking.financial?.total_amount?.toLocaleString() || booking.total_amount?.toLocaleString() || '0'}</TableCell>
+                      <TableCell>
+                        <Select value={booking.status} onValueChange={(v) => updateStatus(booking.id, v)}>
+                          <SelectTrigger className="w-28 h-8"><SelectValue /></SelectTrigger>
+                          <SelectContent>{statuses.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Link to={`/admin/customers/${customerName}`}><Button variant="ghost" size="icon"><Eye className="h-4 w-4" /></Button></Link>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           )}

@@ -138,7 +138,7 @@ YYYYMMDDHHMMSS_descriptive_name.sql
 
 ### Supabase CLI Auth
 ```bash
-export SUPABASE_ACCESS_TOKEN="<token>"
+export SUPABASE_ACCESS_TOKEN="sbp_236c4376cf3402d4c24023dede304af244c70621"
 npx supabase link --project-ref rjwrjpvoksvyigfzrfcj
 npx supabase db push --linked
 ```

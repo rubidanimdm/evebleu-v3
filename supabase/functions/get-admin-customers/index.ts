@@ -100,42 +100,57 @@ Deno.serve(async (req) => {
     // Fetch booking counts and payment totals for each customer
     const customers: CustomerSummary[] = await Promise.all(
       (publicProfiles || []).map(async (profile) => {
-        const privateData = privateMap.get(profile.id);
+        try {
+          const privateData = privateMap.get(profile.id);
 
-        // Get booking count from bookings_public
-        const { count: bookingCount } = await adminClient
-          .from('bookings_public')
-          .select('id', { count: 'exact', head: true })
-          .eq('user_id', profile.id);
+          // Get booking count from bookings_public
+          const { count: bookingCount } = await adminClient
+            .from('bookings_public')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', profile.id);
 
-        // Get financial data from bookings_financial via bookings_public join
-        const { data: bookingsPublic } = await adminClient
-          .from('bookings_public')
-          .select('id, status')
-          .eq('user_id', profile.id)
-          .eq('status', 'confirmed');
+          // Get financial data from bookings_financial via bookings_public join
+          const { data: bookingsPublic } = await adminClient
+            .from('bookings_public')
+            .select('id, status')
+            .eq('user_id', profile.id)
+            .eq('status', 'confirmed');
 
-        let totalPaid = 0;
-        if (bookingsPublic && bookingsPublic.length > 0) {
-          const bookingIds = bookingsPublic.map(b => b.id);
-          const { data: financial } = await adminClient
-            .from('bookings_financial')
-            .select('total_amount')
-            .in('booking_id', bookingIds);
+          let totalPaid = 0;
+          if (bookingsPublic && bookingsPublic.length > 0) {
+            const bookingIds = bookingsPublic.map(b => b.id);
+            const { data: financial } = await adminClient
+              .from('bookings_financial')
+              .select('total_amount')
+              .in('booking_id', bookingIds);
 
-          totalPaid = financial?.reduce((sum, b) => sum + (b.total_amount || 0), 0) || 0;
+            totalPaid = financial?.reduce((sum, b) => sum + (b.total_amount || 0), 0) || 0;
+          }
+
+          return {
+            id: profile.id,
+            full_name: profile.full_name,
+            email: privateData?.email || '',
+            phone: privateData?.phone || '',
+            created_at: profile.created_at,
+            last_seen: profile.last_seen || profile.created_at,
+            total_paid: totalPaid,
+            booking_count: bookingCount || 0,
+          };
+        } catch (err) {
+          console.error('Error fetching data for customer', profile.id, err);
+          const privateData = privateMap.get(profile.id);
+          return {
+            id: profile.id,
+            full_name: profile.full_name,
+            email: privateData?.email || '',
+            phone: privateData?.phone || '',
+            created_at: profile.created_at,
+            last_seen: profile.last_seen || profile.created_at,
+            total_paid: 0,
+            booking_count: 0,
+          };
         }
-
-        return {
-          id: profile.id,
-          full_name: profile.full_name,
-          email: privateData?.email || '',
-          phone: privateData?.phone || '',
-          created_at: profile.created_at,
-          last_seen: profile.last_seen || profile.created_at,
-          total_paid: totalPaid,
-          booking_count: bookingCount || 0,
-        };
       })
     );
 

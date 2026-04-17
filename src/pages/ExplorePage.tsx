@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/BottomNav';
-import { TopNavBar } from '@/components/TopNavBar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
@@ -74,8 +73,7 @@ export default function ExplorePage() {
     : items;
 
   return (
-    <div className="min-h-screen bg-background pb-24 relative pt-[60px]">
-      <TopNavBar />
+    <div className="min-h-screen bg-background pb-24 relative">
       <GoldParticles count={10} />
 
       <LargePageHeader

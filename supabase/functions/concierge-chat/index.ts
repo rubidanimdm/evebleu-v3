@@ -402,7 +402,7 @@ Keep responses concise but warm. Use line breaks for readability. Address users 
     }
 
     // Call Gemini via API key
-    const geminiUrl = `https://aiplatform.googleapis.com/v1/publishers/google/models/${MODEL}:streamGenerateContent?key=${apiKey}&alt=sse`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:streamGenerateContent?key=${apiKey}&alt=sse`;
 
     const response = await fetch(geminiUrl, {
       method: "POST",

@@ -49,7 +49,10 @@ import AdminPages from "./pages/admin/AdminPages";
 import PageEditor from "./pages/admin/PageEditor";
 import AdminCategories from "./pages/admin/AdminCategories";
 import AdminMenus from "./pages/admin/AdminMenus";
+import AdminAffiliates from "./pages/admin/AdminAffiliates";
+import AdminSchedule from "./pages/admin/AdminSchedule";
 import DynamicPage from "./pages/DynamicPage";
+import { SiteLayout } from "@/components/SiteLayout";
 
 const queryClient = new QueryClient();
 
@@ -106,34 +109,12 @@ function AppContent() {
   return (
     <>
       <Routes>
-        {/* Main Screen */}
-        <Route path="/" element={<MainScreen />} />
-        
-        {/* Auth Routes (admin only) */}
+        {/* Auth Routes — excluded from SiteLayout */}
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsOfService />} />
-        <Route path="/cookies" element={<CookiePolicy />} />
-        
-        {/* App Screens - public browsing */}
-        <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/dining" element={<DiningNightlifePage />} />
-        <Route path="/item/:id" element={<ItemDetailsPage />} />
-        <Route path="/yachts" element={<YachtsPage />} />
-        <Route path="/yachts/:slug" element={<YachtDetailPage />} />
-        <Route path="/hotels" element={<HotelSearchPage />} />
-        <Route path="/blog/:id" element={<BlogArticlePage />} />
-        <Route path="/about" element={<Navigate to="/p/about-us" replace />} />
 
-        {/* All pages open - contact via WhatsApp */}
-        <Route path="/concierge" element={<ConciergePage />} />
-        <Route path="/my-plans" element={<MyPlansPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/support" element={<SupportPage />} />
-
-        {/* Admin routes with layout */}
+        {/* Admin routes with their own layout */}
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<AdminDashboard />} />
           <Route path="venues" element={<AdminVenues />} />
@@ -152,10 +133,30 @@ function AppContent() {
           <Route path="pages/:id/edit" element={<PageEditor />} />
           <Route path="categories" element={<AdminCategories />} />
           <Route path="menus" element={<AdminMenus />} />
+          <Route path="schedule" element={<AdminSchedule />} />
+          <Route path="affiliates" element={<AdminAffiliates />} />
         </Route>
-        
-        {/* Dynamic CMS pages */}
-        <Route path="/p/:slug" element={<DynamicPage />} />
+
+        {/* Public routes wrapped in SiteLayout (TopNavBar + Footer) */}
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<MainScreen />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/cookies" element={<CookiePolicy />} />
+          <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/dining" element={<DiningNightlifePage />} />
+          <Route path="/item/:id" element={<ItemDetailsPage />} />
+          <Route path="/yachts" element={<YachtsPage />} />
+          <Route path="/yachts/:slug" element={<YachtDetailPage />} />
+          <Route path="/hotels" element={<HotelSearchPage />} />
+          <Route path="/blog/:id" element={<BlogArticlePage />} />
+          <Route path="/about" element={<Navigate to="/p/about-us" replace />} />
+          <Route path="/concierge" element={<ConciergePage />} />
+          <Route path="/my-plans" element={<MyPlansPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/p/:slug" element={<DynamicPage />} />
+        </Route>
 
         {/* Legacy route redirects */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />

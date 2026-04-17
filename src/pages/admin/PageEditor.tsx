@@ -6,56 +6,17 @@ import { useLanguage } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import {
-  ArrowLeft, Save, Plus, GripVertical, Trash2, ChevronUp, ChevronDown,
-  Type, Image, Video, MousePointer, Minus, LayoutGrid, Ship,
-} from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import TextBlock from '@/components/admin/blocks/TextBlock';
-import ImageBlock from '@/components/admin/blocks/ImageBlock';
-import VideoBlock from '@/components/admin/blocks/VideoBlock';
-import CTABlock from '@/components/admin/blocks/CTABlock';
-import DividerBlock from '@/components/admin/blocks/DividerBlock';
-import VenueGridBlock from '@/components/admin/blocks/VenueGridBlock';
-import YachtCarouselBlock from '@/components/admin/blocks/YachtCarouselBlock';
+import { ArrowLeft, Save, ChevronDown, ChevronUp, X } from 'lucide-react';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 interface CategoryOption {
   id: string;
   name: Record<string, string>;
   slug: string;
 }
-
-interface PageBlock {
-  id: string;
-  type: 'text' | 'image' | 'video' | 'cta' | 'divider' | 'venue_grid' | 'yacht_carousel';
-  content: Record<string, any>;
-  order: number;
-}
-
-const BLOCK_TYPES = [
-  { type: 'text', label: 'Text', icon: Type },
-  { type: 'image', label: 'Image', icon: Image },
-  { type: 'video', label: 'Video', icon: Video },
-  { type: 'cta', label: 'Call to Action', icon: MousePointer },
-  { type: 'divider', label: 'Divider', icon: Minus },
-  { type: 'venue_grid', label: 'Venue Grid', icon: LayoutGrid },
-  { type: 'yacht_carousel', label: 'Yacht Carousel', icon: Ship },
-] as const;
-
-const BLOCK_EDITORS: Record<string, React.FC<{ content: Record<string, any>; onChange: (c: Record<string, any>) => void }>> = {
-  text: TextBlock,
-  image: ImageBlock,
-  video: VideoBlock,
-  cta: CTABlock,
-  divider: DividerBlock,
-  venue_grid: VenueGridBlock,
-  yacht_carousel: YachtCarouselBlock,
-};
 
 function slugify(text: string): string {
   return text
@@ -65,6 +26,23 @@ function slugify(text: string): string {
     .replace(/[\s_]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-+|-+$/g, '');
+}
+
+function CollapsiblePanel({ title, defaultOpen = true, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="bg-card/50 border border-border/40 rounded-xl overflow-hidden">
+      <button
+        type="button"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-muted/30 transition-colors"
+        onClick={() => setOpen(!open)}
+      >
+        {title}
+        {open ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+      </button>
+      {open && <div className="px-4 pb-4 space-y-3 border-t border-border/30">{children}</div>}
+    </div>
+  );
 }
 
 export default function PageEditor() {
@@ -84,11 +62,13 @@ export default function PageEditor() {
   const [featuredImageUrl, setFeaturedImageUrl] = useState('');
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState('');
+  const [tagInput, setTagInput] = useState('');
   const [layoutTemplate, setLayoutTemplate] = useState('standard');
   const [isPublished, setIsPublished] = useState(false);
+  const [publishedAt, setPublishedAt] = useState('');
   const [createdAt, setCreatedAt] = useState('');
   const [updatedAt, setUpdatedAt] = useState('');
-  const [blocks, setBlocks] = useState<PageBlock[]>([]);
+  const [bodyHtml, setBodyHtml] = useState('');
   const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
 
   useEffect(() => {
@@ -105,7 +85,7 @@ export default function PageEditor() {
         .order('sort_order', { ascending: true });
       if (!error && data) setCategoryOptions(data);
     } catch {
-      // Categories table may not exist yet — ignore
+      // Categories table may not exist yet
     }
   }
 
@@ -130,9 +110,23 @@ export default function PageEditor() {
       setTags((data.tags || []).join(', '));
       setLayoutTemplate(data.layout_template || 'standard');
       setIsPublished(data.is_published || false);
+      setPublishedAt(data.published_at || '');
       setCreatedAt(data.created_at || '');
       setUpdatedAt(data.updated_at || '');
-      setBlocks(data.blocks || []);
+
+      // Join all content_blocks text into a single HTML string
+      const blocks = data.content_blocks || [];
+      const html = blocks
+        .sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+        .map((block: any) => {
+          if (typeof block.content === 'string') return block.content;
+          if (block.content?.text) return block.content.text;
+          if (block.content?.html) return block.content.html;
+          return '';
+        })
+        .filter(Boolean)
+        .join('\n');
+      setBodyHtml(html);
     } catch (error) {
       console.error('Error fetching page:', error);
       toast({ title: 'Error loading page', variant: 'destructive' });
@@ -154,35 +148,31 @@ export default function PageEditor() {
     setSlug(slugify(value));
   }
 
-  function addBlock(type: PageBlock['type']) {
-    const newBlock: PageBlock = {
-      id: crypto.randomUUID(),
-      type,
-      content: {},
-      order: blocks.length,
-    };
-    setBlocks([...blocks, newBlock]);
+  const tagsList = tags.split(',').map((t) => t.trim()).filter(Boolean);
+
+  function addTag() {
+    const newTag = tagInput.trim();
+    if (!newTag) return;
+    if (!tagsList.includes(newTag)) {
+      const updated = [...tagsList, newTag].join(', ');
+      setTags(updated);
+    }
+    setTagInput('');
   }
 
-  function updateBlockContent(blockId: string, content: Record<string, any>) {
-    setBlocks(blocks.map((b) => (b.id === blockId ? { ...b, content } : b)));
+  function removeTag(tag: string) {
+    const updated = tagsList.filter((t) => t !== tag).join(', ');
+    setTags(updated);
   }
 
-  function removeBlock(blockId: string) {
-    setBlocks(blocks.filter((b) => b.id !== blockId).map((b, i) => ({ ...b, order: i })));
+  function handleTagKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      addTag();
+    }
   }
 
-  function moveBlock(blockId: string, direction: -1 | 1) {
-    const idx = blocks.findIndex((b) => b.id === blockId);
-    if (idx < 0) return;
-    const newIdx = idx + direction;
-    if (newIdx < 0 || newIdx >= blocks.length) return;
-    const updated = [...blocks];
-    [updated[idx], updated[newIdx]] = [updated[newIdx], updated[idx]];
-    setBlocks(updated.map((b, i) => ({ ...b, order: i })));
-  }
-
-  async function handleSave() {
+  async function handleSave(publish?: boolean) {
     if (!title.trim()) {
       toast({ title: 'Title is required', variant: 'destructive' });
       return;
@@ -192,8 +182,17 @@ export default function PageEditor() {
       return;
     }
 
+    const shouldPublish = publish !== undefined ? publish : isPublished;
+
     setSaving(true);
     try {
+      const contentBlocks = [{
+        id: crypto.randomUUID(),
+        type: 'text',
+        content: { text: bodyHtml },
+        order: 0,
+      }];
+
       const pageData: Record<string, any> = {
         title: title.trim(),
         slug: slug.trim(),
@@ -201,15 +200,19 @@ export default function PageEditor() {
         meta_description: metaDescription.trim() || null,
         featured_image_url: featuredImageUrl.trim() || null,
         category: category.trim() || null,
-        tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
+        tags: tagsList,
         layout_template: layoutTemplate,
-        is_published: isPublished,
-        blocks,
+        is_published: shouldPublish,
+        content_blocks: contentBlocks,
         updated_at: new Date().toISOString(),
       };
 
-      if (isPublished && !createdAt) {
+      if (shouldPublish && !publishedAt) {
         pageData.published_at = new Date().toISOString();
+      }
+
+      if (publish !== undefined) {
+        setIsPublished(shouldPublish);
       }
 
       let result;
@@ -221,7 +224,7 @@ export default function PageEditor() {
 
       if (result.error) throw result.error;
 
-      toast({ title: isNew ? 'Page created' : 'Page saved' });
+      toast({ title: isNew ? 'Page created' : (publish ? 'Page published' : 'Page saved') });
 
       if (isNew && result.data?.id) {
         navigate(`/admin/pages/${result.data.id}/edit`, { replace: true });
@@ -255,7 +258,7 @@ export default function PageEditor() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -269,131 +272,29 @@ export default function PageEditor() {
             )}
           </div>
         </div>
-        <Button className="gap-2" onClick={handleSave} disabled={saving}>
-          <Save className="h-4 w-4" />
-          {saving ? 'Saving...' : 'Save'}
-        </Button>
       </div>
 
-      {/* Title */}
-      <div className="bg-card/50 border border-border/40 rounded-xl p-6">
-        <div className="space-y-2">
-          <Label>Page Title</Label>
-          <Input
-            value={title}
-            onChange={(e) => handleTitleChange(e.target.value)}
-            placeholder="Enter page title"
-            className="text-lg font-semibold"
-          />
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <Tabs defaultValue="content" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="content">Content</TabsTrigger>
-          <TabsTrigger value="seo">SEO</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
-        </TabsList>
-
-        {/* Content Tab */}
-        <TabsContent value="content" className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium text-muted-foreground">
-              {blocks.length} block{blocks.length !== 1 ? 's' : ''}
-            </h2>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Plus className="h-4 w-4" />
-                  Add Block
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {BLOCK_TYPES.map((bt) => (
-                  <DropdownMenuItem
-                    key={bt.type}
-                    onClick={() => addBlock(bt.type as PageBlock['type'])}
-                    className="gap-2"
-                  >
-                    <bt.icon className="h-4 w-4" />
-                    {bt.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+      {/* Two-column layout */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Main column */}
+        <div className="flex-1 min-w-0 space-y-4">
+          {/* Title */}
+          <div className="bg-card/50 border border-border/40 rounded-xl p-4">
+            <Input
+              value={title}
+              onChange={(e) => handleTitleChange(e.target.value)}
+              placeholder="Enter page title"
+              className="text-2xl font-bold border-0 bg-transparent px-0 h-auto focus-visible:ring-0 placeholder:text-muted-foreground/40"
+            />
           </div>
 
-          {blocks.length === 0 ? (
-            <div className="bg-card/50 border border-border/40 rounded-xl p-12 text-center">
-              <Type className="h-10 w-10 mx-auto text-muted-foreground/40 mb-3" />
-              <p className="text-muted-foreground">No blocks yet. Add your first block to start building the page.</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {blocks.map((block, idx) => {
-                const Editor = BLOCK_EDITORS[block.type];
-                const blockMeta = BLOCK_TYPES.find((bt) => bt.type === block.type);
-                return (
-                  <div
-                    key={block.id}
-                    className="bg-card/50 border border-border/40 rounded-xl overflow-hidden"
-                  >
-                    {/* Block header */}
-                    <div className="flex items-center gap-2 px-4 py-2 border-b border-border/30 bg-muted/30">
-                      <GripVertical className="h-4 w-4 text-muted-foreground/50 cursor-grab" />
-                      <Badge variant="outline" className="text-xs">
-                        {blockMeta?.label || block.type}
-                      </Badge>
-                      <div className="flex-1" />
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7"
-                        onClick={() => moveBlock(block.id, -1)}
-                        disabled={idx === 0}
-                      >
-                        <ChevronUp className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7"
-                        onClick={() => moveBlock(block.id, 1)}
-                        disabled={idx === blocks.length - 1}
-                      >
-                        <ChevronDown className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7"
-                        onClick={() => removeBlock(block.id)}
-                      >
-                        <Trash2 className="h-4 w-4 text-destructive" />
-                      </Button>
-                    </div>
-                    {/* Block editor */}
-                    <div className="p-4">
-                      {Editor && (
-                        <Editor
-                          content={block.content}
-                          onChange={(content) => updateBlockContent(block.id, content)}
-                        />
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </TabsContent>
+          {/* Body — Rich Text Editor */}
+          <RichTextEditor content={bodyHtml} onChange={setBodyHtml} />
 
-        {/* SEO Tab */}
-        <TabsContent value="seo">
-          <div className="bg-card/50 border border-border/40 rounded-xl p-6 space-y-4">
-            <div className="space-y-2">
-              <Label>Meta Title</Label>
+          {/* SEO section */}
+          <CollapsiblePanel title="SEO Settings" defaultOpen={false}>
+            <div className="space-y-2 pt-2">
+              <Label className="text-xs text-muted-foreground">Meta Title</Label>
               <Input
                 value={metaTitle}
                 onChange={(e) => setMetaTitle(e.target.value)}
@@ -401,7 +302,7 @@ export default function PageEditor() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Meta Description</Label>
+              <Label className="text-xs text-muted-foreground">Meta Description</Label>
               <Textarea
                 value={metaDescription}
                 onChange={(e) => setMetaDescription(e.target.value)}
@@ -409,45 +310,48 @@ export default function PageEditor() {
                 rows={3}
               />
             </div>
-            <div className="space-y-2">
-              <Label>Slug</Label>
-              <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-sm">/</span>
-                <Input
-                  value={slug}
-                  onChange={(e) => handleSlugChange(e.target.value)}
-                  placeholder="page-url-slug"
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label>Featured Image URL</Label>
-              <Input
-                value={featuredImageUrl}
-                onChange={(e) => setFeaturedImageUrl(e.target.value)}
-                placeholder="https://example.com/featured-image.jpg"
-              />
-              {featuredImageUrl && (
-                <div className="rounded-lg overflow-hidden border border-border/40 mt-2">
-                  <img
-                    src={featuredImageUrl}
-                    alt="Featured"
-                    className="w-full max-h-32 object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </TabsContent>
+          </CollapsiblePanel>
+        </div>
 
-        {/* Settings Tab */}
-        <TabsContent value="settings">
-          <div className="bg-card/50 border border-border/40 rounded-xl p-6 space-y-4">
-            <div className="space-y-2">
-              <Label>Category</Label>
+        {/* Sidebar */}
+        <div className="w-full lg:w-80 space-y-4 flex-shrink-0">
+          {/* Publish panel */}
+          <CollapsiblePanel title="Publish">
+            <div className="flex items-center gap-2 pt-2">
+              <div className={`h-2 w-2 rounded-full ${isPublished ? 'bg-green-500' : 'bg-yellow-500'}`} />
+              <span className="text-sm">{isPublished ? 'Published' : 'Draft'}</span>
+            </div>
+            {publishedAt && (
+              <p className="text-xs text-muted-foreground">Published: {formatDate(publishedAt)}</p>
+            )}
+            {updatedAt && (
+              <p className="text-xs text-muted-foreground">Updated: {formatDate(updatedAt)}</p>
+            )}
+            <div className="flex gap-2 pt-1">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                onClick={() => handleSave(false)}
+                disabled={saving}
+              >
+                {saving ? 'Saving...' : 'Save Draft'}
+              </Button>
+              <Button
+                size="sm"
+                className="flex-1 gap-1.5"
+                onClick={() => handleSave(true)}
+                disabled={saving}
+              >
+                <Save className="h-3.5 w-3.5" />
+                {saving ? 'Saving...' : 'Publish'}
+              </Button>
+            </div>
+          </CollapsiblePanel>
+
+          {/* Category */}
+          <CollapsiblePanel title="Category">
+            <div className="pt-2">
               {categoryOptions.length > 0 ? (
                 <Select value={category} onValueChange={setCategory}>
                   <SelectTrigger>
@@ -470,46 +374,94 @@ export default function PageEditor() {
                 />
               )}
             </div>
-            <div className="space-y-2">
-              <Label>Tags (comma-separated)</Label>
-              <Input
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                placeholder="luxury, dubai, dining"
-              />
+          </CollapsiblePanel>
+
+          {/* Tags */}
+          <CollapsiblePanel title="Tags">
+            <div className="pt-2">
+              <div className="flex gap-2">
+                <Input
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={handleTagKeyDown}
+                  placeholder="Add tag..."
+                  className="text-sm"
+                />
+                <Button variant="outline" size="sm" onClick={addTag}>Add</Button>
+              </div>
+              {tagsList.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {tagsList.map((tag) => (
+                    <Badge key={tag} variant="secondary" className="gap-1 pr-1">
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(tag)}
+                        className="ml-0.5 hover:text-destructive"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
-            <div className="space-y-2">
-              <Label>Layout Template</Label>
+          </CollapsiblePanel>
+
+          {/* Featured Image */}
+          <CollapsiblePanel title="Featured Image">
+            <div className="space-y-2 pt-2">
+              <Input
+                value={featuredImageUrl}
+                onChange={(e) => setFeaturedImageUrl(e.target.value)}
+                placeholder="https://example.com/image.jpg"
+                className="text-sm"
+              />
+              {featuredImageUrl && (
+                <div className="rounded-lg overflow-hidden border border-border/40">
+                  <img
+                    src={featuredImageUrl}
+                    alt="Featured"
+                    className="w-full max-h-40 object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
+                </div>
+              )}
+            </div>
+          </CollapsiblePanel>
+
+          {/* URL Slug */}
+          <CollapsiblePanel title="URL Slug">
+            <div className="pt-2">
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground text-sm">/</span>
+                <Input
+                  value={slug}
+                  onChange={(e) => handleSlugChange(e.target.value)}
+                  placeholder="page-url-slug"
+                  className="text-sm"
+                />
+              </div>
+            </div>
+          </CollapsiblePanel>
+
+          {/* Layout Template */}
+          <CollapsiblePanel title="Layout Template">
+            <div className="pt-2">
               <Select value={layoutTemplate} onValueChange={setLayoutTemplate}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="standard">Standard</SelectItem>
-                  <SelectItem value="full-width">Full Width</SelectItem>
-                  <SelectItem value="sidebar">Sidebar</SelectItem>
+                  <SelectItem value="blog">Blog</SelectItem>
+                  <SelectItem value="landing">Landing</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center gap-3 pt-2">
-              <Switch
-                checked={isPublished}
-                onCheckedChange={setIsPublished}
-              />
-              <Label>Published</Label>
-              {isPublished && (
-                <Badge variant="outline" className="border-green-500/50 text-green-500">Live</Badge>
-              )}
-            </div>
-            {(createdAt || updatedAt) && (
-              <div className="pt-4 border-t border-border/30 space-y-2 text-sm text-muted-foreground">
-                {createdAt && <p>Created: {formatDate(createdAt)}</p>}
-                {updatedAt && <p>Last updated: {formatDate(updatedAt)}</p>}
-              </div>
-            )}
-          </div>
-        </TabsContent>
-      </Tabs>
+          </CollapsiblePanel>
+        </div>
+      </div>
     </div>
   );
 }

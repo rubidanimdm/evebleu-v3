@@ -76,8 +76,8 @@ Deno.serve(async (req) => {
       throw bookingsError;
     }
 
-    // Get unique user IDs
-    const userIds = [...new Set(bookingsPublic?.map(b => b.user_id) || [])];
+    // Get unique user IDs (filter out nulls for guest bookings)
+    const userIds = [...new Set((bookingsPublic?.map(b => b.user_id) || []).filter(Boolean))];
 
     // Fetch public profiles for names
     const { data: publicProfiles } = await adminClient
@@ -120,15 +120,20 @@ Deno.serve(async (req) => {
     const bookings = (bookingsPublic || []).map(b => ({
       id: b.id,
       booking_number: b.booking_number,
+      booking_type: b.booking_type || null,
       booking_date: b.booking_date,
       booking_time: b.booking_time,
       party_size: b.party_size,
       status: b.status,
       special_requests: b.special_requests,
+      guest_name: b.guest_name || null,
+      guest_email: b.guest_email || null,
+      guest_phone: b.guest_phone || null,
+      details: b.details || null,
       created_at: b.created_at,
-      total_amount: financialMap[b.id]?.total_amount || null,
+      total_amount: b.total_amount || financialMap[b.id]?.total_amount || null,
       commission_amount: financialMap[b.id]?.commission_amount || null,
-      admin_notes: financialMap[b.id]?.admin_notes || null,
+      admin_notes: b.admin_notes || financialMap[b.id]?.admin_notes || null,
       user: profileMap.get(b.user_id) || null,
       supplier: b.supplier,
     }));

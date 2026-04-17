@@ -19,6 +19,7 @@ interface MenuItem {
   menu_location: string;
   is_external: boolean;
   sort_order: number;
+  is_active: boolean;
   created_at: string;
 }
 
@@ -37,6 +38,7 @@ const EMPTY_FORM = {
   menu_location: 'top_nav',
   is_external: false,
   sort_order: 0,
+  is_active: true,
 };
 
 export default function AdminMenus() {
@@ -93,6 +95,7 @@ export default function AdminMenus() {
       menu_location: item.menu_location,
       is_external: item.is_external,
       sort_order: item.sort_order,
+      is_active: item.is_active ?? true,
     });
     setDialogOpen(true);
   }
@@ -117,6 +120,7 @@ export default function AdminMenus() {
         menu_location: form.menu_location,
         is_external: form.is_external,
         sort_order: form.sort_order,
+        is_active: form.is_active,
       };
 
       if (editingId) {
@@ -185,6 +189,7 @@ export default function AdminMenus() {
             <TableHead>Label</TableHead>
             <TableHead>URL</TableHead>
             <TableHead>External</TableHead>
+            <TableHead>Active</TableHead>
             <TableHead>Sort Order</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -200,6 +205,15 @@ export default function AdminMenus() {
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">
                 {item.is_external ? 'Yes' : 'No'}
+              </TableCell>
+              <TableCell>
+                <Switch
+                  checked={item.is_active ?? true}
+                  onCheckedChange={async (checked) => {
+                    await (supabase as any).from('site_menus').update({ is_active: checked }).eq('id', item.id);
+                    fetchMenuItems();
+                  }}
+                />
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">
                 {item.sort_order}
@@ -294,6 +308,10 @@ export default function AdminMenus() {
             <div className="flex items-center gap-3">
               <Switch checked={form.is_external} onCheckedChange={(checked) => setForm({ ...form, is_external: checked })} />
               <Label>External Link</Label>
+            </div>
+            <div className="flex items-center gap-3">
+              <Switch checked={form.is_active} onCheckedChange={(checked) => setForm({ ...form, is_active: checked })} />
+              <Label>Active</Label>
             </div>
           </div>
           <DialogFooter>

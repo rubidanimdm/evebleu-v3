@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { openExternalUrl } from '@/lib/openExternalUrl';
 import { useLanguage } from '@/lib/i18n';
+import { supabase } from '@/integrations/supabase/client';
 
 interface FlightSearchFormProps {
   open: boolean;
@@ -50,8 +51,34 @@ export function FlightSearchForm({ open, onOpenChange }: FlightSearchFormProps) 
     email.trim() &&
     agreedToPolicy;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isValid || !departDate) return;
+
+    // Save to database
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      await supabase.from('bookings_public').insert({
+        booking_type: 'flight',
+        guest_name: fullName,
+        guest_phone: phone,
+        guest_email: email || null,
+        user_id: user?.id || null,
+        booking_date: format(departDate, 'yyyy-MM-dd'),
+        party_size: parseInt(passengers) || 1,
+        details: {
+          origin,
+          destination,
+          depart_date: format(departDate, 'yyyy-MM-dd'),
+          return_date: returnDate ? format(returnDate, 'yyyy-MM-dd') : null,
+          passengers: parseInt(passengers),
+          cabin_class: cabinClass,
+          trip_type: tripType,
+          flexible_dates: flexibleDates,
+        },
+      } as any);
+    } catch (err) {
+      console.error('Failed to save flight request:', err);
+    }
 
     const formattedDepart = format(departDate, 'dd/MM/yyyy');
     const formattedReturn = returnDate ? format(returnDate, 'dd/MM/yyyy') : 'N/A';

@@ -68,8 +68,8 @@ export default {
         champagne: "hsl(var(--champagne))",
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Inter', 'Heebo', 'Cairo', 'system-ui', 'sans-serif'],
+        display: ['Cormorant Garamond', 'Frank Ruhl Libre', 'Amiri', 'Georgia', 'serif'],
       },
       fontSize: {
         // Mobile-first premium sizing

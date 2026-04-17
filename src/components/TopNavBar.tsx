@@ -4,6 +4,7 @@ import { useLanguage } from '@/lib/i18n';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import logo from '@/assets/eve-blue-logo-white.gif';
 
 const NAV_LINKS = [
   { key: 'nav.hotels', path: '/hotels' },
@@ -25,11 +26,12 @@ export function TopNavBar() {
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         {/* Left: Logo */}
-        <Link
-          to="/"
-          className="font-['Playfair_Display',serif] text-lg sm:text-xl font-bold text-white tracking-wider hover:text-[#E6B800] transition-colors"
-        >
-          EVE BLUE
+        <Link to="/" className="flex-shrink-0">
+          <img
+            src={logo}
+            alt="EVE BLUE"
+            className="h-8 sm:h-9 w-auto"
+          />
         </Link>
 
         {/* Center: Desktop nav links */}
@@ -41,7 +43,7 @@ export function TopNavBar() {
                 key={link.path}
                 to={link.path}
                 className={cn(
-                  "font-['Plus_Jakarta_Sans',sans-serif] text-sm tracking-wide transition-colors",
+                  "text-sm tracking-wide transition-colors",
                   isActive
                     ? 'text-[#E6B800]'
                     : 'text-white/80 hover:text-[#E6B800]'
@@ -89,9 +91,7 @@ export function TopNavBar() {
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between p-4 border-b border-white/10">
-          <span className="font-['Playfair_Display',serif] text-lg font-bold text-white">
-            EVE BLUE
-          </span>
+          <img src={logo} alt="EVE BLUE" className="h-7 w-auto" />
           <button
             onClick={() => setDrawerOpen(false)}
             className="p-1.5 text-white/60 hover:text-white transition-colors"
@@ -111,7 +111,7 @@ export function TopNavBar() {
                 to={link.path}
                 onClick={() => setDrawerOpen(false)}
                 className={cn(
-                  "block px-6 py-3 font-['Plus_Jakarta_Sans',sans-serif] text-sm tracking-wide transition-colors",
+                  "block px-6 py-3 text-sm tracking-wide transition-colors",
                   isActive
                     ? 'text-[#E6B800] bg-[#E6B800]/10'
                     : 'text-white/70 hover:text-[#E6B800] hover:bg-white/5'

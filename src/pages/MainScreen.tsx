@@ -1,16 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/lib/supabase';
-import { BottomNav } from '@/components/BottomNav';
-import { TopNavBar } from '@/components/TopNavBar';
-import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { openWhatsAppConcierge } from '@/lib/whatsapp';
 import { DubaiInfoStrip } from '@/components/DubaiInfoStrip';
 import { BlogSection, BLOG_ARTICLES } from '@/components/BlogSection';
-import logo from '@/assets/eve-blue-logo-white.gif';
 import heroVideo from '@/assets/hero-video.mp4';
 import yachtVideo from '@/assets/yacht-marina-video.mp4';
 import nightlifeVideo from '@/assets/nightlife-video.mp4';
@@ -25,6 +20,7 @@ import yachtIcon from '@/assets/yacht-icon-new.jpeg';
 import luxuryCarIcon from '@/assets/icon-luxury-car.jpeg';
 import diningIcon from '@/assets/dining-icon-new.jpeg';
 import airportIcon from '@/assets/airport-pickup-icon.jpeg';
+import eveLogoWhite from '@/assets/eve-blue-logo-white.gif';
 import { FlightSearchForm } from '@/components/FlightSearchForm';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
@@ -57,11 +53,13 @@ const categoryKeys = [
 ];
 
 export default function MainScreen() {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const { t, language } = useLanguage();
-  const isLoggedIn = !!user;
   const [flightFormOpen, setFlightFormOpen] = useState(false);
+  const [hotelCheckIn, setHotelCheckIn] = useState('');
+  const [hotelCheckOut, setHotelCheckOut] = useState('');
+  const [hotelGuests, setHotelGuests] = useState(2);
+  const [hotelRooms, setHotelRooms] = useState(1);
 
   // Scroll-reveal refs
   const gridReveal = useScrollReveal<HTMLDivElement>();
@@ -104,8 +102,7 @@ export default function MainScreen() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background pt-[60px]">
-      <TopNavBar />
+    <div className="flex flex-col bg-background">
 
       {/* ═══════════════════════════════════════════════
           INFO STRIP — Time, Weather, Exchange Rate
@@ -146,17 +143,8 @@ export default function MainScreen() {
 
         {/* Hero content — centered */}
         <div className="relative z-20 flex flex-col items-center px-6 text-center pt-16 pb-10">
-          {/* Logo */}
-          <div className="mb-8 animate-[fadeIn_1.2s_ease-out]">
-            <img
-              src={logo}
-              alt="EVE BLUE — Concierge. It. Done."
-              className="w-[min(320px,70vw)] h-auto rounded-lg shadow-2xl shadow-black/40"
-            />
-          </div>
-
           {/* Tagline */}
-          <p className="text-foreground/60 text-sm sm:text-base tracking-[0.25em] uppercase mb-10 animate-[fadeIn_1.8s_ease-out]">
+          <p className="text-foreground/60 text-sm sm:text-base tracking-[0.25em] uppercase mb-10 animate-[fadeIn_1.2s_ease-out]">
             {t('mainScreen.tagline')}
           </p>
 
@@ -186,168 +174,86 @@ export default function MainScreen() {
               </button>
             ))}
           </div>
+
+          {/* EVE BLUE logo */}
+          <div className="my-8 flex justify-center">
+            <img src={eveLogoWhite} alt="EVE BLUE" className="h-16 sm:h-20 opacity-90" />
+          </div>
+
+          {/* Hotel & Flight Quick Search */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[520px] w-full">
+            {/* Hotel Quick Search Card */}
+            <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-5">
+              <h3 className="text-sm font-semibold text-white mb-3">{t('hero.findPerfectHotel')}</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-1">{t('hero.checkIn')}</label>
+                    <input
+                      type="date"
+                      value={hotelCheckIn}
+                      onChange={(e) => setHotelCheckIn(e.target.value)}
+                      className="bg-white/10 border border-white/15 rounded-lg text-white text-xs h-9 px-3 w-full focus:border-[#E6B800]/50 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-1">{t('hero.checkOut')}</label>
+                    <input
+                      type="date"
+                      value={hotelCheckOut}
+                      onChange={(e) => setHotelCheckOut(e.target.value)}
+                      className="bg-white/10 border border-white/15 rounded-lg text-white text-xs h-9 px-3 w-full focus:border-[#E6B800]/50 focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-1">{t('hero.guests')}</label>
+                    <select
+                      value={hotelGuests}
+                      onChange={(e) => setHotelGuests(Number(e.target.value))}
+                      className="bg-white/10 border border-white/15 rounded-lg text-white text-xs h-9 px-3 w-full focus:border-[#E6B800]/50 focus:outline-none appearance-none"
+                    >
+                      {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                        <option key={n} value={n} className="bg-[#0A0A0A] text-white">{n}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-1">{t('hero.rooms')}</label>
+                    <select
+                      value={hotelRooms}
+                      onChange={(e) => setHotelRooms(Number(e.target.value))}
+                      className="bg-white/10 border border-white/15 rounded-lg text-white text-xs h-9 px-3 w-full focus:border-[#E6B800]/50 focus:outline-none appearance-none"
+                    >
+                      {Array.from({ length: 5 }, (_, i) => i + 1).map((n) => (
+                        <option key={n} value={n} className="bg-[#0A0A0A] text-white">{n}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <button
+                  onClick={() => navigate(`/hotels?checkIn=${hotelCheckIn}&checkOut=${hotelCheckOut}&guests=${hotelGuests}&rooms=${hotelRooms}`)}
+                  className="bg-[#E6B800] hover:bg-[#E6B800]/90 text-black font-semibold rounded-full h-10 w-full text-sm transition-colors"
+                >
+                  {t('hero.searchHotels')}
+                </button>
+              </div>
+            </div>
+
+            {/* Flight Quick Request Card */}
+            <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex flex-col">
+              <h3 className="text-sm font-semibold text-white mb-2">{t('hero.flightsAnywhere')}</h3>
+              <p className="text-xs text-white/50 mb-auto leading-relaxed">{t('hero.flightsCta')}</p>
+              <button
+                onClick={() => setFlightFormOpen(true)}
+                className="bg-[#E6B800] hover:bg-[#E6B800]/90 text-black font-semibold rounded-full h-10 w-full text-sm transition-colors mt-4"
+              >
+                {t('hero.requestFlight')}
+              </button>
+            </div>
+          </div>
         </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          YACHT VIDEO STRIP — full-width cinematic band
-      ═══════════════════════════════════════════════ */}
-      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=TRANSPORT')} role="link" aria-label="Luxury Cars">
-        <video
-          src={yachtVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          NIGHTLIFE VIDEO STRIP
-      ═══════════════════════════════════════════════ */}
-      <section ref={nightlifeStripReveal.ref} id="strip-dining" className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
-        <video
-          src={nightlifeVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          CTA — READY FOR SOMETHING SPECIAL
-      ═══════════════════════════════════════════════ */}
-      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-14 max-w-[720px] mx-auto w-full transition-all duration-1000 ease-out ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
-        <div className={`relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center transition-all duration-700 delay-300 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
-          {/* Animated decorative glows */}
-          <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/8 blur-3xl rounded-full transition-all duration-1000 delay-500 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
-          <div className={`absolute -bottom-8 -right-8 w-48 h-48 bg-primary/5 blur-3xl rounded-full transition-all duration-1200 delay-700 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
-          <div className={`absolute -bottom-8 -left-8 w-40 h-40 bg-accent/5 blur-3xl rounded-full transition-all duration-1200 delay-800 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
-
-          {/* Shimmer border effect */}
-          <div className={`absolute inset-0 rounded-2xl transition-opacity duration-1000 delay-600 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`} style={{
-            background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, transparent 40%, transparent 60%, hsl(var(--primary) / 0.1) 100%)',
-            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            maskComposite: 'exclude',
-            WebkitMaskComposite: 'xor',
-            padding: '1px',
-          }} />
-
-          <h3 className={`relative text-xl sm:text-2xl font-semibold text-foreground mb-3 transition-all duration-700 delay-400 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            {t('mainScreen.readyForSomethingSpecial')}
-          </h3>
-          <p className={`relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto transition-all duration-700 delay-500 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            {t('mainScreen.conciergeAvailable')}
-          </p>
-          <Button
-            onClick={() => openWhatsAppConcierge()}
-            className={`relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2 transition-all duration-700 delay-600 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}
-          >
-            {t('mainScreen.chatNow')}
-            <ArrowRight className="w-4 h-4" />
-          </Button>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          ATTRACTIONS VIDEO STRIP
-      ═══════════════════════════════════════════════ */}
-      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
-        <video
-          src={attractionsVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          STRIP 4 VIDEO
-      ═══════════════════════════════════════════════ */}
-      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
-        <video
-          src={strip4Video}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          STRIP 5 VIDEO
-      ═══════════════════════════════════════════════ */}
-      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-4 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
-        <video
-          src={strip5Video}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="absolute inset-0" style={{
-          background: `
-            linear-gradient(180deg,
-              hsl(var(--background)) 0%,
-              transparent 20%,
-              transparent 80%,
-              hsl(var(--background)) 100%
-            )
-          `,
-        }} />
       </section>
 
       {/* ═══════════════════════════════════════════════
@@ -364,7 +270,7 @@ export default function MainScreen() {
           ru: '🏨 Наши рекомендуемые отели',
         };
         return (
-          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+          <section className="px-4 sm:px-6 py-6 sm:py-8 max-w-[720px] mx-auto w-full">
             <div className="text-center mb-8">
               <h2 className="text-xl sm:text-2xl font-semibold text-primary">
                 {hotelStripTitle[language] || hotelStripTitle.en}
@@ -418,7 +324,7 @@ export default function MainScreen() {
           ru: '🌟 Наши лучшие достопримечательности',
         };
         return (
-          <section className="px-4 sm:px-6 py-10 sm:py-14 max-w-[720px] mx-auto w-full">
+          <section className="px-4 sm:px-6 py-6 sm:py-8 max-w-[720px] mx-auto w-full">
             <div className="text-center mb-8">
               <h2 className="text-xl sm:text-2xl font-semibold text-primary">
                 {attractionStripTitle[language] || attractionStripTitle.en}
@@ -463,11 +369,65 @@ export default function MainScreen() {
       <BlogSection />
 
       {/* ═══════════════════════════════════════════════
-          FOOTER
+          VIDEO STRIPS — cinematic bands at the bottom
       ═══════════════════════════════════════════════ */}
-      <Footer />
+      <section ref={yachtStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-1 cursor-pointer video-strip-zoom reveal-scale ${yachtStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=TRANSPORT')} role="link" aria-label="Luxury Cars">
+        <video src={yachtVideo} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, hsl(var(--background)) 0%, transparent 20%, transparent 80%, hsl(var(--background)) 100%)' }} />
+      </section>
+      <section ref={nightlifeStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-1 cursor-pointer video-strip-zoom reveal-scale ${nightlifeStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/yachts')} role="link" aria-label="Yacht Charters">
+        <video src={nightlifeVideo} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, hsl(var(--background)) 0%, transparent 20%, transparent 80%, hsl(var(--background)) 100%)' }} />
+      </section>
+      <section ref={attractionsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-1 cursor-pointer video-strip-zoom reveal-scale ${attractionsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/dining')} role="link" aria-label="Dining & Nightlife">
+        <video src={attractionsVideo} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, hsl(var(--background)) 0%, transparent 20%, transparent 80%, hsl(var(--background)) 100%)' }} />
+      </section>
+      <section ref={carsStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-1 cursor-pointer video-strip-zoom reveal-scale ${carsStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Attractions">
+        <video src={strip4Video} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, hsl(var(--background)) 0%, transparent 20%, transparent 80%, hsl(var(--background)) 100%)' }} />
+      </section>
+      <section ref={desertStripReveal.ref} className={`relative w-full h-[240px] sm:h-[300px] md:h-[360px] overflow-hidden mt-1 cursor-pointer video-strip-zoom reveal-scale ${desertStripReveal.isVisible ? 'revealed' : ''}`} onClick={() => navigate('/explore?category=EXPERIENCE')} role="link" aria-label="Desert">
+        <video src={strip5Video} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-contain sm:object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, hsl(var(--background)) 0%, transparent 20%, transparent 80%, hsl(var(--background)) 100%)' }} />
+      </section>
 
-      {isLoggedIn && <BottomNav />}
+      {/* ═══════════════════════════════════════════════
+          CTA — READY FOR SOMETHING SPECIAL (last section)
+      ═══════════════════════════════════════════════ */}
+      <section ref={ctaReveal.ref} className={`px-4 sm:px-6 py-8 max-w-[720px] mx-auto w-full transition-all duration-1000 ease-out ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
+        <div className={`relative rounded-2xl overflow-hidden border border-primary/15 bg-card/60 backdrop-blur p-8 sm:p-12 text-center transition-all duration-700 delay-300 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/8 blur-3xl rounded-full transition-all duration-1000 delay-500 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          <div className={`absolute -bottom-8 -right-8 w-48 h-48 bg-primary/5 blur-3xl rounded-full transition-all duration-1200 delay-700 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          <div className={`absolute -bottom-8 -left-8 w-40 h-40 bg-accent/5 blur-3xl rounded-full transition-all duration-1200 delay-800 ${ctaReveal.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+          <div className={`absolute inset-0 rounded-2xl transition-opacity duration-1000 delay-600 ${ctaReveal.isVisible ? 'opacity-100' : 'opacity-0'}`} style={{
+            background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, transparent 40%, transparent 60%, hsl(var(--primary) / 0.1) 100%)',
+            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'exclude',
+            WebkitMaskComposite: 'xor',
+            padding: '1px',
+          }} />
+          <h3 className={`relative text-xl sm:text-2xl font-semibold text-foreground mb-3 transition-all duration-700 delay-400 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            {t('mainScreen.readyForSomethingSpecial')}
+          </h3>
+          <p className={`relative text-muted-foreground text-sm mb-8 max-w-sm mx-auto transition-all duration-700 delay-500 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            {t('mainScreen.conciergeAvailable')}
+          </p>
+          <Button
+            onClick={() => openWhatsAppConcierge()}
+            className={`relative h-13 px-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-base font-semibold shadow-lg shadow-primary/15 gap-2 transition-all duration-700 delay-600 ${ctaReveal.isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}
+          >
+            {t('mainScreen.chatNow')}
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+      </section>
 
       <FlightSearchForm open={flightFormOpen} onOpenChange={setFlightFormOpen} />
 
